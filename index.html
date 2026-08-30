@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>歐亞露營與慢活壯遊誌 | Global Wilderness & Vanlife Journal</title>
+    <title>在世界紮營｜JIN's 旅誌 | Global Wilderness & Vanlife Journal</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -95,7 +95,7 @@
                         <i class="fa-solid fa-earth-americas text-base"></i>
                     </div>
                     <div>
-                        <span class="text-lg font-bold tracking-tight text-nordic-900 block font-sans" id="navBrandTitle">歐亞露營與慢活壯遊誌</span>
+                        <span class="text-lg font-bold tracking-tight text-nordic-900 block font-sans" id="navBrandTitle">在世界紮營｜JIN's 旅誌</span>
                         <span class="text-[10px] text-nordic-600 tracking-widest uppercase font-semibold">Global Wilderness & Vanlife Journal</span>
                     </div>
                 </a>
@@ -491,7 +491,7 @@
                     <i class="fa-solid fa-campground"></i>
                 </div>
                 <div>
-                    <div class="text-white font-semibold" id="footerTitle">歐亞露營與慢活壯遊誌</div>
+                    <div class="text-white font-semibold" id="footerTitle">在世界紮營｜JIN's 旅誌</div>
                     <div class="text-xs text-gray-500">Travel Vibe | AURAVIIE </div>
                 </div>
             </div>
@@ -751,7 +751,7 @@
                 if (el) el.innerHTML = html;
             };
 
-            setText('navBrandTitle', isEn ? 'Global Wilderness & Vanlife' : '歐亞露營與慢活壯遊誌');
+            setText('navBrandTitle', isEn ? 'Global Wilderness & Vanlife' : '在世界紮營｜JIN's 旅誌');
             setText('navCountries', isEn ? '30 Countries' : '30國足跡');
             setText('navJournal', isEn ? 'Chronicles' : '營會與生活誌');
             setText('navVideos', isEn ? 'YouTube Vlogs' : '影音紀實');
@@ -831,7 +831,7 @@
             setText('labelMsg', isEn ? 'Proposal Details' : '合作提案內容');
             setHTML('btnSubmitCollab', isEn ? '<i class="fa-solid fa-paper-plane"></i> <span>Submit Inquiry (Export TXT & Open Gmail)</span>' : '<i class="fa-solid fa-paper-plane"></i> <span>送出合作諮詢 (匯出檔並開啟 Gmail)</span>');
 
-            setText('footerTitle', isEn ? 'Global Wilderness & Vanlife Journal' : '歐亞露營與慢活壯遊誌');
+            setText('footerTitle', isEn ? 'Global Wilderness & Vanlife Journal' : '在世界紮營｜JIN's 旅誌');
 
             setText('optAll', isEn ? 'All Camping & Life Themes' : '所有露營與生活主題');
             setText('optDaily', isEn ? 'Daily Slow Life' : '慢活生活日誌 (Daily Life)');
@@ -1154,7 +1154,7 @@
             if (!name || !email || !msg) return;
 
             // 1. Export TXT File
-            const exportText = '=== 歐亞露營與慢活壯遊誌 - 合作諮詢單 ===\n\n' +
+            const exportText = '=== 在世界紮營｜JIN's 旅誌 - 合作諮詢單 ===\n\n' +
                 '送出時間：' + new Date().toLocaleString() + '\n' +
                 '姓名 / 單位：' + name + '\n' +
                 '聯絡 Email：' + email + '\n\n' +
@@ -1171,7 +1171,7 @@
 
             // 2. Open Gmail
             const recipient = 'hello@wildvanlife.com';
-            const subject = '[合作諮詢] ' + name + ' - 歐亞露營與慢活壯遊誌';
+            const subject = '[合作諮詢] ' + name + ' - 在世界紮營｜JIN's 旅誌';
             const body = '親愛的 Liam & Maya,\n\n' +
                 '我是 ' + name + '，對貴站的歐亞露營與車宿專案非常感興趣，以下是我們的合作提案內容：\n\n' +
                 '------------------------------\n' + msg + '\n------------------------------\n\n' +
