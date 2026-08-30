@@ -190,7 +190,7 @@
         <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center pt-8">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-aurora-300 text-xs font-semibold tracking-wider uppercase mb-6 border border-white/15 shadow-sm" id="heroBadge">
                 <i class="fa-solid fa-snowflake text-aurora-400"></i>
-                HYGGE & WILDERNESS · 30 國 · 32,000 KM · 歐亞星空與日常慢活手記
+                HYGGE & WILDERNESS · 30 國 · 32,000＋ KM · 歐亞星空與日常慢活手記
             </div>
 
             <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.15]" id="heroTitle">
@@ -216,7 +216,7 @@
                     <div class="text-[11px] uppercase tracking-wider text-birch-200 mt-1" id="statNights">帳篷與旅行車夜數</div>
                 </div>
                 <div class="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 text-center">
-                    <div class="text-2xl sm:text-3xl font-extrabold text-cyan-200">32,000</div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-cyan-200">32,000＋</div>
                     <div class="text-[11px] uppercase tracking-wider text-birch-200 mt-1" id="statDistance">壯遊總里程 (KM)</div>
                 </div>
             </div>
@@ -500,15 +500,6 @@
         let currentType = 'All';
         let searchQuery = '';
 
-        let gearItems = [
-            { name: '4季高山抗風帳篷', nameEn: '4-Season Alpine Tent', checked: true },
-            { name: '極限 -10°C 羽絨睡袋', nameEn: '-10°C Down Sleeping Bag', checked: true },
-            { name: '高山雙口瓦斯爐與套鍋', nameEn: 'Alpine Dual Stove & Cookset', checked: false },
-            { name: '100W 摺疊太陽能充電板', nameEn: '100W Foldable Solar Panel', checked: true },
-            { name: 'CEE 藍色 3 針旅行轉接頭', nameEn: 'CEE 3-Pin Blue Adapter', checked: false },
-            { name: '手沖咖啡濾杯與手磨機', nameEn: 'Manual Drip Coffee Kit', checked: true }
-        ];
-
         const YOUTUBE_VIDEOS = [
             {
                 id: 's-e-YD92Tho',
@@ -737,7 +728,7 @@
             setText('mNavGallery', isEn ? 'Light & Shadow Gallery' : '光影集錦');
             setText('mNavCollab', isEn ? 'Partnership' : '合作邀約');
 
-            setText('heroBadge', isEn ? 'HYGGE & WILDERNESS · 30 COUNTRIES · 32,000 KM · EURASIA JOURNAL' : 'HYGGE & WILDERNESS · 30 國 · 32,000 KM · 歐亞星空與日常慢活手記');
+            setText('heroBadge', isEn ? 'HYGGE & WILDERNESS · 30 COUNTRIES · 32,000＋ KM · EURASIA JOURNAL' : 'HYGGE & WILDERNESS · 30 國 · 32,000＋ KM · 歐亞星空與日常慢活手記');
             setHTML('heroTitle', isEn 
                 ? 'From Nordic Fjords & Auroras to Mt. Fuji & Tropical Isles<br><span class="bg-gradient-to-r from-aurora-300 via-emerald-200 to-amberRust-400 bg-clip-text text-transparent">Campfire & Slow Life Journal</span>' 
                 : '從歐陸峽灣極光到熱帶島嶼<br><span class="bg-gradient-to-r from-aurora-300 via-emerald-200 to-amberRust-400 bg-clip-text text-transparent">曠野營火與生活誌</span>');
