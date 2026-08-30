@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在世界紮營｜JIN's 旅誌 | Global Wilderness & Vanlife Journal</title>
+    <title>歐亞露營與慢活壯遊誌 | Global Wilderness & Vanlife Journal</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -95,7 +95,7 @@
                         <i class="fa-solid fa-earth-americas text-base"></i>
                     </div>
                     <div>
-                        <span class="text-lg font-bold tracking-tight text-nordic-900 block font-sans" id="navBrandTitle">在世界紮營｜JIN's 旅誌</span>
+                        <span class="text-lg font-bold tracking-tight text-nordic-900 block font-sans" id="navBrandTitle">歐亞露營與慢活壯遊誌</span>
                         <span class="text-[10px] text-nordic-600 tracking-widest uppercase font-semibold">Global Wilderness & Vanlife Journal</span>
                     </div>
                 </a>
@@ -117,6 +117,10 @@
                     <a href="#about" class="text-xs uppercase tracking-wider font-semibold text-birch-800 hover:text-nordic-600 transition-colors flex items-center gap-1.5">
                         <i class="fa-solid fa-user-astronaut text-nordic-600 text-xs"></i>
                         <span id="navAbout">自我介紹</span>
+                    </a>
+                    <a href="#gear" class="text-xs uppercase tracking-wider font-semibold text-birch-800 hover:text-nordic-600 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-campground text-nordic-600 text-xs"></i>
+                        <span id="navGear">裝備指南</span>
                     </a>
                     <a href="#gallery" class="text-xs uppercase tracking-wider font-semibold text-birch-800 hover:text-nordic-600 transition-colors flex items-center gap-1.5">
                         <i class="fa-solid fa-images text-nordic-600 text-xs"></i>
@@ -170,6 +174,10 @@
                 <i class="fa-solid fa-user-astronaut w-6 text-nordic-600"></i>
                 <span id="mNavAbout">自我介紹</span>
             </a>
+            <a href="#gear" onclick="window.toggleMobileMenu()" class="block py-2 text-birch-900 hover:text-nordic-600 font-medium border-b border-birch-200/60">
+                <i class="fa-solid fa-campground w-6 text-nordic-600"></i>
+                <span id="mNavGear">裝備指南</span>
+            </a>
             <a href="#gallery" onclick="window.toggleMobileMenu()" class="block py-2 text-birch-900 hover:text-nordic-600 font-medium border-b border-birch-200/60">
                 <i class="fa-solid fa-images w-6 text-nordic-600"></i>
                 <span id="mNavGallery">光影集錦</span>
@@ -178,15 +186,6 @@
                 <i class="fa-solid fa-handshake w-6 text-nordic-600"></i>
                 <span id="mNavCollab">合作邀約</span>
             </a>
-            <div class="pt-2 flex items-center gap-3">
-                <span class="text-xs text-birch-700 font-medium">Follow Journey:</span>
-                <a href="https://instagram.com" target="_blank" class="text-amberRust-600 hover:text-amberRust-500 font-medium text-xs flex items-center gap-1">
-                    <i class="fa-brands fa-instagram text-sm"></i> Instagram
-                </a>
-                <a href="https://facebook.com" target="_blank" class="text-nordic-600 hover:text-nordic-700 font-medium text-xs flex items-center gap-1">
-                    <i class="fa-brands fa-facebook text-sm"></i> Facebook
-                </a>
-            </div>
         </div>
     </nav>
 
@@ -242,11 +241,6 @@
                 </a>
             </div>
         </div>
-
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-birch-200/70 text-xs flex flex-col items-center gap-1.5 opacity-80">
-            <span class="uppercase tracking-widest text-[10px]">Scroll to Explore</span>
-            <i class="fa-solid fa-chevron-down text-xs animate-bounce"></i>
-        </div>
     </header>
 
     <section id="destinations" class="py-20 bg-birch-100/60 relative border-b border-birch-200">
@@ -257,15 +251,8 @@
                 <p class="text-birch-800 text-sm sm:text-base leading-relaxed" id="descDestinations">選擇任一國家或洲別，快速展開該區域的露營指南與在地慢活故事。</p>
             </div>
 
-            <!-- Region Filter Tabs -->
-            <div class="flex flex-wrap justify-center items-center gap-2.5 sm:gap-3 mb-8" id="regionTabs">
-                <!-- JavaScript renders Region tabs -->
-            </div>
-
-            <!-- Country Badges -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3" id="countryBadges">
-                <!-- JavaScript renders 30 countries + All option -->
-            </div>
+            <div class="flex flex-wrap justify-center items-center gap-2.5 sm:gap-3 mb-8" id="regionTabs"></div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3" id="countryBadges"></div>
         </div>
     </section>
 
@@ -295,9 +282,7 @@
                 </div>
             </div>
 
-            <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Dynamic cards rendered by JS -->
-            </div>
+            <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 
             <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl border border-birch-200">
                 <i class="fa-solid fa-compass text-4xl text-birch-700 mb-4"></i>
@@ -332,9 +317,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" id="videosGrid">
-                <!-- Dynamically rendered YouTube video cards -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8" id="videosGrid"></div>
         </div>
     </section>
 
@@ -353,15 +336,6 @@
                             <h3 class="text-xl font-bold">Liam & Maya</h3>
                             <p class="text-xs text-birch-200 mt-1" id="aboutCardRole">歐亞 30 國野營與車宿紀錄者 / 戶外攝影創作者</p>
                         </div>
-                    </div>
-                    <div class="absolute -bottom-6 -right-6 hidden sm:block p-4 rounded-2xl bg-white border border-birch-200 shadow-lg text-nordic-900 max-w-xs">
-                        <div class="flex items-center gap-3 mb-1">
-                            <div class="w-8 h-8 rounded-full bg-nordic-600 text-white flex items-center justify-center text-xs">
-                                <i class="fa-solid fa-campground"></i>
-                            </div>
-                            <div class="text-xs font-bold">Leave No Trace</div>
-                        </div>
-                        <p class="text-[11px] text-birch-800 leading-snug" id="aboutBadgeDesc">崇尚無痕山林與 Hygge 慢活，用相機與文字留下最純粹的曠野微光。</p>
                     </div>
                 </div>
 
@@ -401,6 +375,51 @@
         </div>
     </section>
 
+    <section id="gear" class="py-20 bg-nordic-900 text-white border-t border-nordic-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-aurora-300 font-bold text-xs tracking-widest uppercase mb-2 block" id="subGear">Pro Tips & Gear Setup</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4" id="titleGear">歐亞自駕露營裝備與實戰心得</h2>
+                <p class="text-gray-300 text-sm leading-relaxed" id="descGear">
+                    跨越北歐到南歐與熱帶島嶼，氣溫從 -5°C 到 32°C。裝備輕量化、車宿與帳篷彈性搭配、以及了解各國野營規範是順利完成 30 國露營的關鍵。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-6 space-y-4">
+                    <div class="p-5 rounded-2xl bg-nordic-800/80 border border-nordic-700">
+                        <h4 class="font-bold text-sm text-aurora-300 mb-1" id="gearTip1Title">北歐 Everyman's Right (自然享受權)</h4>
+                        <p class="text-xs text-gray-300 leading-relaxed" id="gearTip1Desc">瑞典、芬蘭、挪威允許未經許可在未開發土地野營 1-2 夜，但須距離民宅 150 公尺以上，禁止留下垃圾與破壞自然。</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-nordic-800/80 border border-nordic-700">
+                        <h4 class="font-bold text-sm text-aurora-300 mb-1" id="gearTip2Title">高山與氣候適應裝備</h4>
+                        <p class="text-xs text-gray-300 leading-relaxed" id="gearTip2Desc">在阿爾卑斯山區（瑞士/奧地利/義大利）與印尼火山，高山瓦斯高規規格、防風雨等級 5000mm 帳篷與極限 -10°C 睡袋為必備。</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-nordic-800/80 border border-nordic-700">
+                        <h4 class="font-bold text-sm text-aurora-300 mb-1" id="gearTip3Title">歐規露營轉接頭與太陽能</h4>
+                        <p class="text-xs text-gray-300 leading-relaxed" id="gearTip3Desc">配備 CEE 藍色三針露營插頭與 100W 太陽能充電板，能確保在歐陸營地與亞洲車宿時皆順利補給電力。</p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 p-6 rounded-2xl bg-nordic-800/50 border border-nordic-700/80">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="font-bold text-base text-white" id="gearChecklistTitle">露營必備裝備清單 (Checklist)</h3>
+                            <p class="text-xs text-gray-400 mt-0.5" id="gearChecklistDesc">勾選您已準備好的物品，確認壯遊行前狀態：</p>
+                        </div>
+                        <span id="gearProgressText" class="text-xs font-bold text-aurora-300 bg-nordic-900/80 px-3 py-1 rounded-full border border-nordic-700"></span>
+                    </div>
+
+                    <div id="gearChecklist" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4"></div>
+
+                    <button onclick="window.resetGearChecklist()" class="text-xs text-gray-400 hover:text-white underline transition-colors cursor-pointer" id="btnResetGear">
+                        重置勾選
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="gallery" class="py-20 bg-nordic-900 border-t border-nordic-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-12">
@@ -409,9 +428,7 @@
                 <p class="text-gray-400 text-sm" id="descGallery">定格 30 國露營過程中感動人心的晨曦、阿爾卑斯雪山、芬蘭極光與極簡營火瞬間。</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="photoGalleryGrid">
-                <!-- Dynamically generated photos (8 photos) -->
-            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="photoGalleryGrid"></div>
         </div>
     </section>
 
@@ -491,8 +508,8 @@
                     <i class="fa-solid fa-campground"></i>
                 </div>
                 <div>
-                    <div class="text-white font-semibold" id="footerTitle">在世界紮營｜JIN's 旅誌</div>
-                    <div class="text-xs text-gray-500">Travel Vibe | AURAVIIE </div>
+                    <div class="text-white font-semibold" id="footerTitle">歐亞露營與慢活壯遊誌</div>
+                    <div class="text-xs text-gray-500">Travel Vibe | AURAVIIE</div>
                 </div>
             </div>
 
@@ -538,6 +555,15 @@
         let currentCountry = 'All';
         let currentType = 'All';
         let searchQuery = '';
+
+        let gearItems = [
+            { name: '4季高山抗風帳篷', nameEn: '4-Season Alpine Tent', checked: true },
+            { name: '極限 -10°C 羽絨睡袋', nameEn: '-10°C Down Sleeping Bag', checked: true },
+            { name: '高山雙口瓦斯爐與套鍋', nameEn: 'Alpine Dual Stove & Cookset', checked: false },
+            { name: '100W 摺疊太陽能充電板', nameEn: '100W Foldable Solar Panel', checked: true },
+            { name: 'CEE 藍色 3 針露營轉接頭', nameEn: 'CEE 3-Pin Blue Adapter', checked: false },
+            { name: '手沖咖啡濾杯與手磨機', nameEn: 'Manual Drip Coffee Kit', checked: true }
+        ];
 
         const YOUTUBE_VIDEOS = [
             {
@@ -729,6 +755,7 @@
             window.renderRegionTabs();
             window.renderCountryBadges();
             window.renderVideos();
+            window.renderGearChecklist();
             window.renderGallery();
             window.applyAllFilters();
         };
@@ -751,11 +778,12 @@
                 if (el) el.innerHTML = html;
             };
 
-            setText('navBrandTitle', isEn ? 'Global Wilderness & Vanlife' : '在世界紮營｜JIN's 旅誌');
+            setText('navBrandTitle', isEn ? 'Global Wilderness & Vanlife' : '歐亞露營與慢活壯遊誌');
             setText('navCountries', isEn ? '30 Countries' : '30國足跡');
             setText('navJournal', isEn ? 'Chronicles' : '營會與生活誌');
             setText('navVideos', isEn ? 'YouTube Vlogs' : '影音紀實');
             setText('navAbout', isEn ? 'About Us' : '自我介紹');
+            setText('navGear', isEn ? 'Gear Guide' : '裝備指南');
             setText('navGallery', isEn ? 'Gallery' : '光影藝廊');
             setText('navCollab', isEn ? 'Partnership' : '合作邀約');
 
@@ -763,6 +791,7 @@
             setText('mNavJournal', isEn ? 'Life & Camp Chronicles' : '露營與生活日誌');
             setText('mNavVideos', isEn ? 'YouTube Vlogs' : 'YouTube 影音紀實');
             setText('mNavAbout', isEn ? 'About Us' : '自我介紹');
+            setText('mNavGear', isEn ? 'Gear Setup Guide' : '裝備指南');
             setText('mNavGallery', isEn ? 'Light & Shadow Gallery' : '光影集錦');
             setText('mNavCollab', isEn ? 'Partnership' : '合作邀約');
 
@@ -801,7 +830,6 @@
             setText('subAbout', isEn ? 'Meet the Nomad' : 'Meet the Nomad');
             setText('titleAbout', isEn ? 'About Us: From Urban Life to Eurasian Wilderness' : '自我介紹：從城市日常走向歐亞廣袤曠野');
             setText('aboutCardRole', isEn ? 'Eurasia 30-Country Vanlife Explorers / Outdoor Photographers' : '歐亞 30 國野營與車宿紀錄者 / 戶外攝影創作者');
-            setText('aboutBadgeDesc', isEn ? 'Embracing Leave No Trace & Hygge slow travel across global campfires.' : '崇尚無痕山林與 Hygge 慢活，用相機與文字留下最純粹的曠野微光。');
             setText('descAbout1', isEn 
                 ? 'Hi! We are Liam & Maya. This journal captures our road trip journey in campervans and tents across 30 countries in Europe and Asia. From Lapland auroras to Mount Fuji morning brews, we love exploring nature at a slow, meaningful pace.' 
                 : '哈囉！我們是 Liam 與 Maya。這座網站紀錄了我們駕駛露營車與搭乘帳篷，跨越歐洲與亞洲 30 個國家的壯遊故事。從極北拉普蘭的冰雪極光、北歐峽灣的不落太陽，到富士山下的晨光咖啡與熱帶島嶼的海浪聲，我們熱愛以最緩慢、最貼近自然的方式體驗世界。');
@@ -815,6 +843,19 @@
             setText('aboutSkill2Desc', isEn ? 'Self-sufficient solar & power' : '自給自足太陽能與電力');
             setText('aboutSkill3', isEn ? 'Outdoor Drip Coffee' : '露營手沖生活');
             setText('aboutSkill3Desc', isEn ? 'Local coffee & campfire cooking' : '在地風味咖啡與營火料理');
+
+            setText('subGear', isEn ? 'Pro Tips & Gear Setup' : 'Pro Tips & Gear Setup');
+            setText('titleGear', isEn ? 'Eurasian Campervan & Wilderness Gear Guide' : '歐亞自駕露營裝備與實戰心得');
+            setText('descGear', isEn ? 'Traversing temperatures from -5°C to 32°C. Lightweight gear, flexible van/tent setups, and knowing local regulations are key.' : '跨越北歐到南歐與熱帶島嶼，氣溫從 -5°C 到 32°C。裝備輕量化、車宿與帳篷彈性搭配、以及了解各國野營規範是順利完成 30 國露營的關鍵。');
+            setText('gearTip1Title', isEn ? 'Nordic Everyman\'s Right (Allemannsretten)' : '北歐 Everyman\'s Right (自然享受權)');
+            setText('gearTip1Desc', isEn ? 'Sweden, Finland, and Norway allow wild camping for 1-2 nights on uncultivated land, provided you keep 150m away from inhabited homes and leave no trace.' : '瑞典、芬蘭、挪威允許未經許可在未開發土地野營 1-2 夜，但須距離民宅 150 公尺以上，禁止留下垃圾與破壞自然。');
+            setText('gearTip2Title', isEn ? 'Alpine & Weather Adaptability' : '高山與氣候適應裝備');
+            setText('gearTip2Desc', isEn ? 'In the Alps and Indonesia volcanoes, cold-weather gas stoves, 5000mm waterproof tents, and -10°C sleeping bags are mandatory.' : '在阿爾卑斯山區（瑞士/奧地利/義大利）與印尼火山，高山瓦斯高規規格、防風雨等級 5000mm 帳篷與極限 -10°C 睡袋為必備。');
+            setText('gearTip3Title', isEn ? 'EU CEE Adapters & Solar Charging' : '歐規露營轉接頭與太陽能');
+            setText('gearTip3Desc', isEn ? 'CEE 3-pin blue adapters and a 100W foldable solar panel guarantee reliable power at European campsites and Asian off-grid van spots.' : '配備 CEE 藍色三針露營插頭與 100W 太陽能充電板，能確保在歐陸營地與亞洲車宿時皆順利補給電力。');
+            setText('gearChecklistTitle', isEn ? 'Essential Camping Checklist' : '露營必備裝備清單 (Checklist)');
+            setText('gearChecklistDesc', isEn ? 'Check off items as you prepare for your grand trip:' : '勾選您已準備好的物品，確認壯遊行前狀態：');
+            setText('btnResetGear', isEn ? 'Reset Checklist' : '重置勾選');
 
             setText('subGallery', isEn ? 'Moments Captured · 8 Wild Views' : 'Moments Captured · 8 Wild Views');
             setText('titleGallery', isEn ? 'Wilderness Light & Shadow Gallery' : '歐亞露營光影藝廊');
@@ -831,7 +872,7 @@
             setText('labelMsg', isEn ? 'Proposal Details' : '合作提案內容');
             setHTML('btnSubmitCollab', isEn ? '<i class="fa-solid fa-paper-plane"></i> <span>Submit Inquiry (Export TXT & Open Gmail)</span>' : '<i class="fa-solid fa-paper-plane"></i> <span>送出合作諮詢 (匯出檔並開啟 Gmail)</span>');
 
-            setText('footerTitle', isEn ? 'Global Wilderness & Vanlife Journal' : '在世界紮營｜JIN's 旅誌');
+            setText('footerTitle', isEn ? 'Global Wilderness & Vanlife Journal' : '歐亞露營與慢活壯遊誌');
 
             setText('optAll', isEn ? 'All Camping & Life Themes' : '所有露營與生活主題');
             setText('optDaily', isEn ? 'Daily Slow Life' : '慢活生活日誌 (Daily Life)');
@@ -1089,7 +1130,6 @@
             const title = isEn ? article.titleEn : article.title;
             const excerpt = isEn ? article.excerptEn : article.excerpt;
             const fbBtnText = isEn ? 'View & Discuss on Facebook' : '前往 Facebook 討論與交流';
-            const gumroadBtnText = isEn ? 'Download Guide & Assets on Gumroad' : '前往 Gumroad 下載路誌與手冊';
 
             const contentElem = document.getElementById('modalContent');
             if (contentElem) {
@@ -1115,18 +1155,10 @@
                             '<span>Published: ' + article.date + '</span>' +
                             '<span>· Global Wilderness Journal</span>' +
                         '</div>' +
-                        '<div class="flex flex-wrap items-center gap-3">' +
-                            '<a href="https://facebook.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all shadow-md w-fit cursor-pointer">' +
-                                '<i class="fa-brands fa-facebook text-base"></i>' +
-                                '<span>' + fbBtnText + '</span>' +
-                                '<i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>' +
-                            '</a>' +
-                            '<a href="https://gumroad.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amberRust-500 hover:bg-amberRust-600 text-white font-semibold transition-all shadow-md w-fit cursor-pointer">' +
-                                '<i class="fa-solid fa-bag-shopping text-base"></i>' +
-                                '<span>' + gumroadBtnText + '</span>' +
-                                '<i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>' +
-                            '</a>' +
-                        '</div>' +
+                        '<a href="https://facebook.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all shadow-md w-fit cursor-pointer">' +
+                            '<i class="fa-brands fa-facebook text-base"></i>' +
+                            '<span>' + fbBtnText + '</span>' +
+                        '</a>' +
                     '</div>' +
                 '</div>';
             }
@@ -1153,8 +1185,7 @@
 
             if (!name || !email || !msg) return;
 
-            // 1. Export TXT File
-            const exportText = '=== 在世界紮營｜JIN's 旅誌 - 合作諮詢單 ===\n\n' +
+            const exportText = '=== 歐亞露營與慢活壯遊誌 - 合作諮詢單 ===\n\n' +
                 '送出時間：' + new Date().toLocaleString() + '\n' +
                 '姓名 / 單位：' + name + '\n' +
                 '聯絡 Email：' + email + '\n\n' +
@@ -1169,9 +1200,8 @@
             downloadLink.click();
             document.body.removeChild(downloadLink);
 
-            // 2. Open Gmail
             const recipient = 'hello@wildvanlife.com';
-            const subject = '[合作諮詢] ' + name + ' - 在世界紮營｜JIN's 旅誌';
+            const subject = '[合作諮詢] ' + name + ' - 歐亞露營與慢活壯遊誌';
             const body = '親愛的 Liam & Maya,\n\n' +
                 '我是 ' + name + '，對貴站的歐亞露營與車宿專案非常感興趣，以下是我們的合作提案內容：\n\n' +
                 '------------------------------\n' + msg + '\n------------------------------\n\n' +
@@ -1183,6 +1213,41 @@
                 '&body=' + encodeURIComponent(body);
 
             window.open(gmailUrl, '_blank');
+        };
+
+        window.renderGearChecklist = function() {
+            const container = document.getElementById('gearChecklist');
+            const progress = document.getElementById('gearProgressText');
+            if (!container) return;
+
+            const checkedCount = gearItems.filter(function(g) { return g.checked; }).length;
+            if (progress) {
+                progress.textContent = currentLang === 'en' 
+                    ? 'Ready ' + checkedCount + ' / ' + gearItems.length + ' items'
+                    : '已準備 ' + checkedCount + ' / ' + gearItems.length + ' 項';
+            }
+
+            container.innerHTML = gearItems.map(function(item, idx) {
+                const name = currentLang === 'en' ? item.nameEn : item.name;
+                const checkedAttr = item.checked ? 'checked' : '';
+                const textStyle = item.checked ? 'text-gray-300 line-through opacity-75' : 'text-white';
+                return '<label class="flex items-center gap-3 p-3 rounded-xl bg-nordic-900/50 hover:bg-nordic-800/60 border border-nordic-800/80 cursor-pointer transition-colors">' +
+                    '<input type="checkbox" ' + checkedAttr + ' onchange="window.toggleGearItem(' + idx + ')" class="w-4 h-4 rounded text-emerald-500 focus:ring-emerald-500 bg-gray-800 border-gray-700">' +
+                    '<span class="text-xs sm:text-sm ' + textStyle + ' font-medium">' + name + '</span>' +
+                '</label>';
+            }).join('');
+        };
+
+        window.toggleGearItem = function(index) {
+            if (gearItems[index]) {
+                gearItems[index].checked = !gearItems[index].checked;
+                window.renderGearChecklist();
+            }
+        };
+
+        window.resetGearChecklist = function() {
+            gearItems.forEach(function(g) { g.checked = false; });
+            window.renderGearChecklist();
         };
 
         window.renderGallery = function() {
@@ -1210,6 +1275,7 @@
             window.updateUIStrings();
             window.renderRegionTabs();
             window.renderCountryBadges();
+            window.renderGearChecklist();
             window.renderGallery();
             window.renderVideos();
             window.applyAllFilters();
