@@ -251,9 +251,9 @@
                 <button data-cat="asia-pacific" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
   <div class="flex items-center gap-1">
     <i class="fa-solid fa-earth-asia mr-1"></i>
-    <span>亞洲</span>
+    <span>亞洲&其他</span>
   </div>
-  <span class="text-[10px] opacity-80 leading-none">ASIA</span>
+  <span class="text-[10px] opacity-80 leading-none">ASIA & OTHERS</span>
 </button>
               <button data-cat="oceania" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
   <div class="flex items-center gap-1">
@@ -286,20 +286,13 @@
                     <option value="Taiwan" class="bg-slate-800">台灣 (Taiwan)</option>
                     <option value="Japan" class="bg-slate-800">日本 (Japan)</option>
                     <option value="China" class="bg-slate-800">中國 (China)</option>
-                    <option value="Indonesien" class="bg-slate-800">印尼 (Indonesien)</option>
                     <option value="Australia" class="bg-slate-800">澳洲 (Australia)</option>
-                    <option value="Germany" class="bg-slate-800">德國 (Germany)</option>
-                    <option value="Switzerland" class="bg-slate-800">瑞士 (Switzerland)</option>
-                    <option value="Luxembourg" class="bg-slate-800">盧森堡 (Luxembourg)</option>
-                    <option value="Austria" class="bg-slate-800">奧地利 (Austria)</option>
-                    <option value="Slovenia" class="bg-slate-800">斯洛維尼亞 (Slovenia)</option>
-                    <option value="Scotland" class="bg-slate-800">蘇格蘭 (Scotland)</option>
+                    <option value="New Zealand" class="bg-slate-800">紐西蘭 (New Zealand)</option>
+                    <option value="Iceland" class="bg-slate-800">冰島 (Iceland)</option>
                     <option value="France" class="bg-slate-800">法國 (France)</option>
                     <option value="Denmark" class="bg-slate-800">丹麥 (Denmark)</option>
-                    <option value="Sweden" class="bg-slate-800">瑞典 (Sweden)</option>
-                    <option value="Finland" class="bg-slate-800">芬蘭 (Finland)</option>
+                    <option value="Maldives" class="bg-slate-800">馬爾地夫 (Maldives)</option>
                     <option value="Norway" class="bg-slate-800">挪威 (Norway)</option>
-                    <option value="Maldives" class="bg-slate-800">馬爾地夫 (Maldives)</option>  
                 </select>
             </div>
         </div>
@@ -406,143 +399,129 @@
         const initialSpots = [
             {
                 id: 'spot-1',
-                title: '丹麥.Denmark',
+                title: '童話之都 - 丹麥小美人魚',
                 country: 'Denmark',
                 category: 'europe',
                 lat: 55.6925,
                 lng: 12.5992,
-                photo: 'copenhagen.jpg',
-                locationName: '小美人魚.The Little Mermaid',
-                description: '來到丹麥哥本哈根，如果說有哪一個地標是所有旅人心中共同的朝聖地，那必定是座落在海岸岩石上的小美人魚銅像。僅約 1.25 公尺高的青銅雕像，靜靜地背對著長堤公園Langelinie的綠蔭，將視線望向浩瀚的波羅的海。她沒有宏偉的氣勢，也沒有金碧輝煌的裝飾，卻以一種最溫柔而孤單的姿態，承載了全世界無數人對童話的最初想像。',
+                photo: 'https://upload.wikimedia.org/wikipedia/zh/7/7a/Copenhagen_-_the_little_mermaid_statue_-_2013.jpg?utm_source=zh.wikipedia.org&utm_campaign=index&utm_content=original',
+                locationName: 'The Little Mermaid',
+                description: '位於丹麥哥本哈根長堤公園（Langelinie）的港口岩石上。',
                 likes: 390,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://yijhen7.gumroad.com/l/wmwrg' 
+                guideLink: 'https://yijhen7.gumroad.com/l/wmwrg' // 可在此自訂該景點專屬的攻略下載網址
             },
             {
                 id: 'spot-2',
-                title: '中國.China',
+                title: '北京一夜：老北京華市井探訪',
                 country: 'China',
                 category: 'asia-pacific',
                 lat: 39.900773,
                 lng: 116.404490,
-                photo: '627.jpg',
-                locationName: '北京.Beijing',
-                description: '當飛機緩緩降落，北京用它獨有的宏大與細膩迎接每一位到訪的旅人。這裡是一部攤開的中國歷史大戲，前一秒你還走在紫禁城的朱紅宮牆下，驚嘆於幾百年帝國的恢弘氣勢；後一秒轉進南鑼鼓巷的某條老胡同，耳邊就響起了老北京熱絡的叫賣聲與大白菜的市井煙火氣。從長城的壯闊蒼涼到現代藝術區的時尚前衛，北京最迷人的地方，在於它從不急著抹去過去，而是將千年的風霜與當代的脈動，揉進了一碗熱騰騰的北京烤鴨香與清茶裡。這是一場橫跨時空的對話，每一磚一瓦，都在訴說著屬於這座古都的無盡故事。',
+                photo: 'https://vacation.eztravel.com.tw/sight/plc0000074660/qianmen-street-%E5%89%8D%E9%96%80%E5%A4%A7%E8%A1%97',
+                locationName: '北京.中國 | Beijing, China',
+                description: '北京一夜：老北京華市井探訪',
                 likes: 215,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
                 guideLink: 'https://yijhen7.gumroad.com/l/wmwrg'
             },
             {
                 id: 'spot-3',
-                title: '挪威.Norway ',
+                title: '挪威 - 北極光 ',
                 country: 'Norway',
                 category: 'europe',
-                lat: 71.1725,
-                lng: 25.7844,
-                photo: 'norwaycape.jpg',
-                locationName: '北角.North Cape ',
-                description: '在歐洲盡頭的極光下：當綠色精靈點亮北冰洋的夜空。當車子頂著刺骨的寒風，終於抵達被譽為「歐洲盡頭」的北角（Nordkapp），四周除了翻滾的北冰洋浪濤，只剩下世界邊緣的寂靜。然而，就在抬頭望向那片無垠的極夜天幕時，奇蹟發生了。一抹微弱的螢綠色悄然在星空中甦醒，隨後如絲綢般優雅地扭動、擴散，最終化為鋪天蓋地的極光綠簾，那一刻，耳邊只有呼嘯的極地風聲與內心震撼的驚呼。站在大地的盡頭，被極光溫柔而神祕地包覆，所有的舟車勞頓與漫長等待，在這一瞬間都找到了最完美的答案。',
+                lat: 67.2399220,
+                lng: 14.7115030,
+                photo: 'https://drive.google.com/file/d/1fKSKf2IF8VF78lii0Mk2PHRL16_y_soi/view?usp=drivesdk',
+                locationName: '挪威 | Norway,Godøystraumen ',
+                description: '世界最大的珊瑚礁群，從空中俯瞰心型礁與漸層藍色海水，夢幻無比。',
                 likes: 450,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
                 guideLink: 'https://example.com/guides/great-barrier-reef.pdf'
             },
             {
                 id: 'spot-4',
-                title: '盧森堡|Luxembourg',
-                country: 'Luxembourg',
+                title: '冰島 - 瓦特納冰川',
+                country: 'Iceland',
                 category: 'europe',
-                lat: 49.6116,
-                lng: 6.1319,
-                photo: 'lux.jpg',
-                locationName: '盧森堡|Luxembourg',
-                description: '乍看不起眼、實際處處驚喜的懸崖奇景雅緻國度，尤其在地形與城市設計上，真的是把自然條件玩到極致！',
+                lat: 64.0484,
+                lng: -16.1794,
+                photo: 'https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&w=800&q=80',
+                locationName: '冰島瓦特納冰川國家公園',
+                description: '歐洲最大的冰川，夢幻的藍冰洞與壯麗的冰河湖是極光與冷調攝影的絕佳去處。',
                 likes: 512,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
                 guideLink: 'https://example.com/guides/iceland-glacier.pdf'
             },
             {
                 id: 'spot-5',
-                title: '德國|Germany',
-                country: 'Germany',
+                title: '巴黎鐵塔與塞納河',
+                country: 'France',
                 category: 'europe',
-                lat: 52.5243,
-                lng: 13.4105,
-                photo: 'berlin.jpg',
-                locationName: '柏林|Berlin',
-                description: '巧遇彩虹遊行,每個人都活成自己漂亮的樣子。如果說歐洲許多古都像是被時間封存的古典油畫，那麼柏林就是一幅不斷用塗鴉、混凝土與音樂重組的當代巨型拼貼。當腳步踏上這座城市，空氣裡彷彿還殘留著冷戰時期的歷史煙硝，卻同時被滿街的咖啡香、獨立書店的墨水味，以及隨處可見的街頭藝術。這是一座從不掩飾傷痕、卻把傷痕活成勳章的城市。',
+                lat: 48.8584,
+                lng: 2.2945,
+                photo: 'https://images.unsplash.com/photo-1502602898657-3e907624d12c?auto=format&fit=crop&w=800&q=80',
+                locationName: '法國巴黎戰神廣場',
+                description: '日落時分的塞納河畔搭配艾菲爾鐵塔點燈，經典浪漫的歐洲街景。',
                 likes: 620,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://yijhen7.gumroad.com/l/zgarij'
+                guideLink: 'https://example.com/guides/paris-guide.pdf'
             },
             {
                 id: 'spot-6',
-                title: '瑞典|Sweden',
-                country: 'Sweden',
+                title: 'Sweden hot tub',
+                country: 'France',
                 category: 'europe',
-                lat: 59.8588,
-                lng: 17.6389,
-                photo: 'uppsala.jpg',
-                locationName: '烏布撒拉|Uppsala',
-                description: '靜謐之北瑞典：漫遊烏布薩菈。位於瑞典首都斯德哥爾摩以北約70公里，瑞典第四大城市，保有北歐獨有的安靜與溫柔。',
+                lat: 59.33,
+                lng: 18.06,
+                photo: 'https://images.unsplash.com/photo-1502602898657-3e907624d12c?auto=format&fit=crop&w=800&q=80',
+                locationName: '法國巴黎戰神廣場',
+                description: '日落時分的塞納河畔搭配艾菲爾鐵塔點燈，經典浪漫的歐洲街景。',
                 likes: 620,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
                 guideLink: 'https://example.com/guides/paris-guide.pdf'
             },
             {
                 id: 'spot-7',
-                title: '蘇格蘭|Scotland',
-                country: 'Scotland',
-                category: 'europe',
-                lat: 58.6702,
-                lng: -3.3718,
-                photo: 'dunnet.jpg',
-                locationName: '丹內角|Dunnet',
-                description: '世界盡頭Dunnet Head,被譽為蘇格蘭高地世界的盡頭。蘇格蘭Caithness地區的一座壯麗岬角，也是整個大不列顛島的最北端。相較於常被觀光客擠滿的John o' Groats，這裡多了一份遺世獨立的荒涼美感與極地邊境的雄渾氣勢。',
+                title: '富士山 - 新倉山淺間公園',
+                country: 'Japan',
+                category: 'asia-pacific',
+                lat: 35.5014,
+                lng: 138.8016,
+                photo: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80',
+                locationName: '日本山梨縣富士吉田市',
+                description: '經典的富士山與五重塔同框畫面，春季櫻花盛開時更是絕景。',
                 likes: 856,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
                 guideLink: 'https://example.com/guides/fuji-guide.pdf'
             },
             {
                 id: 'spot-8',
-                title: '蘇格蘭|Scotland',
-                country: 'Scotland',
-                category: 'europe',
-                lat: 55.8960,
-                lng: -2.1311,
-                photo: 'stabbs.jpg',
-                locationName: '聖阿布斯|St Abbs',
-                description: '雷神索爾祕境St Abbs,新阿拉斯加祕境。座落於Berwickshire東南部海岸線上的極美小漁村，距離蘇格蘭與英格蘭邊境不遠。這裡三面環海，擁有壯麗的火山岩懸崖、清澈見底的海域，是蘇格蘭東海岸最受矚目的秘境漁村之一。',
+                title: '紐西蘭 - 庫克山國家公園',
+                country: 'New Zealand',
+                category: 'oceania',
+                lat: -43.7333,
+                lng: 170.0999,
+                photo: 'https://images.unsplash.com/photo-1507629221898-576a56b530bb?auto=format&fit=crop&w=800&q=80',
+                locationName: '紐西蘭南島',
+                description: '壯麗的高山與冰河景觀，夜間是絕佳的星空攝影聖地。',
                 likes: 720,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
+                guideLink: ''
             },
             {
                 id: 'spot-9',
-                title: '印尼|Indonesien',
-                country: 'Indonesien',
+                title: '馬爾地夫 - 水上屋',
+                country: 'Maldives',
                 category: 'asia-pacific',
-                lat: 8.3405,
-                lng: 115.0920,
-                photo: '635.jpg',
-                locationName: '峇里島|Bali',
-                description: '印尼最具盛名的度假勝地，素有「神仙島」、「千寺之島」與「最後的天堂」等美譽。這裡以其獨特的印度教文化、壯麗的火山地貌、稻田梯田、衝浪勝地以及頂級的度假村與奢華 SPA 聞名於世。',
+                lat: 4.1755,
+                lng: 73.5093,
+                photo: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80',
+                locationName: '馬爾地夫',
+                description: '湛藍的海水與純白沙灘，空拍與人像攝影的完美天堂。',
                 likes: 910,
                 fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-            {
-                id: 'spot-10',
-                title: '奧地利|Austria',
-                country: 'Austria',
-                category: 'europe',
-                lat: 48.2082,
-                lng: 16.3738,
-                photo: '637.jpg',
-                locationName: '維也納|Vienna',
-                description: '擁有「音樂之都」的美譽，歷史上曾是哈布斯堡王朝的首都，孕育了莫札特、貝多芬、舒伯特、小約翰·史特勞斯等無數傳奇音樂大師。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
+                guideLink: ''
             }
         ];
 
@@ -751,7 +730,7 @@
 
         function getCategoryLabel(cat) {
             const catMap = {
-                'asia-pacific': '亞洲',
+                'asia-pacific': '亞洲&其他',
                 'oceania': '大洋洲',
                 'europe': '歐洲'
             };
