@@ -318,7 +318,7 @@
                 </button>
             </div>
             <!-- Spots List Container -->
-            <div id="spotList" class="flex-1 overflow-y-auto overflow-x-hidden touch-scroll drawer-scrollbar p-3 flex flex-col gap-2 relative pb-20">
+            <div id="spotList" class="flex-1 overflow-y-auto overflow-x-hidden touch-scroll drawer-scrollbar p-3 flex flex-col gap-2.5 relative pb-20">
                 <!-- Dynamic Spot Cards generated here -->
             </div>
         </aside>
@@ -781,10 +781,10 @@
                 marker.bindPopup(popupContent);
                 markersGroup.addLayer(marker);
 
-                // 2. Render Card to Sidebar with updated horizontal list layout matching IMG_20261005_233318.jpg
+                // 2. Render Card to Sidebar with scrollable layout (no compression, fixed height, text truncation)
                 const isSaved = savedSpots.includes(spot.id);
                 const card = document.createElement('div');
-                card.className = 'bg-[#1e293b] hover:bg-slate-700/80 border border-slate-700/70 hover:border-sky-500/50 rounded-2xl overflow-hidden shadow-sm transition cursor-pointer flex items-center h-[72px] group relative p-1 pr-3';
+                card.className = 'bg-[#1e293b] hover:bg-slate-700/80 border border-slate-700/70 hover:border-sky-500/50 rounded-2xl overflow-hidden shadow-sm transition cursor-pointer flex items-center h-[72px] shrink-0 group relative p-1 pr-3';
                 
                 card.onclick = () => {
                     map.flyTo([spot.lat, spot.lng], 15, { duration: 1.2 });
