@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盧森堡一日漫遊：千堡之國深度歷史電子書報 | Luxembourg One-Day Historic E-Book</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #262624;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #1a1a1a;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf8f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d1c7;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#faf8f5] shadow-2xl rounded-xl overflow-hidden border border-[#d3d0c5] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#1a1a1a] text-[#f4f4f0] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 盧森堡歷史特刊" data-en="Gazette • Lux History Edition">Gazette • 盧森堡歷史特刊</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-stone-800 hover:bg-stone-700 text-amber-400 px-2 py-0.5 rounded text-[10px] font-mono border border-stone-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-stone-400 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (11 Pages with Rich History) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-stone-900 text-stone-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="歷史專刊 2026" data-en="Historical Monograph 2026">歷史專刊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="千堡之國" data-en="Grand Duchy">千堡之國</span><br>
+                        <span class="text-amber-700" data-zh="盧森堡歷史深度巡禮" data-en="Luxembourg Heritage">盧森堡歷史深度巡禮</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="The Grand Duchy of Luxembourg: Fortress & Royal Heritage" data-en="The Grand Duchy of Luxembourg: Fortress & Royal Heritage">The Grand Duchy of Luxembourg: Fortress & Royal Heritage</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Luxembourg_City_Night_Wikimedia_Commons.jpg?utm_source=zh.wikipedia.org&utm_campaign=index&utm_content=original" 
+                         onerror="this.src='https://placehold.co/600x400/2c2c2c/ffffff?text=Luxembourg+Fortress'" 
+                         alt="Luxembourg View" class="w-full h-44 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-amber-300 uppercase" data-zh="精選古蹟" data-en="Featured Monument">精選古蹟</p>
+                        <p class="text-xs font-serif font-medium" data-zh="貝特羅斯河谷與千年要塞遺址交織的壯麗景致" data-en="The magnificent Pétrusse valley and millennial fortress ruins">貝特羅斯河谷與千年要塞遺址交織的壯麗景致</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎翻閱本期歷史專刊。盧森堡（Luxembourg）曾被譽為「北方吉布陀」，其防禦工事與中世紀舊城在1994年被列入世界文化遺產。本刊帶您深度探訪每一處經典古蹟。" data-en="Welcome to this historical monograph. Luxembourg, once hailed as the 'Gibraltar of the North', features fortifications and an Old Town inscribed as a UNESCO World Heritage site in 1994. Let us explore every classic monument together.">
+                        歡迎翻閱本期歷史專刊。盧森堡（Luxembourg）曾被譽為「北方吉布陀」，其防禦工事與中世紀舊城在1994年被列入世界文化遺產。本刊帶您深度探訪每一處經典古蹟。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開歷史篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開歷史篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Overview & Itinerary Highlights -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 01 • 概覽與介紹" data-en="Chapter 01 • Overview & Introduction">Chapter 01 • 概覽與介紹</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="盧森堡一日遊精華漫遊" data-en="One-Day Highlights">盧森堡一日遊精華漫遊</h2>
+                </div>
+
+                <div class="bg-stone-100 p-4 rounded-lg border border-stone-300 shadow-sm space-y-3 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="✨ 千堡之國的千年歷史" data-en="✨ Millennial History of the Grand Duchy">✨ 千堡之國的千年歷史</h3>
+                    <p data-zh="盧森堡雖然國土面積精巧，卻是歐洲歷史上極具戰略價值的防禦重鎮。從963年齊格弗里德伯爵建立岩石城堡開始，這裡經歷了西班牙、奧地利、法國與普魯士等列強的統治與擴建，留下了世界頂級的軍事建築奇蹟。" data-en="Though compact in territory, Luxembourg is a fortress town of immense strategic value in European history. Beginning with Count Siegfried's rocky castle in 963, it underwent expansions under Spanish, Austrian, French, and Prussian rule, leaving world-class military architectural wonders.">
+                        盧森堡雖然國土面積精巧，卻是歐洲歷史上極具戰略價值的防禦重鎮。從963年齊格弗里德伯爵建立岩石城堡開始，這裡經歷了西班牙、奧地利、法國與普魯士等列強的統治與擴建，留下了世界頂級的軍事建築奇蹟。
+                    </p>
+                </div>
+
+                <div class="space-y-1.5 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🗺️ 核心漫遊路線導覽" data-en="🗺️ Core Itinerary Route">🗺️ 核心漫遊路線導覽</h3>
+                    <p data-zh="建議從起點：盧森堡中央車站出發，利用免費大眾運輸直奔市中心，沿著阿道夫橋、憲法廣場、聖母教堂、大公宮殿、佩特馬斯炮臺、博克炮臺與魯姆普區（Grund）展開環狀深度巡禮。" data-en="Start at Luxembourg Central Station, take free public transport directly to the city center, and embark on a circular historic tour covering Adolphe Bridge, Constitution Square, Notre-Dame Cathedral, Grand Ducal Palace, Bock Casemates, and the Grund district.">
+                        建議從<strong>起點：盧森堡中央車站</strong>出發，利用免費大眾運輸直奔市中心，沿著阿道夫橋、憲法廣場、聖母教堂、大公宮殿、佩特馬斯炮臺、博克炮臺與魯姆普區（Grund）展開環狀深度巡禮。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/TwYjAD77PSx3YfMJA" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-900 text-stone-100 text-[11px] py-2.5 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：核心景點路線導航" data-en="Open Google Maps: Core Route Navigation">開啟 Google Maps：核心景點路線導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Transportation - Free Transit & Arrival -->
+            <div class="page-slide flex-col space-y-4" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 02 • 交通與抵達" data-en="Chapter 02 • Mobility & Access">Chapter 02 • 交通與抵達</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="全境免費大眾運輸" data-en="Nationwide Free Public Transit">全境免費大眾運輸</h2>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-lg space-y-2 text-xs">
+                    <div class="flex items-center space-x-2 text-amber-900 font-bold font-serif text-sm">
+                        <span>🌟</span>
+                        <span data-zh="全球首創：大眾運輸完全免費！" data-en="Global First: Free Public Transport!">全球首創：大眾運輸完全免費！</span>
+                    </div>
+                    <p class="text-stone-700 leading-relaxed" data-zh="自2020年起，盧森堡實施全國大眾運輸免費。境內的火車（二等艙）、公車與現代有軌電車（Tram）全部免購票、免刷卡，方便您穿梭各大歷史古蹟。" data-en="Since 2020, Luxembourg has made all nationwide public transport free. Trains (2nd class), buses, and modern trams require no tickets or cards, making historic sightseeing effortless.">
+                        自2020年起，盧森堡實施全國大眾運輸免費。境內的<strong>火車（二等艙）、公車與現代有軌電車（Tram）</strong>全部免購票、免刷卡，方便您穿梭各大歷史古蹟。
+                    </p>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🚄 外部交通抵達方式" data-en="🚄 Arrival Options">🚄 外部交通抵達方式</h3>
+                    <ul class="space-y-1.5 list-disc pl-4 leading-relaxed">
+                        <li><strong data-zh="由巴黎出發：" data-en="From Paris:">由巴黎出發：</strong><span data-zh="搭乘 TGV 高速火車約 2 小時 15 分鐘直達盧森堡車站（Gare de Luxembourg）。" data-en="Take the TGV high-speed train for about 2h 15m directly to Luxembourg Station.">搭乘 TGV 高速火車約 2 小時 15 分鐘直達盧森堡車站（Gare de Luxembourg）。</span></li>
+                        <li><strong data-zh="由布魯塞爾出發：" data-en="From Brussels:">由布魯塞爾出發：</strong><span data-zh="搭乘國際列車約 3 小時。" data-en="Take an international train for about 3 hours.">搭乘國際列車約 3 小時。</span></li>
+                        <li><strong data-zh="抵達後：" data-en="Upon Arrival:">抵達後：</strong><span data-zh="直接於車站外轉乘 Tram 1 號線，數分鐘即可抵達舊城區。" data-en="Transfer to Tram Line 1 outside the station to reach the Old Town in minutes.">直接於車站外轉乘 <strong>Tram 1 號線</strong>，數分鐘即可抵達舊城區。</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PAGE 4: History & Foundations - Bock Promontory -->
+            <div class="page-slide flex-col space-y-4" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 03 • 國家起源與要塞" data-en="Chapter 03 • Foundation & Forts">Chapter 03 • 國家起源與要塞</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="博克岬角：國家誕生的搖籃" data-en="Bock Promontory: Birthplace">博克岬角：國家誕生的搖籃</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Luxembourg_City_Bock4_fromCorniche.jpg?utm_source=de.wikipedia.org&utm_campaign=parser&utm_content=thumbnail_unscaled" 
+                         onerror="this.src='https://placehold.co/600x300/444444/ffffff?text=Bock+Promontory'" 
+                         alt="Bock Casemates" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="963年：齊格弗里德伯爵的城堡" data-en="963: Count Siegfried's Castle">963年：齊格弗里德伯爵的城堡</h3>
+                    <p data-zh="西元963年，齊格弗里德伯爵（Count Siegfried）在此處的博克岬角（Bock Promontory）建造了名為「Lucilinburhuc」（小城堡）的要塞，這正是盧森堡國家與首都的起源。" data-en="In 963 AD, Count Siegfried built a fortress named 'Lucilinburhuc' (little castle) on the Bock Promontory, marking the origin of the Luxembourg nation and capital.">
+                        西元963年，齊格弗里德伯爵（Count Siegfried）在此處的博克岬角（Bock Promontory）建造了名為「Lucilinburhuc」（小城堡）的要塞，這正是盧森堡國家與首都的起源。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://www.google.com/maps/place/?q=place_id:ChIJNW7n4zJPlUcRc95AAJEMmcY" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：博克炮臺與要塞遺址" data-en="Open Google Maps: Bock Casemates">開啟 Google Maps：博克炮臺與要塞遺址</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Underground Defense - Casemates -->
+            <div class="page-slide flex-col space-y-4" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 04 • 軍事防禦工程" data-en="Chapter 04 • Military Engineering">Chapter 04 • 軍事防禦工程</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="博克炮臺與地下防禦長廊" data-en="Bock Casemates Tunnels">博克炮臺與地下防禦長廊</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqGO-pdy0fUBYTqioqllXvDPrnKsFqiTEBSwQdQ2ktMu4A4Tv2kXToISM&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/555555/ffffff?text=Casemates+Tunnels'" 
+                         alt="Casemates" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="地下迷宮與「北方吉布陀」" data-en="Underground Labyrinth & Gibraltar of the North">地下迷宮與「北方吉布陀」</h3>
+                    <p data-zh="在西班牙、奧地利與法國等列強統治期間，這座要塞不斷擴建，形成了長達數十公里的地下防禦隧道（Casemates）。可容納數千名士兵、馬厩、廚房及兵工廠，防禦堅不可摧。" data-en="During Spanish, Austrian, and French rule, the fortress expanded into tens of kilometers of underground tunnels (Casemates), accommodating thousands of troops, stables, kitchens, and armories.">
+                        在西班牙、奧地利與法國等列強統治期間，這座要塞不斷擴建，形成了長達數十公里的地下防禦隧道（Casemates）。可容納數千名士兵、馬厩、廚房及兵工廠，防禦堅不可摧。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://www.google.com/maps/place/?q=place_id:ChIJNW7n4zJPlUcRc95AAJEMmcY" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：博克炮臺地下入口" data-en="Open Google Maps: Casemates Entrance">開啟 Google Maps：博克炮臺地下入口</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Medieval Heart - Old Town & Corniche -->
+            <div class="page-slide flex-col space-y-4" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 05 • 風景遺產" data-en="Chapter 05 • Scenic Heritage">Chapter 05 • 風景遺產</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="歐洲最美的陽台：康恩奇防禦牆" data-en="The Most Beautiful Balcony in Europe">歐洲最美的陽台：康恩奇防禦牆</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfXqOLWknW0cNorG4uMLh-M-zfx-q7PN9ypJ5e55PUrsTrQRknq8lLRJN5&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/666666/ffffff?text=Chemin+de+la+Corniche'" 
+                         alt="Corniche" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="Chemin de la Corniche 漫步" data-en="Chemin de la Corniche Walk">Chemin de la Corniche 漫步</h3>
+                    <p data-zh="沿著舊城崖壁延伸的康恩奇防禦牆（Chemin de la Corniche）被作家寫意地稱為「歐洲最美的陽台」。自17世紀以來，這裡俯瞰著下城 Grund 區與古老修道院，歷史氛圍濃厚。" data-en="Stretching along the old cliffside, the Chemin de la Corniche is poetically dubbed 'Europe's most beautiful balcony'. Since the 17th century, it overlooks the lower Grund district and ancient abbeys.">
+                        沿著舊城崖壁延伸的<strong>康恩奇防禦牆（Chemin de la Corniche）</strong>被作家寫意地稱為「歐洲最美的陽台」。自17世紀以來，這裡俯瞰著下城 Grund 區與古老修道院，歷史氛圍濃厚。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/jL5J73XbVTACZZmt9" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：康恩奇防禦牆" data-en="Open Google Maps: Chemin de la Corniche">開啟 Google Maps：康恩奇防禦牆</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Royal & Religious History - Palace & Cathedral -->
+            <div class="page-slide flex-col space-y-4" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 06 • 皇室與宗教" data-en="Chapter 06 • Crown & Faith">Chapter 06 • 皇室與宗教</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="大公宮殿與聖母教堂" data-en="Grand-Ducal Palace & Cathedral">大公宮殿與聖母教堂</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgJMbhhR7nNe6gYlj1lF-9BgyLgJHHHT_p1MeJsc_F2A&s" 
+                         onerror="this.src='https://placehold.co/600x300/777777/ffffff?text=Grand+Ducal+Palace'" 
+                         alt="Palace" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="皇家建築群巡禮" data-en="Royal Architecture Tour">皇家建築群巡禮</h3>
+                    <p data-zh="大公宮殿（Palais Grand-Ducal）始建於16世紀，曾作為市政廳與西班牙總督府。不遠處的聖母教堂（Cathédrale Notre-Dame）則融合了晚期哥德式與文藝復興裝飾，是盧森堡大公家族的安葬之地。" data-en="The Palais Grand-Ducal, built in the 16th century, formerly served as city hall and governor's residence. Nearby, Notre-Dame Cathedral blends late Gothic and Renaissance decor as the burial place of the Grand Ducal family.">
+                        <strong>大公宮殿（Palais Grand-Ducal）</strong>始建於16世紀，曾作為市政廳與西班牙總督府。不遠處的<strong>聖母教堂（Cathédrale Notre-Dame）</strong>則融合了晚期哥德式與文藝復興裝飾，是盧森堡大公家族的安葬之地。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/CSw5aCknvztDMwQo9" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：大公宮殿" data-en="Open Google Maps: Grand-Ducal Palace">開啟 Google Maps：大公宮殿</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: City Elevators & Geography -->
+            <div class="page-slide flex-col space-y-4" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 07 • 現代工程" data-en="Chapter 07 • Modern Engineering">Chapter 07 • 現代工程</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="懸崖與河谷：法菲坦景觀電梯" data-en="Cliffs & Valleys: Pfaffenthal Lift">懸崖與河谷：法菲坦景觀電梯</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://ak-d.tripcdn.com/images/1mi30224x96mb7eyc1A8B.jpg?proc=source/trip" 
+                         onerror="this.src='https://placehold.co/600x300/888888/ffffff?text=Pfaffenthal+Lift'" 
+                         alt="Elevator" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🛗 懸崖高空景觀電梯 (Pfaffenthal Lift)" data-en="🛗 Pfaffenthal Panoramic Glass Elevator">🛗 懸崖高空景觀電梯 (Pfaffenthal Lift)</h3>
+                    <p data-zh="盧森堡市地形因佩特羅斯河與阿爾澤特河切割，高低落差高達60公尺。現代工程師建造了法菲坦全玻璃景觀電梯，免費將高地與古老的下城河谷完美連結，短短30秒即可穿梭於時空之間。" data-en="Luxembourg City features a 60-meter height drop carved by rivers. The Pfaffenthal panoramic glass elevator freely connects the high plateau to the ancient lower valley in just 30 seconds.">
+                        盧森堡市地形因佩特羅斯河與阿爾澤特河切割，高低落差高達60公尺。現代工程師建造了<strong>法菲坦全玻璃景觀電梯</strong>，免費將高地與古老的下城河谷完美連結，短短30秒即可穿梭於時空之間。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://www.google.com/maps/place/?q=place_id:ChIJrelcAyxPlUcRVPc_kw2gPGc" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：法菲坦景觀電梯" data-en="Open Google Maps: Pfaffenthal Lift">開啟 Google Maps：法菲坦景觀電梯</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Three Dining Options with Tabs & Maps -->
+            <div class="page-slide flex-col space-y-4" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 08 • 歷史美饌" data-en="Chapter 08 • Historic Gastronomy">Chapter 08 • 歷史美饌</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="歷史名城中的精選美饌" data-en="Curated Dining in the Historic City">歷史名城中的精選美饌</h2>
+                </div>
+
+                <!-- Interactive Tabs -->
+                <div class="flex space-x-1 bg-stone-200 p-1 rounded text-[11px] font-mono">
+                    <button onclick="switchTab('dine', 1)" id="dine-btn-1" class="flex-1 py-1.5 bg-stone-900 text-white rounded font-bold transition-all" data-zh="米其林法餐" data-en="Michelin French">米其林法餐</button>
+                    <button onclick="switchTab('dine', 2)" id="dine-btn-2" class="flex-1 py-1.5 text-stone-700 rounded transition-all" data-zh="傳奇巧克力屋" data-en="Chocolate House">傳奇巧克力屋</button>
+                    <button onclick="switchTab('dine', 3)" id="dine-btn-3" class="flex-1 py-1.5 text-stone-700 rounded transition-all" data-zh="地道小酒館" data-en="Cozy Bistro">地道小酒館</button>
+                </div>
+
+                <!-- Tab 1 -->
+                <div id="dine-tab-1" class="space-y-3 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-2">
+                        <div class="flex justify-between font-bold text-stone-900 text-sm font-serif">
+                            <span>🍽️ Restaurant Clairefontaine</span>
+                            <span class="text-amber-700 text-xs" data-zh="米其林推薦" data-en="Michelin Rec">米其林推薦</span>
+                        </div>
+                        <p data-zh="位於歷史廣場旁，結合法式烹調藝術與頂級食材，在古典負有盛名的環境中享受精緻佳餚。" data-en="Located by the historic square, combining French culinary arts with premium ingredients in a prestigious classic setting.">位於歷史廣場旁，結合法式烹調藝術與頂級食材，在古典負有盛名的環境中享受精緻佳餚。</p>
+                        <a href="https://www.google.com/maps/place/?q=place_id:ChIJa0pDwdJIlUcRnjU57_ecv7A" target="_blank" 
+                           class="block text-center bg-stone-900 text-stone-100 py-1.5 rounded font-mono text-[10px] tracking-wider">
+                            🗺️ <span data-zh="查看 Google 地圖導航" data-en="View Google Maps Navigation">查看 Google 地圖導航</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tab 2 -->
+                <div id="dine-tab-2" class="space-y-3 text-xs text-stone-700 hidden">
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-2">
+                        <div class="flex justify-between font-bold text-stone-900 text-sm font-serif">
+                            <span>☕ Chocolate House</span>
+                            <span class="text-amber-700 text-xs" data-zh="甜點下午茶" data-en="Dessert & Tea">甜點下午茶</span>
+                        </div>
+                        <p data-zh="位在大公宮殿正對面，提供數十種風味熱巧克力棒，感受百年皇室街區的溫馨甜美。" data-en="Situated right across the Grand-Ducal Palace, offering dozens of flavored hot chocolate spoons and sweets.">位在大公宮殿正對面，提供數十種風味熱巧克力棒，感受百年皇室街區的溫馨甜美。</p>
+                        <a href="https://www.google.com/maps/place/?q=place_id:ChIJIT9809JIlUcR1oX8X9uYw-U" target="_blank" 
+                           class="block text-center bg-stone-900 text-stone-100 py-1.5 rounded font-mono text-[10px] tracking-wider">
+                            🗺️ <span data-zh="查看 Google 地圖導航" data-en="View Google Maps Navigation">查看 Google 地圖導航</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tab 3 -->
+                <div id="dine-tab-3" class="space-y-3 text-xs text-stone-700 hidden">
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-2">
+                        <div class="flex justify-between font-bold text-stone-900 text-sm font-serif">
+                            <span>🍺 Um Plateau</span>
+                            <span class="text-amber-700 text-xs" data-zh="傳統在地餐酒館" data-en="Traditional Bistro">傳統在地餐酒館</span>
+                        </div>
+                        <p data-zh="座落於古老的 Clausen 區，供應傳統盧森堡特色料理與精釀啤酒，歷史韻味十足。" data-en="Nestled in the historic Clausen district, serving traditional Luxembourg specialties and craft beers.">座落於古老的 Clausen 區，供應傳統盧森堡特色料理與精釀啤酒，歷史韻味十足。</p>
+                        <a href="https://www.google.com/maps/place/?q=place_id:ChIJKbRZCTNPlUcRQHZgl-DDzJQ" target="_blank" 
+                           class="block text-center bg-stone-900 text-stone-100 py-1.5 rounded font-mono text-[10px] tracking-wider">
+                            🗺️ <span data-zh="查看 Google 地圖導航" data-en="View Google Maps Navigation">查看 Google 地圖導航</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Complete Historical Itinerary Schedule -->
+            <div class="page-slide flex-col space-y-4" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 09 • 時間軸總結" data-en="Chapter 09 • Schedule Summary">Chapter 09 • 時間軸總結</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="歷史一日遊精華時間軸" data-en="One-Day Historical Itinerary Flow">歷史一日遊精華時間軸</h2>
+                </div>
+
+                <div class="bg-[#1a1a1a] text-[#f4f4f0] p-4 rounded-lg space-y-2 text-xs font-serif shadow-inner">
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">09:30</span>
+                        <span data-zh="中央車站 ➔ 搭乘 Tram 至市中心" data-en="Central Station ➔ Tram to City Center">中央車站 ➔ 搭乘 Tram 至市中心</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">10:00</span>
+                        <span data-zh="博克岬角與國家起源要塞巡禮" data-en="Bock Promontory & Fortress Tour">博克岬角與國家起源要塞巡禮</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">11:15</span>
+                        <span data-zh="漫步康恩奇防禦牆（歐洲最美陽台）" data-en="Chemin de la Corniche Walk">漫步康恩奇防禦牆（歐洲最美陽台）</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">12:30</span>
+                        <span data-zh="米其林餐館 / 巧克力屋 / 地道小酒館午餐" data-en="Lunch at Michelin / Chocolate House / Bistro">米其林餐館 / 巧克力屋 / 地道小酒館午餐</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">14:15</span>
+                        <span data-zh="大公宮殿與聖母教堂歷史巡禮" data-en="Grand-Ducal Palace & Cathedral Tour">大公宮殿與聖母教堂歷史巡禮</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">16:00</span>
+                        <span data-zh="搭乘法菲坦景觀電梯直降河谷" data-en="Pfaffenthal Lift down to the valley">搭乘法菲坦景觀電梯直降河谷</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-amber-400">18:00</span>
+                        <span data-zh="賦歸或晚間古堡散步" data-en="Departure or evening castle stroll">賦歸或晚間古堡散步</span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-[11px] text-stone-500" data-zh="所有歷史景點與導航連結已全部解鎖！" data-en="All historic spots & navigation links unlocked!">所有歷史景點與導航連結已全部解鎖！</p>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Traveler Notes & Conclusion -->
+            <div class="page-slide flex-col space-y-4" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 10 • 旅客備忘錄" data-en="Chapter 10 • Traveler Notes">Chapter 10 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的歷史之旅備忘錄" data-en="Your Personal Travel Notes">您的歷史之旅備忘錄</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人歷史筆記：" data-en="📝 Enter your personal notes here:">📝 在此輸入您的私人歷史筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-3 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-600 focus:outline-none resize-none"
+                        placeholder="例如：走訪博克炮臺與康恩奇防禦牆非常順暢..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-amber-700 hover:bg-amber-800 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">10</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-stone-900 hover:bg-stone-800 text-stone-100 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & History Tabs -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 11;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            document.getElementById('progress-text').textContent = progress;
+
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentPage === totalPages) {
+                nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+            } else {
+                nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+
+            document.getElementById('book-content-area').scrollTop = 0;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            // Toggle all text elements with data-zh and data-en
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            // Update button texts
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function switchTab(type, tabIndex) {
+            if (type === 'dine') {
+                const btn1 = document.getElementById('dine-btn-1');
+                const btn2 = document.getElementById('dine-btn-2');
+                const btn3 = document.getElementById('dine-btn-3');
+                const tab1 = document.getElementById('dine-tab-1');
+                const tab2 = document.getElementById('dine-tab-2');
+                const tab3 = document.getElementById('dine-tab-3');
+
+                if (tabIndex === 1) {
+                    btn1.className = "flex-1 py-1.5 bg-stone-900 text-white rounded font-bold transition-all";
+                    btn2.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn3.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab1.classList.remove('hidden');
+                    tab2.classList.add('hidden');
+                    tab3.classList.add('hidden');
+                } else if (tabIndex === 2) {
+                    btn2.className = "flex-1 py-1.5 bg-stone-900 text-white rounded font-bold transition-all";
+                    btn1.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn3.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab2.classList.remove('hidden');
+                    tab1.classList.add('hidden');
+                    tab3.classList.add('hidden');
+                } else {
+                    btn3.className = "flex-1 py-1.5 bg-stone-900 text-white rounded font-bold transition-all";
+                    btn1.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn2.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab3.classList.remove('hidden');
+                    tab1.classList.add('hidden');
+                    tab2.classList.add('hidden');
+                }
+            }
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前歷史頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('lux_history_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '歷史筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('lux_history_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
