@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哥本哈根一日漫遊：童話之都深度歷史電子書報 | Copenhagen One-Day Historic E-Book</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #262624;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #1a1a1a;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf8f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d1c7;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#faf8f5] shadow-2xl rounded-xl overflow-hidden border border-[#d3d0c5] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#1a1a1a] text-[#f4f4f0] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 哥本哈根歷史特刊" data-en="Gazette • Copenhagen History Edition">Gazette • 哥本哈根歷史特刊</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-stone-800 hover:bg-stone-700 text-amber-400 px-2 py-0.5 rounded text-[10px] font-mono border border-stone-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-stone-400 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (11 Pages with Rich History) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-stone-900 text-stone-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="北歐歷史專刊 2026" data-en="Nordic History Monograph 2026">北歐歷史專刊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="童話之都" data-en="Fairytale Capital">童話之都</span><br>
+                        <span class="text-amber-700" data-zh="哥本哈根歷史深度巡禮" data-en="Copenhagen Royal Heritage">哥本哈根歷史深度巡禮</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Copenhagen: Royal Palaces & Maritime Heritage" data-en="Copenhagen: Royal Palaces & Maritime Heritage">Copenhagen: Royal Palaces & Maritime Heritage</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=800&q=80" 
+                         onerror="this.src='https://placehold.co/600x400/2c2c2c/ffffff?text=Copenhagen+Nyhavn'" 
+                         alt="Copenhagen View" class="w-full h-44 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-amber-300 uppercase" data-zh="精選地標" data-en="Featured Landmark">精選地標</p>
+                        <p class="text-xs font-serif font-medium" data-zh="新港（Nyhavn）色彩繽紛的17世紀歷史運河風情" data-en="The colorful 17th-century canal scenery of Nyhavn">新港（Nyhavn）色彩繽紛的17世紀歷史運河風情</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎翻閱本期哥本哈根歷史專刊。這座由維京漁村蛻變而成的丹麥王國首都，擁有雄偉的文藝復興宮殿、古老運河與深厚的航海底蘊。本刊將帶您深度探訪每一處經典古蹟。" data-en="Welcome to this Copenhagen historical monograph. Evolving from a Viking fishing village into the capital of Denmark, Copenhagen boasts magnificent Renaissance palaces, ancient canals, and deep maritime heritage.">
+                        歡迎翻閱本期哥本哈根歷史專刊。這座由維京漁村蛻變而成的丹麥王國首都，擁有雄偉的文藝復興宮殿、古老運河與深厚的航海底蘊。本刊將帶您深度探訪每一處經典古蹟。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開歷史篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開歷史篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Overview & Itinerary Highlights -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 01 • 概覽與介紹" data-en="Chapter 01 • Overview & Introduction">Chapter 01 • 概覽與介紹</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="哥本哈根一日遊精華漫遊" data-en="One-Day Highlights">哥本哈根一日遊精華漫遊</h2>
+                </div>
+
+                <div class="bg-stone-100 p-4 rounded-lg border border-stone-300 shadow-sm space-y-3 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="✨ 從維京港口到王國之心" data-en="✨ From Viking Port to Royal Heart">✨ 從維京港口到王國之心</h3>
+                    <p data-zh="哥本哈根（Copenhagen）建城於12世紀，最初名為「商人港口」。經歷了中世紀的漢薩同盟貿易、文藝復興時期的克里斯蒂安四世國王大規模擴建，成為北歐最具歷史魅力的文化明珠。" data-en="Founded in the 12th century as 'Merchants' Harbor', Copenhagen grew through Hanseatic trade and King Christian IV's Renaissance expansions into a cultural jewel of Northern Europe.">
+                        哥本哈根（Copenhagen）建城於12世紀，最初名為「商人港口」。經歷了中世紀的漢薩同盟貿易、文藝復興時期的克里斯蒂安四世國王大規模擴建，成為北歐最具歷史魅力的文化明珠。
+                    </p>
+                </div>
+
+                <div class="space-y-1.5 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🗺️ 核心漫遊路線導覽" data-en="🗺️ Core Itinerary Route">🗺️ 核心漫遊路線導覽</h3>
+                    <p data-zh="建議從起點：哥本哈根中央車站出發，漫步或利用地鐵與單車穿梭於新港、阿馬林堡宮、腓特烈教堂、圓塔與羅森堡城堡之間，展開一場北歐王室與童話的文藝巡禮。" data-en="Start at Copenhagen Central Station, and explore Nyhavn, Amalienborg Palace, Frederik's Church, the Round Tower, and Rosenborg Castle via metro or bicycle.">
+                        建議從<strong>起點：哥本哈根中央車站</strong>出發，漫步或利用地鐵與單車穿梭於新港、阿馬林堡宮、腓特烈教堂、圓塔與羅森堡城堡之間，展開一場北歐王室與童話的文藝巡禮。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/g4TnUSA5Lx9ApsFJA" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-900 text-stone-100 text-[11px] py-2.5 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：核心景點路線導航" data-en="Open Google Maps: Core Route Navigation">開啟 Google Maps：核心景點路線導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Transportation & Mobility -->
+            <div class="page-slide flex-col space-y-4" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 02 • 交通與抵達" data-en="Chapter 02 • Mobility & Access">Chapter 02 • 交通與抵達</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="單車之都與高效交通" data-en="Cycling Capital & Efficient Transit">單車之都與高效交通</h2>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-lg space-y-2 text-xs">
+                    <div class="flex items-center space-x-2 text-amber-900 font-bold font-serif text-sm">
+                        <span>🚲</span>
+                        <span data-zh="全球知名單車王國" data-en="World Renowned Cycling Kingdom">全球知名單車王國</span>
+                    </div>
+                    <p class="text-stone-700 leading-relaxed" data-zh="哥本哈根擁有完善的單車道網絡。旅客可租借 Donkey Republic 等共享單車，或購買 City Pass 搭乘全天候營運的自動化地鐵與水上巴士。" data-en="Copenhagen features an extensive bike lane network. Rent a shared bike or use a City Pass for automated metro and water buses.">
+                        哥本哈根擁有完善的單車道網絡。旅客可租借共享單車，或購買 City Pass 搭乘全天候營運的自動化地鐵與水上巴士。
+                    </p>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🚄 外部交通抵達方式" data-en="🚄 Arrival Options">🚄 外部交通抵達方式</h3>
+                    <ul class="space-y-1.5 list-disc pl-4 leading-relaxed">
+                        <li><strong data-zh="由機場出發：" data-en="From Airport:">由機場出發：</strong><span data-zh="哥本哈根凱 Kastrup 機場搭乘地鐵 M2 線僅需 15 分鐘即可直達市中心中央車站（København H）。" data-en="Take Metro M2 from Copenhagen Kastrup Airport straight to Central Station in 15 mins.">哥本哈根凱斯特魯普機場搭乘地鐵 M2 線僅需 15 分鐘即可直達市中心中央車站。</span></li>
+                        <li><strong data-zh="由瑞典馬爾默出發：" data-en="From Malmö, Sweden:">由瑞典馬爾默出發：</strong><span data-zh="搭乘跨海大橋火車僅需 35 分鐘即可抵達。" data-en="Take the Oresund train across the bridge in just 35 minutes.">搭乘厄勒海峽跨海列車僅需 35 分鐘即可抵達。</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Nyhavn - Historical Canal -->
+            <div class="page-slide flex-col space-y-4" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 03 • 歷史運河風情" data-en="Chapter 03 • Historic Canal Scenery">Chapter 03 • 歷史運河風情</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="新港：17世紀的航海樞紐" data-en="Nyhavn: 17th Century Maritime Hub">新港：17世紀的航海樞紐</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?auto=format&fit=crop&w=600&q=80" 
+                         onerror="this.src='https://placehold.co/600x300/444444/ffffff?text=Nyhavn'" 
+                         alt="Nyhavn" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="1673年：克里斯蒂安五世開鑿" data-en="1673: Excavation by King Christian V">1673年：克里斯蒂安五世開鑿</h3>
+                    <p data-zh="新港（Nyhavn）由國王克里斯蒂安五世下令開鑿，旨在連接海港與舊城核心。兩側色彩繽紛的17、18世紀連棟房屋曾吸引文學巨擘安徒生在此居住並寫下多部童話。" data-en="Excavated under King Christian V, Nyhavn connected the sea to the inner city. Its colorful 17th/18th-century townhouses once housed Hans Christian Andersen.">
+                        <strong>新港（Nyhavn）</strong>由國王克里斯蒂安五世下令開鑿，旨在連接海港與舊城核心。兩側色彩繽紛的17、18世紀連棟房屋曾吸引文學巨擘安徒生在此居住並寫下多部童話。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/LjRo8HmetX5VJQ3w6" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：新港運河" data-en="Open Google Maps: Nyhavn">開啟 Google Maps：新港運河</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Amalienborg Palace - Royal Residence -->
+            <div class="page-slide flex-col space-y-4" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 04 • 王室建築巡禮" data-en="Chapter 04 • Royal Palaces">Chapter 04 • 王室建築巡禮</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="阿馬林堡宮：丹麥王室冬宮" data-en="Amalienborg Palace: Royal Residence">阿馬林堡宮：丹麥王室冬宮</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_4csPge_hgK_sYPkokrlVx0NYbE9MjIG7XImqYJt2bg&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/555555/ffffff?text=Amalienborg+Palace'" 
+                         alt="Amalienborg" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="洛可哥式八角廣場與皇家衛兵" data-en="Rococo Octagon Square & Royal Guard">洛可哥式八角廣場與皇家衛兵</h3>
+                    <p data-zh="阿馬林堡宮（Amalienborg）由四座相同的洛可哥式宮殿圍繞而成。中央豎立著腓特烈五世騎馬雕像。每天中午12點可觀賞皇家衛兵交接儀式，見證北歐最古老王室的莊嚴傳統。" data-en="Amalienborg consists of four identical Rococo palaces surrounding an octagonal square with King Frederick V's equestrian statue. Watch the changing of the guard at noon.">
+                        <strong>阿馬林堡宮（Amalienborg）</strong>由四座相同的洛可哥式宮殿圍繞而成。中央豎立著腓特烈五世騎馬雕像。每天中午12點可觀賞皇家衛兵交接儀式，見證北歐最古老王室的莊嚴傳統。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/oZodzR2ZkQpSRUfD6" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：阿馬林堡宮" data-en="Open Google Maps: Amalienborg Palace">開啟 Google Maps：阿馬林堡宮</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Frederik's Church (Marble Church) -->
+            <div class="page-slide flex-col space-y-4" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 05 • 宗教與建築" data-en="Chapter 05 • Architecture & Faith">Chapter 05 • 宗教與建築</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="腓特烈教堂：北歐最大圓頂" data-en="Frederik's Church: Largest Dome">腓特烈教堂：北歐最大圓頂</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFlpQhLVh8PaOnJZT95XkRP07R8WXA2DCisrkQf6HESLQVzbDyIH2ss5iu&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/666666/ffffff?text=Marble+Church'" 
+                         alt="Marble Church" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="氣勢磅礡的大理石圓頂教堂" data-en="The Magnificent Marble Dome">氣勢磅礡的大理石圓頂教堂</h3>
+                    <p data-zh="俗稱「大理石教堂」（Marmorkirken），其宏偉的青銅圓頂是斯堪地那維亞半島最大的教堂圓頂，與阿馬林堡宮軸線遙相呼應，建築美學令人驚嘆。" data-en="Popularly known as the Marble Church, its majestic copper dome is the largest in Scandinavia, aligning perfectly with Amalienborg Palace.">
+                        俗稱<strong>「大理石教堂」（Marmorkirken）</strong>，其宏偉的青銅圓頂是斯堪地那維亞半島最大的教堂圓頂，與阿馬林堡宮軸線遙相呼應，建築美學令人驚嘆。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/PokmrYnuHE9zbb3T6" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：腓特烈教堂" data-en="Open Google Maps: Frederik's Church">開啟 Google Maps：腓特烈教堂</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: The Round Tower (Rundetårn) -->
+            <div class="page-slide flex-col space-y-4" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 06 • 文藝復興天文地標" data-en="Chapter 06 • Renaissance Observatory">Chapter 06 • 文藝復興天文地標</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="圓塔：17世紀的空中螺旋" data-en="The Round Tower: Spiral Ascent">圓塔：17世紀的空中螺旋</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://dreamcatcafe.com/wp-content/uploads/2020/04/%E7%AD%96%E9%A6%AC%E5%A1%949.jpg" 
+                         onerror="this.src='https://placehold.co/600x300/777777/ffffff?text=Round+Tower'" 
+                         alt="Round Tower" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="無階梯的螺旋斜坡天文台" data-en="Step-Free Spiral Observatory Ramp">無階梯的螺旋斜坡天文台</h3>
+                    <p data-zh="建於1642年的圓塔（Rundetårn）是歐洲現存最古老的運作中天文台。其獨特之處在於內部沒有階梯，而是長達209公尺的螺旋斜坡，沙皇彼得大帝曾騎馬登頂。" data-en="Built in 1642, the Round Tower is Europe's oldest functioning observatory, featuring a 209-meter spiral ramp instead of stairs.">
+                        建於1642年的<strong>圓塔（Rundetårn）</strong>是歐洲現存最古老的運作中天文台。其獨特之處在於內部沒有階梯，而是長達209公尺的螺旋斜坡，歷史傳奇色彩濃厚。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/5gfC2HgXYZn7aYCx6" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：圓塔" data-en="Open Google Maps: The Round Tower">開啟 Google Maps：圓塔</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Rosenborg Castle & King's Garden -->
+            <div class="page-slide flex-col space-y-4" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 07 • 城堡與皇家花園" data-en="Chapter 07 • Castle & Royal Gardens">Chapter 07 • 城堡與皇家花園</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="羅森堡城堡與國王花園" data-en="Rosenborg Castle & King's Garden">羅森堡城堡與國王花園</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhdx_tFycaSC_g8T7fqdWUm9C2VU9rWG20OxVKuy5VGoKPk-J9EJVWZ8t3&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/888888/ffffff?text=Rosenborg+Castle'" 
+                         alt="Rosenborg" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="荷蘭文藝復興瑰寶與丹麥王冠" data-en="Dutch Renaissance Gem & Danish Crown Jewels">荷蘭文藝復興瑰寶與丹麥王冠</h3>
+                    <p data-zh="羅森堡城堡（Rosenborg Slot）由克里斯蒂安四世興建於1706年，收藏了璀璨耀眼的丹麥王室珠寶與王冠。周邊的國王花園（Kongens Have）是市民散步的綠洲。" data-en="Rosenborg Castle, built by King Christian IV in 1606, houses the dazzling Danish crown jewels. The surrounding King's Garden is a beloved oasis.">
+                        <strong>羅森堡城堡（Rosenborg Slot）</strong>由克里斯蒂安四世興建於1606年，收藏了璀璨耀眼的丹麥王室珠寶與王冠。周邊的國王花園是市民喜愛的歷史綠洲。
+                    </p>
+                </div>
+
+                <!-- Google Map Link -->
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/8Xf9fP5a331FLgzFA" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：羅森堡城堡" data-en="Open Google Maps: Rosenborg Castle">開啟 Google Maps：羅森堡城堡</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Three Dining Options with Tabs & Maps -->
+            <div class="page-slide flex-col space-y-4" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 08 • 北歐美食美饌" data-en="Chapter 08 • Nordic Gastronomy">Chapter 08 • 北歐美食美饌</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="哥本哈根精選美饌" data-en="Curated Dining in Copenhagen">哥本哈根精選美饌</h2>
+                </div>
+
+                <!-- Interactive Tabs -->
+                <div class="flex space-x-1 bg-stone-200 p-1 rounded text-[11px] font-mono">
+                    <button onclick="switchTab('dine', 1)" id="dine-btn-1" class="flex-1 py-1.5 bg-stone-900 text-white rounded font-bold transition-all" data-zh="米其林新北歐" data-en="Nordic Fine Dining">米其林新北歐</button>
+                    <button onclick="switchTab('dine', 2)" id="dine-btn-2" class="flex-1 py-1.5 text-stone-700 rounded transition-all" data-zh="傳統開放三明治" data-en="Smørrebrød">傳統三明治</button>
+                    <button onclick="switchTab('dine', 3)" id="dine-btn-3" class="flex-1 py-1.5 text-stone-700 rounded transition-all" data-zh="托夫勒市場美食" data-en="Torvehallerne">托夫勒市場</button>
+                </div>
+
+                <!-- Tab 1 -->
+                <div id="dine-tab-1" class="space-y-3 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-2">
+                        <div class="flex justify-between font-bold text-stone-900 text-sm font-serif">
+                            <span>🍽️ Høst Restaurant</span>
+                            <span class="text-amber-700 text-xs" data-zh="米其林推薦" data-en="Michelin Rec">米其林推薦</span>
+                        </div>
+                        <p data-zh="結合北歐極簡與溫馨鄉村風格，提供精緻創新且充滿在地食材風味的新北歐料理體驗。" data-en="Combining Nordic minimalism with cozy rustic charm, offering innovative local cuisine.">結合北歐極簡與溫馨鄉村風格，提供精緻創新且充滿在地食材風味的新北歐料理體驗。</p>
+                        <a href="https://maps.app.goo.gl/pSm2DZDS6JwPA8Ep7" target="_blank" 
+                           class="block text-center bg-stone-900 text-stone-100 py-1.5 rounded font-mono text-[10px] tracking-wider">
+                            🗺️ <span data-zh="查看 Google 地圖導航" data-en="View Google Maps Navigation">查看 Google 地圖導航</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tab 2 -->
+                <div id="dine-tab-2" class="space-y-3 text-xs text-stone-700 hidden">
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-2">
+                        <div class="flex justify-between font-bold text-stone-900 text-sm font-serif">
+                            <span>🥪 Schønnemann</span>
+                            <span class="text-amber-700 text-xs" data-zh="百年傳統名店" data-en="Century Tradition">百年傳統名店</span>
+                        </div>
+                        <p data-zh="自1877年開業至今，專注於丹麥國寶級傳統開放式三明治（Smørrebrød），搭配特色鯡魚與頂級佐料。" data-en="Open since 1877, specializing in traditional Danish open-faced sandwiches (Smørrebrød).">自1877年開業至今，專注於丹麥國寶級傳統開放式三明治（Smørrebrød），搭配特色鯡魚與頂級佐料。</p>
+                        <a href="https://maps.app.goo.gl/YHSWnS5Fm7GRbHtD9" target="_blank" 
+                           class="block text-center bg-stone-900 text-stone-100 py-1.5 rounded font-mono text-[10px] tracking-wider">
+                            🗺️ <span data-zh="查看 Google 地圖導航" data-en="View Google Maps Navigation">查看 Google 地圖導航</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tab 3 -->
+                <div id="dine-tab-3" class="space-y-3 text-xs text-stone-700 hidden">
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-2">
+                        <div class="flex justify-between font-bold text-stone-900 text-sm font-serif">
+                            <span>☕ Torvehallerne Market</span>
+                            <span class="text-amber-700 text-xs" data-zh="人氣玻璃市場" data-en="Glass Market">人氣玻璃市場</span>
+                        </div>
+                        <p data-zh="哥本哈根最具代表性的室內玻璃市場，匯集上百家在地手工起司、咖啡、糕點與丹麥肉桂捲。" data-en="Copenhagen's iconic glass market featuring over 100 stalls of local cheeses, coffee, and pastries.">哥本哈根最具代表性的室內玻璃市場，匯集上百家在地手工起司、咖啡、糕點與丹麥肉桂捲。</p>
+                        <a href="https://maps.app.goo.gl/BFtwTuy5FF3beNT48" target="_blank" 
+                           class="block text-center bg-stone-900 text-stone-100 py-1.5 rounded font-mono text-[10px] tracking-wider">
+                            🗺️ <span data-zh="查看 Google 地圖導航" data-en="View Google Maps Navigation">查看 Google 地圖導航</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Complete Historical Itinerary Schedule -->
+            <div class="page-slide flex-col space-y-4" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 09 • 時間軸總結" data-en="Chapter 09 • Schedule Summary">Chapter 09 • 時間軸總結</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="歷史一日遊精華時間軸" data-en="One-Day Historical Itinerary Flow">歷史一日遊精華時間軸</h2>
+                </div>
+
+                <div class="bg-[#1a1a1a] text-[#f4f4f0] p-4 rounded-lg space-y-2 text-xs font-serif shadow-inner">
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">09:30</span>
+                        <span data-zh="中央車站出發 ➔ 漫步新港運河" data-en="Central Station ➔ Nyhavn Canal Stroll">中央車站出發 ➔ 漫步新港運河</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">11:00</span>
+                        <span data-zh="阿馬林堡宮與衛兵交接儀式" data-en="Amalienborg Palace & Changing of Guards">阿馬林堡宮與衛兵交接儀式</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">12:00</span>
+                        <span data-zh="腓特烈大理石教堂巡禮" data-en="Frederik's Marble Church Tour">腓特烈大理石教堂巡禮</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">13:00</span>
+                        <span data-zh="品嚐傳統開放三明治 / 市場午餐" data-en="Traditional Smørrebrød / Market Lunch">品嚐傳統開放三明治 / 市場午餐</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">14:30</span>
+                        <span data-zh="登上圓塔俯瞰舊城美景" data-en="Climb the Round Tower for Old Town views">登上圓塔俯瞰舊城美景</span>
+                    </div>
+                    <div class="flex justify-between border-b border-stone-800 pb-1.5">
+                        <span class="font-mono text-amber-400">16:00</span>
+                        <span data-zh="羅森堡城堡與國王花園漫步" data-en="Rosenborg Castle & King's Garden Stroll">羅森堡城堡與國王花園漫步</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-amber-400">18:00</span>
+                        <span data-zh="新港晚餐或賦歸" data-en="Dinner at Nyhavn or Departure">新港晚餐或賦歸</span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-[11px] text-stone-500" data-zh="所有哥本哈根歷史景點與導航連結已全部解鎖！" data-en="All Copenhagen historic spots & navigation links unlocked!">所有哥本哈根歷史景點與導航連結已全部解鎖！</p>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Traveler Notes & Conclusion -->
+            <div class="page-slide flex-col space-y-4" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-stone-500" data-zh="Chapter 10 • 旅客備忘錄" data-en="Chapter 10 • Traveler Notes">Chapter 10 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的歷史之旅備忘錄" data-en="Your Personal Travel Notes">您的歷史之旅備忘錄</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人歷史筆記：" data-en="📝 Enter your personal notes here:">📝 在此輸入您的私人歷史筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-3 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-amber-600 focus:outline-none resize-none"
+                        placeholder="例如：造訪新港與圓塔的螺旋斜坡非常令人難忘..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-amber-700 hover:bg-amber-800 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">10</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-stone-900 hover:bg-stone-800 text-stone-100 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & History Tabs -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 11;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            document.getElementById('progress-text').textContent = progress;
+
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentPage === totalPages) {
+                nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+            } else {
+                nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+
+            document.getElementById('book-content-area').scrollTop = 0;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            // Toggle all text elements with data-zh and data-en
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            // Update button texts
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function switchTab(type, tabIndex) {
+            if (type === 'dine') {
+                const btn1 = document.getElementById('dine-btn-1');
+                const btn2 = document.getElementById('dine-btn-2');
+                const btn3 = document.getElementById('dine-btn-3');
+                const tab1 = document.getElementById('dine-tab-1');
+                const tab2 = document.getElementById('dine-tab-2');
+                const tab3 = document.getElementById('dine-tab-3');
+
+                if (tabIndex === 1) {
+                    btn1.className = "flex-1 py-1.5 bg-stone-900 text-white rounded font-bold transition-all";
+                    btn2.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn3.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab1.classList.remove('hidden');
+                    tab2.classList.add('hidden');
+                    tab3.classList.add('hidden');
+                } else if (tabIndex === 2) {
+                    btn2.className = "flex-1 py-1.5 bg-stone-900 text-white rounded font-bold transition-all";
+                    btn1.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn3.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab2.classList.remove('hidden');
+                    tab1.classList.add('hidden');
+                    tab3.classList.add('hidden');
+                } else {
+                    btn3.className = "flex-1 py-1.5 bg-stone-900 text-white rounded font-bold transition-all";
+                    btn1.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn2.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab3.classList.remove('hidden');
+                    tab1.classList.add('hidden');
+                    tab2.classList.add('hidden');
+                }
+            }
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前歷史頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('cph_history_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '歷史筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('cph_history_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
