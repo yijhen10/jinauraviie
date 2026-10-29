@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>泰國象島全方位旅遊指南：雨林、海灘與休閒度假電子書報 | Koh Chang Comprehensive Travel Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #1e293b;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #0f766e;
+            border-top: 1px solid #0f766e;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #0f766e;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdfbf7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#fdfbf7] shadow-2xl rounded-xl overflow-hidden border border-[#e2d9ce] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#0f766e] text-[#f8fafc] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 象島全方位旅遊指南" data-en="Gazette • Koh Chang Travel Guide">Gazette • 象島全方位旅遊指南</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-teal-900 hover:bg-teal-800 text-teal-200 px-2 py-0.5 rounded text-[10px] font-mono border border-teal-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-teal-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (11 Pages with Detailed Beaches, Dining, Ting Tong Bar, Resorts & Itineraries) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-teal-800 text-teal-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="泰國東部海島全方位手冊 2026" data-en="Thailand Island Travel Handbook 2026">泰國東部海島全方位手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="象島全攻略" data-en="Koh Chang Guide">象島全攻略</span><br>
+                        <span class="text-teal-700" data-zh="沙灘住宿、美食、酒吧" data-en="Transit, Beaches, Resorts, Dining & Bars">沙灘住宿、美食、酒吧</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Koh Chang: Transit, Comprehensive Beach & Itinerary Guide" data-en="Koh Chang: Transit, Comprehensive Beach & Itinerary Guide">Koh Chang: Transit, Comprehensive Beach & Itinerary Guide</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://www.taithaione.com/gt/webp/ai/c/2018/08/18/896-d6594fe1.webp" 
+                         onerror="this.src='https://placehold.co/600x400/0f766e/ffffff?text=Koh+Chang+Beach'" 
+                         alt="Koh Chang View" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-teal-300 uppercase" data-zh="全方位度假勝地" data-en="All-Around Resort Island">全方位度假勝地</p>
+                        <p class="text-xs font-serif font-medium" data-zh="本島交通、各海灘專屬住宿、餐館與精選一日行程" data-en="Mainland transit, area resorts, dining & itineraries">本島交通、各海灘專屬住宿、餐館與精選一日行程</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎閱讀本期象島旅遊指南。本手冊新增泰國本島到象島的完整交通指南，並涵蓋各大沙灘的飯店、海灘酒吧與餐廳推薦。" data-en="Welcome to this comprehensive Koh Chang travel guide. This handbook includes a complete mainland-to-island transit guide, area-by-area resorts, beach bars, and dining options.">
+                        歡迎閱讀本期象島旅遊指南。本手冊新增泰國本島到象島的完整交通指南，並涵蓋各大沙灘的飯店、海灘酒吧與餐廳推薦。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-teal-800 hover:bg-teal-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Mainland to Koh Chang Transit Guide (NEW) -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 01 • 泰國本島到象島交通" data-en="Chapter 01 • Mainland to Koh Chang Transit">Chapter 01 • 泰國本島到象島交通</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="從曼谷或本島前往象島攻略" data-en="Travel from Bangkok / Mainland to Koh Chang">從曼谷或本島前往象島攻略</h2>
+                </div>
+
+                <div class="bg-stone-100 p-3 rounded border border-stone-300 space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🚌 1. 曼谷至達叻府（Trat）巴士" data-en="1. Bangkok to Trat Bus">🚌 1. 曼谷至達叻府（Trat）巴士</h3>
+                    <p data-zh="從曼谷東部客運站（Ekkamai）或素萬那普機場（BKK）搭乘大巴前往達叻府（Trat）的 Laem Ngop 碼頭，車程約 5-6 小時，票價約 300-500 泰銖。" data-en="Take a long-distance bus from Bangkok's Ekkamai Station or Suvarnabhumi Airport (BKK) to Trat's Laem Ngop pier (approx. 5-6 hours, 300-500 THB).">
+                        從曼谷東部客運站（Ekkamai）或素萬那普機場（BKK）搭乘大巴前往達叻府（Trat）的 Laem Ngop 碼頭，車程約 5-6 小時。
+                    </p>
+                </div>
+
+                <div class="bg-stone-100 p-3 rounded border border-stone-300 space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🚐 2. 包車或 Mini Van（最推薦）" data-en="2. Private Car or Mini Van">🚐 2. 包車或 Mini Van（最推薦）</h3>
+                    <p data-zh="可從曼谷市區或機場預約點對點包車（Private Taxi）直達碼頭，或搭乘觀光 Mini Van，省去轉車麻煩，車程約 4.5-5 小時。" data-en="Book a private taxi or shared tourist van from Bangkok directly to the pier for a seamless 4.5-5 hour journey.">
+                        可從曼谷市區或機場預約點對點包車（Private Taxi）直達碼頭，或搭乘觀光 Mini Van，省去轉車麻煩，車程約 4.5-5 小時。
+                    </p>
+                </div>
+
+                <div class="bg-stone-100 p-3 rounded border border-stone-300 space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="⛴️ 3. 渡輪渡海（Centerpoint & Ferry Koh Chang）" data-en="3. Mainland-to-Island Ferries">⛴️ 3. 渡輪渡海（Centerpoint & Ferry Koh Chang）</h3>
+                    <p data-zh="抵達達叻府碼頭後，搭乘載車渡輪（Ferry Koh Chang 或 Centerpoint Ferry）前往象島（Ao Sapparot 碼頭）。航程約 35-45 分鐘，可連人帶車或步行登船。" data-en="Board a car ferry from Koh Chang Ferry or Centerpoint pier to Ao Sapparot pier on the island. The crossing takes 35-45 minutes.">
+                        抵達達叻府碼頭後，搭乘載車渡輪前往象島（Ao Sapparot 碼頭）。航程約 35-45 分鐘，可連人帶車或步行登船。
+                    </p>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Overview & Scooter Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 02 • 島上概覽與機車" data-en="Chapter 02 • Island Overview & Scooters">Chapter 02 • 島上概覽與機車</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="象島地理與機車騎乘指南" data-en="Island Overview & Scooter Guide">象島地理與機車騎乘指南</h2>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-300 shadow-sm space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="✨ 象形大島與交通樞紐" data-en="✨ Elephant Island & Transport">✨ 象形大島與交通樞紐</h3>
+                    <p data-zh="象島為泰國第二大島，西岸為主要觀光海岸，由北至南依序為白沙灘、孔拋海灘、卡貝海灘與孤島，最南端為宏貝灣漁村。" data-en="Koh Chang is Thailand's 2nd largest island. The west coast features White Sand Beach, Khlong Prao, Kai Bae, and Lonely Beach, ending at Bang Bao.">
+                        象島為泰國第二大島，西岸為主要觀光海岸，由北至南依序為白沙灘、孔拋海灘、卡貝海灘與孤島，最南端為宏貝灣漁村。
+                    </p>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-lg space-y-1.5 text-xs text-stone-700">
+                    <h3 class="font-serif font-bold text-sm text-amber-900" data-zh="🛵 機車租賃與山路安全" data-en="🛵 Scooter Rentals & Mountain Roads">🛵 機車租賃與山路安全</h3>
+                    <p data-zh="日租金約 200-350 泰銖。注意中段山路（白沙灘至卡貝間）坡度極陡且有急彎，雨天務必減速慢行，並佩戴安全帽與攜帶國際駕照。" data-en="Daily rental is 200-350 THB. Central mountain roads are very steep and sharp; ride slowly when wet, wear helmets, and carry IDP.">
+                        日租金約 200-350 泰銖。注意中段山路（白沙灘至卡貝間）坡度極陡且有急彎，雨天務必減速慢行。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/QiTumLMAbv92MSry9" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-teal-800 text-white text-[11px] py-2.5 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：象島全島核心導航" data-en="Open Google Maps: Core Island Navigation">開啟 Google Maps：象島全島核心導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 4: White Sand Beach -->
+            <div class="page-slide flex-col space-y-4" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 中西部優雅區" data-en="Chapter 03 • Khlong Prao Area">Chapter 03 • 中西部優雅區</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="孔拋海灘：住宿、餐館與酒吧" data-en="Khlong Prao Beach: Guide">孔拋海灘：住宿、餐館與酒吧</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🌊 海灘特色與地圖" data-en="🌊 Beach Overview">🌊 海灘特色與地圖</h3>
+                        <p data-zh="象島最長沙灘，環境優雅寧靜，適合家庭度假與河口獨木舟。" data-en="The longest beach on Koh Chang, offering serene family vibes and estuary kayaking.">象島最長沙灘，環境優雅寧靜，適合家庭度假與河口獨木舟。</p>
+                        <a href="https://maps.app.goo.gl/Bywh4jd1GPMY5FSV8" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：孔拋海灘導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🏨 推薦住宿：Santhiya Tree Koh Chang" data-en="🏨 Resorts">🏨 推薦住宿：Santhiya Tree Koh Chang</h3>
+                        <p data-zh="豪華泰式木雕美學度假村，融合頂級泳池與私密綠意。" data-en="Luxury Thai teakwood resort blending elite pools and private greenery.">豪華泰式木雕美學度假村，融合頂級泳池與私密綠意。</p>
+                        <a href="https://maps.app.goo.gl/HZQCukgGKj4au3UJ9" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Santhiya Tree 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🍽️ 推薦餐館：Tiger Hut Restaurant" data-en="🍽️ Dining">🍽️ 推薦餐館：Tiger Hut Restaurant</h3>
+                        <p data-zh="座落海濱的木造泰式餐廳，品嚐道地冬蔭功與新鮮魚料理。" data-en="Beachfront wooden Thai restaurant serving authentic Tom Yum and fresh fish.">座落海濱的木造泰式餐廳，品嚐道地冬蔭功與新鮮魚料理。</p>
+                        <a href="https://maps.app.goo.gl/BEoXmN3KtkR4kAue7" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Tiger Hut 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🍸 推薦酒吧：Margarita Sunset Bar" data-en="🔥 Beach Bar">🍸 推薦酒吧：Margarita Sunset Bar</h3>
+                        <p data-zh="欣賞無敵夕陽落日的浪漫沙灘酒吧，調酒極具水準。" data-en="Romantic sunset beach bar offering top-tier cocktails by the water.">欣賞無敵夕陽落日的浪漫沙灘酒吧，調酒極具水準。</p>
+                        <a href="https://maps.app.goo.gl/7PZHP742k2NDXyjc7" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Margarita Sunset Bar 導航</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Kai Bae Beach -->
+            <div class="page-slide flex-col space-y-4" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 04 • 中南部悠閒區" data-en="Chapter 04 • Kai Bae Area">Chapter 04 • 中南部悠閒區</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="卡貝海灘：住宿、餐館與酒吧" data-en="Kai Bae Beach: Guide">卡貝海灘：住宿、餐館與酒吧</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🌊 海灘特色與地圖" data-en="🌊 Beach Overview">🌊 海灘特色與地圖</h3>
+                        <p data-zh="兼具便利商店、咖啡廳與夕陽美景的中繼海岸，氛圍舒適放鬆。" data-en="A balanced coastal area with convenience stores, cafes, and stunning sunsets.">兼具便利商店、咖啡廳與夕陽美景的中繼海岸，氛圍舒適放鬆。</p>
+                        <a href="https://maps.app.goo.gl/CEe1KVKCi3kKHRrr9" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：卡貝海灘導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🏨 推薦住宿：Gajapuri Resort & Spa" data-en="🏨 Resorts">🏨 推薦住宿：Gajapuri Resort & Spa</h3>
+                        <p data-zh="隱密奢華的雨林樹屋度假村，提供極致私密假期。" data-en="Secluded luxury rainforest treehouse resort offering ultimate privacy.">隱密奢華的雨林樹屋度假村，提供極致私密假期。</p>
+                        <a href="https://maps.app.goo.gl/3FKKnG6A8d35eAo69" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Gajapuri Resort 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🍽️ 推薦餐館：Filou Seafood & BBQ" data-en="🍽️ Dining">🍽️ 推薦餐館：Filou Seafood & BBQ</h3>
+                        <p data-zh="提供歐式與泰式碳烤海鮮排餐，深受歐美旅客喜愛。" data-en="Serving European and Thai grilled seafood platters, loved by expats.">提供歐式與泰式碳烤海鮮排餐，深受歐美旅客喜愛。</p>
+                        <a href="https://maps.app.goo.gl/VgYg9oetSzS1fbzu7" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Filou Seafood 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🍻 推薦酒吧：The Party Banana Bar" data-en="🔥 Beach Bar">🍻 推薦酒吧：The Party Banana Bar</h3>
+                        <p data-zh="充滿熱帶風情的趣味小酒館，音樂歡樂且氣氛輕鬆。" data-en="Tropical-themed fun bar with upbeat music and relaxed vibes.">充滿熱帶風情的趣味小酒館，音樂歡樂且氣氛輕鬆。</p>
+                        <a href="https://maps.app.goo.gl/dxFqKDj36KaHkUKJ9" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Banana Bar 導航</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Lonely Beach -->
+            <div class="page-slide flex-col space-y-4" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 05 • 南部嬉皮背包客區" data-en="Chapter 05 • Lonely Beach Area">Chapter 05 • 南部嬉皮背包客區</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="孤島：住宿、餐館與酒吧推薦" data-en="Lonely Beach: Guide">孤島：住宿、餐館與酒吧推薦</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🌊 海灘特色與地圖" data-en="🌊 Beach Overview">🌊 海灘特色與地圖</h3>
+                        <p data-zh="背包客與自由行靈魂聖地，波希米亞風格濃厚，夜生活最為精彩。" data-en="Backpacker and free-spirit sanctuary with bohemian flair and vibrant nightlife.">背包客與自由行靈魂聖地，波希米亞風格濃厚，夜生活最為精彩。</p>
+                        <a href="https://maps.app.goo.gl/dv4EPMnsZWDWu4uo8" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：孤島海灘導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🏨 推薦住宿：Wararom Resort" data-en="🏨 Resorts">🏨 推薦住宿：Wararom Resort</h3>
+                        <p data-zh="環境清幽且性價比極高的度假小屋，步行即可抵達熱鬧街區。" data-en="Peaceful and high-value resort cottages within walking distance of the lively strip.">環境清幽且性價比極高的度假小屋，步行即可抵達熱鬧街區。</p>
+                        <a href="https://maps.app.goo.gl/2TRXVuQfxKEj6XTZ6" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Wararom Resort 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🍽️ 推薦餐館：Magic Garden Restaurant" data-en="🍽️ Dining">🍽️ 推薦餐館：Magic Garden Restaurant</h3>
+                        <p data-zh="隱身森林中的特色餐廳，提供美味泰國菜與素食創意料理。" data-en="Forest-hidden specialty restaurant serving delicious Thai and vegetarian creative dishes.">隱身森林中的特色餐廳，提供美味泰國菜與素食創意料理。</p>
+                        <a href="https://maps.app.goo.gl/GFKn6wDhGDrqfa8SA" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Magic Garden 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🔥 推薦酒吧：Ting Tong Bar" data-en="🔥 Beach Bar">🔥 推薦酒吧：Ting Tong Bar</h3>
+                        <p data-zh="孤島極受歡迎的傳奇派對酒吧，擁有舒適海灘席位、音樂與歡樂氛圍。" data-en="Lonely Beach's legendary party bar featuring beachside seating, great music, and vibrant nightlife vibes.">孤島極受歡迎的傳奇派對酒吧，擁有舒適海灘席位、音樂與歡樂氛圍。</p>
+                        <a href="https://maps.app.goo.gl/J4vrDt94wzUfiWDj7" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Ting Tong Bar 導航</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Bang Bao -->
+            <div class="page-slide flex-col space-y-4" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 06 • 最南端漁村區" data-en="Chapter 06 • Bang Bao Village Area">Chapter 06 • 最南端漁村區</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="宏貝灣：水上高腳屋與海鮮推薦" data-en="Bang Bao: Stilt Village & Seafood">宏貝灣：水上高腳屋與海鮮推薦</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🌊 漁村特色與跳島碼頭" data-en="🌊 Village Overview">🌊 漁村特色與跳島碼頭</h3>
+                        <p data-zh="建於海面上的百年水上高腳屋村落，也是出海前往 Koh Rang 國家公園浮潛的快艇碼頭。" data-en="Century-old stilt village built over water, also the speed boat pier for Koh Rang Marine Park snorkeling.">建於海面上的百年水上高腳屋村落，也是出海前往 Koh Rang 國家公園浮潛的快艇碼頭。</p>
+                        <a href="https://maps.app.goo.gl/NYs9YATFNsEpeka67" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：宏貝灣導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🏨 推薦住宿：Bailan Beach Resort" data-en="🏨 Resorts">🏨 推薦住宿：Bailan Beach Resort</h3>
+                        <p data-zh="俯瞰宏貝灣海景的寧靜度假村，享受漁村的安祥與日出。" data-en="Quiet resort overlooking Bang Bao bay, enjoying fishing village serenity and sunrise.">俯瞰宏貝灣海景的寧靜度假村，享受漁村的安祥與日出。</p>
+                        <a href="https://maps.app.goo.gl/yK5cqenJT5Pczscb7" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Grandview Resort 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🦐 推薦餐館：Chow Lay Seafood" data-en="🍽️ Dining">🦐 推薦餐館：Chow Lay Seafood</h3>
+                        <p data-zh="坐落木棧道盡頭的水上高腳屋餐廳，現撈咖哩炒蟹與蒸石斑一流。" data-en="Stilt pier end restaurant serving freshly caught curry crab and steamed grouper.">坐落木棧道盡頭的水上高腳屋餐廳，現撈咖哩炒蟹與蒸石斑一流。</p>
+                        <a href="https://maps.app.goo.gl/XmZNaArVyoQWTtJc6" target="_blank" class="text-teal-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Chow Lay Seafood 導航</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 8: ITINERARY 1 -->
+            <div class="page-slide flex-col space-y-4" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Itinerary Option 01" data-en="Itinerary Option 01">Itinerary Option 01</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="一日行程①：西岸精華與日落巡禮" data-en="Itinerary 1: West Coast & Sunset">一日行程①：西岸精華與日落巡禮</h2>
+                </div>
+
+                <div class="bg-[#1e293b] text-[#f8fafc] p-4 rounded-lg space-y-2 text-xs font-serif shadow-inner">
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">09:00</span>
+                        <span data-zh="白沙灘漫步與海景咖啡" data-en="White Sand Beach walk & coffee">白沙灘漫步與海景咖啡</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">11:00</span>
+                        <span data-zh="騎機車前往卡貝觀景台眺望群島" data-en="Ride to Kai Bae Viewpoint">騎機車前往卡貝觀景台眺望群島</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">12:30</span>
+                        <span data-zh="孔拋海灘餐廳享用泰式午餐" data-en="Thai lunch at Khlong Prao Beach">孔拋海灘餐廳享用泰式午餐</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">15:00</span>
+                        <span data-zh="孔拋河口獨木舟體驗" data-en="Khlong Prao estuary kayaking">孔拋河口獨木舟體驗</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">17:30</span>
+                        <span data-zh="卡貝海灘夕陽落日與雞尾酒" data-en="Sunset & cocktails at Kai Bae">卡貝海灘夕陽落日與雞尾酒</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-teal-300">19:30</span>
+                        <span data-zh="白沙灘夜市與海鮮晚餐" data-en="White Sand night market & seafood">白沙灘夜市與海鮮晚餐</span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-[11px] text-stone-500" data-zh="適合初訪旅客的經典西岸一日遊！" data-en="Classic west coast day trip for first-timers!">適合初訪旅客的經典西岸一日遊！</p>
+                </div>
+            </div>
+
+            <!-- PAGE 9: ITINERARY 2 -->
+            <div class="page-slide flex-col space-y-4" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Itinerary Option 02" data-en="Itinerary Option 02">Itinerary Option 02</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="一日行程②：宏貝灣跳島與海洋浮潛" data-en="Itinerary 2: Island Hopping & Snorkeling">一日行程②：宏貝灣跳島與海洋浮潛</h2>
+                </div>
+
+                <div class="bg-[#1e293b] text-[#f8fafc] p-4 rounded-lg space-y-2 text-xs font-serif shadow-inner">
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">08:30</span>
+                        <span data-zh="抵達宏貝灣碼頭報名快艇跳島" data-en="Arrive at Bang Bao Pier for speedboat">抵達宏貝灣碼頭報名快艇跳島</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">09:30</span>
+                        <span data-zh="前往 Koh Rang 國家公園浮潛" data-en="Snorkeling at Koh Rang Marine Park">前往 Koh Rang 國家公園浮潛</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">12:30</span>
+                        <span data-zh="離島沙灘享用無人島午餐" data-en="Remote island beach lunch">離島沙灘享用無人島午餐</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">14:30</span>
+                        <span data-zh="探索第二個浮潛點與珊瑚礁群" data-en="Explore 2nd snorkeling coral reef">探索第二個浮潛點與珊瑚礁群</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">16:30</span>
+                        <span data-zh="返回宏貝灣水上高腳屋逛街" data-en="Stroll Bang Bao stilt village">返回宏貝灣水上高腳屋逛街</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-teal-300">18:30</span>
+                        <span data-zh="Chow Lay Seafood 享用海鮮大餐" data-en="Seafood dinner at Chow Lay">Chow Lay Seafood 享用海鮮大餐</span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-[11px] text-stone-500" data-zh="適合熱愛海洋與浮潛的陽光旅人！" data-en="Perfect for ocean and snorkeling lovers!">適合熱愛海洋與浮潛的陽光旅人！</p>
+                </div>
+            </div>
+
+            <!-- PAGE 10: ITINERARY 3 -->
+            <div class="page-slide flex-col space-y-4" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Itinerary Option 03" data-en="Itinerary Option 03">Itinerary Option 03</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="一日行程③：雨林瀑布與東岸秘境" data-en="Itinerary 3: Rainforest & Waterfalls">一日行程③：雨林瀑布與東岸秘境</h2>
+                </div>
+
+                <div class="bg-[#1e293b] text-[#f8fafc] p-4 rounded-lg space-y-2 text-xs font-serif shadow-inner">
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">09:00</span>
+                        <span data-zh="騎機車挑戰中段山路至東岸" data-en="Ride across central mountains to East coast">騎機車挑戰中段山路至東岸</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">10:00</span>
+                        <span data-zh="探訪丹麥勇瀑布（Than Mayom）" data-en="Explore Than Mayom Waterfall">探訪丹麥勇瀑布（Than Mayom）</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">12:00</span>
+                        <span data-zh="薩拉克科克紅樹林木棧道漫步" data-en="Salak Kok Mangrove Boardwalk walk">薩拉克科克紅樹林木棧道漫步</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">13:30</span>
+                        <span data-zh="東岸傳統漁村享用在地午餐" data-en="Local lunch at East coast village">東岸傳統漁村享用在地午餐</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">15:30</span>
+                        <span data-zh="Klong Plu 瀑布森林健行與戲水" data-en="Klong Plu Waterfall forest hike">Klong Plu 瀑布森林健行與戲水</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-teal-300">18:00</span>
+                        <span data-zh="孔拋海灘晚餐與靜謐夜色" data-en="Khlong Prao beach dinner & night">孔拋海灘晚餐與靜謐夜色</span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-[11px] text-stone-500" data-zh="適合熱愛大自然、雨林與健行的探險者！" data-en="Ideal for nature and rainforest explorers!">適合熱愛大自然、雨林與健行的探險者！</p>
+                </div>
+            </div>
+
+            <!-- PAGE 11: ITINERARY 4 -->
+            <div class="page-slide flex-col space-y-4" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Itinerary Option 04" data-en="Itinerary Option 04">Itinerary Option 04</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="一日行程④：孤島背包客與夜生活狂歡" data-en="Itinerary 4: Backpackers & Nightlife">一日行程④：孤島背包客與夜生活狂歡</h2>
+                </div>
+
+                <div class="bg-[#1e293b] text-[#f8fafc] p-4 rounded-lg space-y-2 text-xs font-serif shadow-inner">
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">10:30</span>
+                        <span data-zh="睡到自然醒，前往孤島（Lonely Beach）" data-en="Sleep in, head to Lonely Beach">睡到自然醒，前往孤島（Lonely Beach）</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">12:00</span>
+                        <span data-zh="Magic Garden 森林泰國菜午餐" data-en="Lunch at Magic Garden">Magic Garden 森林泰國菜午餐</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">14:30</span>
+                        <span data-zh="孤島隱密海灘日光浴與游泳" data-en="Sunbathing & swimming at Lonely Beach">孤島隱密海灘日光浴與游泳</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">17:00</span>
+                        <span data-zh="波希米亞小店尋寶與拍照" data-en="Bohemian boutique shopping">波希米亞小店尋寶與拍照</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1.5">
+                        <span class="font-mono text-teal-300">19:00</span>
+                        <span data-zh="Ting Tong Bar 海灘晚餐與雞尾酒" data-en="Dinner & cocktails at Ting Tong Bar">Ting Tong Bar 海灘晚餐與雞尾酒</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-teal-300">21:00</span>
+                        <span data-zh="精采派對音樂與夜生活狂歡" data-en="Party music and lively nightlife">精采派對音樂與夜生活狂歡</span>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <p class="text-[11px] text-stone-500" data-zh="適合年輕族群、自由行與夜生活愛好者！" data-en="Great for young travelers and nightlife lovers!">適合年輕族群、自由行與夜生活愛好者！</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">8</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-teal-800 hover:bg-teal-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Island Tabs -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 11;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            document.getElementById('progress-text').textContent = progress;
+
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentPage === totalPages) {
+                nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+            } else {
+                nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+
+            document.getElementById('book-content-area').scrollTop = 0;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            // Toggle all text elements with data-zh and data-en
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            // Update button texts
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前海島頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
