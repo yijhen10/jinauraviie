@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沖繩本島全方位旅遊指南：琉球歷史、海灘、租車與度假美食電子書報 | Okinawa Comprehensive Travel Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0f172a;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #0284c7;
+            border-top: 1px solid #0284c7;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #0284c7;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdfbf7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#fdfbf7] shadow-2xl rounded-xl overflow-hidden border border-[#e2d9ce] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#0284c7] text-[#f8fafc] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-sky-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 沖繩本島全方位指南" data-en="Gazette • Okinawa Guide">Gazette • 沖繩本島全方位指南</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-sky-900 hover:bg-sky-800 text-sky-200 px-2 py-0.5 rounded text-[10px] font-mono border border-sky-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-sky-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (12 Pages) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-sky-800 text-sky-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="日本琉球度假全書 2026" data-en="Okinawa Travel Handbook 2026">日本琉球度假全書 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="沖繩本島全攻略" data-en="Okinawa Main Island">沖繩本島全攻略</span><br>
+                        <span class="text-sky-700" data-zh="琉球歷史、海灘與自駕度假" data-en="Ryukyu History, Beaches & Self-Drive">琉球歷史、海灘度假</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Okinawa: Ryukyu History, Rental Cars & Beach Guide" data-en="Okinawa: Ryukyu History, Rental Cars & Beach Guide">Okinawa: Ryukyu History, Rental Cars & Beach Guide</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://cdn.zekkei-japan.jp/datas/cache/images/2024/04/17/800x533_ea1e9d427fb5664c32c517a73e421e58_eb6b5e3990b9a0cdf3d5355c0537605c399929cd.jpg" 
+                         onerror="this.src='https://placehold.co/600x400/0284c7/ffffff?text=Okinawa+Beach'" 
+                         alt="Okinawa View" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-sky-300 uppercase" data-zh="蔚藍度假天堂" data-en="Azure Resort Paradise">蔚藍度假天堂</p>
+                        <p class="text-xs font-serif font-medium" data-zh="本島交通自駕、分區沙灘、歷史古蹟與琉球美食" data-en="Driving transit, regional beaches, heritage & cuisine">本島交通自駕、分區沙灘、歷史古蹟與琉球美食</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="藍色囈語：島嶼的慢時光。沖繩的空氣裡，總是飄著一股淡淡的鹹味與慵懶的扶桑花香。本手冊涵蓋琉球王國世界遺產、全島沙灘分佈、度假飯店推薦與美食酒吧。" data-en="Welcome to this Okinawa main island travel handbook. It covers car rental transit, Ryukyu Kingdom heritage, beach distributions, resorts, and dining.">
+                        藍色囈語：島嶼的慢時光。沖繩的空氣裡，總是飄著一股淡淡的鹹味與慵懶的扶桑花香。本手冊涵蓋琉球王國世界遺產、全島沙灘分佈、度假飯店推薦與美食酒吧。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-sky-800 hover:bg-sky-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Transit & Car Rental Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 01 • 機場交通與自駕指南" data-en="Chapter 01 • Transit & Car Rental">Chapter 01 • 機場交通與自駕指南</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="那霸機場交通與租車攻略" data-en="Naha Airport Transit & Car Rental">那霸機場交通與租車攻略</h2>
+                </div>
+
+                <div class="bg-stone-100 p-3 rounded border border-stone-300 space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🚗 1. 租車自駕（最推薦）" data-en="1. Car Rental (Highly Recommended)">🚗 1. 租車自駕（最推薦）</h3>
+                    <p data-zh="抵達那霸機場（OKA）後，各家租車公司（OTS、Toyota、Times等）均有免費接駁車帶您至機場外圍營業所辦理。建議事先辦理日文譯本駕照，右駕上路注意道路標線與速限。" data-en="After arriving at Naha Airport, rental companies provide shuttle bus transit. Remember your International Driving Permit / Japanese translation.">
+                        抵達那霸機場後，各大租車公司有免費接駁車帶您至營業所。請務必攜帶台灣駕照及日文譯本，右側駕駛上路注意方向燈與雨刷相反。
+                    </p>
+                </div>
+
+                <div class="bg-stone-100 p-3 rounded border border-stone-300 space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🚝 2. 沖繩單軌電車（Yui Rail）" data-en="2. Yui Rail Monorail">🚝 2. 沖繩單軌電車（Yui Rail）</h3>
+                    <p data-zh="若僅在市區（那霸市）活動，可搭乘連接那霸機場至首里城與浦添市的單軌電車（Yui Rail），班次密集且可使用 IC 卡或一日券，免去塞車與停車煩惱。" data-en="If staying in Naha city, take the Yui Rail connecting the airport to Shuri Castle and Urasoe.">
+                        若僅在那霸市區活動，可搭乘連接機場至首里城與浦添市的單軌電車（Yui Rail），市區景點如國際通、首里城皆可輕鬆到達。
+                    </p>
+                </div>
+
+                <div class="bg-stone-100 p-3 rounded border border-stone-300 space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🚌 3. 高速巴士與觀光專車" data-en="3. Highway Buses & Sightseeing Tours">🚌 3. 高速巴士與觀光專車</h3>
+                    <p data-zh="若不自駕，可搭乘 Yanbaru Express Bus 或 Okinawa Airport Shuttle 直達北部美麗海水族館與恩納村度假村。" data-en="Non-drivers can take highway buses like Yanbaru Express to the Churaumi Aquarium and Onna Village resorts.">
+                        若不自駕，亦可搭乘高速巴士直達北部美麗海水族館與恩納村度假區。
+                    </p>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Yui Rail Monorail Route Map (NEW CHAPTER) -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 02 • 單軌電車路線與站名號碼" data-en="Chapter 02 • Yui Rail Route & Station Numbers">Chapter 02 • 單軌電車路線與站名號碼</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="沖繩都市單軌電車（Yui Rail）完整路線與站號" data-en="Yui Rail Monorail Stations & Numbers">沖繩都市單軌電車（Yui Rail）完整路線與站號</h2>
+                </div>
+
+                <div class="bg-sky-50 border border-sky-200 p-2.5 rounded-lg space-y-1 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-sky-900" data-zh="🚝 單軌電車站名代號系統 (校正版)" data-en="🚝 Monorail Station Numbering System (Corrected)">🚝 單軌電車站名代號系統 (校正版)</h3>
+                    <p data-zh="根據沖繩單軌電車最新官方路線圖，05號為壺川站，06號為旭橋站。以下為正確對照：" data-en="According to the official map, station 05 is Tsubogawa and 06 is Asahibashi. Here is the corrected list:">
+                        根據沖繩單軌電車官方路線圖（05號為壺川站，06號為旭橋站）。以下為正確對照：
+                    </p>
+                </div>
+
+                <div class="bg-stone-100 p-3 rounded border border-stone-300 space-y-1.5 text-xs text-stone-700 max-h-40 overflow-y-auto">
+                    <h4 class="font-serif font-bold text-stone-900" data-zh="📍 正確車站與站號對照：" data-en="📍 Corrected Station Numbers:">📍 正確車站與站號對照：</h4>
+                    <ul class="space-y-1 font-mono text-[11px] pl-1">
+                        <li>✈️ <strong class="text-sky-800">01 那霸機場站 (Naha Airport)</strong></li>
+                        <li>🛬 <strong class="text-sky-800">02 赤嶺站 (Akamine)</strong></li>
+                        <li>🏘️ <strong class="text-sky-800">03 小祿站 (Ooroku)</strong></li>
+                        <li>🏬 <strong class="text-sky-800">04 奧武山公園站 (Onoyama Park)</strong></li>
+                        <li>🌿 <strong class="text-sky-800">05 壺川站 (Tsubogawa)</strong></li>
+                        <li>🏨 <strong class="text-sky-800">06 旭橋站 (Asahibashi)</strong> ➔ 巴士總站 / Hotel Precia</li>
+                        <li>🛍️ <strong class="text-sky-800">07 縣廳前站 (Kencho-mae)</strong> ➔ 國際通入口</li>
+                        <li>⛩️ <strong class="text-sky-800">08 美榮橋站 (Miebashi)</strong></li>
+                        <li>🐟 <strong class="text-sky-800">09 牧志站 (Makishi)</strong> ➔ 牧志公設市場</li>
+                        <li>👑 <strong class="text-sky-800">15 首里站 (Shuri)</strong> ➔ 首里城遺跡</li>
+                    </ul>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://www.yui-rail.co.jp/tc/routemap/" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-sky-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="單軌電車路線圖 (06)" data-en="Open Google Maps: Asahibashi Station (06)">單軌電車路線圖</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Regional Beach Distribution (North, Central, South) -->
+            <div class="page-slide flex-col space-y-4" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 全島沙灘分佈導覽" data-en="Chapter 03 • Beach Distribution">Chapter 03 • 全島沙灘分佈導覽</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="沖繩本島南北沙灘分佈與安良波海灘" data-en="Okinawa Beach Distribution & Araha Beach">沖繩本島南北沙灘分佈與安良波海灘</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="1. 安良波海灘 (Araha Beach) — 北谷町美式海濱公園" data-en="1. Araha Beach - Chatan Seaside Park">1. 安良波海灘 (Araha Beach) — 北谷町美式海濱公園</h3>
+                        <p class="text-[11px]" data-zh="位於沖繩中部北谷町，擁有優美的白沙灘與一座仿真的古代印度洋帆船遊樂設施。鄰近美國村，是散步與戲水的熱門海濱。" data-en="Located in Chatan Town, central Okinawa, featuring fine white sand, a replica Indian Ocean sailing ship playground, and proximity to American Village.">位於沖繩中部北谷町，擁有優美的白沙灘與一座仿真的古代印度洋帆船遊樂設施。鄰近美國村，是散步與戲水的熱門海濱。</p>
+                        <a href="https://maps.app.goo.gl/G1cHP65i4n9exNug7" target="_blank" class="text-sky-700 font-mono underline text-[10px]">🗺️ 開啟 Google Maps：安良波海灘導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="2. 北部本部半島與瀨底島 — 碧海與水族館" data-en="2. Northern Motobu & Sesoko">2. 北部本部半島與瀨底島 — 碧海與水族館</h3>
+                        <p class="text-[11px]" data-zh="海水清澈度全島之冠，擁有美麗海水族館及翡翠海灘、瀨底海灘。" data-en="Highest water clarity, featuring Churaumi Aquarium and Emerald Beach.">海水清澈度全島之冠，擁有美麗海水族館及翡翠海灘、瀨底海灘。</p>
+                        <a href="https://maps.app.goo.gl/PoAuzbimm2UbAbCk9" target="_blank" class="text-sky-700 font-mono underline text-[10px]">🗺️ 開啟 Google Maps：瀨底島導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="3. 中部恩納村與讀谷村 — 豪華度假村海岸" data-en="3. Central Onna & Yomitan">3. 中部恩納村與讀谷村 — 豪華度假村海岸</h3>
+                        <p class="text-[11px]" data-zh="萬座毛與著名的萬座海灘、月亮海灘林立。" data-en="Premier resort hub featuring Cape Manzamo and Moon Beach.">萬座毛與著名的萬座海灘、月亮海灘林立。</p>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="4. 南部那霸與系滿市 — 歷史文化與美軍風情" data-en="4. Southern Naha & Itoman">4. 南部那霸與系滿市 — 歷史文化與美軍風情</h3>
+                        <p class="text-[11px]" data-zh="波上宮、瀨長島希臘風情夕陽海濱。" data-en="Naminoue Shrine and Umikaji Terrace sunset beach.">波上宮、瀨長島希臘風情夕陽海濱。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Historical Heritage - Shuri Castle -->
+            <div class="page-slide flex-col space-y-4" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 04 • 北部世界級景點" data-en="Chapter 04 • Northern World-Class Attraction">Chapter 04 • 北部世界級景點</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="美麗海水族館：黑潮之海" data-en="Churaumi Aquarium: Kuroshio Sea">美麗海水族館：黑潮之海</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://res.klook.com/images/w_1200,h_630,c_fill,q_65/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/ffvxriuek8w8mc4nlxmr/%E6%B2%96%E7%B9%A9%E7%BE%8E%E9%BA%97%E6%B5%B7%E6%B0%B4%E6%97%8F%E9%A4%A8%E9%96%80%E7%A5%A8.jpg" 
+                         onerror="this.src='https://placehold.co/600x300/4a5568/ffffff?text=Churaumi+Aquarium'" 
+                         alt="Churaumi Aquarium" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="震撼人心的巨型壓克力觀景窗" data-en="Breathtaking Giant Acrylic Observation Window">震撼人心的巨型壓克力觀景窗</h3>
+                    <p data-zh="位於國營沖繩紀念公園內的沖繩美麗海水族館（Churaumi Aquarium）聞名全球。其核心展區「黑潮之海」擁有世界最大等級的觀景窗，可近距離觀賞巨大的鯨鯊與鬼蝠魟悠游。" data-en="Located in Ocean Expo Park, the Churaumi Aquarium is world-famous. Its 'Kuroshio Sea' tank features one of the world's largest viewing panels for whale sharks.">
+                        位於國營沖繩紀念公園內的<strong>沖繩美麗海水族館（Churaumi Aquarium）</strong>聞名全球。其核心展區「黑潮之海」擁有巨型觀景窗，可近距離觀賞鯨鯊與鬼蝠魟悠游。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/LsT9yCSWnvuzhoKu8" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：美麗海水族館" data-en="Open Google Maps: Churaumi Aquarium">開啟 Google Maps：美麗海水族館</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Cape Manzamo & American Village -->
+            <div class="page-slide flex-col space-y-4" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 05 • 中部地標" data-en="Chapter 05 • Central Landmarks">Chapter 05 • 中部地標</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="萬座毛" data-en="Cape Manzamo & American Village">萬座毛</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXFlA456Q0bTA_6-IRQLoeaV67CI0Nqpu4Fbw7f5_FLQ&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/555555/ffffff?text=Cape+Manzamo'" 
+                         alt="Manzamo" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="象鼻岩峭壁" data-en="Elephant Trunk Cliff & Seaside Mall">象鼻岩峭壁</h3>
+                    <p data-zh="恩納村的<strong>萬座毛（Cape Manzamo）</strong>萬座毛是一處位於日本沖繩縣國頭郡恩納村的風景名勝。特徵是在海岸的峭壁上，有著像大象鼻子形狀的石頭。萬座毛面對著東海，屬於沖繩海岸國定公園。。" data-en="Cape Manzamo in Onna Village is famous for its elephant-trunk coral cliff.">
+                        恩納村的<strong>萬座毛（Cape Manzamo）</strong>萬座毛是一處位於日本沖繩縣國頭郡恩納村的風景名勝。特徵是在海岸的峭壁上，有著像大象鼻子形狀的石頭。萬座毛面對著東海，屬於沖繩海岸國定公園。。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/icq3yxdL4Cbtzab78" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：萬座毛" data-en="Open Google Maps: American Village">開啟 Google Maps：萬座毛</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Senagajima Umikaji Terrace -->
+            <div class="page-slide flex-col space-y-4" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 06 • 南部希臘風情" data-en="Chapter 06 • Southern Greek Vibe">Chapter 06 • 南部希臘風情</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="瀨長島：沖繩的希臘小島" data-en="Senagajima Umikaji Terrace">瀨長島：沖繩的希臘小島</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://visitokinawajapan.com/wp-content/themes/visit-okinawa_multi-language/lang/zh-hant/assets/img/destinations/okinawa-main-island/southern-okinawa-main-island/senaga-island/de36_01_senaga-island-beach.webp" 
+                         onerror="this.src='https://placehold.co/600x300/666666/ffffff?text=Umikaji+Terrace'" 
+                         alt="Senagajima" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="白色階梯建築與飛機起降景觀" data-en="White Tiered Buildings & Airplane Views">白色階梯建築與飛機起降景觀</h3>
+                    <p data-zh="位於那霸機場南側的<strong>瀨長島（Umikaji Terrace）</strong>擁有階梯式的純白歐風建築、海景餐廳與舒芙蕾鬆餅店。由於鄰近機場，在此可近距離仰望飛機從頭頂劃過蔚藍海面，是欣賞夕陽的絕佳聖地。" data-en="Located south of Naha Airport, Umikaji Terrace features tiered white buildings, seaside restaurants, and close-up views of landing planes.">
+                        位於那霸機場南側的<strong>瀨長島（Umikaji Terrace）</strong>擁有純白歐風建築與海景餐廳。在此可近距離仰望飛機從頭頂劃過蔚藍海面，是欣賞絕美夕陽的聖地。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/XpPvNSZ9tMHuHhMM6" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-stone-200 hover:bg-stone-300 text-stone-800 text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：瀨長島" data-en="Open Google Maps: Senagajima">開啟 Google Maps：瀨長島</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7.5: Shrines and Temples (NEW CHAPTER) -->
+            <div class="page-slide flex-col space-y-4" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 07 • 琉球神社與心靈聖地" data-en="Chapter 07 • Okinawa Shrines & Sacred Sites">Chapter 07 • 琉球神社與心靈聖地</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="波上宮與普天滿宮：琉球八社巡禮" data-en="Naminoue & Futenma Shrines">波上宮與普天滿宮：琉球八社巡禮</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRENVf_xxCi-Xvuz5E7c4Gvqps3KKOR1_LTicsvPftg1NjTtPiFRqAkAnfj&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/444444/ffffff?text=Naminoue+Shrine'" 
+                         alt="Naminoue Shrine" class="w-full h-36 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="⛩️ 波上宮 (Naminoue Shrine)" data-en="⛩️ Naminoue Shrine">⛩️ 波上宮 (Naminoue Shrine)</h3>
+                    <p data-zh="琉球八社之首，座落於那霸市海邊的珊瑚礁斷崖上，俯瞰著波の上海灘。自古以來被漁民與航海者視為守護海上安全與祈求平安的聖地，紅瓦屋頂極具琉球建築特色。" data-en="The chief of the eight Ryukyu shrines, perched on a coral cliff overlooking Naminoue Beach in Naha.">
+                        琉球八社之首，座落於那霸市海邊的珊瑚礁斷崖上，俯瞰著波の上海灘。自古以來被視為守護海上安全與祈求平安的聖地，紅瓦屋頂極具琉球建築特色。
+                    </p>
+                    <a href="https://maps.app.goo.gl/v7FujyCpzjpLFT2e8" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：波上宮導航</a>
+                </div>
+
+                <div class="space-y-1 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="⛩️ 普天滿宮 (Futenma Shrine)" data-en="⛩️ Futenma Shrine">⛩️ 普天滿宮 (Futenma Shrine)</h3>
+                    <p data-zh="位於宜野灣市的古老神社，以境內深處神聖的鐘乳石洞穴（奥宮）聞名，祭祀著琉球神道諸神，神祕莊嚴。" data-en="Located in Ginowan, famous for its sacred limestone cave deep within the shrine grounds.">
+                        位於宜野灣市的古老神社，以境內深處神聖的鐘乳石洞穴（奥宮）聞名，祭祀著琉球神道諸神，神祕莊嚴。
+                    </p>
+                    <a href="https://maps.app.goo.gl/Rt9URNyQJL2YMj218" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：普天滿宮導航</a>
+                </div>
+            </div>
+
+            <!-- PAGE 7.8: Gyokusendo Limestone Cave (NEW CHAPTER) -->
+            <div class="page-slide flex-col space-y-4" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 07-2 • 億年自然奇觀" data-en="Chapter 07-2 • Natural Wonder">Chapter 07-2 • 億年自然奇觀</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="玉泉洞與 Cave Okinawa：沖繩壯麗的地下鐘乳石洞與地下河川" data-en="Gyokusendo & Cave Okinawa: Limestone Caves">玉泉洞與 Cave Okinawa：沖繩壯麗的地下鐘乳石洞與地下河川</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://img.letsgojp.com/2025/05/okinawaworld0507111-800x500.webp" 
+                         onerror="this.src='https://placehold.co/600x300/334155/ffffff?text=Gyokusendo+Cave'" 
+                         alt="Gyokusendo Cave" class="w-full h-32 object-cover">
+                </div>
+
+                <div class="space-y-1.5 text-xs text-stone-700 leading-relaxed max-h-56 overflow-y-auto pr-1">
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900" data-zh="1. 玉泉洞 (Gyokusendo Cave)" data-en="1. Gyokusendo Cave">1. 玉泉洞 (Gyokusendo Cave)</h3>
+                        <p class="text-[11px]" data-zh="位於沖繩南部南城市，是日本國內規模最大級的鐘乳石洞。總長度達5公里，擁有超過100萬根形態各異的鐘乳石、石筍，以及貫穿洞穴深處的清澈地下河川。" data-en="Located in Nanjo City, Gyokusendo is one of Japan's largest limestone caves featuring over a million stalactites and underground rivers.">位於沖繩南部南城市，是日本國內規模最大級的鐘乳石洞。總長度達5公里，擁有超過100萬根形態各異的鐘乳石、石筍，以及貫穿洞穴深處的清澈地下河川。</p>
+                        <a href="https://maps.app.goo.gl/ZiKGLt8WnQrWzsGk7" target="_blank" class="text-sky-700 font-mono underline text-[10px]">🗺️ 開啟 Google Maps：玉泉洞導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900" data-zh="2. Cave Okinawa (沖繩洞穴)" data-en="2. Cave Okinawa">2. Cave Okinawa (沖繩洞穴)</h3>
+                        <p class="text-[11px]" data-zh="位於沖繩中部恩納村的熱門神祕鐘乳石洞。內部打上夢幻的七彩燈光，擁有壯觀的心形鐘乳石洞景與神聖鐘乳石柱，探險感十足且極具神祕氛圍。" data-en="A popular mystical limestone cave located in Onna Village, central Okinawa. Features dreamy colorful lighting, heart-shaped stalactites, and sacred pillars.">位於沖繩中部恩納村的熱門神祕鐘乳石洞。內部打上夢幻的七彩燈光，擁有壯觀的心形鐘乳石洞景與神聖鐘乳石柱，探險感十足且極具神祕氛圍。</p>
+                        <a href="https://maps.app.goo.gl/JCXp9p3vwJnEenJJ6" target="_blank" class="text-sky-700 font-mono underline text-[10px]">🗺️ 開啟 Google Maps：Cave Okinawa 導航</a>
+                    </div>
+                </div>
+
+                <div class="pt-0.5">
+                    <a href="https://maps.app.goo.gl/ZiKGLt8WnQrWzsGk7" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-sky-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：玉泉洞導航" data-en="Open Google Maps: Gyokusendo Cave">開啟 Google Maps：玉泉洞導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Resorts & Accommodation Recommendations -->
+            <div class="page-slide flex-col space-y-4" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 08 • 豪華度假村與飯店" data-en="Chapter 08 • Luxury Resorts & Hotels">Chapter 08 • 豪華度假村與飯店</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="沖繩本島精選飯店與度假村" data-en="Curated Okinawa Resorts & Hotels">沖繩本島精選飯店與度假村</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🏨 那霸市區：Hotel Precia Naha Tsujimachi" data-en="🏨 Naha: Hotel Precia Naha Tsujimachi">🏨 那霸市區：Hotel Precia Naha Tsujimachi</h3>
+                        <p data-zh="鄰近那霸港與波上宮，交通便利、房間舒適且性價比極高，是自駕或市區探索的絕佳住宿。" data-en="Near Naha Port and Naminoue Shrine, offering convenient transit, comfortable rooms, and great value.">鄰近那霸港與波上宮，交通便利、房間舒適且性價比極高，是自駕或市區探索的絕佳住宿。</p>
+                        <a href="https://maps.app.goo.gl/oYGvV5m7U2NDNTB69" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Hotel Precia 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🏨 恩納村：The Busena Terrace（部瀬名岬）" data-en="🏨 Onna: The Busena Terrace">🏨 恩納村：The Busena Terrace（部瀬名岬）</h3>
+                        <p data-zh="沖繩頂級海濱度假村標竿，擁有私人沙灘、海底展望塔與極致細膩的日式款待。" data-en="Okinawa's premier beach resort benchmark with private beach, underwater observatory, and hospitality.">沖繩頂級海濱度假村標竿，擁有私人沙灘、海底展望塔與極致細膩的日式款待。</p>
+                        <a href="https://maps.app.goo.gl/A3wc4vAkyymssGsR9" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：The Busena Terrace 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🏨 讀谷村：Hoshinoya Okinawa（虹夕諾雅 沖繩）" data-en="🏨 Yomitan: Hoshinoya Okinawa">🏨 讀谷村：Hoshinoya Okinawa（虹夕諾雅 沖繩）</h3>
+                        <p data-zh="沿著海岸線而建的奢華城堡式度假村，每間客房皆可一覽無敵海景與壯麗夕陽。" data-en="Luxury castle-like resort along the coastline offering ocean views and magnificent sunsets from every room.">沿著海岸線而建的奢華城堡式度假村，每間客房皆可一覽無敵海景與壯麗夕陽。</p>
+                        <a href="https://maps.app.goo.gl/PhVm1kXiT8QHby1a9" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Hoshinoya Okinawa 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="🏨 那霸市區：Hyatt Regency Naha Okinawa" data-en="🏨 Naha: Hyatt Regency">🏨 那霸市區：Hyatt Regency Naha Okinawa</h3>
+                        <p data-zh="位於那霸市區核心，步行即可抵達國際通，結合現代高雅與便利交通。" data-en="Located in downtown Naha within walking distance of Kokusai Dori, combining modern elegance and convenience.">位於那霸市區核心，步行即可抵達國際通，結合現代高雅與便利交通。</p>
+                        <a href="https://maps.app.goo.gl/vc8NemNqHVrxUgXTA" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Hyatt Regency Naha 導航</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Shopping Route 1 - Kokusai Dori & Cafes -->
+            <div class="page-slide flex-col space-y-4" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 09 • 購物與咖啡路線一" data-en="Chapter 09 • Shopping Route 1">Chapter 09 • 購物與咖啡路線一</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="國際通購物路線與職人咖啡" data-en="Kokusai Dori Shopping & Cafes">國際通購物路線與職人咖啡</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700 leading-relaxed">
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🛍️ 國際通（Kokusai Dori）漫步指南" data-en="🛍️ Kokusai Dori Walking Route">🛍️ 國際通（Kokusai Dori）漫步指南</h3>
+                        <p data-zh="全長約1.6公里的「奇蹟一英里」。從縣廳前站出發，沿途參觀牧志公設市場品嚐新鮮刺身，選購御菓子御殿紫薯塔與琉球玻璃伴手禮。" data-en="The 1.6km 'Miracle Mile'. Start at Kenchomae station, visit Makishi Public Market, and shop for purple sweet potato tarts.">全長約1.6公里的「奇蹟一英里」。從縣廳前站出發，沿途參觀牧志公設市場品嚐新鮮刺身，選購御菓子御殿紫薯塔與琉球玻璃伴手禮。</p>
+                        <a href="https://maps.app.goo.gl/qDnY33V4W9RaY6R77" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：國際通導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="☕ Tasokare Coffee" data-en="☕ Tasokare Coffeey">☕ Tasokare Coffee</h3>
+                        <p data-zh="位於日本沖繩那霸市國際通的一間知名小巧復古風自家烘焙咖啡店。" data-en="A well-known, small, retro-style homemade roastery located on Kokusai Street in Naha, Okinawa, Japan.">位於日本沖繩那霸市國際通的一間知名小巧復古風自家烘焙咖啡店。</p>
+                        <a href="https://maps.app.goo.gl/rce4NFmcmSbAABy99" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Tasokare Coffee 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="☕ Tsuboya Pottery Street Cafes (壺屋通)" data-en="☕ Tsuboya Pottery Cafes">☕ 壺屋通陶器街漫步與茶屋</h3>
+                        <p data-zh="國際通旁的300年陶器歷史老街，古樸石疊道兩旁充滿陶藝工房與隱藏版日式茶屋。" data-en="A 300-year-old pottery street next to Kokusai Dori featuring artisan studios and hidden tea houses.">國際通旁的300年陶器歷史老街，古樸石疊道兩旁充滿陶藝工房與隱藏版日式茶屋。</p>
+                        <a href="https://maps.app.goo.gl/vJkBTGa9jgQrWWjG7" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：壺屋通導航</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Shopping Route 2 - American Village & Cafes -->
+            <div class="page-slide flex-col space-y-4" data-page="12">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 10 • 購物與咖啡路線二" data-en="Chapter 10 • Shopping Route 2">Chapter 10 • 購物與咖啡路線二</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="美國村購物路線與海景咖啡" data-en="American Village Shopping & Cafes">美國村購物路線與海景咖啡</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700 leading-relaxed">
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🛍️ 美國村（American Village）血拼指南" data-en="🛍️ American Village Shopping">🛍️ 美國村（American Village）血拼指南</h3>
+                        <p data-zh="融合美式懷舊與日系潮流的海濱大型商場。Depot Island 古著店、潮流服飾與日落海灘散步道。" data-en="Seaside mega-mall combining retro American and Japanese street fashion with Sunset Beach.">融合美式懷舊與日系潮流的海濱大型商場。Depot Island 古著店、潮流服飾與日落海灘散步道。</p>
+                        <a href="https://maps.app.goo.gl/TqhpWTzBnDckLhgo9" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：美國村導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="☕ Transit Cafe (美濱海景咖啡)" data-en="☕ Transit Cafe American Village">☕ Transit Cafe (美濱海景咖啡)</h3>
+                        <p data-zh="位於美國村日落海灘旁的絕美海景咖啡廳，白色希臘風情露臺，夕陽時分喝一杯冰拿鐵浪漫至極。" data-en="Stunning seaside cafe by Sunset Beach in American Village with white terrace and sublime sunset views.">位於美國村日落海灘旁的絕美海景咖啡廳，白色希臘風情露臺，夕陽時分喝一杯冰拿鐵浪漫至極。</p>
+                        <a href="https://maps.app.goo.gl/4n8sBCszvQGBi6NC9" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Transit Cafe 導航</a>
+                    </div>
+
+                    <div class="bg-stone-100 p-3 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-xs" data-zh="☕ Kona's Coffee Okinawa" data-en="☕ Kona's Coffee Okinawa">☕ Kona's Coffee Okinawa</h3>
+                        <p data-zh="獨棟夏威夷風大木屋，供應份量十足的夏威夷鮮奶油鬆餅、漢堡與多款產區咖啡。" data-en="awaiian-style log cabin offers generous portions of Hawaiian whipped cream pancakes, burgers, and a variety of regional coffees.">獨棟夏威夷風大木屋，供應份量十足的夏威夷鮮奶油鬆餅、漢堡與多款產區咖啡。</p>
+                        <a href="https://maps.app.goo.gl/xD6nb4hxiA5jxZZL9" target="_blank" class="text-sky-700 font-mono underline block pt-0.5">🗺️ 開啟 Google Maps：Kona's Coffee Okinawa 導航</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Must-Buy Okinawa Souvenirs -->
+            <div class="page-slide flex-col space-y-4" data-page="13">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 11 • 沖繩必買伴手禮" data-en="Chapter 11 • Must-Buy Souvenirs">Chapter 11 • 沖繩必買伴手禮</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="經典必買伴手禮與特產推薦" data-en="5+ Must-Buy Okinawa Souvenirs & Specialties">經典必買伴手禮與特產推薦</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🍠 1. 御菓子御殿：元祖紅芋塔" data-en="1. Beni-imo Tart (Purple Potato Tart)">🍠 1. 御菓子御殿：元祖紅芋塔</h3>
+                        <p class="text-[11px]" data-zh="使用沖繩產100%天然紅芋製成，口感綿密且充滿地瓜香氣，全沖繩最具代表性。" data-en="Made with 100% natural Okinawan purple sweet potatoes, smooth and fragrant.">使用沖繩產100%天然紅芋製成，口感綿密且充滿地瓜香氣，全沖繩最具代表性。</p>
+                    </div>
+
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🍘 2. 雪鹽餅乾 (Snow Salt Chinsuko)" data-en="2. Snow Salt Chinsuko">🍘 2. 雪鹽餅乾 (Snow Salt Chinsuko)</h3>
+                        <p class="text-[11px]" data-zh="結合宮古島地下海水的「雪鹽」與傳統餅乾，鹹甜交織、入口即化。" data-en="Combining Miyako Island Snow Salt with traditional Chinsuko cookies, sweet-salty and melt-in-your-mouth.">結合宮古島地下海水的「雪鹽」與傳統餅乾，鹹甜交織、入口即化。</p>
+                    </div>
+
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🍺 3. Orion 啤酒與泡盛 (Awamori)" data-en="3. Orion Beer & Awamori">🍺 3. Orion 啤酒與泡盛 (Awamori)</h3>
+                        <p class="text-[11px]" data-zh="沖繩在地清爽生啤酒，以及擁有500年歷史的琉球蒸餾傳統烈酒「泡盛」。" data-en="Local refreshing Orion Beer and the 500-year-old traditional Ryukyu distilled Awamori spirit.">沖繩在地清爽生啤酒，以及擁有500年歷史的琉球蒸餾傳統烈酒「泡盛」。</p>
+                    </div>
+
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🍍 4. 沖繩鳳梨酥 / 鳳梨蛋糕" data-en="4. Okinawa Pineapple Cake">🍍 4. 沖繩鳳梨酥 / 鳳梨蛋糕</h3>
+                        <p class="text-[11px]" data-zh="產自沖繩北部名護的香甜鳳梨，果肉飽滿、酸甜多汁製成的糕點伴手禮。" data-en="Sweet pineapple grown in northern Nago, baked into delicious juicy pastries.">產自沖繩北部名護的香甜鳳梨，果肉飽滿、酸甜多汁製成的糕點伴手禮。</p>
+                    </div>
+
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="🧂 5. 宮古島雪鹽與黑糖系列" data-en="5. Miyako Snow Salt & Brown Sugar">🧂 5. 宮古島雪鹽與黑糖系列</h3>
+                        <p class="text-[11px]" data-zh="富含礦物質的世界級雪鹽，以及濃郁香醇的沖繩手作黑糖塊與黑糖餅乾。" data-en="Mineral-rich snow salt and rich handmade Okinawan brown sugar blocks.">富含礦物質的世界級雪鹽，以及濃郁香醇的沖繩手作黑糖塊與黑糖餅乾。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 12: 9+ Curated Dining Recommendations with Tabs -->
+            <div class="page-slide flex-col space-y-4" data-page="14">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 12 • 9+餐廳美食總覽" data-en="Chapter 12 • 9+ Dining Recommendations">Chapter 12 • 9+餐廳美食總覽</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="沖繩本島 9 大精選餐館與小吃" data-en="9+ Curated Okinawa Restaurants">沖繩本島 9 大精選餐館與小吃</h2>
+                </div>
+
+                <!-- Interactive Tabs -->
+                <div class="flex space-x-1 bg-stone-200 p-1 rounded text-[11px] font-mono">
+                    <button onclick="switchTab('dine', 1)" id="dine-btn-1" class="flex-1 py-1.5 bg-sky-800 text-white rounded font-bold transition-all" data-zh="肉類名店(1-3)" data-en="Meats (1-3)">肉類(1-3)</button>
+                    <button onclick="switchTab('dine', 2)" id="dine-btn-2" class="flex-1 py-1.5 text-stone-700 rounded transition-all" data-zh="拉麵壽司(4-6)" data-en="Ramen (4-6)">拉麵(4-6)</button>
+                    <button onclick="switchTab('dine', 3)" id="dine-btn-3" class="flex-1 py-1.5 text-stone-700 rounded transition-all" data-zh="海鮮甜點(7-9)" data-en="Seafood (7-9)">海鮮(7-9)</button>
+                </div>
+
+                <!-- Tab 1: Restaurants 1-3 (Meats with Motomura Gyukatsu) -->
+                <div id="dine-tab-1" class="space-y-2.5 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="1. 牛かつもと村 那覇国際通り本店 (炸牛排)" data-en="1. Gyukatsu Motomura Naha Kokusai-dori">1. 牛かつもと村 那覇國際通り本店 (炸牛排)</span>
+                            <a href="https://maps.app.goo.gl/9HKKmNn1isqq72cM6" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="國際通超人氣炸牛排名店，外酥內嫩，可自行在個人石盤上加熱至喜愛熟度。" data-en="Super popular gyukatsu cutlet restaurant on Kokusai Dori. Crispy outside and tender, grilled to perfection on your personal stone plate.">國際通超人氣炸牛排名店，外酥內嫩，可自行在個人石盤上加熱至喜愛熟度。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="2. 百年古家 大家 (Agu Pork)" data-en="2.百年古家 大家 (Agu Pork Shabu Shabu)">2. 百年古家 大家 (Agu Pork)</span>
+                            <a href="https://maps.app.goo.gl/834zbgPKxfi8MTH47" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="名護百年古民家，頂級阿古豬涮涮鍋與特製豬排。" data-en="Historic 100-year-old Ryukyu folk house in Nago serving premium Agu pork shabu-shabu and cutlets.">名護百年古民家，頂級阿古豬涮涮鍋與特製豬排。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="3. 燒肉乃我那覇 (Yakiniku Yanbaru)" data-en="3. Yakiniku Yanbaru (Wagyu & Agu)">3. 燒肉乃我那覇 (Yakiniku Yanbaru)</span>
+                            <a href="https://maps.app.goo.gl/MjMcKWLWeUxKYrQS9" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="北部名護養豬場直營，頂級和牛與阿古豬燒肉吃到飽。" data-en="Directly managed by a Nago pig farm, offering top-tier Wagyu and Agu pork BBQ all-you-can-eat.">北部名護養豬場直營，頂級和牛與阿古豬燒肉吃到飽。</p>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Restaurants 4-6 (Ramen with Ichiran) -->
+                <div id="dine-tab-2" class="space-y-2.5 text-xs text-stone-700 hidden">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="4. 一蘭拉麵 那覇國際通り店 (Ichiran)" data-en="4. Ichiran Ramen Naha Kokusai-dori">4. 一蘭拉麵 那覇國際通り店 (Ichiran)</span>
+                            <a href="https://maps.app.goo.gl/PHUJUH4wdR2xwoxb9" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="日本知名天然豚骨拉麵專門店，濃郁豚骨湯頭與祕製赤紅醬汁，國際通必吃。" data-en="Famous Japanese tonkotsu ramen specialty shop featuring rich pork bone broth and secret red sauce on Kokusai Dori.">日本知名天然豚骨拉麵專門店，濃郁豚骨湯頭與祕製赤紅醬汁，國際通必吃。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="5. 琉球新麵 通堂 (Tondou Ramen)" data-en="5. Ryukyu Shinmen Tondou">5. 琉球新麵 通堂 (Tondou Ramen)</span>
+                            <a href="https://maps.app.goo.gl/b6qb5n19nKzQPouf7" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="經典男人麵（豚骨）與女人麵（雞汁），配辣豆芽極佳。" data-en="Classic 'Men's' tonkotsu ramen and 'Women's' chicken broth ramen, perfectly paired with spicy bean sprouts.">經典男人麵（豚骨）與女人麵（雞汁），配辣豆芽極佳。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="6. 暖暮拉麵 (Danbo Ramen)" data-en="6. Danbo Ramen">6. 暖暮拉麵 (Danbo Ramen)</span>
+                            <a href="https://maps.app.goo.gl/DXgtdrEwKv3SNk5p9" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="曾獲九州拉麵總選舉冠軍，濃郁豚骨湯頭與特製細麵。" data-en="Kyushu Ramen General Election winner, renowned for rich tonkotsu broth and thin noodles.">曾獲九州拉麵總選舉冠軍，濃郁豚骨湯頭與特製細麵。</p>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Restaurants 7-9 (Seafood & Desserts) -->
+                <div id="dine-tab-3" class="space-y-2.5 text-xs text-stone-700 hidden">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="7. 牧志公設市場海鮮食堂 (Makishi)" data-en="7. Makishi Public Market Seafood">7. 牧志公設市場海鮮食堂 (Makishi)</span>
+                            <a href="https://maps.app.goo.gl/gB9aHUm5HpeveyLG8" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="一樓挑選新鮮龍蝦與海膽，二樓代客料理美味海鮮。" data-en="Pick fresh lobster and sea urchin on the 1st floor, cooked to order on the 2nd floor.">一樓挑選新鮮龍蝦與海膽，二樓代客料理美味海鮮。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="8. 浜屋沖繩麵 (Hamaya Soba)" data-en="8. Hamaya Soba">8. 浜屋沖繩麵 (Hamaya Soba)</span>
+                            <a href="https://maps.app.goo.gl/kE9mZMMKr5iyeeqs8" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="北谷町海濱人氣老店，軟嫩軟骨沖繩麵湯頭鮮甜。" data-en="Popular seaside old shop in Chatan town serving tender cartilage Okinawan soba with sweet broth.">北谷町海濱人氣老店，軟嫩軟骨沖繩麵湯頭鮮甜。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <div class="flex justify-between font-bold text-stone-900">
+                            <span data-zh="9. Blue Seal Ice Cream (牧志本店)" data-en="9. Blue Seal Ice Cream">9. Blue Seal Ice Cream (牧志本店)</span>
+                            <a href="https://maps.app.goo.gl/Mk2Gytycw7tRryvx8" target="_blank" class="text-sky-700 font-mono underline text-[10px]" data-zh="地圖" data-en="Map">地圖</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="沖繩美式冰淇淋代表，必吃紅芋與鹽屋黑糖口味。" data-en="Okinawa's iconic American-style ice cream, must-try purple sweet potato and brown sugar flavors.">沖繩美式冰淇淋代表，必吃紅芋與鹽屋黑糖口味。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 13: 4-Day Comprehensive Itinerary & Notes (EXPANDED TO 4 DAYS) -->
+            <div class="page-slide flex-col space-y-4" data-page="15">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 13 • 4天完整行程推薦" data-en="Chapter 13 • 4-Day Itinerary Plan">Chapter 13 • 4天完整行程推薦</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="沖繩本島 4 天深度精華行程" data-en="4-Day Comprehensive Okinawa Itinerary">沖繩本島 4 天深度精華行程</h2>
+                </div>
+
+                <div class="bg-[#0f172a] text-[#f8fafc] p-3 rounded-lg space-y-1 text-xs font-serif shadow-inner">
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 1</span>
+                        <span data-zh="抵達那霸 ➔ 波上宮祈福 ➔ 國際通血拼 ➔ 牧志市場晚餐" data-en="Arrive Naha ➔ Naminoue Shrine ➔ Kokusai Dori Shopping ➔ Makishi Market Dinner">抵達那霸 ➔ 波上宮祈福 ➔ 國際通血拼 ➔ 牧志市場晚餐</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 2</span>
+                        <span data-zh="中部美國村商場散策 ➔ 萬座毛絕景 ➔ 恩納村海濱度假村" data-en="American Village Stroll ➔ Cape Manzamo ➔ Onna Beach Resort">中部美國村商場散策 ➔ 萬座毛絕景 ➔ 恩納村海濱度假村</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 3</span>
+                        <span data-zh="北部美麗海水族館（黑潮之海） ➔ 古宇利島跨海大橋" data-en="Churaumi Aquarium (Kuroshio Sea) ➔ Kouri Island Bridge">北部美麗海水族館（黑潮之海） ➔ 古宇利島跨海大橋</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-sky-300 font-bold">Day 4</span>
+                        <span data-zh="瀨長島希臘風情咖啡 ➔ 伴手禮採買 ➔ 機場賦歸" data-en="Senagajima Greek Cafe ➔ Souvenir Shopping ➔ Airport Departure">瀨長島希臘風情咖啡 ➔ 伴手禮採買 ➔ 機場賦歸</span>
+                    </div>
+                </div>
+
+                <div class="space-y-1 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 私人沖繩筆記：" data-en="📝 Personal Okinawa Notes:">📝 私人沖繩筆記：</label>
+                    <textarea id="travel-notes" rows="2" 
+                        class="w-full p-2 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-sky-600 focus:outline-none resize-none"
+                        placeholder="例如：租車公司接駁時間、神社御朱印收集..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-sky-800 hover:bg-sky-700 text-white text-xs py-2 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-3 py-2 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[10px] text-emerald-700 font-mono h-3"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">8</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-sky-800 hover:bg-sky-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Dining Tabs -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 15;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            document.getElementById('progress-text').textContent = progress;
+
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentPage === totalPages) {
+                nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+            } else {
+                nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+
+            document.getElementById('book-content-area').scrollTop = 0;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function switchTab(type, tabIndex) {
+            if (type === 'dine') {
+                const btn1 = document.getElementById('dine-btn-1');
+                const btn2 = document.getElementById('dine-btn-2');
+                const btn3 = document.getElementById('dine-btn-3');
+                const tab1 = document.getElementById('dine-tab-1');
+                const tab2 = document.getElementById('dine-tab-2');
+                const tab3 = document.getElementById('dine-tab-3');
+
+                if (tabIndex === 1) {
+                    btn1.className = "flex-1 py-1.5 bg-sky-800 text-white rounded font-bold transition-all";
+                    btn2.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn3.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab1.classList.remove('hidden');
+                    tab2.classList.add('hidden');
+                    tab3.classList.add('hidden');
+                } else if (tabIndex === 2) {
+                    btn2.className = "flex-1 py-1.5 bg-sky-800 text-white rounded font-bold transition-all";
+                    btn1.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn3.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab2.classList.remove('hidden');
+                    tab1.classList.add('hidden');
+                    tab3.classList.add('hidden');
+                } else {
+                    btn3.className = "flex-1 py-1.5 bg-sky-800 text-white rounded font-bold transition-all";
+                    btn1.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn2.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab3.classList.remove('hidden');
+                    tab1.classList.add('hidden');
+                    tab2.classList.add('hidden');
+                }
+            }
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('okinawa_guide_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('okinawa_guide_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
