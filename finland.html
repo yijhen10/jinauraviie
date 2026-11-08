@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芬蘭桑拿極光之旅：赫爾辛基、羅瓦涅米、奧盧、伊納里與極地要塞電子書報 | Finland Sauna & Aurora Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0c1b2a;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #0284c7;
+            border-top: 1px solid #0284c7;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #0284c7;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#f8fafc] shadow-2xl rounded-xl overflow-hidden border border-[#cbd5e1] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#0369a1] text-[#f8fafc] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 芬蘭桑拿極光之旅" data-en="Gazette • Finland Sauna & Aurora Guide">Gazette • 芬蘭桑拿極光之旅</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-cyan-900 hover:bg-cyan-800 text-cyan-200 px-2 py-0.5 rounded text-[10px] font-mono border border-cyan-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-cyan-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (12 Pages) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-cyan-800 text-cyan-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="北極圈極光與桑拿手冊 2026" data-en="Arctic Aurora & Sauna Handbook 2026">北極圈極光與桑拿手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="芬蘭桑拿極光" data-en="Finland Aurora & Sauna">芬蘭桑拿極光</span><br>
+                        <span class="text-cyan-700" data-zh="城市至拉普蘭夢幻之旅" data-en="Helsinki to Lapland Dream Journey">城市至拉普蘭夢幻之旅</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Finland: Sauna & Northern Lights Journey" data-en="Finland: Helsinki, Ruppo, Oulu, Santa Claus Village & Inari">Finland: Sauna & Northern Lights Journey.</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=800&q=80" 
+                         onerror="this.src='https://placehold.co/600x400/0369a1/ffffff?text=Finland+Aurora'" 
+                         alt="Finland Aurora" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-cyan-300 uppercase" data-zh="極光與冰雪桑拿" data-en="Aurora & Ice Sauna">極光與冰雪桑拿</p>
+                        <p class="text-xs font-serif font-medium" data-zh="橫跨赫爾辛基、羅瓦涅米(Ruppo)、奧盧與伊納里秘境" data-en="Journey across Helsinki, Ruppo, Oulu and Inari">橫跨赫爾辛基、羅瓦涅米(Ruppo)、奧盧與伊納里秘境</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="極光下的碳火香氣。芬蘭不只是聖誕老人的故鄉，更是世界桑拿文化的發源地。本手冊完整涵蓋赫爾辛基、Ruppo、奧盧、聖誕老人村、黃金村、伊納里與 Järämä 要塞。" data-en="Welcome to this Finland Sauna & Aurora guide. Spanning Helsinki, Ruppo, Oulu, Santa Claus Village, Gold Village, Inari, and Järämä Fortification Area.">
+                        極光下的碳火香氣。芬蘭不只是聖誕老人的故鄉，更是世界桑拿文化的發源地。本手冊完整涵蓋赫爾辛基、Ruppo、奧盧、聖誕老人村、黃金村、伊納里與 Järämä 要塞。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-cyan-800 hover:bg-cyan-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Chapter 01 - Helsinki (赫爾辛基) -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 01 • 首都漫遊" data-en="Chapter 01 • Capital City">Chapter 01 • 首都漫遊</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Helsinki 赫爾辛基：設計之都與海濱桑拿" data-en="Helsinki: Design Capital & Seaside Sauna">Helsinki 赫爾辛基：設計之都與海濱桑拿</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTH--TbkOCgK7twP1niuTUO_hhClqSd7peu90AArKf2A&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/334155/ffffff?text=Helsinki'" 
+                         alt="Helsinki" class="w-full h-32 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="參議院廣場與著名的 Allas Sea Pool 桑拿" data-en="Senate Square & Allas Sea Pool Sauna">參議院廣場與著名的 Allas Sea Pool 桑拿</h3>
+                    <p data-zh="芬蘭首都赫爾辛基（Helsinki）融合了新古典主義建築與北歐現代設計。造訪赫爾辛基大教堂後，務必體驗港口旁的 Allas Sea Pool 或 Loyly 海濱木造桑拿，感受冰海與熱蒸氣交融的芬蘭傳統。" data-en="Helsinki blends neoclassical architecture and Nordic design. Visit the Helsinki Cathedral and experience seaside saunas like Allas Sea Pool or Loyly by the harbor.">
+                        芬蘭首都赫爾辛基（Helsinki）融合了新古典主義建築與北歐現代設計。造訪赫爾辛基大教堂後，務必體驗港口旁的 Allas Sea Pool 或 Loyly 海濱木造桑拿。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/GgupDowbLM6ASZhSA" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-cyan-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：赫爾辛基導航" data-en="Open Google Maps: Helsinki">開啟 Google Maps：赫爾辛基導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Chapter 02 - Ruppo (羅瓦涅米門戶/Ruppo) -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 02 • 北極圈門戶" data-en="Chapter 02 • Arctic Gateway">Chapter 02 • 北極圈門戶</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Ruppo (羅瓦涅米)：極光基地與雪地冒險" data-en="Ruppo (Rovaniemi): Aurora & Snow Base">Ruppo (羅瓦涅米)：極光基地與雪地冒險</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVthJzOZ7viCw7JRejp_yKkKBrnxs8NnKUMttarRhVfg&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/475569/ffffff?text=Ruppo'" 
+                         alt="Ruppo" class="w-full h-32 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="探索北極圈秘境 Ruppo" data-en="Exploring the Arctic Wilderness of Ruppo">探索北極圈秘境 Ruppo</h3>
+                    <p data-zh="Ruppo 作為前往北極圈腹地的核心門戶，周邊擁有茂密的雪地森林與極光觀測站。在此可體驗哈士奇雪橇、馴鹿雪橇以及極地冰屋住宿。" data-en="Ruppo serves as a gateway to the Arctic heartland, surrounded by snowy forests and aurora spotting stations. Experience husky sleds, reindeer rides, and glass igloos.">
+                        Ruppo 作為前往北極圈腹地的核心門戶，周邊擁有茂密的雪地森林與極光觀測站。在此可體驗哈士奇雪橇、馴鹿雪橇以及極地冰屋住宿。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/tvaAEMLVLh2gZdGt6" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-cyan-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：Ruppo 導航" data-en="Open Google Maps: Ruppo">開啟 Google Maps：Ruppo 導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Chapter 03 - Santa Claus Village (聖誕老人村) -->
+            <div class="page-slide flex-col space-y-4" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 03 • 童話夢幻小鎮" data-en="Chapter 03 • Fairytale Village">Chapter 03 • Santa Claus Village</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Santa Claus Village 聖誕老人村" data-en="Santa Claus Village: Crossing the Arctic Circle">Santa Claus Village 聖誕老人村</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT37xXxfgkFX9DwpHRAo4jp9XxTXL7TZy7wKPV777RTJg&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/334155/ffffff?text=Santa+Claus+Village'" 
+                         alt="Santa Claus Village" class="w-full h-32 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="跨越北極圈緯線（Arctic Circle）" data-en="Crossing the Arctic Circle Line">跨越北極圈緯線（Arctic Circle）</h3>
+                    <p data-zh="位於羅瓦涅米郊區的<strong>聖誕老人村（Santa Claus Village）</strong>是全球大小朋友的夢想之地。您可以親自跨越北極圈線、拜訪聖誕老人辦公室，並從官方郵局寄出蓋有極圈郵戳的明信片。" data-en="Located in Rovaniemi, Santa Claus Village is a dream destination. Cross the Arctic Circle line, visit Santa's office, and mail postcards with the official Arctic postmark.">
+                        位於羅瓦涅米郊區的<strong>聖誕老人村（Santa Claus Village）</strong>是全球大小朋友的夢想之地。您可以親自跨越北極圈線、拜訪聖誕老人辦公室，並從官方郵局寄出蓋有極圈郵戳的明信片。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/SRVJT38meEPUjd1d7" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-cyan-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：聖誕老人村導航" data-en="Open Google Maps: Santa Claus Village">開啟 Google Maps：聖誕老人村導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Chapter 04 - Oulu (奧盧) -->
+            <div class="page-slide flex-col space-y-4" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 04 • 波的灣科技文化城" data-en="Chapter 04 • Gulf of Bothnia Hub">Chapter 04 • Gulf of Bothnia Hub</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Oulu 奧盧：北部科技與海濱文化" data-en="Oulu: Tech & Coastal Culture">Oulu 奧盧：北部科技與海濱文化</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://wanderlustwelsh.com/wp-content/uploads/2025/02/oulu-in-winter-sign.jpg" 
+                         onerror="this.src='https://placehold.co/600x300/1e293b/ffffff?text=Oulu'" 
+                         alt="Oulu" class="w-full h-32 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="波的尼亞灣畔的活力城市" data-en="Vibrant City by the Gulf of Bothnia">波的尼亞灣畔的活力城市</h3>
+                    <p data-zh="奧盧（Oulu）是芬蘭北部最大城市，座落於波的尼亞灣。這裡結合了先進科技園區、傳統木造市場廣場（Market Square）與知名的「空氣吉他世界錦標賽」，充滿北歐文藝氣息。" data-en="Oulu is northern Finland's largest city on the Gulf of Bothnia, blending tech parks, traditional wooden Market Squares, and the Air Guitar World Championships.">
+                        奧盧（Oulu）是芬蘭北部最大城市，座落於波的尼亞灣。這裡結合了先進科技園區、傳統木造市場廣場與知名的文化氣息，是通往拉普蘭的重要中繼站。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/UpJYq2foBufTDJEFA" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-cyan-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：奧盧導航" data-en="Open Google Maps: Oulu">開啟 Google Maps：奧盧導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Chapter 05 - Gold Village (黃金村/Tankavaara) -->
+            <div class="page-slide flex-col space-y-4" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 05 • 淘金歷史與木屋" data-en="Chapter 05 • Gold Panning Heritage">Chapter 05 • Gold Village</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Gold Village 黃金村：淘金傳奇與荒野木屋" data-en="Gold Village: Panning Heritage & Wilderness">Gold Village 黃金村：淘金傳奇與荒野木屋</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD7GYGhqrN3KEpsMieaV1wGdFbCEvUv-5d-kIy8fPfnA&s" 
+                         onerror="this.src='https://placehold.co/600x300/475569/ffffff?text=Gold+Village'" 
+                         alt="Gold Village" class="w-full h-32 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="探尋拉普蘭的黃金傳說（Tankavaara）" data-en="Exploring Lapland's Gold Legends">探尋拉普蘭的黃金傳說</h3>
+                    <p data-zh="位於芬蘭北部荒野中的<strong>黃金村（Gold Village / Tankavaara）</strong>保留了19世紀末淘金熱潮時期的原汁原味木造小鎮風貌。遊客可以親自體驗河流淘金、參觀黃金博物館，並在溫馨的木屋中享受極地營火。" data-en="Located in the northern wilderness, Gold Village preserves late 19th-century gold rush wooden cabins. Experience gold panning and the Gold Museum.">
+                        位於芬蘭北部荒野中的<strong>黃金村（Gold Village / Tankavaara）</strong>保留了19世紀末淘金熱潮時期的原汁原味木造小鎮風貌。遊客可以親自體驗河流淘金、參觀黃金博物館。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/x7PUWXqTsWXFUSJv9" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-cyan-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：黃金村導航" data-en="Open Google Maps: Gold Village">開啟 Google Maps：黃金村導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Chapter 06 - Inari (伊納里) -->
+            <div class="page-slide flex-col space-y-4" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 06 • 薩米文化與極光聖地" data-en="Chapter 06 • Sami Culture & Aurora">Chapter 06 • Inari</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Inari 伊納里：薩米文化聖地與湖泊極光" data-en="Inari: Sami Culture & Lake Aurora">Inari 伊納里：薩米文化聖地與湖泊極光</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpNuI8kGoxucBVm5jwePbiJLb8MYOl0IsOm6z78MqMBg&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/334155/ffffff?text=Inari'" 
+                         alt="Inari" class="w-full h-32 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="伊納里湖（Lake Inari）與萨米博物館" data-en="Lake Inari & Siida Sami Museum">伊納里湖（Lake Inari）與萨米博物館</h3>
+                    <p data-zh="伊納里（Inari）是芬蘭薩米原住民文化的腹地。巨大的伊納里湖在冬日結冰後成為絕佳的極光觀測點。參觀 Siida 博物館可深入了解薩米人的馴鹿生活與極地歷史。" data-en="Inari is the heart of Sami culture. Lake Inari freezes in winter into an elite aurora spotting ground. Visit the Siida Museum to explore Sami heritage.">
+                        伊納里（Inari）是芬蘭薩米原住民文化的腹地。巨大的伊納里湖在冬日結冰後成為絕佳的極光觀測點。參觀 Siida 博物館可深入了解薩米人的馴鹿生活與極地歷史。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/aAxKh6MuJs4Qu5kB9" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-cyan-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：伊納里導航" data-en="Open Google Maps: Inari">開啟 Google Maps：伊納里導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Chapter 07 - Järämä Fortification Area (極地軍事要塞) -->
+            <div class="page-slide flex-col space-y-4" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 07 • 歷史軍事遺跡" data-en="Chapter 07 • Historic Military Heritage">Chapter 07 • Järämä Fortification</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Järämä Fortification Area：極地防禦要塞遺跡" data-en="Järämä Fortification Area: Arctic Fortress">Järämä Fortification Area：極地防禦要塞遺跡</h2>
+                </div>
+
+                <div class="rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3ljYgd0fwu6DkzNSs95NuZCFHuT0dHWioYn7Kn2hLdQ&s=10" 
+                         onerror="this.src='https://placehold.co/600x300/475569/ffffff?text=Jarama+Fortification'" 
+                         alt="Jarama Fortification" class="w-full h-32 object-cover">
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed">
+                    <h3 class="font-serif font-bold text-sm text-stone-900" data-zh="拉普蘭戰爭的歷史見證" data-en="Historical Witness of the Lapland War">拉普蘭戰爭的歷史見證</h3>
+                    <p data-zh="位於芬蘭西北部拉普蘭地區的<strong>Järämä 戰地防禦要塞（Järämä Fortification Area）</strong>是第二次世界大戰拉普蘭戰爭（Lapland War）的重要軍事歷史遺跡。現場修復了當年的戰壕、掩體與指揮所，展示了極地嚴酷環境中的軍事防禦工程。" data-en="Located in northwestern Lapland, the Järämä Fortification Area is an important WWII historic site from the Lapland War, featuring restored trenches, bunkers, and command posts.">
+                        位於芬蘭西北部拉普蘭地區的<strong>Järämä 戰地防禦要塞（Järämä Fortification Area）</strong>是第二次世界大戰拉普蘭戰爭的重要軍事歷史遺跡。現場修復了當年的戰壕、掩體與指揮所。
+                    </p>
+                </div>
+
+                <div class="pt-1">
+                    <a href="https://maps.app.goo.gl/LiWe2jyb4Brmsc789" target="_blank" 
+                       class="flex items-center justify-center space-x-1.5 w-full bg-cyan-800 text-white text-[11px] py-2 rounded font-mono transition">
+                        <span>🗺️</span>
+                        <span data-zh="開啟 Google Maps：Järämä 要塞導航" data-en="Open Google Maps: Jarama Fortification">開啟 Google Maps：Järämä 要塞導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Curated Dining & Sauna Guide -->
+            <div class="page-slide flex-col space-y-4" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 08 • 桑拿與極地美食" data-en="Chapter 08 • Sauna & Nordic Cuisine">Chapter 08 • 桑拿與極地美食</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="芬蘭桑拿體驗與極地美饌推薦" data-en="Sauna Culture & Nordic Dining">芬蘭桑拿體驗與極地美饌推薦</h2>
+                </div>
+
+                <!-- Interactive Tabs -->
+                <div class="flex space-x-1 bg-stone-200 p-1 rounded text-[11px] font-mono">
+                    <button onclick="switchTab('dine', 1)" id="dine-btn-1" class="flex-1 py-1.5 bg-cyan-800 text-white rounded font-bold transition-all" data-zh="傳統煙燻桑拿" data-en="Smoke Sauna">煙燻桑拿</button>
+                    <button onclick="switchTab('dine', 2)" id="dine-btn-2" class="flex-1 py-1.5 text-stone-700 rounded transition-all" data-zh="極地馴鹿料理" data-en="Reindeer Dishes">馴鹿料理</button>
+                    <button onclick="switchTab('dine', 3)" id="dine-btn-3" class="flex-1 py-1.5 text-stone-700 rounded transition-all" data-zh="鮭魚與野莓派" data-en="Salmon & Berries">鮭魚野莓</button>
+                </div>
+
+                <!-- Tab 1 -->
+                <div id="dine-tab-1" class="space-y-2.5 text-xs text-stone-700">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900">🔥 傳統煙燻桑拿 (Savusauna)</h3>
+                        <p class="text-[11px]" data-zh="芬蘭最正宗的桑拿體驗。不設煙囪，木材燃燒產生的煙霧充滿整個房間，加熱石塊後排煙，蒸氣柔和且帶有淡淡木香。" data-en="The most authentic Finnish sauna experience without a chimney, offering soft steam infused with wood smoke aroma.">芬蘭最正宗的桑拿體驗。不設煙囪，木材燃燒產生的煙霧充滿整個房間，加熱石塊後排煙，蒸氣柔和且帶有淡淡木香。</p>
+                    </div>
+                </div>
+
+                <!-- Tab 2 -->
+                <div id="dine-tab-2" class="space-y-2.5 text-xs text-stone-700 hidden">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900">🦌 傳統拉普蘭馴鹿肉 (Poronkäristys)</h3>
+                        <p class="text-[11px]" data-zh="極地經典主食。將馴鹿肉薄片與奶油、洋蔥拌炒燉煮，搭配綿密馬鈴薯泥與越橘果醬（Lingonberry），鹹甜交織。" data-en="Classic Arctic dish of sautéed reindeer meat served with mashed potatoes and lingonberry jam.">極地經典主食。將馴鹿肉薄片與奶油、洋蔥拌炒燉煮，搭配綿密馬鈴薯泥與越橘果醬，鹹甜交織。</p>
+                    </div>
+                </div>
+
+                <!-- Tab 3 -->
+                <div id="dine-tab-3" class="space-y-2.5 text-xs text-stone-700 hidden">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900">🐟 傳統碳烤鮭魚與越橘派</h3>
+                        <p class="text-[11px]" data-zh="以明火慢烤的拉普蘭鮮美鮭魚，搭配當地新鮮採集的北極雲莓（Cloudberry）與越橘製成的傳統甜點。" data-en="Open-fire grilled Lapland salmon paired with traditional desserts made from Arctic cloudberries and lingonberries.">以明火慢烤的拉普蘭鮮美鮭魚，搭配當地新鮮採集的北極雲莓與越橘製成的傳統甜點。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 10: 5-Day Finland Journey Itinerary -->
+            <div class="page-slide flex-col space-y-4" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-cyan-800" data-zh="Chapter 09 • 極光桑拿行程" data-en="Chapter 09 • Aurora & Sauna Itinerary">Chapter 09 •極光桑拿行程</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="芬蘭桑拿極深度精華行程" data-en="5-Day Finland Aurora & Sauna Itinerary">芬蘭桑拿極光深度精華行程</h2>
+                </div>
+
+                <div class="bg-[#0c1b2a] text-[#f8fafc] p-3 rounded-lg space-y-1 text-xs font-serif shadow-inner">
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-cyan-300 font-bold">Day 1</span>
+                        <span data-zh="抵達赫爾辛基 ➔ 參議院廣場 ➔ 海濱桑拿體驗" data-en="Arrive Helsinki ➔ Senate Square ➔ Seaside Sauna">抵達赫爾辛基 ➔ 參議院廣場 ➔ 海濱桑拿體驗</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-cyan-300 font-bold">Day 2</span>
+                        <span data-zh="赫爾辛基設計區漫步 ➔ 搭乘夜臥火車北上" data-en="Stroll through Helsinki's Design District ➔ Take an overnight sleeper train north">赫爾辛基設計區漫步 ➔ 搭乘夜臥火車北上</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-cyan-300 font-bold">Day 3</span>
+                        <span data-zh="抵達奧盧（Oulu） ➔ 探索波的尼亞灣市場廣場" data-en="Arrive in Oulu ➔ Explore the Gulf of Bothnia Market Square">抵達奧盧（Oulu） ➔ 探索波的尼亞灣市場廣場</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-cyan-300 font-bold">Day 4</span>
+                        <span data-zh="前往 Ruppo ➔ 雪地森林極光觀測" data-en="Head to Ruppo ➔ Snow Forest Aurora Viewing">前往 Ruppo ➔ 雪地森林極光觀測</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-cyan-300 font-bold">Day 5</span>
+                        <span data-zh="聖誕老人村跨越極圈 ➔ 官方郵局寄明信片" data-en="Santa Claus Village crosses the Arctic Circle ➔ Send postcards from the official post office">聖誕老人村跨越極圈 ➔ 官方郵局寄明信片</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-cyan-300 font-bold">Day 6</span>
+                        <span data-zh="深入拉普蘭荒野 ➔ 抵達黃金村（Tankavaara）" data-en="Venture deep into the Lapland wilderness ➔ Arrive at Tankavaara (Golden Village)">深入拉普蘭荒野 ➔ 抵達黃金村（Tankavaara）</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-cyan-300 font-bold">Day 7</span>
+                        <span data-zh="黃金村河流淘金體驗 ➔ 參觀黃金博物館" data-en="Gold panning experience at Gold River Village ➔ Visit the Gold Museum">黃金村河流淘金體驗 ➔ 參觀黃金博物館</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-cyan-300 font-bold">Day 8</span>
+                        <span data-zh="抵達伊納里 ➔ 薩米文化與極光湖泊" data-en="Lake Inari Aurora ➔ Järämä Fortification Historic Site ➔ Sami Culture and Aurora LakesSami Culture.">抵達伊納里 ➔ 薩米文化與極光湖泊</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-cyan-300 font-bold">Day 9</span>
+                        <span data-zh="探訪 Järämä 要塞遺跡 ➔ 煙燻桑拿體驗" data-en="Exploring the ruins of Järämä fortress ➔ Smoke sauna experience">探訪 Järämä 要塞遺跡 ➔ 煙燻桑拿體驗</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-cyan-300 font-bold">Day 10</span>
+                        <span data-zh="馴鹿肉美饌饗宴 ➔ 伴手禮採買 ➔ 賦歸" data-en="Reindeer Feast ➔ Souvenir Shopping ➔ Departure">馴鹿肉饗宴 ➔ 伴手禮採買 ➔ 賦歸</span>
+                    </div>
+                </div>
+                
+                <div id="save-status" class="text-center text-[10px] text-emerald-700 font-mono h-3"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">10</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-cyan-800 hover:bg-cyan-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Dining Tabs -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 10;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            document.getElementById('progress-text').textContent = progress;
+
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentPage === totalPages) {
+                nextBtn.textContent = (currentLang === 'zh') ? '回到封面↺' : 'Finish ↺';
+            } else {
+                nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+
+            document.getElementById('book-content-area').scrollTop = 0;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function switchTab(type, tabIndex) {
+            if (type === 'dine') {
+                const btn1 = document.getElementById('dine-btn-1');
+                const btn2 = document.getElementById('dine-btn-2');
+                const btn3 = document.getElementById('dine-btn-3');
+                const tab1 = document.getElementById('dine-tab-1');
+                const tab2 = document.getElementById('dine-tab-2');
+                const tab3 = document.getElementById('dine-tab-3');
+
+                if (tabIndex === 1) {
+                    btn1.className = "flex-1 py-1.5 bg-cyan-800 text-white rounded font-bold transition-all";
+                    btn2.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn3.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab1.classList.remove('hidden');
+                    tab2.classList.add('hidden');
+                    tab3.classList.add('hidden');
+                } else if (tabIndex === 2) {
+                    btn2.className = "flex-1 py-1.5 bg-cyan-800 text-white rounded font-bold transition-all";
+                    btn1.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn3.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab2.classList.remove('hidden');
+                    tab1.classList.add('hidden');
+                    tab3.classList.add('hidden');
+                } else {
+                    btn3.className = "flex-1 py-1.5 bg-cyan-800 text-white rounded font-bold transition-all";
+                    btn1.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    btn2.className = "flex-1 py-1.5 text-stone-700 rounded transition-all";
+                    tab3.classList.remove('hidden');
+                    tab1.classList.add('hidden');
+                    tab2.classList.add('hidden');
+                }
+            }
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('finland_aurora_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('finland_aurora_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
