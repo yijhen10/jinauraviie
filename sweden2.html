@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瑞典深度探索之旅：極光、國家公園與海灣古鎮電子書報 | Sweden Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0f172a;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #0d9488;
+            border-top: 1px solid #0d9488;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #0d9488;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#f8fafc] shadow-2xl rounded-xl overflow-hidden border border-[#cbd5e1] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#0f766e] text-[#f8fafc] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-teal-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 瑞典深度探索之旅" data-en="Gazette • Sweden Discovery Journey">Gazette • 瑞典深度探索之旅</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-teal-900 hover:bg-teal-800 text-teal-200 px-2 py-0.5 rounded text-[10px] font-mono border border-teal-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-teal-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (13 Pages with individual destination & food pages) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-teal-800 text-teal-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="北歐瑞典深度旅遊手冊 2026" data-en="Sweden Travel Handbook 2026">北歐瑞典深度旅遊手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="瑞典深度探索" data-en="Sweden Discovery">瑞典深度探索</span><br>
+                        <span class="text-teal-700" data-zh="極光、國家公園與海灣秘境" data-en="Aurora, National Parks & Coast">極光、國家公園與海灣秘境</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Sweden: Abisko, Skuleskogen, Sundsvall & More" data-en="Sweden: Pålänge, Södra Sunderbyn, Sundsvall, Abisko & Beyond">Sweden: Pålänge, Södra Sunderbyn, Sundsvall, Abisko & Beyond.</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA3Luh1DcDFHMRG-EnPwqqwLN9o66ApXztngjuk72cUQ&s=10" 
+                         onerror="this.src='https://placehold.co/600x400/0f766e/ffffff?text=Sweden+Nature'" 
+                         alt="Sweden Nature" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-teal-300 uppercase" data-zh="極光與荒野森林" data-en="Aurora & Wilderness">極光與荒野森林</p>
+                        <p class="text-xs font-serif font-medium" data-zh="獨家收錄新指定景點與瑞典道地美食專頁" data-en="Featuring updated destinations and Swedish food">獨家收錄新指定景點與瑞典道地美食專頁</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎閱讀瑞典深度旅遊指南。本手冊將每個精選景點（Pålänge、Södra Sunderbyn、Sundsvall、Abisko、Skuleskogen、Askersund、Skärså）與特色美食獨立設頁。" data-en="Welcome to the updated Sweden Discovery Journey. Each destination and culinary specialty is featured on its own standalone page for an immersive reading experience.">
+                        歡迎閱讀瑞典深度旅遊指南。本手冊將每個精選景點與特色美食獨立設頁，帶領您領略瑞典北部極光、峽灣國家公園與海岸漁村之美。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-teal-800 hover:bg-teal-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 01 • 氣候與穿搭" data-en="Chapter 01 • Weather & Clothing">Chapter 01 • 氣候與穿搭</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="瑞典月份天氣與穿搭建議" data-en="Swedish Monthly Weather & Clothing">瑞典月份天氣與穿搭建議</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="❄️ 冬季 (12月 - 2月)：極光冰雪" data-en="❄️ Winter (Dec - Feb): Aurora & Snow">❄️ 冬季 (12月 - 2月)：極光冰雪</strong>
+                        <p data-zh="北部阿比斯庫（Abisko）極寒約 -10°C 至 -25°C。穿搭：專業極地防風防水羽絨衣、保暖發熱衣、雪靴、毛帽與防風護目鏡。" data-en="Northern Abisko can reach -10°C to -25°C. Clothing: Professional polar down jacket, thermal layers, snow boots, beanie, and goggles.">北部阿比斯庫極寒約 -10°C 至 -25°C。穿搭：專業極地防風防水羽絨衣、保暖發熱衣、雪靴、毛帽與防風護目鏡。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🌷 春季 (3月 - 5月)：萬物復甦" data-en="🌷 Spring (Mar - May): Awakening">🌷 春季 (3月 - 5月)：萬物復甦</strong>
+                        <p data-zh="氣溫約 0°C 至 12°C。穿搭：防風外套、層次穿搭（毛衣搭配輕便夾克）、舒適健行鞋。" data-en="Temperatures around 0°C to 12°C. Clothing: Windbreaker, layered sweaters, light jacket, and comfortable hiking shoes.">氣溫約 0°C 至 12°C。穿搭：防風外套、層次穿搭（毛衣搭配輕便夾克）、舒適健行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="☀️ 夏季 (6月 - 8月)：溫暖極晝" data-en="☀️ Summer (Jun - Aug): Warm & Bright">☀️ 夏季 (6月 - 8月)：溫暖極晝</strong>
+                        <p data-zh="氣溫約 15°C 至 25°C，日照時間極長。穿搭：輕便休閒服裝、太陽眼鏡、防曬乳，晚間需備薄外套。" data-en="Temperatures around 15°C to 25°C with long daylight hours. Clothing: Casual clothing, sunglasses, sunscreen, and a light jacket for evenings.">氣溫約 15°C 至 25°C，日照時間極長。穿搭：輕便休閒服裝、太陽眼鏡、防曬乳，晚間需備薄外套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🍁 秋季 (9月 - 11月)：金秋楓紅" data-en="🍁 Autumn (Sep - Nov): Fall Foliage">🍁 秋季 (9月 - 11月)：金秋楓紅</strong>
+                        <p data-zh="氣溫約 2°C 至 12°C，雨水漸多。穿搭：防水防風夾克、保暖刷毛衣、防滑防水靴。" data-en="Temperatures around 2°C to 12°C with increasing rain. Clothing: Waterproof/windproof jacket, fleece, and slip-resistant boots.">氣溫約 2°C 至 12°C，雨水漸多。穿搭：防水防風夾克、保暖刷毛衣、防滑防水靴。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(3)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：瑞典特色美食 ➔" data-en="Next: Swedish Cuisine ➔">下一頁：瑞典特色美食 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Local Culinary Specialties (Standalone Page) -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 02 • 當地特色美食專頁" data-en="Chapter 02 • Local Swedish Culinary Specialties">Chapter 02 • 當地特色美食專頁</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="瑞典必吃經典道地美食" data-en="Must-Try Swedish Local Specialties">瑞典必吃經典道地美食</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🧆 瑞典肉丸 (Köttbullar)" data-en="🧆 Swedish Meatballs (Köttbullar)">🧆 瑞典肉丸 (Köttbullar)</h3>
+                        <p data-zh="國寶級國民美食。由牛肉與豬肉混合揉製，搭配濃郁的棕色肉汁、越橘果醬與綿密馬鈴薯泥。" data-en="The national classic dish made from minced beef and pork, served with rich gravy, lingonberry jam, and mashed potatoes.">國寶級國民美食。由牛肉與豬肉混合揉製，搭配濃郁的棕色肉汁、越橘果醬與綿密馬鈴薯泥。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="innamon 桂圓肉桂捲 (Kanelbulle)" data-en="innamon Cinnamon Buns (Kanelbulle)">innamon 桂圓肉桂捲 (Kanelbulle)</h3>
+                        <p data-zh="瑞典「Fika」咖啡文化不可或缺的靈魂。充滿濃郁肉桂香氣與珍珠糖粒，配上一杯熱黑咖啡最為享受。" data-en="An essential soul food for Sweden's 'Fika' coffee culture, filled with rich cinnamon and topped with pearl sugar.">瑞典「Fika」咖啡文化不可或缺的靈魂。充滿濃郁肉桂香氣與珍珠糖粒，配上一杯熱黑咖啡最為享受。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🦐 斯卡根蝦仁吐司 (Toast Skagen)" data-en="🦐 Toast Skagen">🦐 斯卡根蝦仁吐司 (Toast Skagen)</h3>
+                        <p data-zh="經典瑞典開胃菜。烤至酥脆的吐司上鋪滿鮮甜的小蝦仁、美乃滋、新鮮蒔蘿與檸檬，口感清爽奢華。" data-en="A classic Swedish appetizer of crispy toast topped with tender shrimp, mayonnaise, fresh dill, and lemon.">經典瑞典開胃菜。烤至酥脆的吐司上鋪滿鮮甜的小蝦仁、美乃滋、新鮮蒔蘿與檸檬，口感清爽奢華。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🐟 鯡魚與鮭魚料理 (Sill & Lax)" data-en="🐟 Herring & Salmon Dishes">🐟 鯡魚與鮭魚料理 (Sill & Lax)</h3>
+                        <p data-zh="包含醃漬鯡魚與傳統煙燻、鹽燻鮭魚，是北歐海岸餐桌上歷久彌新的傳統風味。" data-en="Including pickled herring and traditional cured/smoked salmon, timeless classics of the Nordic coast.">包含醃漬鯡魚與傳統煙燻、鹽燻鮭魚，是北歐海岸餐桌上歷久彌新的傳統風味。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(4)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Pålänge 景點專頁 ➔" data-en="Next: Pålänge Destination ➔">下一頁：Pålänge 景點專頁 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Standalone Pålänge -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [1/7]" data-en="Chapter 03 • Destination [1/7]">Chapter 03 • 景點專頁 [1/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Pålänge：波的尼亞灣的傳統村落" data-en="Pålänge: Traditional Coastal Village">Pålänge：波的尼亞灣的傳統村落</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT4b1UzRHMl5n0xcqImzp2_-Zk4DIwW77S956LhPDkSA&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Palange'">
+                    </div>
+                    <p data-zh="Pålänge 位於瑞典北部博滕省（Norrbotten），是一座風景如畫的傳統沿海村落。這裡鄰近波的尼亞灣，擁有寧靜的海岸線、廣袤的泰加林與純樸的北極圈鄉村風情。" data-en="Pålänge is a picturesque traditional coastal village in Norrbotten, Northern Sweden, featuring tranquil coastlines and taiga forests.">
+                        Pålänge 位於瑞典北部博滕省，是一座風景如畫的傳統沿海村落。這裡鄰近波的尼亞灣，擁有寧靜的海岸線、廣袤的泰加林與純樸的北極圈鄉村風情。
+                    </p>
+                    <a href="https://maps.app.goo.gl/oudLTUZrGL54ZcwF7" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Pålänge 導航" data-en="Open Google Maps: Pålänge">開啟 Google Maps：Pålänge 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(5)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Södra Sunderbyn ➔" data-en="Next: Södra Sunderbyn ➔">下一頁：Södra Sunderbyn ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Standalone Södra Sunderbyn -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [2/7]" data-en="Chapter 03 • Destination [2/7]">Chapter 03 • 景點專頁 [2/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Södra Sunderbyn：呂勒河畔文化小鎮" data-en="Södra Sunderbyn: Lule River Town">Södra Sunderbyn：呂勒河畔文化小鎮</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpF1cq8nwfL8mAfGfe1os1P7F0wnlSBUYs4TDxv6ZEnw&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Sodra+Sunderbyn'">
+                    </div>
+                    <p data-zh="Södra Sunderbyn 座落於雄偉的呂勒河（Lule River）畔，靠近呂勒奧（Luleå）。這裡結合了現代醫療文化園區與古老的鄉村歷史建築，河畔風光在極晝與極夜中展現出獨特魅力。" data-en="Södra Sunderbyn sits along the magnificent Lule River near Luleå, combining modern culture and historic rural architecture.">
+                        Södra Sunderbyn 座落於雄偉的呂勒河畔，靠近呂勒奧。這裡結合了現代文化園區與古老的鄉村歷史建築，河畔風光在極晝與極夜中展現出獨特魅力。
+                    </p>
+                    <a href="https://maps.app.goo.gl/TbdHQiny9Nwp48rz5" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Södra Sunderbyn 導航" data-en="Open Google Maps: Södra Sunderbyn">開啟 Google Maps：Södra Sunderbyn 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(6)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Sundsvall 斯松茲瓦爾 ➔" data-en="Next: Sundsvall ➔">下一頁：Sundsvall 斯松茲瓦爾 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Standalone Sundsvall -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [3/7]" data-en="Chapter 03 • Destination [3/7]">Chapter 03 • 景點專頁 [3/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Sundsvall：石造建築之城" data-en="Sundsvall: Stone City">Sundsvall：石造建築之城</h2>
+                </div>
+
+                    <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvfIEjBlwcDsf9_6_Nkz86bznylzk8G0ef0b6gZN-4WQ&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Sundsvall'" alt="Sundsvall" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Sundsvall（斯松茲瓦爾）是瑞典東海岸的重要樞紐，以1888年大火後重建的宏偉磚石建築群（Stenstan）聞名，展現出十九世紀末文藝復興與新哥德式的建築巔峰。" data-en="Sundsvall is an east coast hub renowned for its majestic 19th-century brick and stone architecture (Stenstan) rebuilt after a massive 1888 fire.">
+                        Sundsvall（斯松茲瓦爾）是瑞典東海岸的重要樞紐，以1888年大火後重建的宏偉磚石建築群（Stenstan）聞名，展現出十九世紀末文藝復興與新哥德式的建築巔峰。
+                    </p>
+                    <a href="https://maps.app.goo.gl/UCQQvFJDkgvxMERQ8" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Sundsvall 導航" data-en="Open Google Maps: Sundsvall">開啟 Google Maps：Sundsvall 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(7)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Abisko 極光天堂 ➔" data-en="Next: Abisko ➔">下一頁：Abisko 極光天堂 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Standalone Abisko -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [4/7]" data-en="Chapter 03 • Destination [4/7]">Chapter 03 • 景點專頁 [4/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Abisko：世界級極光觀測聖地" data-en="Abisko: Northern Lights Heaven">Abisko：世界級極光觀測聖地</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7-jfQbuGeiHk1qbEkmAU4UdnEqIuA1yipWljnSRaw_Q&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Abisko'" alt="Abisko" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Abisko（阿比斯庫）位於瑞典極北拉普蘭，擁有傳奇的「極光洞（Blue Hole）」，因獨特的微氣候使晴空率極高，是全球公認觀賞北極光的最佳絕佳地點之一。" data-en="Abisko in northern Lapland features the legendary 'Blue Hole', providing exceptionally clear skies for Northern Lights viewing.">
+                        Abisko（阿比斯庫）位於瑞典極北拉普蘭，擁有傳奇的「極光洞」，因獨特的微氣候使晴空率極高，是全球公認觀賞北極光的最佳絕佳地點之一。
+                    </p>
+                    <a href="https://maps.app.goo.gl/azF7813STgy3mZK29" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Abisko 導航" data-en="Open Google Maps: Abisko">開啟 Google Maps：Abisko 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(8)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Skuleskogen 國家公園 ➔" data-en="Next: Skuleskogen ➔">下一頁：Skuleskogen 國家公園 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Standalone Skuleskogen national park -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [5/7]" data-en="Chapter 03 • Destination [5/7]">Chapter 03 • 景點專頁 [5/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Skuleskogen：高海岸世界遺產國家公園" data-en="Skuleskogen National Park">Skuleskogen：高海岸世界遺產國家公園</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG6xAHAKNZwUaZWpePuJLTqOcaqour67cShsMfSUIDig&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Skuleskogen'" alt="Skuleskogen" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Skuleskogen 國家公園座落於瑞典著名的「高海岸（Höga Kusten）」世界遺產區。這裡擁有壯麗的紅色花崗岩峭壁、深邃的峽谷裂縫（Slåttdalsklyven）與原始森林。" data-en="Skuleskogen National Park is situated in the Höga Kusten (High Coast) UNESCO area, featuring striking red granite cliffs and Slåttdalsklyven canyon.">
+                        Skuleskogen 國家公園座落於瑞典著名的「高海岸」世界遺產區。這裡擁有壯麗的紅色花崗岩峭壁、深邃的峽谷裂縫（Slåttdalsklyven）與原始森林。
+                    </p>
+                    <a href="https://maps.app.goo.gl/RKEyytchLHQQYsuz6" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Skuleskogen 導航" data-en="Open Google Maps: Skuleskogen">開啟 Google Maps：Skuleskogen 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(9)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Askersund 湖濱小鎮 ➔" data-en="Next: Askersund ➔">下一頁：Askersund 湖濱小鎮 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Standalone Askersund -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [6/7]" data-en="Chapter 03 • Destination [6/7]">Chapter 03 • 景點專頁 [6/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Askersund：韋特恩湖畔木造木屋之城" data-en="Askersund: Lakeside Wooden Town">Askersund：韋特恩湖畔木造木屋之城</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQrrUa41-cUfbl0cAkvi26ZxJ3JhvwUb6qxd-Vk0JeUw&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Askersund'" alt="Askersund" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Askersund 位於韋特恩湖（Vättern）的最北端，是一座充滿17世紀歷史風情的木造小鎮。狹窄街道兩旁是色彩柔和的木造房舍與寧靜的船塢碼頭。" data-en="Askersund lies at the northern tip of Lake Vättern, offering 17th-century wooden town charm, quaint streets, and serene boat marinas.">
+                        Askersund 位於韋特恩湖的最北端，是一座充滿17世紀歷史風情的木造小鎮。狹窄街道兩旁是色彩柔和的木造房舍與寧靜的船塢碼頭。
+                    </p>
+                    <a href="https://maps.app.goo.gl/hg5YGr9szAfn4Fq16" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Askersund 導航" data-en="Open Google Maps: Askersund">開啟 Google Maps：Askersund 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(10)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Skärså 漁村 ➔" data-en="Next: Skärså ➔">下一頁：Skärså 漁村 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Standalone Skärså -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [7/7]" data-en="Chapter 03 • Destination [7/7]">Chapter 03 • Destination [7/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Skärså：波的尼亞灣明珠漁村" data-en="Skärså: Coastal Fishing Village">Skärså：波的尼亞灣明珠漁村</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDPlzwAUsBwu0ANHuRrluH1E1m1rQcCO4OFO8CuHwi6Q&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Skarsa'" alt="Skarsa" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Skärså 是瑞典赫爾辛辛（Hälsingland）海岸線上極具代表性的古老漁村。這裡以保存完好的紅色木造漁網房、傳統煙燻魚肉餐廳與絕美的海灣日落聞名。" data-en="Skärså is a traditional coastal fishing village on the Hälsingland coast, famous for red boathouses and smoked fish dining.">
+                        Skärså 是瑞典赫爾辛蘭海岸線上極具代表性的古老漁村。這裡以保存完好的紅色木造漁網房、傳統煙燻魚肉餐廳與絕美的海灣日落聞名。
+                    </p>
+                    <a href="https://maps.app.goo.gl/JZ7YN7nGpWY2n4RQ8" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Skärså 導航" data-en="Open Google Maps: Skärså">開啟 Google Maps：Skärså 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(11)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：10天精華行程 ➔" data-en="Next: 10-Day Itinerary ➔">下一頁：10天精華行程 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 11: 10-Day Sweden Grand Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 04 • 10天精華行程" data-en="Chapter 04 • 10-Day Grand Itinerary">Chapter 04 • 10天精華行程推薦</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="瑞典極光、國家公園與海灣 10 天大環線" data-en="10-Day Sweden Grand Itinerary">瑞典極光與國家公園 10 天大環線</h2>
+                </div>
+
+                <div class="bg-[#0f172a] text-[#f8fafc] p-2.5 rounded-lg space-y-1 text-xs font-serif shadow-inner overflow-y-auto max-h-60">
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 1</span>
+                        <span data-zh="抵達 Abisko（阿比斯庫）➔ 極光觀測基地" data-en="Arrive Abisko ➔ Northern Lights Base">抵達 Abisko ➔ 極光觀測基地</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 2</span>
+                        <span data-zh="Abisko 國家公園冰雪健行 ➔ 峽谷探險" data-en="Abisko National Park Ice Hiking">Abisko 國家公園冰雪健行 ➔ 峽谷探險</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 3</span>
+                        <span data-zh="前往 Södra Sunderbyn ➔ 呂勒河畔文化漫步" data-en="Head to Södra Sunderbyn ➔ Lule River Stroll">前往 Södra Sunderbyn ➔ 呂勒河畔文化漫步</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 4</span>
+                        <span data-zh="Pålänge 傳統沿海村落巡禮 ➔ 北極鄉村風情" data-en="Pålänge Traditional Coastal Village">Pålänge 傳統沿海村落巡禮 ➔ 北極鄉村風情</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 5</span>
+                        <span data-zh="Skuleskogen 國家公園 ➔ 挑戰峽谷裂縫" data-en="Skuleskogen National Park ➔ Canyon Hike">Skuleskogen 國家公園 ➔ 挑戰峽谷裂縫</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 6</span>
+                        <span data-zh="Skärså 古老漁村 ➔ 品嚐煙燻鮮魚美食" data-en="Skärså Fishing Village ➔ Smoked Fish">Skärså 古老漁村 ➔ 品嚐煙燻鮮魚美食</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 7</span>
+                        <span data-zh="Sundsvall 斯松茲瓦爾 ➔ 宏偉石造建築群" data-en="Sundsvall ➔ Majestic Stone Architecture">Sundsvall 斯松茲瓦爾 ➔ 宏偉石造建築群</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 8</span>
+                        <span data-zh="Askersund 韋特恩湖畔木造小鎮漫步" data-en="Askersund ➔ Lakeside Wooden Town Stroll">Askersund 韋特恩湖畔木造小鎮漫步</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 9</span>
+                        <span data-zh="韋特恩湖區深度休閒 ➔ 湖濱咖啡 Fika" data-en="Lake Vättern Leisure & Fika">韋特恩湖區深度休閒 ➔ 湖濱咖啡 Fika</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-teal-300 font-bold">Day 10</span>
+                        <span data-zh="整理旅途回憶 ➔ 快樂賦歸" data-en="Journey Memories & Departure">整理旅途回憶 ➔ 快樂賦歸</span>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(12)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：私人旅遊筆記 ➔" data-en="Next: Traveler Notes ➔">下一頁：私人旅遊筆記 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Traveler Notes & Completion -->
+            <div class="page-slide flex-col space-y-4" data-page="12">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 05 • 旅客備忘錄" data-en="Chapter 05 • Traveler Notes">Chapter 05 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的瑞典之旅筆記" data-en="Your Personal Travel Notes">您的瑞典之旅筆記</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人筆記：" data-en="📝 Enter your personal notes:">📝 在此輸入您的私人筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-2.5 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-teal-600 focus:outline-none resize-none"
+                        placeholder="例如：Abisko極光觀測裝備、Skuleskogen健行鞋..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-teal-800 hover:bg-teal-700 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">12</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-teal-800 hover:bg-teal-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Storage -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 12;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            document.getElementById('progress-text').textContent = progress;
+
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentPage === totalPages) {
+                nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+            } else {
+                nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+
+            document.getElementById('book-content-area').scrollTop = 0;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('sweden_journey_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('sweden_journey_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
