@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瑞典深度探索之旅：木造小鎮、國家公園與湖區秘境電子書報 | Sweden Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0f172a;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #0d9488;
+            border-top: 1px solid #0d9488;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #0d9488;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#f8fafc] shadow-2xl rounded-xl overflow-hidden border border-[#cbd5e1] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#0f766e] text-[#f8fafc] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-teal-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 瑞典深度探索之旅" data-en="Gazette • Sweden Discovery Journey">Gazette • 瑞典深度探索之旅</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-teal-900 hover:bg-teal-800 text-teal-200 px-2 py-0.5 rounded text-[10px] font-mono border border-teal-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-teal-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (17 Pages with individual destination & food pages) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-teal-800 text-teal-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="北歐瑞典深度旅遊手冊 2026" data-en="Sweden Travel Handbook 2026">北歐瑞典深度旅遊手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="瑞典深度探索" data-en="Sweden Discovery">瑞典深度探索</span><br>
+                        <span class="text-teal-700" data-zh="木造小鎮與國家公園之旅" data-en="Wooden Towns & Wilderness">木造小鎮與國家公園之旅</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Sweden: Hjo, Tiveden, Örebro, Uppsala & More" data-en="Sweden: Hjo, Tivedens, Örebro, Nora, Falun & Beyond">Sweden: Hjo, Tivedens, Örebro, Nora, Falun & Beyond.</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA3Luh1DcDFHMRG-EnPwqqwLN9o66ApXztngjuk72cUQ&s=10" 
+                         onerror="this.src='https://placehold.co/600x400/0f766e/ffffff?text=Sweden+Nature'" 
+                         alt="Sweden Nature" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-teal-300 uppercase" data-zh="湖泊與森林秘境" data-en="Lakes & Forests">湖泊與森林秘境</p>
+                        <p class="text-xs font-serif font-medium" data-zh="獨家收錄獨立景點與瑞典道地美食專頁" data-en="Featuring dedicated standalone pages for each destination & Swedish food">獨家收錄獨立景點與瑞典道地美食專頁</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎閱讀瑞典深度旅遊指南。本手冊將每個精選景點與特色美食獨立設頁，讓您能夠細細品味瑞典各地的木造建築、國家公園與美食文化。" data-en="Welcome to the Sweden Discovery Journey. Each destination and culinary specialty is featured on its own standalone page for an immersive reading experience.">
+                        歡迎閱讀瑞典深度旅遊指南。本手冊將每個精選景點與特色美食獨立設頁，讓您能夠細細品味瑞典各地的木造建築、國家公園與美食文化。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-teal-800 hover:bg-teal-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 01 • 氣候與穿搭" data-en="Chapter 01 • Weather & Clothing">Chapter 01 • 氣候與穿搭</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="瑞典月份天氣與穿搭建議" data-en="Swedish Monthly Weather & Clothing">瑞典月份天氣與穿搭建議</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="❄️ 冬季 (12月 - 2月)：極寒冰雪" data-en="❄️ Winter (Dec - Feb): Freezing & Snow">❄️ 冬季 (12月 - 2月)：極寒冰雪</strong>
+                        <p data-zh="氣溫約 -5°C 至 -15°C（北部更冷）。穿搭：防風防水羽絨衣、保暖發熱衣、雪靴、毛帽、手套與圍巾。" data-en="Temperatures around -5°C to -15°C (colder up north). Clothing: Windproof/waterproof down jacket, thermal layers, snow boots, beanie, gloves, and scarf.">氣溫約 -5°C 至 -15°C（北部更冷）。穿搭：防風防水羽絨衣、保暖發熱衣、雪靴、毛帽、手套與圍巾。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🌷 春季 (3月 - 5月)：萬物復甦" data-en="🌷 Spring (Mar - May): Awakening">🌷 春季 (3月 - 5月)：萬物復甦</strong>
+                        <p data-zh="氣溫約 0°C 至 12°C。穿搭：防風外套、層次穿搭（毛衣搭配輕便夾克）、舒適健行鞋。" data-en="Temperatures around 0°C to 12°C. Clothing: Windbreaker, layered sweaters, light jacket, and comfortable hiking shoes.">氣溫約 0°C 至 12°C。穿搭：防風外套、層次穿搭（毛衣搭配輕便夾克）、舒適健行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="☀️ 夏季 (6月 - 8月)：溫暖極晝" data-en="☀️ Summer (Jun - Aug): Warm & Bright">☀️ 夏季 (6月 - 8月)：溫暖極晝</strong>
+                        <p data-zh="氣溫約 15°C 至 25°C，日照時間極長。穿搭：輕便休閒服裝、太陽眼鏡、防曬乳，晚間需備薄外套。" data-en="Temperatures around 15°C to 25°C with long daylight hours. Clothing: Casual clothing, sunglasses, sunscreen, and a light jacket for evenings.">氣溫約 15°C 至 25°C，日照時間極長。穿搭：輕便休閒服裝、太陽眼鏡、防曬乳，晚間需備薄外套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🍁 秋季 (9月 - 11月)：金秋楓紅" data-en="🍁 Autumn (Sep - Nov): Fall Foliage">🍁 秋季 (9月 - 11月)：金秋楓紅</strong>
+                        <p data-zh="氣溫約 2°C 至 12°C，雨水漸多。穿搭：防水防風夾克、保暖刷毛衣、防滑防水靴。" data-en="Temperatures around 2°C to 12°C with increasing rain. Clothing: Waterproof/windproof jacket, fleece, and slip-resistant boots.">氣溫約 2°C 至 12°C，雨水漸多。穿搭：防水防風夾克、保暖刷毛衣、防滑防水靴。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(3)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：瑞典特色美食 ➔" data-en="Next: Swedish Cuisine ➔">下一頁：瑞典特色美食 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Local Culinary Specialties (Standalone Page) -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 02 • 當地特色美食專頁" data-en="Chapter 02 • Local Swedish Culinary Specialties">Chapter 02 • 當地特色美食專頁</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="瑞典必吃經典道地美食" data-en="Must-Try Swedish Local Specialties">瑞典必吃經典道地美食</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🧆 瑞典肉丸 (Köttbullar)" data-en="🧆 Swedish Meatballs (Köttbullar)">🧆 瑞典肉丸 (Köttbullar)</h3>
+                        <p data-zh="國寶級國民美食。由牛肉與豬肉混合揉製，搭配濃郁的棕色肉汁（Gravy）、越橘果醬（Lingonberry jam）與綿密馬鈴薯泥。" data-en="The national classic dish made from minced beef and pork, served with rich gravy, lingonberry jam, and mashed potatoes.">國寶級國民美食。由牛肉與豬肉混合揉製，搭配濃郁的棕色肉汁、越橘果醬與綿密馬鈴薯泥。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="innamon 桂圓肉桂捲 (Kanelbulle)" data-en="innamon Cinnamon Buns (Kanelbulle)">innamon 桂圓肉桂捲 (Kanelbulle)</h3>
+                        <p data-zh="瑞典「Fika」（咖啡聚會文化）不可或缺的靈魂。充滿濃郁肉桂香氣與珍珠糖粒，配上一杯熱黑咖啡最為享受。" data-en="An essential soul food for Sweden's 'Fika' coffee culture, filled with rich cinnamon and topped with pearl sugar.">瑞典「Fika」咖啡文化不可或缺的靈魂。充滿濃郁肉桂香氣與珍珠糖粒，配上一杯熱黑咖啡最為享受。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🦐 斯卡根蝦仁吐司 (Toast Skagen)" data-en="🦐 Toast Skagen">🦐 斯卡根蝦仁吐司 (Toast Skagen)</h3>
+                        <p data-zh="經典瑞典開胃菜。烤至酥脆的吐司上鋪滿鮮甜的小蝦仁、美乃滋、新鮮蒔蘿與檸檬，口感清爽奢華。" data-en="A classic Swedish appetizer of crispy toast topped with tender shrimp, mayonnaise, fresh dill, and lemon.">經典瑞典開胃菜。烤至酥脆的吐司上鋪滿鮮甜的小蝦仁、美乃滋、新鮮蒔蘿與檸檬，口感清爽奢華。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🐟 鯡魚與鮭魚料理 (Sill & Lax)" data-en="🐟 Herring & Salmon Dishes">🐟 鯡魚與鮭魚料理 (Sill & Lax)</h3>
+                        <p data-zh="包含醃漬鯡魚（Inlagd sill）與傳統煙燻、鹽漬鮭魚（Gravad lax），是北歐海岸餐桌上歷久彌新的傳統風味。" data-en="Including pickled herring and traditional cured/smoked salmon, timeless classics of the Nordic coast.">包含醃漬鯡魚與傳統煙燻、鹽漬鮭魚，是北歐海岸餐桌上歷久彌新的傳統風味。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(4)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Hjo 景點專頁 ➔" data-en="Next: Hjo Destination ➔">下一頁：Hjo 景點專頁 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Standalone Hjo -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [1/11]" data-en="Chapter 03 • Destination [1/11]">Chapter 03 • 景點專頁 [1/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Hjo：韋特恩湖畔的木造之城" data-en="Hjo: Lakeside Wooden Town">Hjo：韋特恩湖畔的木造之城</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqAM5zPA4IDLoWu0oANjnAtpbAkoxHpkmo6W-LFr1ikQ&s=10">
+                    </div>
+                    <p data-zh="Hjo 是一座座落於瑞典第二大湖韋特恩湖（Vättern）西岸的迷人小鎮。這裡以保存完好的19世紀精緻木造別墅、林蔭大道與悠閒的湖濱氛圍聞名，是漫步與心靈沉澱的絕佳勝地。" data-en="Hjo is a charming town on the western shore of Lake Vättern. Famous for well-preserved 19th-century wooden villas, tree-lined avenues, and tranquil lakeside ambience.">
+                        Hjo 是一座座落於瑞典第二大湖韋特恩湖（Vättern）西岸的迷人小鎮。這裡以保存完好的19世紀精緻木造別墅、林蔭大道與悠閒的湖濱氛圍聞名，是漫步與心靈沉澱的絕佳勝地。
+                    </p>
+                    <a href="https://maps.app.goo.gl/kdTWrh2uayijeBWx5" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Hjo 導航" data-en="Open Google Maps: Hjo">開啟 Google Maps：Hjo 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(5)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Tivedens 國家公園 ➔" data-en="Next: Tivedens National Park ➔">下一頁：Tivedens 國家公園 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Standalone Tivedens national park -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [2/11]" data-en="Chapter 03 • Destination [2/11]">Chapter 03 • 景點專頁 [2/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Tivedens national park：原始森林與巨石荒野" data-en="Tivedens National Park: Wilderness">Tivedens national park：原始森林荒野</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3w9Ddl7q6SA7kt64zDDHdPONoWMw2rUu4-_Hf3Zodww&s=10">
+                    </div>
+                    <p data-zh="Tivedens 國家公園（蒂韋登）是瑞典南部最荒涼且壯麗的森林之一。這裡擁有上古冰川遺留下的大型巨石、幽深清澈的森林湖泊以及無數條絕美健行步道，深受自然探險者喜愛。" data-en="Tivedens National Park is one of southern Sweden's most rugged and stunning wilderness areas, featuring ancient boulders, deep crystal lakes, and premier hiking trails.">
+                        Tivedens 國家公園（蒂韋登）是瑞典南部最荒涼且壯麗的森林之一。這裡擁有上古冰川遺留下的大型巨石、幽深清澈的森林湖泊以及無數條絕美健行步道，深受自然探險者喜愛。
+                    </p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Tivedens+national+park" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Tivedens 導航" data-en="Open Google Maps: Tivedens">開啟 Google Maps：Tivedens 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(6)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Örebro 城堡小鎮 ➔" data-en="Next: Örebro ➔">下一頁：Örebro 城堡小鎮 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Standalone Örebro -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [3/11]" data-en="Chapter 03 • Destination [3/11]">Chapter 03 • 景點專頁 [3/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Örebro：中世紀水上城堡之城" data-en="Örebro: Medieval Castle City">Örebro：中世紀水上城堡之城</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_hprtNlU3AiCy7ynBPMmkVvMVuIMb3gehUuI0PhlQUQ&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Orebro'" alt="Orebro" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Örebro（厄勒布魯）是瑞典腹地的文化與歷史重鎮，最著名的是聳立於斯瓦爾塔河中央的厄勒布魯城堡（Örebro Castle），見證了700多年的王室權力與防禦歷史。" data-en="Örebro is a cultural and historical hub featuring the magnificent Örebro Castle rising from the Svartån river, witnessing over 700 years of royal history.">
+                        Örebro（厄勒布魯）是瑞典腹地的文化與歷史重鎮，最著名的是聳立於斯瓦爾塔河中央的厄勒布魯城堡（Örebro Castle），見證了700多年的王室權力與防禦歷史。
+                    </p>
+                    <a href="https://maps.app.goo.gl/1UWbMhLoxG7mJsm17" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Örebro 導航" data-en="Open Google Maps: Örebro">開啟 Google Maps：Örebro 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(7)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Nora 歷史礦業鎮 ➔" data-en="Next: Nora ➔">下一頁：Nora 歷史礦業鎮 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Standalone Nora -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [4/11]" data-en="Chapter 03 • Destination [4/11]">Chapter 03 • 景點專頁 [4/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Nora：保存完好的木造採礦小鎮" data-en="Nora: Wooden Mining Town">Nora：保存完好的木造採礦小鎮</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX_8HgBgNoR4dHn0Jqgc4tm5Zl39DCoVr8skYHUEtqJw&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Nora'" alt="Nora" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Nora（諾拉）是瑞典保存最完整的傳統木造採礦小鎮之一。漫步於古色古香的街道與工匠坊，彷彿時光倒流至18世紀的瑞典黃金工業時代。" data-en="Nora is one of Sweden's best-preserved traditional wooden mining towns, offering a step back into the 18th-century golden industrial era.">
+                        Nora（諾拉）是瑞典保存最完整的傳統木造採礦小鎮之一。漫步於古色古香的街道與工匠坊，彷彿時光倒流至18世紀的瑞典黃金工業時代。
+                    </p>
+                    <a href="https://maps.app.goo.gl/sh1R9acAPEfoHgsK6" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Nora 導航" data-en="Open Google Maps: Nora">開啟 Google Maps：Nora 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(8)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Falun city 銅礦古城 ➔" data-en="Next: Falun city ➔">下一頁：Falun city 銅礦古城 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Standalone Falun city -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [5/11]" data-en="Chapter 03 • Destination [5/11]">Chapter 03 • 景點專頁 [5/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Falun city：世界遺產銅礦與法倫紅" data-en="Falun City: UNESCO Copper Mine">Falun city：世界遺產銅礦古城</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReTieLSqrIvWKNhs608yaEadLLeX3CyETWQ2eK5Dxn-w&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Falun'" alt="Falun" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Falun city（法倫）以世界遺產法倫銅礦（Great Copper Mountain）聞名於世。這裡曾是瑞典經濟命脈，標誌性的瑞典傳統「法倫紅」木屋漆色即源自此處的礦石。" data-en="Falun city is famous for the Great Copper Mountain UNESCO site. It was once Sweden's economic backbone and the origin of iconic 'Falun Red' paint.">
+                        Falun city（法倫）以世界遺產法倫銅礦聞名於世。這裡曾是瑞典經濟命脈，標誌性的瑞典傳統「法倫紅」木屋漆色即源自此處的礦石。
+                    </p>
+                    <a href="https://maps.app.goo.gl/fUYaUUSndPxFigkQ8" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Falun city 導航" data-en="Open Google Maps: Falun city">開啟 Google Maps：Falun city 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(9)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Gävle city 海港城 ➔" data-en="Next: Gävle city ➔">下一頁：Gävle city 海港城 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Standalone Gävle city -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [6/11]" data-en="Chapter 03 • Destination [6/11]">Chapter 03 • 景點專頁 [6/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Gävle city：波的尼亞灣海港明珠" data-en="Gävle City: Gulf Harbor">Gävle city：波的尼亞灣海港城</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_RtEl0tsrY5qFwqCZjkm-Z5xoYKUKCSkchGEXvsjvug&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Gavle'" alt="Gavle" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Gävle city（耶夫勒）是瑞典東海岸歷史悠久的海港城市，座落於波的尼亞灣畔。擁有美麗的城市公園、博物館與傳統木造建築群，是感受海岸風光的理想據點。" data-en="Gävle city is a historic east coast port city on the Gulf of Bothnia featuring scenic parks, museums, and traditional wooden architecture.">
+                        Gävle city（耶夫勒）是瑞典東海岸歷史悠久的海港城市，座落於波的尼亞灣畔。擁有美麗的城市公園、博物館與傳統木造建築群，是感受海岸風光的理想據點。
+                    </p>
+                    <a href="https://maps.app.goo.gl/VYBSiEWPFs9FeTWZA" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Gävle city 導航" data-en="Open Google Maps: Gävle city">開啟 Google Maps：Gävle city 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(10)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Söderhamn 沿海城鎮 ➔" data-en="Next: Söderhamn ➔">下一頁：Söderhamn 沿海城鎮 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Standalone Söderhamn -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [7/11]" data-en="Chapter 03 • Destination [7/11]">Chapter 03 • 景點專頁 [7/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Söderhamn：群山與群島的瑟德爾港" data-en="Söderhamn: Coastal Town">Söderhamn：瑟德爾港與瞭望塔</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxI5p8YphZN6aBQqKACKSM-D5NrTgAoavrl1viB-jNwA&s" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Soderhamn'" alt="Soderhamn" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Söderhamn（瑟德爾港）被群山、森林與壯麗的沿海群島環繞。地標奧斯卡瞭望塔（Utsiktstornet Oskar）可俯瞰整座城鎮與波光粼粼的海灣，歷史底蘊深厚。" data-en="Söderhamn is surrounded by mountains, forests, and archipelago islands. The Oskar Lookout Tower offers panoramic views over the town and bay.">
+                        Söderhamn（瑟德爾港）被群山、森林與壯麗的沿海群島環繞。地標奧斯卡瞭望塔可俯瞰整座城鎮與波光粼粼的海灣，歷史底蘊深厚。
+                    </p>
+                    <a href="https://maps.app.goo.gl/6xBMcx4DmgUTzFWx8" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Söderhamn 導航" data-en="Open Google Maps: Söderhamn">開啟 Google Maps：Söderhamn 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(11)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Långvinds bruk 鐵廠 ➔" data-en="Next: Långvinds bruk ➔">下一頁：Långvinds bruk 鐵廠 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Standalone Långvinds bruk -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [8/11]" data-en="Chapter 03 • Destination [8/11]">Chapter 03 • 景點專頁 [8/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Långvinds bruk：18世紀歷史鐵廠遺址" data-en="Långvinds bruk: Historic Ironworks">Långvinds bruk：朗溫德歷史鐵廠</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHr7ayHKQ5BEMtfxmQ8Si4uRECxNJtjY5CZxmq5lunLg&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Langvind'" alt="Langvind" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Långvinds bruk（朗溫德）是瑞典保存完好的18世紀造鐵廠與貴族莊園遺址。這裡完美結合了工業革命時期的鐵匠歷史與波的尼亞灣的原始海岸自然風光。" data-en="Långvinds bruk is a well-preserved 18th-century ironworks and estate merging industrial heritage with coastal nature.">
+                        Långvinds bruk（朗溫德）是瑞典保存完好的18世紀造鐵廠與貴族莊園遺址。這裡完美結合了工業革命時期的鐵匠歷史與波的尼亞灣的原始海岸自然風光。
+                    </p>
+                    <a href="https://maps.app.goo.gl/FZgELx6F9o597DAq9" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Långvinds bruk 導航" data-en="Open Google Maps: Långvinds bruk">開啟 Google Maps：Långvinds bruk 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(12)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Uppsala 學府城 ➔" data-en="Next: Uppsala ➔">下一頁：Uppsala 學府城 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Standalone Uppsala -->
+            <div class="page-slide flex-col space-y-3" data-page="12">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [9/11]" data-en="Chapter 03 • Destination [9/11]">Chapter 03 • 景點專頁 [9/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Uppsala：千年學府與大教堂之城" data-en="Uppsala: University City">Uppsala：烏普薩拉大教堂與學府</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyGpkyeLgEjT_GJjFpTJ6JPXIpmKS1oF0baz3Zdm3MyA&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Uppsala'" alt="Uppsala" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Uppsala（烏普薩拉）是瑞典第四大城，擁有斯堪地那維亞半島最大的哥德式大教堂與瑞典最古老的烏普薩拉大學，充滿深厚的學術與宗教歷史底蘊。" data-en="Uppsala is Sweden's 4th largest city, featuring Scandinavia's largest Gothic cathedral and Sweden's oldest university.">
+                        Uppsala（烏普薩拉）是瑞典第四大城，擁有斯堪地那維亞半島最大的哥德式大教堂與瑞典最古老的烏普薩拉大學，充滿深厚的學術與宗教歷史底蘊。
+                    </p>
+                    <a href="https://maps.app.goo.gl/DA2Jkj2ZHxQtxCto6" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Uppsala 導航" data-en="Open Google Maps: Uppsala">開啟 Google Maps：Uppsala 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(13)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Norsholm 運河區 ➔" data-en="Next: Norsholm ➔">下一頁：Norsholm 運河區 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 13: Standalone Hösjbodet. Norsholm -->
+            <div class="page-slide flex-col space-y-3" data-page="13">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [10/11]" data-en="Chapter 03 • Destination [10/11]">Chapter 03 • 景點專頁 [10/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Hösjbodet (Norsholm)：哥達運河水鄉" data-en="Hösjbodet & Norsholm Canal">Hösjbodet (Norsholm)：哥達運河水鄉</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROdTQukMqEpN1Tz_3PJEMvXP_IQlm0ihjz3c39P17Ybg&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Norsholm'" alt="Norsholm" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Hösjbodet 與 Norsholm（諾舍姆）座落於瑞典著名的哥達運河（Göta Canal）沿線。這裡是欣賞運河船隻通過水閘、享受寧靜田園風光與水鄉漫步的絕佳地點。" data-en="Hösjbodet and Norsholm are nestled along Sweden's famous Göta Canal, offering tranquil waterside scenery and watching boats pass through locks.">
+                        Hösjbodet 與 Norsholm（諾舍姆）座落於瑞典著名的哥達運河沿線。這裡是欣賞運河船隻通過水閘、享受寧靜田園風光與水鄉漫步的絕佳地點。
+                    </p>
+                    <a href="https://maps.app.goo.gl/6q6tyC3UrodvZwf89" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Norsholm 導航" data-en="Open Google Maps: Norsholm">開啟 Google Maps：Norsholm 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(14)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Hätteboda 荒野露營 ➔" data-en="Next: Hätteboda ➔">下一頁：Hätteboda 荒野露營 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 14: Standalone Hätteboda -->
+            <div class="page-slide flex-col space-y-3" data-page="14">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 03 • 景點專頁 [11/11]" data-en="Chapter 03 • Destination [11/11]">Chapter 03 • Destination [11/11]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Hätteboda：斯莫兰湖畔荒野露營" data-en="Hätteboda Wilderness Camping">Hätteboda：湖畔荒野露營地</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8305NCwZrREUT-bJpdLyenS-y9zFMcF9xkR1u8W2BcA&s=10" onerror="this.src='https://placehold.co/600x300/0f766e/ffffff?text=Hatteboda'" alt="Hatteboda" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="Hätteboda Vildmarkscamping 位於南部斯莫兰（Småland）的深邃森林與湖畔交界處，是傳奇的無電荒野露營地。旅客在此可回歸純粹的營火烹飪、木柴桑拿與湖水清晨澡。" data-en="Hätteboda Vildmarkscamping is a legendary off-grid wilderness campsite by Småland's forests and lakes, returning to pure campfires and nature.">
+                        Hätteboda Vildmarkscamping 位於南部斯莫兰的深邃森林與湖畔交界處，是傳奇的無電荒野露營地。旅客在此可回歸純粹的營火烹飪、木柴桑拿與湖水清晨澡。
+                    </p>
+                    <a href="https://maps.app.goo.gl/V8jiFFVTTzp6aUzR7" target="_blank" class="block text-center bg-teal-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Hätteboda 導航" data-en="Open Google Maps: Hätteboda">開啟 Google Maps：Hätteboda 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(15)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：10天精華行程 ➔" data-en="Next: 10-Day Itinerary ➔">下一頁：10天精華行程 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 15: 10-Day Sweden Grand Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="15">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 04 • 10天精華行程" data-en="Chapter 04 • 10-Day Grand Itinerary">Chapter 04 • 10天精華行程推薦</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="瑞典木造小鎮與國家公園 10 天大環線" data-en="10-Day Sweden Grand Itinerary">瑞典木造小鎮與國家公園 10 天大環線</h2>
+                </div>
+
+                <div class="bg-[#0f172a] text-[#f8fafc] p-2.5 rounded-lg space-y-1 text-xs font-serif shadow-inner overflow-y-auto max-h-60">
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 1</span>
+                        <span data-zh="抵達烏普薩拉（Uppsala）➔ 大教堂漫步" data-en="Arrive Uppsala ➔ Cathedral Stroll">抵達烏普薩拉（Uppsala）➔ 大教堂漫步</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 2</span>
+                        <span data-zh="前往耶夫勒（Gävle city）➔ 波的尼亞灣港口" data-en="Head to Gävle City ➔ Gulf Harbor">前往耶夫勒（Gävle city）➔ 波的尼亞灣港口</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 3</span>
+                        <span data-zh="瑟德爾港（Söderhamn）➔ 登奧斯卡瞭望塔" data-en="Söderhamn ➔ Oskar Lookout Tower">瑟德爾港（Söderhamn）➔ 登奧斯卡瞭望塔</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 4</span>
+                        <span data-zh="Långvinds bruk 歷史鐵廠遺址巡禮" data-en="Långvinds Bruk Historic Ironworks">Långvinds bruk 歷史鐵廠遺址巡禮</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 5</span>
+                        <span data-zh="Falun city 世界遺產銅礦與法倫紅屋" data-en="Falun City UNESCO Copper Mine">Falun city 世界遺產銅礦與法倫紅屋</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 6</span>
+                        <span data-zh="Nora 傳統木造採礦小鎮漫步" data-en="Nora Traditional Wooden Mining Town">Nora 傳統木造採礦小鎮漫步</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 7</span>
+                        <span data-zh="Örebro 城堡與中世紀水上古城" data-en="Örebro Castle & Waterside Town">Örebro 城堡與中世紀水上古城</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 8</span>
+                        <span data-zh="Tivedens national park 原始森林健行" data-en="Tivedens National Park Hiking">Tivedens national park 原始森林健行</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-teal-300 font-bold">Day 9</span>
+                        <span data-zh="Hjo 木造之城 ➔ Hösjbodet (Norsholm) 運河" data-en="Hjo Wooden Town ➔ Norsholm Canal">Hjo 木造之城 ➔ Hösjbodet (Norsholm) 運河</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-teal-300 font-bold">Day 10</span>
+                        <span data-zh="Hätteboda 湖畔荒野露營體驗 ➔ 賦歸" data-en="Hätteboda Wilderness Camping ➔ Departure">Hätteboda 湖畔荒野露營體驗 ➔ 賦歸</span>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(16)" class="w-full bg-teal-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：私人旅遊筆記 ➔" data-en="Next: Traveler Notes ➔">下一頁：私人旅遊筆記 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 16: Traveler Notes & Completion -->
+            <div class="page-slide flex-col space-y-4" data-page="16">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-teal-800" data-zh="Chapter 05 • 旅客備忘錄" data-en="Chapter 05 • Traveler Notes">Chapter 05 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的瑞典之旅筆記" data-en="Your Personal Travel Notes">您的瑞典之旅筆記</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人筆記：" data-en="📝 Enter your personal notes:">📝 在此輸入您的私人筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-2.5 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-teal-600 focus:outline-none resize-none"
+                        placeholder="例如：Tivedens國家公園健行裝備、Hätteboda露營預約..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-teal-800 hover:bg-teal-700 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">16</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-teal-800 hover:bg-teal-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Storage -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 16;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            document.getElementById('progress-text').textContent = progress;
+
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentPage === totalPages) {
+                nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+            } else {
+                nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+
+            document.getElementById('book-content-area').scrollTop = 0;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('sweden_journey_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('sweden_journey_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
