@@ -1,2340 +1,614 @@
 <!DOCTYPE html>
-<html lang="zh-TW" class="h-full">
+<html lang="zh-TW" id="html-root">
 <head>
     <meta charset="UTF-8">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhotoSpot - 在世界角落紮營地圖攻略</title>
-    <!-- Tailwind CSS -->
+    <title>挪威峽灣與景觀公路探索之旅：木板教堂、極地冰川與 Lofoten 絕景電子書報 | Norway Fjord & Scenic Route Discovery</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- EXIF.js for photo metadata reading -->
-    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0f9ff',
-                            500: '#0284c7',
-                            600: '#0369a1',
-                            700: '#075985',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        .leaflet-popup-content-wrapper {
-            padding: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0b1329;
+            color: #2c2c2c;
+            touch-action: pan-y;
         }
-        .leaflet-popup-content {
-            margin: 0;
-            width: 260px !important;
+
+        .newspaper-header {
+            border-bottom: 3px double #0284c7;
+            border-top: 1px solid #0284c7;
         }
-        .custom-photo-marker {
-            transition: transform 0.2s ease-in-out;
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #0284c7;
         }
-        .custom-photo-marker:hover {
-            transform: scale(1.15);
-            z-index: 1000 !important;
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
         }
-        .marker-pin {
-            width: 44px;
-            height: 44px;
-            border-radius: 50% 50% 50% 0;
-            position: absolute;
-            transform: rotate(-45deg);
-            left: 50%;
-            top: 50%;
-            margin: -22px 0 0 -22px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            border: 3px solid #ffffff;
-            overflow: hidden;
-            background: #0284c7;
-        }
-        .marker-pin img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: rotate(45deg) scale(1.3);
-        }
-        /* User location pulsing dot style */
-        .user-location-marker {
+        .page-slide.active {
             display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        .user-location-dot {
-            width: 16px;
-            height: 16px;
-            background-color: #38bdf8;
-            border: 3px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
-            position: relative;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .user-location-dot::after {
-            content: '';
-            position: absolute;
-            top: -7px;
-            left: -7px;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background-color: rgba(56, 189, 248, 0.4);
-            animation: user-pulse 1.8s infinite ease-out;
-        }
-        @keyframes user-pulse {
-            0% { transform: scale(0.5); opacity: 1; }
-            100% { transform: scale(2.5); opacity: 0; }
-        }
-        /* Custom scrollbar */
+
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 4px;
         }
         ::-webkit-scrollbar-track {
-            background: transparent;
+            background: #f8fafc;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(148, 163, 184, 0.4); /* slate-400 with opacity */
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(148, 163, 184, 0.7);
-        }
-        
-        /* Specific scrollbar styling for drawers to match the requested look */
-        .drawer-scrollbar::-webkit-scrollbar {
-            width: 8px;
-        }
-        .drawer-scrollbar::-webkit-scrollbar-track {
-             background: rgba(15, 23, 42, 0.3); /* dark slate track */
-             border-radius: 4px;
-        }
-        .drawer-scrollbar::-webkit-scrollbar-thumb {
-            background: #94a3b8; /* Solid slate-400 thumb */
-            border-radius: 4px;
-            border: 2px solid rgba(30, 41, 59, 0.95); /* matching the drawer background */
-        }
-        .drawer-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #cbd5e1; /* Lighter on hover */
-        }
-
-        /* Enhanced smooth scrolling for drawer lists */
-        .touch-scroll {
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior-y: contain;
-            touch-action: pan-y; /* 強制行動裝置允許上下滑動 */
+            background: #94a3b8;
+            border-radius: 2px;
         }
     </style>
 </head>
-<body class="h-full bg-slate-900 text-slate-100 font-sans antialiased overflow-hidden flex flex-col">
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
 
-    <!-- Navigation Header -->
-    <header class="h-16 bg-slate-800/90 backdrop-blur border-b border-slate-700 px-4 flex items-center justify-between z-30 shrink-0">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/30">
-                <i class="fa-solid font-bold fa-camera-retro text-xl"></i>
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#f8fafc] shadow-2xl rounded-xl overflow-hidden border border-[#cbd5e1] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#0284c7] text-[#f8fafc] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-sky-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 挪威峽灣與景觀公路探索" data-en="Gazette • Norway Fjord Discovery">Gazette • 挪威峽灣與景觀公路探索</span>
             </div>
-            <div>
-                <h1 class="font-bold text-lg leading-tight tracking-wide bg-gradient-to-r from-white via-slate-200 to-sky-400 bg-clip-text text-transparent">PhotoSpot Map</h1>
-                <p class="text-xs text-slate-400 hidden sm:block">在世界角落紮營地圖攻略</p>
-            </div>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="flex-1 max-w-md mx-4 hidden md:block">
-            <div class="relative flex items-center">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 text-slate-400"></i>
-                <input type="text" id="searchInput" placeholder="搜尋景點、城市，或按 Enter 搜尋全球 Google 地點..." 
-                    class="w-full pl-10 pr-20 py-1.5 bg-slate-900/80 border border-slate-700 rounded-full text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 transition">
-                <button id="searchGlobalBtn" class="absolute right-1 px-3 py-1 bg-sky-600 hover:bg-sky-500 text-white text-xs font-medium rounded-full transition" title="搜尋全球 Google 地點">
-                    搜尋Search
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-sky-900 hover:bg-sky-800 text-sky-200 px-2 py-0.5 rounded text-[10px] font-mono border border-sky-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-sky-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
                 </button>
             </div>
         </div>
 
-        <!-- Actions -->
-        <div class="flex items-center gap-2">
-            <button id="myLocationBtn" class="p-2.5 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-slate-200 hover:text-white transition" title="前往我的位置">
-                <i class="fa-solid fa-location-crosshairs text-base"></i>
-            </button>
-            <button id="savedSpotsBtn" class="relative p-2.5 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-slate-200 hover:text-white transition" title="收藏的地點">
-                <i class="fa-solid fa-bookmark text-base"></i>
-                <span id="savedBadge" class="absolute -top-1 -right-1 w-4 h-4 bg-sky-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center hidden">0</span>
-            </button>
-        </div>
-    </header>
+        <!-- Main Scrollable Content Container -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
 
-    <!-- Main Content Area -->
-    <div class="flex-1 relative overflow-hidden bg-slate-950" id="mainLayout">
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-sky-800 text-sky-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="挪威峽灣與公路自駕手冊 2026" data-en="Norway Fjord & Scenic Route Handbook 2026">挪威峽灣與公路自駕手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="挪威峽灣極境" data-en="Norway Fjord Majesty">挪威峽灣極境</span><br>
+                        <span class="text-sky-700" data-zh="景觀公路羅弗敦群島之旅" data-en="Scenic Roads & Lofoten Journey">景觀公路羅弗敦群島之旅</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Norway: Stave Churches, Trolls, Glaciers & Lofoten" data-en="Norway: Stave Churches, Trolls, Glaciers & Lofoten">Norway: Stave Churches, Trolls, Glaciers & Lofoten.</p>
+                </div>
 
-        <!-- Map Container (Full Screen Underneath) -->
-        <main id="mapContainer" class="absolute inset-0 z-0">
-            <div id="map" class="w-full h-full"></div>
-
-            <!-- Map Controls Overlay (Google Maps Style Selector) -->
-            <div class="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
-                <div class="relative inline-block text-left" id="mapStyleContainer">
-                    <button id="mapStyleBtn" class="bg-slate-800/90 text-slate-200 border border-slate-700 hover:bg-slate-700 px-3 py-2 rounded-xl shadow-lg text-xs flex items-center gap-2 backdrop-blur transition">
-                        <i class="fa-solid fa-map-location-dot text-sky-400 text-sm"></i>
-                        <span id="mapStyleLabel" class="hidden sm:inline">Google 街道圖</span>
-                        <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
-                    </button>
-                    <!-- Google Maps Tile Menu -->
-                    <div id="mapStyleMenu" class="hidden absolute right-0 mt-2 w-44 bg-slate-800/95 border border-slate-700 rounded-xl shadow-2xl py-1 z-50 backdrop-blur">
-                        <button data-layer="googleStreets" class="w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-sky-600/30 hover:text-sky-400 flex items-center gap-2 transition">
-                            <i class="fa-solid fa-map text-sky-400"></i> Google 街道圖
-                        </button>
-                        <button data-layer="googleHybrid" class="w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-sky-600/30 hover:text-sky-400 flex items-center gap-2 transition">
-                            <i class="fa-solid fa-layer-group text-indigo-400"></i> Google 混合圖
-                        </button>
-                        <button data-layer="googleSatellite" class="w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-sky-600/30 hover:text-sky-400 flex items-center gap-2 transition">
-                            <i class="fa-solid fa-earth-americas text-emerald-400"></i> Google 衛星圖
-                        </button>
-                        <button data-layer="googleTerrain" class="w-full px-3 py-2 text-left text-xs text-slate-200 hover:bg-sky-600/30 hover:text-sky-400 flex items-center gap-2 transition">
-                            <i class="fa-solid fa-mountain-sun text-amber-400"></i> Google 地形圖
-                        </button>
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw-qivQ7YnIwQ_CWngxDsYdWTg1T1ESUpGb0pplX-zHw&s=10" 
+                         onerror="this.src='https://placehold.co/600x400/0284c7/ffffff?text=Norway+Fjord'" 
+                         alt="Norway Fjord" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-sky-300 uppercase" data-zh="壯麗峽灣與木板教堂" data-en="Fjords & Stave Churches">壯麗峽灣與木板教堂</p>
+                        <p class="text-xs font-serif font-medium" data-zh="涵蓋 24 個指定景點、渡輪指南與頂級營區" data-en="Covering 24 destinations, ferry guide & top campsites">涵蓋 24 個指定景點、渡輪指南與頂級營區</p>
                     </div>
                 </div>
-            </div>
 
-            <!-- Custom Map Controls (Zoom & Fullscreen) -->
-            <div class="absolute bottom-6 right-4 z-[1000] flex flex-col gap-3">
-                <button id="fullscreenBtn" class="w-10 h-10 bg-slate-800/95 text-slate-200 border border-slate-700 hover:bg-slate-700 hover:text-white rounded-xl shadow-lg flex items-center justify-center backdrop-blur transition" title="切換全螢幕">
-                    <i class="fa-solid fa-expand"></i>
-                </button>
-                <div class="flex flex-col bg-slate-800/95 border border-slate-700 rounded-xl shadow-lg overflow-hidden backdrop-blur">
-                    <button id="zoomInBtn" class="w-10 h-10 text-slate-200 hover:bg-slate-700 hover:text-white flex items-center justify-center transition border-b border-slate-700/80" title="放大地圖">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                    <button id="zoomOutBtn" class="w-10 h-10 text-slate-200 hover:bg-slate-700 hover:text-white flex items-center justify-center transition" title="縮小地圖">
-                        <i class="fa-solid fa-minus"></i>
-                    </button>
-                </div>
-            </div>
-        </main>
-
-        <!-- Floating Top Left Filter Bar -->
-        <div class="absolute top-4 left-4 right-16 z-[1000] flex flex-wrap gap-2 pointer-events-none" id="floatingControls">
-            <!-- Toggle List Button -->
-            <button onclick="toggleSidebar()" class="pointer-events-auto bg-sky-600 hover:bg-sky-500 text-white px-3 sm:px-4 py-2 rounded-xl shadow-[0_4px_12px_rgba(2,132,199,0.4)] font-medium text-xs sm:text-sm transition flex items-center gap-2 backdrop-blur">
-                <i class="fa-solid fa-list"></i>
-  <span class="hidden sm:flex flex-col items-center leading-tight ml-1">
-    <span>展開清單</span>
-    <span class="text-[10px] opacity-80">TRIP LIST</span>
-  </span>
-            </button>
-            
-            <!-- Category Filters -->
-            <div class="pointer-events-auto flex items-center gap-1.5 overflow-x-auto no-scrollbar bg-slate-800/90 backdrop-blur p-1.5 rounded-xl border border-slate-700 shadow-lg" id="categoryFilter">
-                <button data-cat="all" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
-  <div class="flex items-center gap-1">
-    <i class="fas fa-compass mr-1"></i>
-    <span>全部地區</span>
-  </div>
-  <span class="text-[10px] opacity-80 leading-none">WORLDWIDE</span>
-</button>
-                <button data-cat="asia-pacific" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
-  <div class="flex items-center gap-1">
-    <i class="fa-solid fa-earth-asia mr-1"></i>
-    <span>亞洲</span>
-  </div>
-  <span class="text-[10px] opacity-80 leading-none">ASIA</span>
-</button>
-              <button data-cat="oceania" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
-  <div class="flex items-center gap-1">
-    <i class="fas fa-anchor mr-1"></i>
-    <span>大洋洲</span>
-  </div>
-  <span class="text-[10px] opacity-80 leading-none">OCEANIA</span>
-</button>
-<button data-cat="europe" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
-  <div class="flex items-center gap-1">
-    <i class="fas fa-dharmachakra mr-1"></i>
-    <span>歐洲</span>
-  </div>
-  <span class="text-[10px] opacity-80 leading-none">EUROPE</span>
-</button>       
-  <button data-cat="campsite" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
-  <div class="flex items-center gap-1">
-    <i class="fas fa-campground"></i>
-    <span>營區</span>
-  </div>
-  <span class="text-[10px] opacity-80 leading-none">CAMPSITE</span>
-<button data-cat="coffee" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
-  <div class="flex items-center gap-1">
-    <i class="fas fa-coffee"></i>
-    <span>咖啡</span>
-  </div>
-  <span class="text-[10px] opacity-80 leading-none">COFFEE</span>
-</button>
-            </div>
-            
-            <!-- Country Select -->
-            <div class="pointer-events-auto bg-slate-800/90 backdrop-blur px-3 py-1.5 rounded-xl border border-slate-700 shadow-lg flex items-center text-xs text-slate-200">
-                <i class="fa-solid fa-globe text-sky-400 mr-2"></i>
-                <select id="countrySelect" class="bg-transparent focus:outline-none cursor-pointer">
-                    <option value="all" class="bg-slate-800">所有國家(All)</option>
-                    <option value="Taiwan" class="bg-slate-800">台灣 (Taiwan)</option>
-                    <option value="Thailand" class="bg-slate-800">泰國 (Thailand)</option>
-                    <option value="Indonesia" class="bg-slate-800">印尼 (Indonesia)</option>
-                    <option value="China" class="bg-slate-800">中國 (China)</option>
-                    <option value="Japen" class="bg-slate-800">日本 (Japen)</option>
-                    <option value="korea" class="bg-slate-800">韓國 (Korea)</option>
-                    <option value="Australia" class="bg-slate-800">澳洲 (Australia)</option>
-                    <option value="Germany" class="bg-slate-800">德國 (Germany)</option>
-                    <option value="Luxembourg" class="bg-slate-800">盧森堡 (Luxembourg)</option>
-                    <option value="Austria" class="bg-slate-800">奧地利 (Austria)</option>
-                    <option value="Denmark" class="bg-slate-800">丹麥 (Denmark)</option>
-                    <option value="Slovenia" class="bg-slate-800">斯洛維尼亞 (Slovenia)</option>
-                    <option value="Sweden" class="bg-slate-800">瑞典 (Sweden)</option>
-                    <option value="Finland" class="bg-slate-800">芬蘭 (Finland)</option>
-                    <option value="Norway" class="bg-slate-800">挪威 (Norway)</option>
-                    <option value="Britain" class="bg-slate-800">英國 (Britain)</option>
-                    <option value="Italy" class="bg-slate-800">義大利 (Italy)</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Sidebar Drawer (Spot List) -->
-        <aside id="sidebar" class="absolute inset-y-0 left-0 w-full sm:w-[400px] z-[1010] bg-[#1e293b]/95 backdrop-blur border-r border-slate-700 transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl pointer-events-auto">
-            <!-- List Stats / Count -->
-            <div class="px-4 py-3 bg-slate-900/80 border-b border-slate-700 flex justify-between items-center z-10 shrink-0 backdrop-blur">
-                <h2 class="font-bold text-slate-100 flex items-center gap-2">
-                    <i class="fa-solid fa-map-location-dot text-sky-400"></i>
-                    <span class="lang-zh">全集列表 All List (<strong id="spotCount" class="text-sky-400">0</strong>)</span>
-                    <span class="lang-en hidden">All Spots (<strong id="spotCountEn" class="text-sky-400">0</strong>)</span>
-                </h2>
-                <button onclick="toggleSidebar()" class="w-8 h-8 rounded-full bg-slate-700/50 hover:bg-slate-600 text-slate-300 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <!-- Spots List Container -->
-            <div id="spotList" class="flex-1 overflow-y-auto overflow-x-hidden touch-scroll drawer-scrollbar p-3 flex flex-col gap-2.5 relative pb-20">
-                <!-- Dynamic Spot Cards generated here -->
-            </div>
-        </aside>
-
-        <!-- Detail Drawer (Guide Panel) -->
-        <aside id="detailSidebar" class="absolute bottom-0 left-0 w-full max-h-[85vh] sm:top-0 sm:bottom-0 sm:w-[420px] sm:max-h-full z-[1020] bg-[#1e293b]/95 backdrop-blur border-t sm:border-t-0 sm:border-r border-slate-700 transform translate-y-full sm:-translate-x-full sm:translate-y-0 transition-transform duration-300 flex flex-col shadow-[0_-10px_40px_rgba(0,0,0,0.5)] sm:shadow-2xl rounded-t-2xl sm:rounded-none pointer-events-auto">
-            <!-- Detail Panel Header Navigation -->
-            <div class="p-3 border-b border-slate-700 bg-slate-900/80 sticky top-0 z-10 flex items-center justify-between backdrop-blur rounded-t-2xl sm:rounded-none">
-                <div class="flex items-center gap-3">
-                    <button id="closeDetailBtn" class="w-8 h-8 rounded-full bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm flex items-center justify-center transition shadow-md">
-                        <i class="fa-solid fa-arrow-left sm:hidden"></i>
-                        <i class="fa-solid fa-xmark hidden sm:block"></i>
-                    </button>
-                    <span id="modalCategoryBadge" class="bg-sky-600/90 text-white text-[10px] px-2 py-0.5 rounded border border-sky-500/50 shadow-sm">
-                        地區
-                    </span>
-                </div>
-                <button id="modalSaveBtn" class="text-slate-400 hover:text-sky-400 text-lg p-1 transition drop-shadow-md" title="收藏景點">
-                    <i class="fa-regular fa-bookmark"></i>
-                </button>
-            </div>
-
-            <!-- Photo & Details Body -->
-            <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
-                <!-- Photo Container -->
-                <div class="w-full bg-black rounded-xl overflow-hidden relative shadow-xl group shrink-0 h-48 sm:h-56 border border-slate-700/50">
-                    <img id="modalPhoto" src="" alt="Spot Photo" class="w-full h-full object-contain transition duration-500 group-hover:scale-105 bg-black">
-                    <div class="absolute inset-0 shadow-[inset_0_-40px_40px_rgba(0,0,0,0.6)] pointer-events-none"></div>
-                </div>
-
-                <!-- Info Container -->
-                <div class="w-full flex flex-col space-y-3 pb-6">
-                    <!-- Title & Location -->
-                    <div>
-                        <h2 id="modalTitle" class="text-xl font-bold text-white leading-tight mb-1.5 drop-shadow-md">景點名稱</h2>
-                        <p id="modalLocation" class="text-xs text-sky-400 flex items-center gap-1.5 font-medium">
-                            <i class="fa-solid fa-location-dot"></i> <span>地點位置</span>
-                        </p>
-                    </div>
-
-                    <!-- Description -->
-                    <p id="modalDescription" class="text-sm text-slate-300 leading-relaxed bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 shadow-inner">
-                        景點描述內容...
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎展開挪威峽灣深度探索之旅。本手冊完整收錄從哈林達爾木板教堂、精靈之路、大西洋海濱公路到羅弗敦群島（Lofoten）的絕美景致、渡輪交通與露營勝地。" data-en="Welcome to the Norway Fjord & Scenic Route Discovery. This handbook features 24 epic destinations, comprehensive ferry transit guides, and top campsites like Setnes Feriesenter and Lofoten Beach Camp.">
+                        歡迎展開挪威峽灣深度探索之旅。本手冊完整收錄從哈林達爾木板教堂、精靈之路、大西洋海濱公路到羅弗敦群島的絕美景致、渡輪交通與露營勝地。
                     </p>
+                </div>
 
-                    <!-- External Links Box -->
-                    <div class="grid grid-cols-2 gap-3 pt-2">
-                        <a id="modalFacebookLink" href="#" target="_blank" class="bg-[#1877F2]/20 hover:bg-[#1877F2]/40 border border-[#1877F2]/40 text-[#1877F2] rounded-xl p-3 flex flex-col items-center justify-center gap-2 transition shadow-lg group">
-                            <i class="fa-brands fa-facebook text-2xl group-hover:scale-110 transition"></i>
-                            <span class="text-xs font-bold tracking-wide">Facebook 貼文</span>
-                        </a>
-                        <a id="modalGuideLink" href="#" target="_blank" class="bg-emerald-900/30 hover:bg-emerald-800/50 border border-emerald-500/30 text-emerald-400 rounded-xl p-3 flex flex-col items-center justify-center gap-2 transition shadow-lg group">
-                            <i class="fa-solid fa-book-atlas text-2xl group-hover:scale-110 transition"></i>
-                            <span class="text-xs font-bold tracking-wide">指南手冊 Guide</span>
-                        </a>
-                    </div>
-
-                    <!-- Action buttons -->
-                    <div class="pt-2 flex flex-col gap-2">
-                        <button id="modalNavigateBtn" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-sm flex items-center justify-center gap-2 transition shadow-lg shadow-sky-600/20 border border-sky-500/50">
-                            <i class="fa-solid fa-diamond-turn-right"></i> 開啟 Google 地圖導航 (Navigation)
-                        </button>
-                        <div class="flex gap-2">
-                            <button id="modalStreetViewBtn" class="flex-1 py-2.5 px-3 bg-slate-800 border border-slate-600 hover:bg-slate-700 text-slate-200 font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition shadow-md">
-                                <i class="fa-solid fa-street-view text-amber-400"></i> Google 街景 (Street View)
-                            </button>
-                            <button id="modalCopyCoordBtn" class="py-2.5 px-4 rounded-xl bg-slate-800 border border-slate-600 hover:bg-slate-700 text-slate-200 text-sm transition shadow-md shrink-0" title="複製經緯度">
-                                <i class="fa-solid fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-sky-800 hover:bg-sky-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
                 </div>
             </div>
-        </aside>
+
+            <!-- PAGE 2: Norwegian Ferry Transit Guide (渡輪交通指南) -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 01 • 渡輪交通指南" data-en="Chapter 01 • Ferry Transit Guide">Chapter 01 • 渡輪交通指南</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="挪威峽灣渡輪交通方式指南" data-en="Norwegian Fjord Ferry Transit Guide">挪威峽灣渡輪交通方式指南</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="⛴️ 1. 峽灣車輛渡輪（Bilferge）" data-en="⛴️ 1. Car Ferries (Bilferge)">⛴️ 1. 峽灣車輛渡輪（Bilferge）</strong>
+                        <p data-zh="挪威海岸線曲折，許多景觀公路（如往返Geiranger、Lofoten）必須依賴渡輪。多數渡輪允許車輛與行人直接登船，多數採用先到先排或線上預約（AutoPASS）。" data-en="Norway's rugged coastline relies on car ferries connecting scenic routes. Most ferries accept cars and foot passengers on a first-come basis or via AutoPASS.">挪威海岸線曲折，許多景觀公路必須依賴渡輪。多數渡輪允許車輛與行人直接登船，支援 AutoPASS 電子收費或現場刷卡。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="💳 2. 付費系統與 AutoPASS" data-en="💳 2. Payment & AutoPASS">💳 2. 付費系統與 AutoPASS</strong>
+                        <p data-zh="強烈建議租車時裝設 AutoPASS 標籤，不僅能享有過路費折扣，也能自動扣繳各大渡輪通行費（FerryCard），省去排隊買票時間。" data-en="Installing an AutoPASS tag in rental cars is highly recommended for toll discounts and seamless ferry payments.">強烈建議租車時裝設 AutoPASS 標籤，不僅能享有過路費折扣，也能自動扣繳各大渡輪通行費，省去排隊買票時間。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="⏱️ 3. 航班時刻與季節調整" data-en="⏱️ 3. Timetables & Seasonal Adjustments">⏱️ 3. 航班時刻與季節調整</strong>
+                        <p data-zh="夏季班次頻繁（每20-40分鐘一班），冬季或極北地區（如Bodø至Lofoten的Moskenes渡輪）班次較少且易受天候影響，務必提前查詢 Torghatten Nord 或 Ruter 官網。" data-en="Summer schedules are frequent, while winter and northern routes (e.g., Bodø to Moskenes) have reduced sailings and depend on weather.">夏季班次頻繁，冬季或極北地區（如Bodø至Lofoten渡輪）班次較少且易受天候影響，務必提前查詢官方時刻表。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(3)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：氣候與穿搭建議 ➔" data-en="Next: Weather & Clothing ➔">下一頁：氣候與穿搭建議 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 02 • 氣候與穿搭" data-en="Chapter 02 • Weather & Clothing">Chapter 02 • 氣候與穿搭</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="挪威月份天氣與穿搭建議" data-en="Norwegian Monthly Weather & Clothing">挪威月份天氣與穿搭建議</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="❄️ 冬季 (11月 - 3月)：極光與冰雪" data-en="❄️ Winter (Nov - Mar): Aurora & Snow">❄️ 冬季 (11月 - 3月)：極光與冰雪</strong>
+                        <p data-zh="氣溫約 -15°C 至 2°C。穿搭：極地防水防風羽絨外套、羊毛排汗內衣、防滑雪靴、毛帽與保暖手套。" data-en="Temperatures -15°C to 2°C. Clothing: Polar waterproof down jacket, merino wool thermals, snow boots, and beanies.">氣溫約 -15°C 至 2°C。穿搭：極地防水防風羽絨外套、羊毛排汗內衣、防滑雪靴、毛帽與保暖手套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🌷 春季 (4月 - 5月)：萬物復甦與融雪" data-en="🌷 Spring (Apr - May): Blossoms & Melting Snow">🌷 春季 (4月 - 5月)：萬物復甦與融雪</strong>
+                        <p data-zh="氣溫約 2°C 至 14°C，瀑布水量最豐沛。穿搭：防風防水夾克、刷毛衣、防滑健行鞋。" data-en="Temperatures 2°C to 14°C with roaring waterfalls. Clothing: Windproof/waterproof jacket, fleece, and hiking boots.">氣溫約 2°C 至 14°C，瀑布水量最豐沛。穿搭：防風防水夾克、刷毛衣、防滑健行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="☀️ 夏季 (6月 - 8月)：極晝健行季" data-en="☀️ Summer (Jun - Aug): Midnight Sun & Hiking">☀️ 夏季 (6月 - 8月)：極晝健行季</strong>
+                        <p data-zh="氣溫約 12°C 至 25°C。穿搭：輕量排汗衣、防風夾克、太陽眼鏡、防曬乳與舒適健行鞋。" data-en="Temperatures 12°C to 25°C. Clothing: Lightweight moisture-wicking shirts, wind jacket, sunglasses, sunscreen, and hiking shoes.">氣溫約 12°C 至 25°C。穿搭：輕量排汗衣、防風夾克、太陽眼鏡、防曬乳與舒適健行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🍁 秋季 (9月 - 10月)：金黃峽灣秋景" data-en="🍁 Autumn (Sep - Oct): Golden Fjords">🍁 秋季 (9月 - 10月)：金黃峽灣秋景</strong>
+                        <p data-zh="氣溫約 3°C 至 12°C，降雨機率較高。穿搭：高品質防水外套、刷毛保暖衣、防水靴。" data-en="Temperatures 3°C to 12°C with higher rainfall. Clothing: High-quality waterproof jacket, fleece, and waterproof boots.">氣溫約 3°C 至 12°C，降雨機率較高。穿搭：高品質防水外套、刷毛保暖衣、防水靴。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(4)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：景點導覽 [1-5] ➔" data-en="Next: Destinations [1-5] ➔">下一頁：景點導覽 [1-5] ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Destinations Part 1 (Torpo, Hallingdal Museum, Vøringsfossen, Tvindefossen, Flåm) -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點巡禮 [1/5]" data-en="Chapter 03 • Destinations [1/5]">Chapter 03 • 景點巡禮 [1/5]</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="木板教堂、博物館與壯麗瀑布" data-en="Stave Churches, Museums & Waterfalls">木板教堂、博物館與壯麗瀑布</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">1. Torpo stave church, Hallingdal</h3>
+                        <p class="text-[11px]" data-zh="建於1192年的古老木板教堂，是哈林達爾現存最古老的建築，擁有精美的中世紀木雕與龍形裝飾。" data-en="Built in 1192, Hallingdal's oldest surviving stave church features exquisite medieval wood carvings and dragon motifs.">建於1192年的古老木板教堂，擁有精美的中世紀木雕與龍形裝飾。</p>
+                        <a href="https://maps.app.goo.gl/Mk2DysenSXJMhFUH6" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">2. Hallingdal Museum, Nesbyen</h3>
+                        <p class="text-[11px]" data-zh="挪威歷史最悠久的戶外露天博物館之一，保存了30多棟傳統的哈林達爾古老木造農舍與歷史文物。" data-en="One of Norway's oldest open-air museums preserving over 30 traditional timber farmhouses.">挪威歷史最悠久的戶外露天博物館之一，保存了30多棟傳統的古老木造農舍與歷史文物。</p>
+                        <a href="https://maps.app.goo.gl/xv1cduhiutkoDPrs5" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">3. Vøringsfossen 菲林斯瀑布</h3>
+                        <p class="text-[11px]" data-zh="落差高達182公尺的壯麗瀑布，設有驚險的觀景步道與跨越峽谷的建築設計景觀橋。" data-en="A magnificent 182-meter drop waterfall featuring thrilling viewing platforms and a canyon-spanning bridge.">落差高達182公尺的壯麗瀑布，設有驚險的觀景步道與跨越峽谷的景觀橋。</p>
+                        <a href="https://maps.app.goo.gl/ZrFBA2i8ZPiuagcs9" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">4. Tvindefossen 特溫德瀑布</h3>
+                        <p class="text-[11px]" data-zh="著名的多層階梯狀瀑布，水流沿著崖壁如白色面紗般流淌，傳說具有青春永駐的神奇魔力。" data-en="A famous multi-tiered cascading waterfall flowing gracefully like a white veil down the rock face.">著名的多層階梯狀瀑布，水流沿著崖壁如白色面紗般流淌，傳說具有青春永駐的神奇魔力。</p>
+                        <a href="https://maps.app.goo.gl/rkyzFpwZz2Rs7jxz5" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">5. Flåm 弗洛姆</h3>
+                        <p class="text-[11px]" data-zh="坐落於納勒羅峽灣深處的世外桃源，世界著名的弗洛姆鐵路（Flåmsbana）起點，景色如詩如畫。" data-en="A scenic haven deep within Nærøyfjord, starting point of the world-famous Flåm Railway.">坐落於峽灣深處的世外桃源，世界著名的弗洛姆鐵路起點，景色如詩如畫。</p>
+                        <a href="https://maps.app.goo.gl/WyjKrKfJAvss5mZr6" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(5)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：景點導覽 [2/5] ➔" data-en="Next: Destinations [2/5] ➔">下一頁：景點導覽 [2/5] ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destinations Part 2 (Lærdalstunnelen, Lom, Geiranger Skywalk, Kvanndalsfossen, Dronning Sonjas stol) -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點巡禮 [2/5]" data-en="Chapter 03 • Destinations [2/5]">Chapter 03 • 景點巡禮 [2/5]</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="世界最長隧道與雲端天際步道" data-en="Longest Tunnel & Skywalk">世界最長隧道與雲端天際步道</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">6. Lærdalstunnelen 洛達爾隧道</h3>
+                        <p class="text-[11px]" data-zh="全長24.5公里的世界最長公路隧道，內部設有三處利用炫彩燈光營造的巨型洞穴，緩解駕駛疲勞。" data-en="At 24.5 km, the world's longest road tunnel features three illuminated mountain caverns.">全長24.5公里的世界最長公路隧道，內部設有三處利用炫彩燈光營造的巨型洞穴。</p>
+                        <a href="https://maps.app.goo.gl/D8poSMPDaWKthpdn9" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">7. Lom 洛姆木板教堂與小鎮</h3>
+                        <p class="text-[11px]" data-zh="擁有建於1150年的宏偉木板教堂，是挪威保存最完好且規模最大的中世紀木造建築之一。" data-en="Home to a magnificent stave church built in 1150, one of Norway's largest and best-preserved.">擁有建於1150年的宏偉木板教堂，是挪威保存最完好且規模最大的中世紀木造建築之一。</p>
+                        <a href="https://maps.app.goo.gl/ccnSzJtmVXwdr2wp6" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">8. Geiranger Skywalk Dalsnibba</h3>
+                        <p class="text-[11px]" data-zh="海拔1,500公尺的歐洲最高峽灣觀景台，站在懸空平台上可俯瞰如詩如畫的蓋倫厄爾峽灣全景。" data-en="Europe's highest fjord viewpoint at 1,500 meters, offering breathtaking panoramic views of Geirangerfjord.">海拔1,500公尺的歐洲最高峽灣觀景台，站在懸空平台上可俯瞰蓋倫厄爾峽灣全景。</p>
+                        <a href="https://maps.app.goo.gl/Sqt6LPMqfTdqoe816" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">9. Kvanndalsfossen 寬達爾瀑布</h3>
+                        <p class="text-[11px]" data-zh="壯觀的自然瀑布景觀，奔騰水流自高山直瀉而下，融合周邊原始森林與群山，氣勢磅礡。" data-en="A spectacular natural waterfall plunging down rugged mountains amidst pristine forests.">壯觀的自然瀑布景觀，奔騰水流自高山直瀉而下，融合周邊原始森林與群山。</p>
+                        <a href="https://maps.app.goo.gl/65kqSerVciygSTA26" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">10. Dronning Sonjas stol (skulptur)</h3>
+                        <p class="text-[11px]" data-zh="紀念挪威宋雅王后（Queen Sonja）的經典石雕與觀景勝地，可俯瞰山谷與壯麗峽灣風光。" data-en="A classic sculpture and viewpoint dedicated to Queen Sonja of Norway, overlooking stunning valleys.">紀念挪威宋雅王后的經典石雕與觀景勝地，可俯瞰山谷與壯麗峽灣風光。</p>
+                        <a href="https://maps.app.goo.gl/urLxCa1xZbz6qhHp9" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(6)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：景點導覽 [3/5] ➔" data-en="Next: Destinations [3/5] ➔">下一頁：景點導覽 [3/5] ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destinations Part 3 (Norwegian Fjord Centre, Ørnesvingen, Trollstigen, Atlanterhavsveien, Mo i Rana) -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點巡禮 [3/5]" data-en="Chapter 03 • Destinations [3/5]">Chapter 03 • 景點巡禮 [3/5]</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="精靈之路與大西洋海濱公路" data-en="Trollstigen & Atlantic Road">精靈之路與大西洋海濱公路</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">11. Norwegian Fjord Centre</h3>
+                        <p class="text-[11px]" data-zh="位於蓋倫厄爾的互動式峽灣中心，深入介紹蓋倫厄爾峽灣的自然地質、歷史與世界遺產保護。" data-en="An interactive fjord center in Geiranger explaining the geology, history, and UNESCO heritage of the fjord.">位於蓋倫厄爾的互動式峽灣中心，深入介紹蓋倫厄爾峽灣的自然地質與世界遺產保護。</p>
+                        <a href="https://maps.app.goo.gl/Hu62ErGsJc9i9iAp8" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">12. Ørnesvingen 老鷹之路</h3>
+                        <p class="text-[11px]" data-zh="蓋倫厄爾公路最高處的11個連環急轉彎觀景點，可俯瞰峽灣水面與七姊妹瀑布的絕美視角。" data-en="The Eagle's Bend features 11 hairpin turns overlooking the Geirangerfjord and Seven Sisters waterfall.">老鷹之路的11個連環急轉彎觀景點，可俯瞰峽灣水面與七姊妹瀑布的絕美視角。</p>
+                        <a href="https://maps.app.goo.gl/fDnWoJWtx2xisvDCA" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">13. Trollstigen 精靈之路</h3>
+                        <p class="text-[11px]" data-zh="挪威最著名的山區景觀公路，擁有11個驚險髮夾彎與垂直峭壁，宛如巨龍盤據山間。" data-en="Norway's most famous scenic mountain road featuring 11 hairpin bends and sheer cliffs.">挪威最著名的山區景觀公路，擁有11個驚險髮夾彎與垂直峭壁。</p>
+                        <a href="https://maps.app.goo.gl/MdRy2XmGgz1nPSfZ8" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">14. Atlanterhavsveien 大西洋海濱公路</h3>
+                        <p class="text-[11px]" data-zh="被譽為「全世界最美公路」之一，蜿蜒於大西洋海岸的群島與多座神奇拱形大橋之間。" data-en="Ranked among the world's best road trips, winding across coastal islets and dramatic curved bridges.">被譽為「全世界最美公路」之一，蜿蜒於大西洋海岸的群島與多座神奇拱形大橋之間。</p>
+                        <a href="https://maps.app.goo.gl/4VpQCfT2Kf9SP9pB7" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">15. Mo i Rana 摩伊拉納</h3>
+                        <p class="text-[11px]" data-zh="北極圈門戶工業與文化城市，臨近壯麗的冰川與地質奇觀，是北上極圈的理想補給站。" data-en="An industrial and cultural gateway to the Arctic Circle, close to majestic glaciers and wonders.">北極圈門戶城市，臨近壯麗冰川與地質奇觀，是北上極圈的理想補給站。</p>
+                        <a href="https://maps.app.goo.gl/YBrxNBFaB9fidA7y9" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(7)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：景點導覽 [4/5] ➔" data-en="Next: Destinations [4/5] ➔">下一頁：景點導覽 [4/5] ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destinations Part 4 (Svartisen glacier, Uredd, Saltstraumen, Svolvær, Hamnoy) -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點巡禮 [4/5]" data-en="Chapter 03 • Destinations [4/5]">Chapter 03 • 景點巡禮 [4/5]</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="冰川、最強漩渦與羅弗敦群島" data-en="Glacier, Strongest Whirlpool & Lofoten">冰川、最強漩渦與羅弗敦群島</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">16. Svartisen glacier 斯瓦蒂森冰川</h3>
+                        <p class="text-[11px]" data-zh="挪威第二大冰川，散發著夢幻的湛藍冰舌，遊客可搭乘小渡輪與健行親近冰川邊緣。" data-en="Norway's second-largest glacier featuring mystical blue ice tongues accessible by boat and hiking.">挪威第二大冰川，散發著夢幻的湛藍冰舌，遊客可搭乘小渡輪與健行親近冰川。</p>
+                        <a href="https://maps.app.goo.gl/DZH9LHqBt5CCYaUp9" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">17. Uredd 烏雷德景觀休息區</h3>
+                        <p class="text-[11px]" data-zh="沿海景觀公路上的絕美休息站，擁有波浪造型的建築、大理石觀景台與世界級的極光海景視野。" data-en="A stunning coastal rest area featuring wave-inspired architecture and marble viewpoints.">沿海景觀公路上的絕美休息站，擁有波浪造型建築與絕佳海景視野。</p>
+                        <a href="https://maps.app.goo.gl/mZtNZMY83FjvZZsy6" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">18. Saltstraumen 薩爾特斯特勞門大漩渦</h3>
+                        <p class="text-[11px]" data-zh="全球最強的海流漩渦之一，每六小時就有四億立方公尺海水通過狹窄海峽，形成壯觀旋渦。" data-en="One of the world's strongest tidal currents, rushing massive volumes of water through a narrow strait.">全球最強的海流漩渦之一，每六小時就有巨量海水通過狹窄海峽形成壯觀旋渦。</p>
+                        <a href="https://maps.app.goo.gl/VXX91zNHAVku3ZJ18" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">19. Svolvær 斯沃尔韦尔</h3>
+                        <p class="text-[11px]" data-zh="羅弗敦群島（Lofoten）的最大城鎮與交通樞紐，背倚奇特的 Svolværgeita 羊角山峰。" data-en="The largest town and hub of the Lofoten Islands, backed by the dramatic Svolværgeita peak.">羅弗敦群島的最大城鎮與交通樞紐，背倚奇特的山峰與美麗漁港。</p>
+                        <a href="https://maps.app.goo.gl/QXEbEuPQ3YgPuAB78" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">20. Hamnoy Lofoten Scenic Viewpoint</h3>
+                        <p class="text-[11px]" data-zh="羅弗敦群島最具標誌性的明信片視角，紅色傳統漁夫小屋（Rorbu）與險峻海山交織成絕景。" data-en="Lofoten's most iconic postcard view featuring red fisherman cabins (Rorbu) against dramatic peaks.">羅弗敦群島最具標誌性的明信片視角，紅色傳統漁夫小屋與險峻海山交織成絕景。</p>
+                        <a href="https://maps.app.goo.gl/3iMeG7G1AKRAy7bx7" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(8)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：景點導覽 [5/5] ➔" data-en="Next: Destinations [5/5] ➔">下一頁：景點導覽 [5/5] ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destinations Part 5 (Å, Hauklandstranda, Unstad Beach, Nasjonal, Campsites) -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點巡禮 [5/5] 與頂級營區" data-en="Chapter 03 • Destinations & Campsites">Chapter 03 • 景點巡禮 [5/5] 與頂級營區</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="群島盡頭、衝浪勝地與推薦營區" data-en="Lofoten End, Surf Beaches & Campsites">群島盡頭、衝浪勝地與推薦營區</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">21. Å 奧鎮（羅弗敦最南端）</h3>
+                        <p class="text-[11px]" data-zh="歐洲公路E10的終點，古老的漁村完整保留了19世紀的鱈魚乾架與漁業博物館。" data-en="The end of European route E10, preserving 19th-century cod drying racks and fishing heritage.">歐洲公路E10的終點，古老的漁村完整保留了19世紀的鱈魚乾架與博物館。</p>
+                        <a href="https://maps.app.goo.gl/7mZRVDTU47HmNm3i8" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">22. Hauklandstranda 豪克蘭海灘</h3>
+                        <p class="text-[11px]" data-zh="被譽為挪威最美海灘之一，擁有細緻白沙與清澈翠綠的海水，背倚壯麗陡峭的群山。" data-en="Ranked among Norway's best beaches with fine white sand, turquoise water, and dramatic mountains.">被譽為挪威最美海灘之一，擁有細緻白沙與清澈翠綠的海水，背倚壯麗群山。</p>
+                        <a href="https://maps.app.goo.gl/DCkSFB7FLCgyoFbF8" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">23. Unstad Beach 烏斯塔德衝浪海灘</h3>
+                        <p class="text-[11px]" data-zh="北極圈內的傳奇衝浪聖地，吸引全球頂尖衝浪客前來挑戰北冰洋的冷冽浪潮。" data-en="A legendary Arctic surfing hotspot attracting surfers from around the globe.">北極圈內的傳奇衝浪聖地，吸引全球衝浪客前來挑戰北冰洋浪潮。</p>
+                        <a href="https://maps.app.goo.gl/w98Ep22741UpNLmw5" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-stone-100 p-2 rounded border border-stone-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-stone-900">24. Austnesfjorden 奧斯特內斯峽灣</h3>
+                        <p class="text-[11px]" data-zh="挪威官方指定的18條國家景觀公路，沿途設有世界級前衛設計的觀景台與休息設施。" data-en="Norway's 18 designated National Tourist Routes featuring avant-garde design viewpoints.">挪威官方指定的國家景觀公路網，沿途設有世界級前衛設計的觀景台與設施。</p>
+                        <a href="https://maps.app.goo.gl/UwFfoJ5Nb3kDfSui9" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-sky-50 p-2 rounded border border-sky-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sky-900">🏕️ 推薦營區 1：Setnes Feriesenter</h3>
+                        <p class="text-[11px]" data-zh="位於安道爾（Åndalsnes）山腳下的頂級營地，鄰近精靈之路，提供完善木屋與露營車設施。" data-en="Top-rated campsite at the foot of the mountains near Åndalsnes and Trollstigen.">位於安道爾山腳下的頂級營地，鄰近精靈之路，提供完善木屋與露營車設施。</p>
+                        <a href="https://maps.app.goo.gl/BG2xP8mDJT792Ake7" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-sky-50 p-2 rounded border border-sky-200 space-y-0.5">
+                        <h3 class="font-serif font-bold text-sky-900">🏕️ 推薦營區 2：Lofoten beach camp</h3>
+                        <p class="text-[11px]" data-zh="坐落於羅弗敦群島絕美海灘旁的夢幻營地，可直接在帳篷或露營車前欣賞極光與海浪。" data-en="Dreamy beachfront campsite in Lofoten offering direct views of waves and the Aurora.">坐落於羅弗敦群島絕美海灘旁的夢幻營地，可直接欣賞極光與海浪。</p>
+                        <a href="https://maps.app.goo.gl/ejmtyqTEXpaecoXv9" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(9)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：10天精華行程 ➔" data-en="Next: 10-Day Itinerary ➔">下一頁：10天精華行程 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 9: 10-Day Grand Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 04 • 10天精華行程" data-en="Chapter 04 • 10-Day Grand Itinerary">Chapter 04 • 10天峽灣與群島大環線</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="挪威峽灣、景觀公路與羅弗敦 10 天大環線" data-en="10-Day Norway Fjord & Lofoten Grand Itinerary">挪威峽灣與羅弗敦 10 天大環線行程</h2>
+                </div>
+
+                <div class="bg-[#0b1329] text-[#f8fafc] p-2.5 rounded-lg space-y-1 text-xs font-serif shadow-inner overflow-y-auto max-h-60">
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 1</span>
+                        <span data-zh="哈林達爾 ➔ Torpo 木板教堂 ➔ Museum" data-en="Hallingdal ➔ Torpo Stave Church ➔ Museum">哈林達爾 ➔ Torpo 木板教堂 ➔ 博物館</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 2</span>
+                        <span data-zh="Vøringsfossen 瀑布 ➔ 弗洛姆 (Flåm) 峽灣" data-en="Vøringsfossen ➔ Flåm Fjord">Vøringsfossen 瀑布 ➔ 弗洛姆 (Flåm) 峽灣</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 3</span>
+                        <span data-zh="Lærdalstunnelen ➔ 洛姆 (Lom) 木板教堂" data-en="Lærdal Tunnel ➔ Lom Stave Church">Lærdal 隧道 ➔ 洛姆 (Lom) 木板教堂</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 4</span>
+                        <span data-zh="Geiranger Skywalk ➔ Ørnesvingen ➔ Setnes 營區" data-en="Geiranger Skywalk ➔ Eagle Bend ➔ Setnes">Geiranger 觀景台 ➔ 老鷹之路 ➔ Setnes 營區</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 5</span>
+                        <span data-zh="Trollstigen 精靈之路 ➔ 大西洋海濱公路" data-en="Trollstigen ➔ Atlantic Ocean Road">精靈之路 ➔ 大西洋海濱公路</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 6</span>
+                        <span data-zh="北上 Mo i Rana ➔ Svartisen 冰川健行" data-en="Mo i Rana ➔ Svartisen Glacier">北上 Mo i Rana ➔ Svartisen 冰川健行</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 7</span>
+                        <span data-zh="Uredd 休息區 ➔ 薩爾特斯特勞門大漩渦" data-en="Uredd ➔ Saltstraumen Whirlpool">Uredd 休息區 ➔ 薩爾特斯特勞門大漩渦</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 8</span>
+                        <span data-zh="渡輪前往 Svolvær ➔ 羅弗敦群島" data-en="Ferry to Svolvær ➔ Lofoten Islands">渡輪前往 Svolvær ➔ 羅弗敦群島</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 9</span>
+                        <span data-zh="Hamnøy 絕景 ➔ Hauklandstranda ➔ 營區" data-en="Hamnøy View ➔ Haukland ➔ Beach Camp">Hamnøy 絕景 ➔ Haukland ➔ 營區</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-sky-300 font-bold">Day 10</span>
+                        <span data-zh="Unstad 衝浪海灘 ➔ Å 奧鎮終點 ➔ 賦歸" data-en="Unstad Surf ➔ Å Village ➔ Departure">Unstad 衝浪海灘 ➔ Å 奧鎮終點 ➔ 賦歸</span>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(10)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：私人旅遊筆記 ➔" data-en="Next: Traveler Notes ➔">下一頁：私人旅遊筆記 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Traveler Notes & Completion -->
+            <div class="page-slide flex-col space-y-4" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 05 • 旅客備忘錄" data-en="Chapter 05 • Traveler Notes">Chapter 05 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的挪威之旅筆記" data-en="Your Personal Travel Notes">您的挪威之旅筆記</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人筆記：" data-en="📝 Enter your personal notes:">📝 在此輸入您的私人筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-2.5 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-sky-600 focus:outline-none resize-none"
+                        placeholder="例如：AutoPASS渡輪預約、Lofoten beach camp裝備..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-sky-800 hover:bg-sky-700 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">10</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-sky-800 hover:bg-sky-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
     </div>
 
-    <!-- Notification Toast -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-slate-800 text-white border border-slate-700 px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-        <i class="fa-solid fa-circle-check text-sky-400"></i>
-        <span id="toastMsg" class="text-xs">操作成功</span>
-    </div>
-
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Storage -->
     <script>
-        // Sample photography locations dataset with customizable Facebook and Guide PDF links
-        const initialSpots = [
-            {
-                id: 'spot-1',
-                title: '小美人魚｜The Little Mermaid',
-                country: 'Denmark',
-                category: 'europe',
-                lat: 55.6925,
-                lng: 12.5992,
-                photo: 'https://ak-d.tripcdn.com/images/1mi6f424x99mraxf99CF2_Q90.jpg?proc=source/trip',
-                locationName: '丹麥｜Denmark',
-                description: '來到丹麥哥本哈根，如果說有哪一個地標是所有旅人心中共同的朝聖地，那必定是座落在海岸岩石上的小美人魚銅像。僅約 1.25 公尺高的青銅雕像，靜靜地背對著長堤公園Langelinie的綠蔭，將視線望向浩瀚的波羅的海。她沒有宏偉的氣勢，也沒有金碧輝煌的裝飾，卻以一種最溫柔而孤單的姿態，承載了全世界無數人對童話的最初想像。',
-                likes: 390,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'Copenhagen.html' // 可在此自訂該景點專屬的攻略下載網址
-            },
-            {
-                id: 'spot-2',
-                title: '北京｜Beijing',
-                country: 'China',
-                category: 'asia-pacific',
-                lat: 39.900773,
-                lng: 116.404490,
-                photo: '627.jpg',
-                locationName: '中國｜China',
-                description: '當飛機緩緩降落，北京用它獨有的宏大與細膩迎接每一位到訪的旅人。這裡是一部攤開的中國歷史大戲，前一秒你還走在紫禁城的朱紅宮牆下，驚嘆於幾百年帝國的恢弘氣勢；後一秒轉進南鑼鼓巷的某條老胡同，耳邊就響起了老北京熱絡的叫賣聲與大白菜的市井煙火氣。從長城的壯闊蒼涼到現代藝術區的時尚前衛，北京最迷人的地方，在於它從不急著抹去過去，而是將千年的風霜與當代的脈動，揉進了一碗熱騰騰的北京烤鴨香與清茶裡。這是一場橫跨時空的對話，每一磚一瓦，都在訴說著屬於這座古都的無盡故事。',
-                likes: 215,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://yijhen7.gumroad.com/l/wmwrg'
-            },
-            {
-                id: 'spot-3',
-                title: '北角｜North Cape',
-                country: 'Norway',
-                category: 'europe',
-                lat: 71.1725,
-                lng: 25.7844,
-                photo: 'norwaycape.jpg',
-                locationName: '挪威｜Norway',
-                description: '在歐洲盡頭的極光下：當綠色精靈點亮北冰洋的夜空。當車子頂著刺骨的寒風，終於抵達被譽為「歐洲盡頭」的北角（Nordkapp），四周除了翻滾的北冰洋浪濤，只剩下世界邊緣的寂靜。然而，就在抬頭望向那片無垠的極夜天幕時，奇蹟發生了。一抹微弱的螢綠色悄然在星空中甦醒，隨後如絲綢般優雅地扭動、擴散，最終化為鋪天蓋地的極光綠簾，那一刻，耳邊只有呼嘯的極地風聲與內心震撼的驚呼。站在大地的盡頭，被極光溫柔而神祕地包覆，所有的舟車勞頓與漫長等待，在這一瞬間都找到了最完美的答案。',
-                likes: 450,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/great-barrier-reef.pdf'
-            },
-            {
-                id: 'spot-4',
-                title: '盧森堡|Luxembourg',
-                country: 'Luxembourg',
-                category: 'europe',
-                lat: 49.6116,
-                lng: 6.1319,
-                photo: 'lux.jpg',
-                locationName: '盧森堡|Luxembourg',
-                description: '乍看不起眼、實際處處驚喜的懸崖奇景雅緻國度，尤其在地形與城市設計上，真的是把自然條件玩到極致！',
-                likes: 512,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'lux.html'
-            },
-            {
-                id: 'spot-5',
-                title: '柏林|Berlin',
-                country: 'Germany',
-                category: 'europe',
-                lat: 52.5243,
-                lng: 13.4105,
-                photo: 'berlin.jpg',
-                locationName: '德國|Germany',
-                description: '巧遇彩虹遊行,每個人都活成自己漂亮的樣子。如果說歐洲許多古都像是被時間封存的古典油畫，那麼柏林就是一幅不斷用塗鴉、混凝土與音樂重組的當代巨型拼貼。當腳步踏上這座城市，空氣裡彷彿還殘留著冷戰時期的歷史煙硝，卻同時被滿街的咖啡香、獨立書店的墨水味，以及隨處可見的街頭藝術。這是一座從不掩飾傷痕、卻把傷痕活成勳章的城市。',
-                likes: 620,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://yijhen7.gumroad.com/l/zgarij'
-            },
-            {
-                id: 'spot-6',
-                title: '烏布撒拉|Uppsala',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 59.8588,
-                lng: 17.6389,
-                photo: 'uppsala.jpg',
-                locationName: '瑞典|Sweden',
-                description: '靜謐之北瑞典：漫遊烏布薩菈。位於瑞典首都斯德哥爾摩以北約70公里，瑞典第四大城市，保有北歐獨有的安靜與溫柔。',
-                likes: 620,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-            {
-                id: 'spot-7',
-                title: '丹內角|Dunnet',
-                country: 'Britain',
-                category: 'europe',
-                lat: 58.6702,
-                lng: -3.3718,
-                photo: 'scotland.jpg',
-                locationName: '蘇格蘭|Scotland',
-                description: '世界盡頭Dunnet Head,被譽為蘇格蘭高地世界的盡頭。蘇格蘭Caithness地區的一座壯麗岬角，也是整個大不列顛島的最北端。相較於常被觀光客擠滿的John o Groats，這裡多了一份遺世獨立的荒涼美感與極地邊境的雄渾氣勢。',
-                likes: 620,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/paris-guide.pdf'
-            },
-            {
-                id: 'spot-8',
-                title: '聖阿布斯|St Abbs',
-                country: 'Britain',
-                category: 'europe',
-                lat: 55.8960,
-                lng: -2.1311,
-                photo: 'stabbs.jpg',
-                locationName: '蘇格蘭|Scotland',
-                description: '雷神索爾祕境St Abbs,新阿拉斯加祕境。座落於Berwickshire東南部海岸線上的極美小漁村，距離蘇格蘭與英格蘭邊境不遠。這裡三面環海，擁有壯麗的火山岩懸崖、清澈見底的海域，是蘇格蘭東海岸最受矚目的秘境漁村之一。',
-                likes: 720,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-            {
-                id: 'spot-9',
-                title: '峇里島|Bali',
-                country: 'Indonesia',
-                category: 'asia-pacific',
-                lat: -8.36010,
-                lng: 115.11475,
-                photo: '635.jpg',
-                locationName: '印尼|Indonesien',
-                description: '印尼最具盛名的度假勝地，素有「神仙島」、「千寺之島」與「最後的天堂」等美譽。這裡以其獨特的印度教文化、壯麗的火山地貌、稻田梯田、衝浪勝地以及頂級的度假村與奢華 SPA 聞名於世。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-            {
-                id: 'spot-10',
-                title: '維也納|Vienna',
-                country: 'Austria',
-                category: 'europe',
-                lat: 48.2082,
-                lng: 16.3738,
-                photo: '637.jpg',
-                locationName: '奧地利|Austria',
-                description: '擁有「音樂之都」的美譽，歷史上曾是哈布斯堡王朝的首都，孕育了莫札特、貝多芬、舒伯特、小約翰·史特勞斯等無數傳奇音樂大師。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-             {
-                id: 'spot-11',
-                title: '因特拉肯|Interlaken',
-                country: 'Switzerland',
-                category: 'europe',
-                lat: 46.6853,
-                lng: 7.8583,
-                photo: '642.jpg',
-                locationName: '瑞士|Switzerland',
-                description: '如果說瑞士是上帝遺落人間的祕境，那麼Interlaken絕對是這座祕境中最溫柔、也最具生命力的心臟。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-             {
-                id: 'spot-12',
-                title: '斯卡爾瑟|Skärså',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 61.37787,
-                lng: 17.10413,
-                photo: 'sweden.jpg',
-                locationName: '瑞典|Sweden',
-                description: '瑞典東海岸Hälsingland地區極具傳統風情魅力的群島小漁村，屬於Gävleborg County,Söderhamn Municipality的一部分。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-             {
-                id: 'spot-13',
-                title: '魯波|Ruppo',
-                country: 'Finland',
-                category: 'europe',
-                lat: 63.23,
-                lng: 25.44,
-                photo: '638.jpg',
-                locationName: '芬蘭|Finland',
-                description: '這裡遠離城市喧囂，展現了純粹的芬蘭鄉野風情，是體驗極地次生林、寧靜湖畔氛圍以及極簡北歐生活的私房區域。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'finland.html'
-            },
-             {
-                id: 'spot-14',
-                title: '克拉尼斯卡戈拉|Kranjska Gora',
-                country: 'Slovenia',
-                category: 'europe',
-                lat: 46.4853,
-                lng: 13.7844,
-                photo: '600.jpg',
-                locationName: '斯洛維尼亞|Slovenia',
-                description: '阿爾卑斯山區最具代表性的著名高山小鎮與四季勝地，坐落在Sava Dolinka上游的綠色山谷中，緊鄰奧地利與義大利邊境。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-             {
-                id: 'spot-15',
-                title: '阿斯克松德市|Askersund',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 58.8845,
-                lng: 14.9022,
-                photo: 'askersund.jpg',
-                locationName: '瑞典|Sweden',
-                description: '座落於瑞典中部韋特恩湖Lake Vättern的最北端，是一座充滿歷史風情與木造建築魅力的迷人湖畔小鎮。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-            {
-                id: 'spot-16',
-                title: '象島|Koh Chang',
-                country: 'Thailand',
-                category: 'asia-pacific',
-                lat: 12.10,
-                lng: 102.35,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlJT-9GriqKMijw0XUDu_usNtK-tQro-1F5FCynGkn79BaidR8Pf57-wuA&s=10',
-                locationName: '泰國|Thailand',
-                description: '因從空中俯瞰其輪廓酷似一隻大象趴在海面上而得名，是泰國的第二大島（僅次於普吉島),相較於普吉島或蘇美島的高度商業化與奢華，象島有很大一部分面積被劃為國家海洋公園保護區，保留了大量原始、粗獷且寧靜的熱帶雨林風貌，非常適合喜愛大自然、慢活步調以及想要避開過多觀光客的旅客。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'kohchang.html'
-            },
-            {
-                id: 'spot-17',
-                title: '羅馬競技場|Colosseum',
-                country: 'Italy',
-                category: 'europe',
-                lat: 41.8902,
-                lng: 12.4924,
-                photo: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Colosseo_2020.jpg/1280px-Colosseo_2020.jpg?utm_source=zh.wikipedia.org&utm_campaign=index&utm_content=thumbnail',
-                locationName: '義大利|Italy',
-                description: '又稱羅馬鬥獸場，是古羅馬帝國最具代表性的標誌與世界新七大奇蹟。這座建於公元 1 世紀的橢圓形巨型劇場，曾是用於舉辦角鬥士對決、猛獸搏鬥及大型公共表演的場所。其建築結合了拱門與混凝土工藝，展現了高超的古羅馬工程學。如今，這裡與相鄰的古羅馬廣場和帕拉提諾之丘一同被列為世界文化遺產，吸引全球旅客造訪，探索其千年歷史與壯觀遺跡。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-             {
-                id: 'spot-18',
-                title: '象山|Xiangshan',
-                country: 'Taiwan',
-                category: 'asia-pacific',
-                lat: 25.02743,
-                lng: 121.57095,
-                photo: 'https://www.travel.taipei/image/105534/?r=1534237710107',
-                locationName: '台北.台灣|Taipei.Taiwan',
-                description: '象山步道位於台北市信義區，因山形似象頭而得名。步道交通便利，鄰近捷運象山站，沿途設有多處觀景平台與六巨石，是俯瞰台北盆地與眺望台北 101 大樓夜景的熱門健行路線。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-            {
-                id: 'spot-19',
-                title: '努沙|Noosa',
-                country: 'Australia',
-                category: 'oceania',
-                lat: -26.38218,
-                lng: 153.09946,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_QO31P4FPchV4vHi2tCHODc1FbwSGoC-kKEgoeXjS1PRYEUyOwUWpFcKz&s=10',
-                locationName: '布里斯本.澳洲|Brisbane.Australia',
-                description: '位於澳洲昆士蘭州陽光海岸（Sunshine Coast）北部，距離布里斯本車程約 1.5 至 2 小時，是澳洲享譽盛名的頂級度假勝地與自然生態天堂。這裡完美融合了優雅的海岸風情、熱帶雨林與豐富的野生動物，是不論當地人或國際旅客都極度向往的避暑與慢活去處。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-            {
-                id: 'spot-20',
-                title: '萬座毛|Manzamo',
-                country: 'Japen',
-                category: 'asia-pacific',
-                lat: 26.5050,
-                lng: 127.8504,
-                photo: 'https://www.settour.com.tw/ss_img/info/location/OKA/A0/OKA0000464/OKA0000464_114758.jpg',
-                locationName: '沖繩.日本|Okinawa.Japen',
-                description: '萬座毛是日本沖繩本島西海岸恩納村的代表性自然景觀，以高度約 20 公尺、形似大象鼻子的隆起珊瑚礁斷崖「象鼻岩」聞名於世。其名稱源自 1726 年琉球國尚敬王造訪此地時的讚嘆之詞，意指「足以容納萬人齊坐的大原野（毛在琉球語中指原野）」。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'okinawa.html'
-            },
-              {
-                id: 'spot-21',
-                title: '安良波海灘|Araha Beach',
-                country: 'Japen',
-                category: 'asia-pacific',
-                lat: 26.3122,
-                lng: 127.7554,
-                photo: 'https://aliciatseng.net/wp-content/uploads/2024/07/20240731-xoykr.jpg',
-                locationName: '沖繩.日本|Okinawa.Japen',
-                description: '這裡距離美國村僅需約 5~10 分鐘車程，相較於知名的「日落海灘」，安良波海灘多了一份生活感與開闊感。因為鄰近美軍基地「福斯特營地」（Camp Foster），海灘周邊隨處可見慢跑的外國人、散步的在地居民與嬉戲的孩子，散發著極其愜意、類似美國西海岸的異國陽光氛圍。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'okinawa.html'
-            },
-             {
-                id: 'spot-22',
-                title: '美國村|Araha Beach',
-                country: 'Japen',
-                category: 'asia-pacific',
-                lat: 26.31757,
-                lng: 127.76138,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU6poam5exuYQRYwM72CJkTlIdRJ9SynvWaGzD-YQkfY7Dl21bNts3B7T3&s=10',
-                locationName: '沖繩.日本|Okinawa.Japen',
-                description: '沖繩「美濱美國村」（Mihama American Village）是沖繩中部最熱門的綜合型文創觀光景點。這裡原本是美軍基地（北谷飛行場）歸還後的舊址，後來運用臨海的地理優勢，改造成充滿濃厚美國西海岸風情的濱海度假園區，是一處融合了沖繩在地文化、美式復古風情與無敵海景的經典地標。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'okinawa.html'
-             },
-            {
-                id: 'spot-23',
-                title: '美麗灣水族館|Churaumi Aquarium',
-                country: 'Japen',
-                category: 'asia-pacific',
-                lat: 26.6943,
-                lng: 127.8781,
-                photo: 'https://res.klook.com/images/w_1200,h_630,c_fill,q_65/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/ffvxriuek8w8mc4nlxmr/%E6%B2%96%E7%B9%A9%E7%BE%8E%E9%BA%97%E6%B5%B7%E6%B0%B4%E6%97%8F%E9%A4%A8%E9%96%80%E7%A5%A8.jpg',
-                locationName: '沖繩.日本|Okinawa.Japen',
-                description: '沖繩美麗海水族館（Okinawa Churaumi Aquarium）是沖繩北部最受歡迎的必訪地標。其最大亮點是擁有全球頂級規模的巨大水槽「黑潮之海」，能近距離震撼觀賞長達 8.8 公尺的巨型鯨鯊與鬼蝠魟悠游。此外，園區內的海豚表演秀、海龜館及海牛館皆可免費自由參觀，是個兼具教育與療癒感、適合全家大小一同造訪的海洋天堂。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'okinawa.html'
-            },
-             {
-                id: 'spot-24',
-                title: '波上宮|Naminoue Shrine',
-                country: 'Japen',
-                category: 'asia-pacific',
-                lat: 26.22076,
-                lng: 127.67111,
-                photo: 'https://img.letsgojp.com/2025/07/naminoueguanguru01-1000x750-1752043101.webp',
-                locationName: '沖繩.日本|Okinawa.Japen',
-                description: '沖繩最具代表性的神社，位居「琉球八社」之首，更被譽為當地的「當國第一神社」。它最著名的是建造在珊瑚礁懸崖上的朱紅色本殿，從高處俯瞰著碧藍的「波之上海灘」，是沖繩市區（那霸）內唯一能同時感受宗教莊嚴與海景絕景的必訪景點。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'okinawa.html'
-             },
-             {
-                id: 'spot-25',
-                title: '沖繩鐘乳洞|CAVE OKINAWA',
-                country: 'Japen',
-                category: 'asia-pacific',
-                lat: 26.42015,
-                lng: 127.81001,
-                photo: 'https://img.letsgojp.com/2025/12/caveokinawa-1-870x580.webp',
-                locationName: '沖繩.日本|Okinawa.Japen',
-                description: '沖繩中部最具代表性、全長約200公尺的石灰岩鐘乳洞。它曾是當地人的私房祕境，近年來經過整修、搭建了極為完善的觀景步道與LED燈光，搖身一變成為超人氣的能量景點',
-                likes: 389,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'okinawa.html'
-            },
-             {
-                id: 'spot-26',
-                title: '日落海灘|Sunset Beach',
-                country: 'Japen',
-                category: 'asia-pacific',
-                lat: 26.3139,
-                lng: 127.7553,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTOeTwpidZaE2yv6CIN6rZsNauG-QOaucfQGeDNEmsTI35qoAqdW77DFQ&s=10',
-                locationName: '沖繩.日本|Okinawa.Japen',
-                description: '北谷公園日落海灘（Chatan Park Sunset Beach）是沖繩中部最具代表性的夕陽觀賞聖地。它緊鄰充滿異國風情的「美國村」（American Village），擁有面向東海 180 度的無敵視野。無論是租車自駕的旅客、還是帶著家庭的親子團，這裡都是融合購物、異國美食與浪漫海景的必訪景點。',
-                likes: 389,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'okinawa.html'
-            },
-            {
-                id: 'spot-27',
-                title: '國際通|Kokusai-dori',
-                country: 'Japen',
-                category: 'asia-pacific',
-                lat: 26.21516,
-                lng: 127.68459,
-                photo: 'https://static.gltjp.com/glt/data/article/22000/21027/20250523_124926_83fe03b1_w1920.webp',
-                locationName: '沖繩.日本|Okinawa.Japen',
-                description: '日本沖繩那霸市最熱鬧的購物街，全長約 1.6 公里，被稱為「奇蹟的一英里」。這裡林立著各式土產伴手禮店、藥妝店、居酒屋與沖繩料理餐廳，不僅能買到紅芋塔、泡盛等特產，還能品嚐美味的沖繩麵與石垣牛。因交通便利且充滿活力，是遊訪沖繩絕對不能錯過的必訪熱點！',
-                likes: 389,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'okinawa.html'
-            },
-            {
-                id: 'spot-28',
-                title: '赫爾辛基|Helsinki',
-                country: 'Finland',
-                category: 'europe',
-                lat: 60.1708,
-                lng: 24.9375,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmh8DHdTorA7rN_xor4cwpoSTTMAxodrnuhccRl9yAznHLbU74-ytRFw0&s=10',
-                locationName: '芬蘭|Finland',
-                description: '這座被譽為「波羅的海女兒」的芬蘭首都，是一座將北歐設計美學與純淨自然完美融合的都市,這裡步調悠閒、綠地遍布，旅人只需搭乘輕軌或乘船，便能輕鬆穿梭於設計街區、熱鬧的露天市場，或是世界文化遺產「芬蘭堡」之間。',
-                likes: 560,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'finland.html'
-            },
-             {
-                id: 'spot-29',
-                title: '奧盧|Oulu',
-                country: 'Finland',
-                category: 'europe',
-                lat: 65.0124,
-                lng: 25.4682,
-                photo: 'https://finland.fi/wp-content/uploads/2026/08/oulu.jpg',
-                locationName: '芬蘭|Finland',
-                description: '芬蘭北部的經濟與文化中心，芬蘭第五大城市。坐落於波斯尼亞灣東岸的奧盧河口，以融合先進的高科技產業（如 6G 研發）與純淨的北歐自然風光而聞名。獲選為 2026 年歐洲文化之都（European Capital of Culture 2026）',
-                likes: 560,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'finland.html'
-             },
-             {
-                id: 'spot-30',
-                title: '聖誕老人村|Santa Claus Village',
-                country: 'Finland',
-                category: 'europe',
-                lat: 66.5436,
-                lng: 25.8444,
-                photo: 'https://i0.wp.com/strollineurope.com/wp-content/uploads/2025/03/IMG_1223-copy.jpg?resize=1024%2C819&ssl=1',
-                locationName: '羅瓦涅米.芬蘭|Rovaniemi.Finland',
-                description: '位於芬蘭北部的羅瓦涅米（Rovaniemi），是全球唯一獲聯合國認證的聖誕老人故鄉。剛好坐落在北極圈線上，是一座終年開放、充滿童話色彩的冰雪主題園區。',
-                likes: 560,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'finland.html'
-             },
-             {
-                id: 'spot-31',
-                title: '坦卡瓦拉黃金鄉村|Tankavaara Gold Village',
-                country: 'Finland',
-                category: 'europe',
-                lat: 68.1807,
-                lng: 27.0994,
-                photo: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/251668858.jpg?k=099d6ebfc577e9f7ccbcf8997d073ad8846d9ebfffcac3678b24751ebac73eb0&o=',
-                locationName: '索丹屈萊.芬蘭|Sodankylä.Finland',
-                description: '位於芬蘭拉普蘭（Lapland）地區索丹屈萊（Sodankylä）的特色主題度假村與歷史文化景點，以淘金歷史和極地自然風光聞名。',
-                likes: 560,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'finland.html'
-             },
-             {
-                id: 'spot-32',
-                title: '伊納里|Inari ',
-                country: 'Finland',
-                category: 'europe',
-                lat: 68.9033,
-                lng: 27.0233,
-                photo: 'https://www.visitfinland.com/dam/jcr:f13510a6-90c6-4a9b-813b-27f2bc02942b/AuroraHut_Inari.jpg',
-                locationName: '芬蘭|Finland',
-                description: '位於芬蘭北部Lapland地區，是芬蘭面積最大但人口密度極低的世外桃源。這裏不僅是芬蘭薩米族（Sámi，歐洲唯一的原住民）文化的中心，也是探索極地荒野、追逐極光和體驗純粹北歐慢活的絕佳目的地。',
-                likes: 560,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'finland.html'
-             },
-            {
-                id: 'spot-33',
-                title: '耶拉馬防禦工事區|Järämä Fortification Area ',
-                country: 'Finland',
-                category: 'europe',
-                lat: 68.48615,
-                lng: 22.10572,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0gHJDEA80f2GimsNKxa2elPZKVQ9PVDlApQTcltk5D2UQg4u5-wS8iBD&s=10',
-                locationName: '芬蘭|Finland',
-                description: '芬蘭北部拉普蘭地區非常著名的二戰歷史遺址。它不僅是一處重要的軍事歷史戶外博物館，也是了解芬蘭北部在二次世界大戰期間（特別是拉普蘭戰爭）關鍵角色的活教材。',
-                likes: 560,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'finland.html'
-            },
-             {
-                id: 'spot-34',
-                title: '尤城|Hjo',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 58.3008,
-                lng: 14.2875,
-                photo: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/20/6e/f7/caption.jpg?w=600&h=400&s=1',
-                locationName: '瑞典|Sweden',
-                description: 'Hjo 的瑞典語發音聽起來類似英文的 "You"。當地著名的「I ❤️ Hjo」標語因此具有雙關意涵，諧音即為「I Love You」。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-             },
-             {
-                id: 'spot-35',
-                title: '提韋登國家公園|Tivedens nationalpark',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 58.7167,
-                lng: 14.6056,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqKARtFezqEhcYhRnDwVyM4BqAmoH8zCPJ7Z8KqlpOMvlF7ag8SHSOxlQd&s=10',
-                locationName: '瑞典|Sweden',
-                description: '瑞典最迷人、最具原始荒野風貌的國家公園之一，橫跨在維納恩湖（Lake Vänern）與韋特恩湖（Lake Vättern）兩大巨型湖泊之間。這裡以古老的原始森林、巨大的冰川漂礫（巨石）以及深邃清澈的森林湖泊聞名，是體驗北歐大自然奧祕的絕佳去處。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-             {
-                id: 'spot-36',
-                title: '奧勒布魯|Örebro',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 59.2756,
-                lng: 15.2161,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7_nx8bWx-KPCy53pGf2lO7ge1XJhApuDURXAoUX2J3rhz0Dj4aVe5p4EN&s=10',
-                locationName: '瑞典|Sweden',
-                description: '瑞典中部的內陸重鎮、同時也是瑞典第七大城市 及厄勒布魯省的首府。它位於斯瓦特ån河（Svartån River）畔、耶爾馬倫湖（Lake Hjälmaren）的西端，地理位置優越，大約剛好處於首都斯德哥爾摩（Stockholm）和第二大城哥德堡（Gothenburg）的中間。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-             {
-                id: 'spot-37',
-                title: '法倫|Falun',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 60.6061,
-                lng: 15.6319,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_jd-dhv5goMpqlYYXduivH6AQ_YJjezLZwAsjHSF7yczSBME3bbGwr_6Z&s=10',
-                locationName: '瑞典|Sweden',
-                description: '走進瑞典達拉納省的首府法倫（Falun），就像直接走進了童話故事！這裡不僅藏著被列為世界文化遺產的宏偉法倫銅礦（Falu Gruva），更是瑞典經典『法倫紅漆』木屋與國寶級幸運象徵『達拉馬』的發源地。古樸的小鎮風情、深厚的工業歷史，絕對是瑞典深度旅遊不可錯過的靈魂小鎮！',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-             {
-                id: 'spot-38',
-                title: '耶夫勒|Gävle',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 60.67622,
-                lng: 17.14348,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5wXZ3WeuG53VpLgCfP-IwavyZpK74j5dWhk3XCaiCZoOKGPSOPCqaJYE&s=10',
-                locationName: '瑞典|Sweden',
-                description: '瑞典東海岸的一座歷史名城，也是耶夫勒堡省（Gävleborg County）的首府，位於斯德哥爾摩以北約 170 公里處。這裡是瑞典最古老的城市之一（建於 1446 年），以美麗的海港風情、鵝卵石街道、美味的咖啡品牌（Gevalia），以及全球聞名的巨型稻草聖誕山羊而聞名。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-             {
-                id: 'spot-39',
-                title: '瑟德港|Söderhamn',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 61.30543,
-                lng: 17.06288,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_xFkzxzBheW4wOJnZ6HsaTuYzLGk-JjKqrdkzeoG_1Tb_pmyBBCY0jpY&s=10',
-                locationName: '瑞典|Sweden',
-                description: '瑞典東海岸耶夫勒堡省的一座迷人沿海小鎮與市鎮，位於耶夫勒（Gävle）以北約 80 公里處。這裡擁有豐富的群島風貌、深厚的造船與工業歷史，是一處充滿傳統瑞典沿海風情的悠閒目的地。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-            {
-                id: 'spot-40',
-                title: '朗溫德鐵廠|Långvinds bruk',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 61.46858,
-                lng: 17.12399,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRmuu2FD-Ctb-0HxXVJP1ZxUQNXQKSq2UM0JI43gviU_efuQqRaiWGSGI&s=10',
-                locationName: '瑞典|Sweden',
-                description: '於1687年 獲得皇家特許令而正式建立鐵廠。這裡具備生產鐵器得天獨厚的地理條件：鄰近森林可提供大量木材（燒製木炭）、豐沛的水力資源，以及靠海的優良港口便於運送鐵礦砂與成品。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-            {
-                id: 'spot-41.',
-                title: '霍格博文化村|Högbo bruk',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 60.67045,
-                lng: 16.81254,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrWhPSmyhxP3Gi2l0kWjbZGD7mRky49DRGs_d5DJ1K9Q&s=10',
-                locationName: '瑞典|Sweden',
-                description: '位於瑞典中部的耶夫勒堡省（Gävleborg）桑德維肯市（Sandviken），將 17 世紀傳統鐵廠轉型為集文化遺產、戶外運動、美食與工藝於一身的熱門休閒度假村，也是世界知名鋼鐵企業「山特維克」（Sandvik）的發源地。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-            {
-                id: 'spot-42.',
-                title: '⛺️|海特博達荒野露營區|Hätteboda Vildmarkscamping',
-                country: 'Sweden',
-                category: 'campsite',
-                lat: 56.49295,
-                lng: 14.85296,
-                photo: 'https://images.citybreak.com/image.aspx?ImageId=2207721&width=1440&crop=1&scale=downscaleonly',
-                locationName: '斯莫蘭.瑞典|Småland.Sweden',
-                description: '逃離城市喧囂的終極祕境——Hätteboda（海特博達荒野露營區）坐落於瑞典南部斯莫蘭（Småland）的原始森林與清澈湖畔間。這裡主打「無電、無水管」的極致回歸自然體驗，讓旅客親手汲井水、劈柴火、點營燈，並在滿天星斗下享受純粹的寂靜。無論是划著獨木舟探索湖泊、漫步於無垠林道，或是體驗傳統森林桑拿，都是尋求心靈沈澱與深度放鬆的絕佳去處。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden1.html'
-            },
-            {
-                id: 'spot-43.',
-                title: '波倫格|Pålänge',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 65.81653,
-                lng: 22.89178,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmJQsE_lxZmgV86244Ob8eZbLnSnefh8Uk-tESDXKwO7dDnOgnXDTUcrpM&s=10',
-                locationName: '卡利克斯.瑞典|Kalix.Sweden',
-                description: '坐落於瑞典北部波的尼亞灣畔的純樸村落 Pålänge，展現了獨特的北方海岸風情與寧靜的鄉村景致。這裡擁有開闊的群島風光、豐富的自然生態以及傳統的瑞典村落文化，是體驗極圈附近慢活步調、親近海灣大自然與探索波的尼亞灣沿岸風光的私房景點。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-            {
-                id: 'spot-44.',
-                title: '桑德比|Södra Sunderbyn',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 65.658,
-                lng: 21.944,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwyXMBi0zOIxfUZXB5e7pHDrzOvlDqTo6xpt5C0_N_9sNPL_v7J6iKobAF&s=10',
-                locationName: '呂勒奧.瑞典|Luleå.Sweden',
-                description: 'Sunderbyn 的歷史可以追溯到 14 世紀，是諾爾博滕省（Norrbotten）歷史悠久的古老村落。這裡最廣為人知的現代地標是 Sunderby sjukhus（蘇德里比醫院）——它是整個諾爾博滕省的醫療核心與專科中心。此外，當地也設有著名的 Sunderby Folkhögskola（平民高中/社區大學)。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-            {
-                id: 'spot-45.',
-                title: '松茲瓦爾|Sundsvall',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 62.391,
-                lng: 17.316,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOiqtI0yRPcnKKInbejIyq0sfFMUgaDv21lPvhJb3xrw&s=10',
-                locationName: '瑞典|Sweden',
-                description: '座落於瑞典中東部海岸的歷史名城 Sundsvall，以其在 1888 年大火後重建、精美絕倫的 19 世紀石造建築群（Stenstaden）聞名遐邇。這裡完美融合了豐富的工業歷史底蘊、繁華的現代購物街區，以及群山與大海環繞的壯麗北歐風光。無論是登上 Norra Berget 俯瞰港灣全景、漫步於典雅的街道，還是探索周邊的自然保護區，都是感受瑞典中部海岸魅力的絕佳去處。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-            {
-                id: 'spot-46.',
-                title: '阿比斯庫|Abisko',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 68.34947,
-                lng: 18.83116,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ80gIdbfdN0ZspQ3nkzRBv8cE2vSOrKyHk-lnGsXrWf69vjA2jHJTT-3WK&s=10',
-                locationName: '基律納.瑞典|Kiruna.Sweden',
-                description: '坐落於瑞典北極圈深處的 Abisko，是追尋極光與探索北歐荒野的夢幻殿堂。這裡擁有全球頂級的極光觀測站（Aurora Sky Station）、壯麗的阿比斯庫國家公園峽谷風光，以及作為世界級健行路線「國王步道」的起點。無論是冬日搭乘纜車仰望絢麗極光，或是夏日體驗永晝下的極圈健行，都能帶來無與倫比的震撼與感動。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-            {
-                id: 'spot-47.',
-                title: '斯卡魯斯科根國家公園|Skuleskogen national park',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 63.11957,
-                lng: 18.49383,
-                photo: 'https://www.explore.com/img/gallery/one-of-europes-national-parks-offers-beautiful-coastlines-forests-hiking/intro-1789376697.jpg',
-                locationName: '厄恩斯科尔斯维克.瑞典|Örnsköldsvik.Sweden',
-                description: '坐落於瑞典世界自然遺產「高海岸」心臟地帶的 Skuleskogen 國家公園，是一片融合了冰川遺跡、原始森林與壯麗海岸線的神奇荒野。這裡擁有令人屏息的深邃峽谷（如著名的 Slåttdalskretsen）、登高望遠的紅色花崗岩山頂，以及通往波的尼亞灣波光粼粼的絕美步道。無論是挑戰經典的健行路線，或是漫步於山海交織的北國森林，都是大自然愛好者不容錯過的戶外殿堂。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-            {
-                id: 'spot-48.',
-                title: '斯考根瓦爾德野戰醫院|Feltlasarettet i Skoganvarre',
-                country: 'Norway',
-                category: 'europe',
-                lat: 69.82837,
-                lng: 25.13845,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQer-626mOmOaQRiAG5sy9WRaLv9dRveXx_9GWjx7qKyA&s=10',
-                locationName: '波斯安格爾.挪威|Porsanger.Norway',
-                description: '位於挪威北部芬mark郡（Finnmark）波斯安格爾市（Porsanger）斯考根瓦爾德村附近的一處第二次世界大戰歷史遺址。該野戰醫院由納粹德國國防軍於二戰期間，德國從挪威北部的芬馬克透過芬蘭領土入侵蘇聯（即莫曼斯克前線與佩察莫走廊一帶）。斯考根瓦爾德野戰醫院是用來為德軍在芬馬克及芬蘭北部前線負傷的士兵提供治療的主要醫療設施之一。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-            {
-                id: 'spot-49.',
-                title: '阿爾塔|Alta',
-                country: 'Norway',
-                category: 'europe',
-                lat: 69.9689,
-                lng: 23.2716,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWodYvw3d_RvOKO5a74-70-tpkLX0YMmtcCZ0oRFuRBw&s=10',
-                locationName: '挪威|Norway',
-                description: '挪威北部芬馬克郡的重要城鎮並被譽為北極光之城，這裡擁有被列入聯合國教科文組織的史前岩畫博物館來記錄石器時代與薩米祖先文化，同時因冬季氣候相對穩定且晴朗天數多而成為全球觀賞極光的極佳地點並坐擁現代地標極光大教堂，此外它還擁有阿爾塔機場是前往北角公路之旅的重要中繼站與交通樞紐。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-              {
-                id: 'spot-50.',
-                title: '托爾波木板教堂|Torpo Stave Church',
-                country: 'Norway',
-                category: 'europe',
-                lat: 60.8988,
-                lng: 8.7077,
-                photo: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/17/61/e6/photo4jpg.jpg?w=1200&h=-1&s=1',
-                locationName: '哈林達爾.挪威|Hallingdal.Norway',
-                description: '大約建於十二世紀後期，是當地現存最古老且是哈林達爾唯一完整保留在原址的中世紀木板教堂。雖然其部分原始結構在十九世紀末遭到拆除，但其內部保存了挪威極為罕見且珍貴的十三世紀彩繪木造天篷，生動描繪了基督、使徒與聖瑪格麗特的傳說故事，展現出高度的中世紀宗教藝術與精湛木造工藝。',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-51.',
-                title: '哈林達爾博物館|Hallingdal Museum',
-                country: 'Norway',
-                category: 'europe',
-                lat: 60.56626,
-                lng: 9.09137,
-                photo: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEge74CN57ag3xhGJpaPkBL7COcjWgtWOswr2x0DxTcNN5xRgA5Wh3EkjhTQKx5nSPXVsJOlGMoG_P0k_voLAic8PO8KjEyCJPojqllq7EZrhvMGqzV9F5wKFb4CYuGZptpPiZ0oP6jRLmBfFgNIzfaflsHzYEbCWS4QiWtEOWgOtUq1jEYy6dHIEhy4CT6j/w1200-h630-p-k-no-nu/Maihaugen%20%2837%29.JPG',
-                locationName: '內斯比恩.挪威|Nesbyen.Norway',
-                description: '挪威歷史最悠久、規模最大的露天博物館之一。該館於1899年由古德布蘭德·坦德伯格（Gudbrand Tandberg）創立，旨在保存並展示哈林達爾山谷的傳統文化遺產、古老建築與鄉村生活樣貌。One of the oldest and largest open-air museums in the country. Founded in 1899 by Gudbrand Tandberg, it offers a deep dive into the cultural heritage, architecture, and traditional lifestyle of the Hallingdal valley.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-52.',
-                title: '沃林斯瀑布|Vøringsfossen',
-                country: 'Norway',
-                category: 'europe',
-                lat: 60.4267,
-                lng: 7.2516,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAdHagwgJXaXb4O7TuNzZrGNy5lGwta2sJ2UYa2yf-qAZodMKBijjRcLr-&s=10',
-                locationName: '艾德菲尤爾.挪威|Eidfjord.Norway',
-                description: '瀑布總落差達 182公尺，其中最高的一段單一垂直落差為 163公尺。大量的水流從哈當厄爾高原的懸崖邊緣傾瀉而下，衝入狹窄深邃的峽谷中，水聲震耳欲聾，氣勢極其浩大。The waterfall has a total drop of 182 meters, with its highest single vertical section measuring 163 meters. A massive volume of water cascades over the edge of a cliff on the Hardangervidda plateau, plunging into a deep, narrow gorge with a deafening roar and immense, overwhelming power.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-              {
-                id: 'spot-53.',
-                title: '特溫德瀑布|Tvindefossen           
-                country: 'Norway',
-                category: 'europe',
-                lat: 60.7262,
-                lng: 6.4842,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtUX4IKfaUlaQfrqnff5IZMX9gMoTwmFev4t7vfwwXgA&s=10',
-                locationName: '艾德菲尤爾.挪威|Eidfjord.Norway',
-                description: '挪威非常知名且極具特色的階梯式瀑布，以優雅的簾幕狀水流與極佳的親近性聞名。它就位於歐洲 E16 公路旁（從沃斯鎮往弗洛姆的方向約 12 公里處），開車經過絕對不會錯過。This highly renowned and distinctive tiered waterfall in Norway is celebrated for its elegant, curtain-like cascades and the ease with which visitors can get up close. It is located right beside the European route E16 (approximately 12 kilometers from the town of Voss toward Flåm), making it impossible to miss when driving by.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-54.',
-                title: '弗洛姆|Flåm',
-                country: 'Norway',
-                category: 'europe',
-                lat: 60.8658,
-                lng: 7.1125,
-                photo: 'https://res.cloudinary.com/gofjords-com/images/w_2560,h_1600,c_scale/f_auto,q_auto:eco/v1697799903/Experiences/GoFjords/Fjord%20Cruise/Fl%C3%A5m%20by%20Sognefjord%20Cruise/Flam-Aurlandsfjord-Flamsbana-2/Flam-Aurlandsfjord-Flamsbana-2.jpg?_i=AA',
-                locationName: '艾于蘭.挪威|Aurland.Norway',
-                description: '一個風景如畫的小村莊，坐落於世界最長、最深的峽谷之一——松恩峽谷的最內端分支「艾于蘭峽谷」的盡頭。它是挪威最受歡迎的旅遊勝地之一，以壯麗的高山峽灣風光和世界級的鐵路工程聞名。A picturesque small village, nestled at the head of Aurlandsfjord—an innermost branch of Sognefjord, one of the world’s longest and deepest fjords. It is one of Norway’s most popular tourist destinations, renowned for its magnificent alpine-fjord scenery and world-class railway engineering.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-55.',
-                title: '洛達爾隧道|Lærdalstunnelen',
-                country: 'Norway',
-                category: 'europe',
-                lat: 61.09290,
-                lng: 7.47619,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9izDmhyG6WEETWdZ2R_OaWjcnZqU2vFGQUcFJXk0qWKPiAkOfCMh93RM&s=10',
-                locationName: '艾于蘭.挪威|Aurland.Norway',
-                description: '全長達 24.51 公里，是目前全球最長的公路隧道。連接了萊達爾與艾于蘭，是歐洲 E16 公路（奧斯陸至卑爾根之間）的重要路段。Spanning 24.51 kilometers in total, it is currently the longest road tunnel in the world. It connects Lærdal and Aurland and serves as a vital section of the European route E16 (between Oslo and Bergen).',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-56.',
-                title: '洛姆|Lom',
-                country: 'Norway',
-                category: 'europe',
-                lat: 61.8364,
-                lng: 8.5681,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzHRfDaBp36Yt0TMzXqh5rFQmUMn49H4QA4NheWKtg6A&s=10',
-                locationName: '內陸郡.挪威|Innlandet.Norway',
-                description: '這座被北歐最高峰環抱的小鎮，靜靜地矗立在碧綠的河流旁。那座建於12世紀的洛姆木板教堂，歷經數百年風雨，依然頂著獨特的龍頭雕飾與層疊的黑色木屋頂，訴說著中古世紀的傳奇。Nestled amidst the highest peaks in Northern Europe, this small town stands quietly beside a turquoise river. The Lom Stave Church, built in the 12th century, has weathered centuries of elements; with its distinctive dragon-head carvings and tiered, black-timbered roof, it continues to recount the legends of the Middle Ages.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-57.',
-                title: '🅿️|Fagerheim',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 60.43613,
-                lng: 7.77766,
-                photo: 'https://sensing-the-world.de/blog/2022/norwegen-4/Samegammene-tit_hu_7875c6526ba8abda.jpg',
-                locationName: '挪威|Norway',
-                description: '7號公路邊停車區,擁有壯麗河和山景,對面商家披掛著挪威代表性的馴鹿皮囊，無公廁。A rest area along Highway 7, offering magnificent views of the river and mountains; a shop across the way displays reindeer hides—a quintessential Norwegian item—but there are no public restrooms.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-58.',
-                title: '🌲|Bratagrendi,Unnamed Road',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 61.91016,
-                lng: 8.03521,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsqQwAVwdmlEUvWWiD0LmiDitSILuWHSksM_6RE8zL7Q&s=10',
-                locationName: '挪威|Norway',
-                description: '往山上行駛會先經過河流瀑布，潺潺流水聲伴眠深刻感受森林的純樸與寂靜。As you head up the mountain, you will first pass by rivers and waterfalls; the sound of the murmuring water lulls you to sleep, allowing you to deeply experience the simplicity and tranquility of the forest.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-             {
-                id: 'spot-59.',
-                title: '克旺達爾瀑布|Kvanndalsfossen',
-                country: 'Norway',
-                category: 'europe',
-                lat: 62.06435,
-                lng: 7.26162,
-                photo: 'https://images.world-of-waterfalls.com/Kvanndalsfossen_028_07182019.jpg',
-                locationName: '蓋倫格峽灣.挪威|Geirangerfjord.Norway',
-                description: '挪威著名世界遺產蓋倫格峽灣地區的一座壯麗瀑布。它雖然不像七姊妹瀑布那般聲名遠播，卻是自駕遊客在探索蓋倫格一帶時經常會眼睛為之一亮的隱藏美景。A magnificent waterfall located in the Geiranger Fjord area—a renowned World Heritage site in Norway. While perhaps not as widely famous as the Seven Sisters Waterfall, it serves as a striking hidden gem that often catches the eye of travelers exploring the Geiranger region by car.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-60.',
-                title: '圖爾達|Torta',
-                country: 'Norway',
-                category: 'europe',
-                lat: 62.00966,
-                lng: 7.86629,
-                photo: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Torda_river_-_Skj%C3%A5k_-_Noorwegen_280.jpg/250px-Torda_river_-_Skj%C3%A5k_-_Noorwegen_280.jpg?utm_source=no.wikipedia.org&utm_campaign=parser&utm_content=thumbnail',
-                locationName: '斯亞克.挪威|Skjåk.Norway',
-                description: '在斯亞克深邃而壯麗的高原深處，托爾達河自雷因海門的冰雪與群山間奔騰而出。它切開古老的 U 型山谷，一路吸收著大小支流與冰川融水的清冽，以無拘無束的姿態在崇山峻嶺間蜿蜒。Deep within the vast and magnificent highlands of Siyak, the Tolda River surges forth from the snow, ice, and mountains of Reinheim. Carving its way through an ancient U-shaped valley, it gathers the clear, cold waters of various tributaries and glacial melt, winding its unrestrained course amidst the towering peaks.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-61.',
-                title: '挪威峽灣中心|Norwegian Fjord Centre',
-                country: 'Norway',
-                category: 'europe',
-                lat:62.09570,
-                lng:7.21013,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmsTKLnDptFjDEnfHxfROHHjwpsa_OLb6eGjQL-4q4hoIZ0SgILBBWwx8&s=10',
-                locationName: '蓋倫格.挪威|Geiranger.Norway',
-                description: '該中心主要展示西挪威峽灣（包含蓋倫格峽灣與奈勒伊峽灣）的自然形成歷史、地質演變（如冰川作用）、獨特的生態系統，以及人類在險峻峽灣壁上開墾、生活的歷史文化，也是深入了解聯合國世界遺產「西挪威峽灣」的重要門戶。The center primarily showcases the natural formation and geological evolution—such as glacial processes—of the West Norwegian Fjords (including the Geirangerfjord and Nærøyfjord), as well as their unique ecosystems.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-62.',
-                title: '奧恩斯溫根|Ørnesvingen',
-                country: 'Norway',
-                category: 'europe',
-                lat:62.12003,
-                lng:7.18167,
-                photo: 'https://www.visitgeiranger.com/upload/images/sights/orne/7.jpg',
-                locationName: '蓋倫格.挪威|Geiranger.Norway',
-                description: '也稱為老鷹之路，是挪威最著名、最驚險的高山景觀公路地標之一，也是造訪蓋倫格峽灣時絕對不能錯過的必訪勝地，老鷹之路之所以得名，是因為這段公路在陡峭的山壁上連續修建了 11 個極度陡峭的髮夾彎，而奧恩斯溫根正是其中視野最壯麗的轉彎觀景台。Also known as the Eagle Road this is one of Norway’s most famous and thrilling mountain scenic routes—a must-visit destination for anyone traveling to the Geirangerfjord. The road earns its name from the 11 hairpin bends carved into the steep mountainside, and Ørnesvingen  serves as a viewpoint at one of these turns, offering perhaps the most spectacular vista along the entire route.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-63.',
-                title: '⛺️|Setnes Feriesenter',
-                country: 'Norway',
-                category: 'campsite',
-                lat:62.55456,
-                lng:7.68122,
-                photo: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/337877673.jpg?k=a9066b59080e88925d65452c971ac9893ea622bf0cd70e3e01f0fe283394a073&o=',
-                locationName: '韋布倫斯內斯.挪威|Veblungsnes.Norway',
-                description: '距離公車站和超市步行可達，也是前往精靈之路Trollstigen、Rampestreken、Romsdalseggen 健行步道以及開車前往亞特蘭大海底隧道和大西洋之路與蓋朗厄爾。✅衛浴✅汙水✅垃圾✅景觀。Within walking distance of a bus stop and a supermarket. Conveniently located for accessing the Trollstigen, Rampestreken, and Romsdalseggen hiking trails, and well-positioned for driving trips to the Atlantic Ocean Tunnel, the Atlantic Road, and Geiranger. ✅Shower ✅WC ✅Graywater ✅views',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-64.',
-                title: '大西洋海濱公路|Atlanterhavsveien',
-                country: 'Norway',
-                category: 'europe',
-                lat:63.01549,
-                lng:7.34080,
-                photo: 'https://atlanticadventure.eu/wp-content/uploads/2023/10/DJI_0044-2-1.webp',
-                locationName: '默勒魯姆斯達爾郡.挪威|Møreog Romsda.Norway',
-                description: '挪威最著名、最壯麗的公路景點之一，被許多旅遊權威機構和駕駛愛好者譽為「世界最美的自駕公路」之一。One of Norway’s most famous and spectacular scenic routes, hailed by numerous travel authorities and driving enthusiasts as one of the most beautiful road-trip routes in the world.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-65.',
-                title: '特隆赫姆|Trondheim',
-                country: 'Norway',
-                category: 'europe',
-                lat:63.4305,
-                lng:10.3951,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCIvd5GlG8LxLshrtfL8KYwaU_-jpU4fNaYGCg5pJ-Ew&s=10',
-                locationName: '挪威|Norway',
-                description: '挪威的第三大城市，也是一座完美融合了千年歷史文化與現代創新活力的美麗港口城市。它位於挪威中部（特隆赫姆峽灣的南岸），是許多旅客前往挪威中北部或Lofoten群島時的重要門戶。As Norway’s third-largest city, this beautiful port city perfectly blends a thousand years of history and culture with modern, innovative vitality. Located in Central Norway—on the southern shore of the Trondheim Fjord—it serves as a key gateway for many travelers heading toward the central and northern parts of the country or the Lofoten Islands.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-66.',
-                title: '諾爾蘭之門|Nordlandsporten',
-                country: 'Norway',
-                category: 'europe',
-                lat:65.10104,
-                lng:13.34230,
-                photo: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/48/35/3e/caption.jpg?w=1200&h=-1&s=1',
-                locationName: '挪威|Norway',
-                description: '位於E6公路上特倫德拉格郡與諾爾蘭郡（北挪威的南大門）的交界處。對自駕旅客來說，看到這個地標就正式宣告「進入北挪威了」。At the border between Trøndelag County and Nordland County—the southern gateway to Northern Norway—this landmark serves as a clear signal to road-trippers that they have officially entered Northern Norway.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-             {
-                id: 'spot-67.',
-                title: '🌲✨|2 Selundar.Fylkesveg 291',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 65.80155,
-                lng: 13.89961,
-                photo: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/15/9f/06/storholmen.jpg?w=900&h=500&s=1',
-                locationName: '挪威|Norway',
-                description: '位於景觀優美的湖岸邊,晚上幸運遇上極光,草地有桌椅可以休憩。✅廁所✅景觀。Located along a scenic lakeshore; I was lucky enough to see the aurora in the evening. There are tables and chairs on the lawn where you can relax. ✅Restrooms ✅Views',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-            {
-                id: 'spot-68.',
-                title: '莫城|Mo i Rana',
-                country: 'Norway',
-                category: 'europe',
-                lat: 66.3134,
-                lng: 14.1432,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmDrxfIjaBsLRVrtMDlVmFNsVE7uXNMzV3-_GFt_2gng&s=10',
-                locationName: '挪威|Norway',
-                description: '挪威北部諾爾蘭郡的第二大城市，也是前往北挪威的重要工業與交通重鎮。由於它緊鄰北極圈（位於北極圈以南僅約 30 公里處），因此常被稱為「北極圈之城」。As the second-largest city in Nordland County, Northern Norway, it serves as a vital industrial and transportation hub for the region. Situated just about 30 kilometers south of the Arctic Circle, it is often referred to as the "Gateway to the Arctic.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-               {
-                id: 'spot-69.',
-                title: '斯瓦蒂森冰川|Svartisen',
-                country: 'Norway',
-                category: 'europe',
-                lat: 66.6800,
-                lng: 13.8400,
-                photo: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/34/51/0a/svartisen-glacier-in.jpg?w=1200&h=-1&s=1',
-                locationName: '挪威|Norway',
-                description: '境內面積第二大的冰川（僅次於約斯特達爾冰川，也是歐洲大陸上最低的冰川之一。它橫跨挪威北部的多個市鎮，主要位於斯蒂納菲耶爾-斯瓦蒂森國家公園內。It is the second-largest glacier in the country (surpassed only by the Jostedalsbreen glacier) and also one of the lowest-lying glaciers on the European mainland. It spans several municipalities in northern Norway and is located primarily within the Saltfjellet-Svartisen National Park.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-             {
-                id: 'spot-70.',
-                title: '烏雷德|Uredd',
-                country: 'Norway',
-                category: 'europe',
-                lat: 66.95043,
-                lng: 13.63168,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScATqfHQSY6kEbvyw1FQF3BoGvl2aqRJ_nqzDst_oZIPfGsT_dUdzCTFDh&s=10',
-                locationName: '吉爾德斯勒.挪威|Gildeskål.Norway',
-                description: '「Uredd」在挪威語中意為「無畏者」,源於紀念二戰期間不幸殉職的挪威皇家海軍「無畏號」潛艇官兵。1943 年 2 月，該潛艇在附近的海域觸雷沉沒，造成 42 名官兵罹難。現地豎立著紀念碑，以悼念這些為國捐軀的英雄。並設立「全世界最美、風景最奢華的公共廁所」。"Uredd" means "fearless" in Norwegian; the name commemorates the crew of the Royal Norwegian Navy submarine *Uredd*, who tragically lost their lives during World War II. In February 1943, the submarine struck a naval mine in these waters and sank, claiming the lives of 42 sailors. A monument stands at the site to honor these heroes who made the ultimate sacrifice for their country—alongside what has been described as the world’s most beautiful public restroom, boasting an exceptionally spectacular view.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-             {
-                id: 'spot-71.',
-                title: '⛺️|Marlens mysiga B&B',
-                country: 'Sweden',
-                category: 'campsite',
-                lat:65.81896,
-                lng:22.89306,
-                photo: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/782900123.jpg?k=b0e7d00654aa2c3e741c7605d19f9c2f89ce4c6be4d3d9b751883315eaae0b1b&o=',
-                locationName: '波倫格.瑞典|Pålänge.Sweden',
-                description: '位於瑞典北部拉普蘭地區諾尔博滕省小村莊波倫格的溫馨民宿。「Mysiga」在瑞典語中正是「舒適、溫馨、愜意」的意思。✅衛浴✅廚房✅汙水✅垃圾✅桑拿。A cozy guesthouse located in the small village of Boleng in Norbotten County, Lapland, northern Sweden. "Mysiga" means "comfortable, cozy, and pleasant" in Swedish. ✅Shower ✅WC ✅Kitchen ✅Graywater ✅Trash ✅Sauna',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-            {
-                id: 'spot-72.',
-                title: '薩爾特流|Saltstraumen',
-                country: 'Norway',
-                category: 'europe',
-                lat: 67.23153,
-                lng: 14.61392,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGj1v3afFJipFy3Pdp_2ddGAdqoScQd0mRkFzyqsg7mQ&s=10',
-                locationName: '吉爾德斯勒.挪威|Gildeskål.Norway',
-                description: '世界上最強大的潮汐漩渦,於海峽狹窄加上海底地形奇特，當潮汐轉向時，水流速度極快（可達每秒 10 海里 / 約時速 40 公里），因而形成直徑可達 10 公尺、深度達 4 至 5 公尺的巨大漩渦。The most powerful tidal vortex of world is formed by the narrowness of the strait and the unique seabed topography. When the tide turns, the water flow is extremely fast (up to 10 knots / about 40 kilometers per hour).',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-            {
-                id: 'spot-73.',
-                title: '🅿️✨|Godøy maelstrom restarea',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 67.23989,
-                lng: 14.71165,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRkbwl5PYnpXv99nZZKmeDW49Eb8rCBFLZra8j8rnedA&s=10',
-                locationName: '海爾格蘭海岸.挪威|Nasjonale turistveger.Norway',
-                description: '位於挪威海爾格蘭海岸沿線，靠近 Godøystraumen 狹窄海峽的入口處,也接近世界上最大的潮汐漩渦薩爾特流。幸運遇見映照再海面上的北極光。✅垃圾✅景觀。Located along the Norwegian coastline, near the entrance to the narrow strait of Godøystraumen, and also close to the Sarthe Current, the largest tidal eddy of world. Lucky enough to witness the Northern Lights reflected on the sea. ✅Trash✅View',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-            {
-                id: 'spot-74.',
-                title: '⛺️|Lofoten Beach Camp',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 68.1032,
-                lng: 13.2945,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1B4zZDdZvj0p_fYcysBNdFaqcHNKXNOuTg6f8Yk1bmw&s=10',
-                locationName: '羅浮敦.挪威|Lofoten.Norway',
-                description: '營地緊鄰綿延的白色沙灘與壯麗的群山，正面對著廣闊的大海,這裡也是羅浮敦群島重要的衝浪勝地。營地本身提供衝浪課程與裝備租借，周邊也便於健行、海上獨木舟等戶外活動。✅衛浴✅桑拿✅廚房✅污水✅垃圾✅景觀。The campsite is nestled beside a long stretch of white sand beaches and majestic mountains, facing the vast ocean; also a major surfing destination in the Lofoten Islands. The campsite itself offers surfing lessons and equipment rentals, and the surrounding area is convenient for hiking, canoeing, and other outdoor activities.✅Shower ✅WC ✅Sauna ✅Kitchen ✅Graywater ✅Trash ✅View',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-            {
-                id: 'spot-75.',
-                title: '☕️|Duus Matverk',
-                country: 'Norway',
-                category: 'coffee',
-                lat: 68.23367,
-                lng: 14.55849,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM9ZrCwd9pX-evDVfiqoP6tWb_BgI4FFHey78SjJ9NvQ&s=10',
-                locationName: '斯沃爾維爾.挪威|Svolvær.Norway',
-                description: '羅浮敦群島最大城鎮斯沃爾維爾市中心的Alti賣場內，是一家深受當地人與旅客喜愛的美食餐館與熟食坊,餐廳主打結合挪威傳統與現代烹調手法的料理，特別擅長運用群島最新鮮的海鮮（如當地著名的鱈魚與海鮮湯品）以及優質的在地肉品，呈現道地的北歐風味。Located in the heart of Svorville in shopping mall, the largest town in the Lofoten Islands, this restaurant and delicatessen is a favorite among locals and tourists alike. The restaurant specializes in dishes that combine traditional Norwegian cooking techniques with modern culinary methods, and is particularly adept at using the islands’ freshest seafood (such as the famous local cod and seafood soups) and high-quality local meats to present authentic Nordic flavors.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-            {
-                id: 'spot-76.',
-                title: '漢姆勒觀景台|Hamnoy lofoten scenic viewpoint',
-                country: 'Norway',
-                category: 'europe',
-                lat: 67.94544,
-                lng: 13.13117,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpTyurDbf9Qw3ee9f6kMc-0hofZMr6bd34Om-p2PZ9wwuDAetT0wLbitd-&s=10',
-                locationName: '莫斯克內斯.挪威|Moskenes.Norway',
-                description: '這裡正是明信片與各大旅遊雜誌上常見的「羅浮敦標誌性畫面」拍攝點。從觀景台上望去，可以將標誌性的紅色傳統漁民小屋、湛藍的海灣，以及背後如利刃般直插天際的壯麗尖峭山峰完美融為一体。This is the very spot where you can take photos of the iconic Lofoten scene often seen on postcards and in major travel magazines. From the viewing platform, you can perfectly blend the iconic red traditional fishermens huts, the azure bay, and the magnificent, sharp peaks that pierce the sky like blades in the background.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-77.',
-                title: '奧鎮|Å',
-                country: 'Norway',
-                category: 'europe',
-                lat: 67.88030,
-                lng: 12.98441,
-                photo: 'https://zstravelliving.com/wp-content/uploads/2024/06/20240601025119_0_eea375.jpg',
-                locationName: '羅浮敦.挪威|Lofoten.Norway',
-                description: '挪威羅浮敦群島最南端的小漁村，也是整個群島上最具代表性與人氣的秘境之一。這個地名「Å」是挪威語及丹麥語字母表中的最後一個字母，在古諾斯語中意指「小河」或「溪流」。The southernmost fishing village in the Lofoten Islands of Norway is also one of the most prestigious and popular hidden gems in the entire archipelago. The name "Å" is the last letter of the Norwegian and Danish alphabets and means small river or stream in Old Norse.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-78.',
-                title: '豪克蘭海灘|Hauklandstranda',
-                country: 'Norway',
-                category: 'europe',
-                lat: 68.19902,
-                lng: 13.52872,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxCQ3aDS3t4ja0nJ3oiJGI1k_0jQrZvRClFFmU6N6rsA&s=10',
-                locationName: '羅浮敦.挪威|Lofoten.Norway',
-                description: '被公認為全挪威甚至全歐洲最美麗的海灘之一,擁有綿延的純白細沙與極為清澈透亮的土耳其藍海水，背景則是氣勢磅礡、筆直陡峭的壯麗山峰。山海交織的強烈對比，讓此處無論晴雨都展現出令人屏息的極致景致。Widely recognized as one of the most beautiful beaches in Norway and even Europe, this beach boasts long stretches of pure white sand and crystal-clear turquoise waters, set against a backdrop of majestic, steep mountains. The striking contrast between the mountains and the sea creates a breathtakingly beautiful scene, regardless of the weather.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-79.',
-                title: '烏恩斯塔海灘|Unstad Beach',
-                country: 'Norway',
-                category: 'europe',
-                lat: 68.26907,
-                lng: 13.58144,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDMNbX_zpB3mqjLTb_QIg8XhdvRtVGPyXj7eQhyjyHDA&s=10',
-                locationName: '羅浮敦.挪威|Lofoten.Norway',
-                description: '位於挪威羅浮敦群島韋斯特沃格島的西北海岸，是全球極具盛名的北極圈衝浪勝地。Located on the northwest coast of Vestvågøya in the Lofoten Islands of Norway, it is a world-renowned surfing destination in the Arctic Circle.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-80.',
-                title: '奧斯特內斯峽灣|Austnesfjorden',
-                country: 'Norway',
-                category: 'europe',
-                lat: 68.31610,
-                lng: 14.71573,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIyVEpGhCrsU8LUS9DwH41GkQMZUrB17uUWFVRhtiiXA&s=10',
-                locationName: '羅浮敦.挪威|Lofoten.Norway',
-                description: '在奧斯特內斯峽灣內側的 Sildpollen 海灣，坐落著一間被群山與海水環繞的孤單小教堂。這裡搭配蜿蜒的公路，是羅浮敦群島極具代表性的明信片經典構圖，吸引無數攝影愛好者前來朝聖。Nestled in Sildpollen Bay, inside the Osternesfjord, lies a solitary chapel surrounded by mountains and sea. Combined with the winding road, this location creates a classic postcard-perfect composition typical of the Lofoten Islands, attracting countless photography enthusiasts on a pilgrimage.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-81.',
-                title: '基律納|Kiruna',
-                country: 'Sweden',
-                category: 'europe',
-                lat: 67.85572,
-                lng: 20.22513,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbp81n-B3orHD02uVX-eZ-dqiqSgOsAGMNz6jOFWh6eg&s=10',
-                locationName: '瑞典|Sweden',
-                description: '瑞典最北端的城鎮，位於北極圈以北約 145 公里處的拉普蘭地區。這座城市以壯麗的極地風光、全球最大的地下鐵礦場，以及因採礦引發的「整座城市大遷徙」工程而聞名於世。The northernmost town in Sweden is located in Lapland, about 145 kilometers north of the Arctic Circle. The city is famous for its magnificent polar scenery, the largest underground iron ore mine of the world, and the "mass relocation of the entire city" project triggered by mining.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'https://example.com/guides/fuji-guide.pdf'
-            },
-            {
-                id: 'spot-82.',
-                title: '🌲✨|Robertsfors Ö',
-                country: 'Sweden',
-                category: 'campsite',
-                lat: 64.17710,
-                lng: 21.04064,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzmosIRdX3e8jyRWgnRiaqez-UphysokScG4OcLNNsSQ&s=10',
-                locationName: '瑞典|Sweden',
-                description: '二訪的過夜森林,也幸運再次同一地點遇上極光,可以散步到Killingsands白沙灘,是瑞典列入自然保護區之一。✅污水✅垃圾✅景觀。My second visit to the forest, where I spent the night, was also fortunate enough to witness the aurora borealis at the same location. We could then stroll to Killingsands white sand beach.✅Graywater✅Trash ✅View',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-            },
-             {
-                id: 'spot-83.',
-                title: '⛺️|Trysilfjellet Camping',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 61.30416,
-                lng: 12.27328,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuag0BYRN__O_7Ysfq9ThrXHKwSz314xvqQyWZlfw3Hg&s',
-                locationName: '挪威|Norway',
-                description: '位於挪威著名滑雪勝地特里西爾山區的核心露營與車宿據點,緊鄰河岸可以從事水上活動。✅衛浴✅桑拿✅廚房✅污水✅垃圾✅景觀。Located in the heart of the Trissil mountain region, a famous ski resort in Norway, this camping and caravan site is adjacent to the riverbank for water activities. ✅Shower ✅WC ✅Sauna ✅Kitchen ✅Graywater ✅Trash ✅Views',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-              {
-                id: 'spot-84.',
-                title: '🅿️|Eidsvoll',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 60.32706,
-                lng: 11.26264,
-                photo: 'https://g.acdn.no/obscura/API/dynamic/r1/ece5/tr_2000_2000_s_f/1717678664000/eids/2024/6/6/14/PXL_20240604_090714573.jpg?chk=131C17',
-                locationName: '挪威|Norway',
-                description: '位於首都奧斯陸以北約 50 公里處，也是通往挪威內陸與奧斯陸加勒穆恩機場的重要交通門戶，付費衛浴在橋的另一側。Located about 50 kilometers north of the capital Oslo, it is also an important transportation gateway to the Norwegian interior and Oslo-Galemun Airport. The paid bathroom is on the other side of the bridge.✅衛浴✅垃圾。✅Shower ✅WC ✅Trash.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-85.',
-                title: '🅿️|Tjongsfjorden,sekundar Fylkesvei 17',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 66.64701,
-                lng: 13.53469,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfxgDYmBnMaknDDFKc90rT257mwhtnOdCmkU0dAwukDg&s=10',
-                locationName: '挪威|Norway',
-                description: '面對峽灣深入內陸的一處公園停車場，周圍環繞著起伏的翠綠山丘、陡峭山脈與大片森林，展現出典型的挪威西海岸峽灣地貌，環境極為清幽，遠離塵囂。✅垃圾✅景觀。Facing a park parking lot extending inland from the fjord, surrounded by rolling green hills, steep mountains, and vast forests, this area showcases typical Norwegian west coast fjord landscapes. The environment is extremely tranquil, far removed from the hustle and bustle. ✅Trash ✅Views.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-86.',
-                title: '🅿️|Lødingen 52',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 68.42037,
-                lng: 15.99151,
-                photo: 'https://d2exd72xrrp1s7.cloudfront.net/www/adventure/80246/1WdOo0',
-                locationName: '呂丁恩.挪威|Lødingen.Norway',
-                description: '停車場位於渡輪橋頭,晚上會聽到渡輪的聲響。Lødingen 長期以來是連接挪威本土（透過 E10 公路）與羅浮敦群島的重要渡輪門戶（過去曾是主要的汽車渡輪航線起訖點之一）。✅垃圾✅景觀。The parking lot is located at the ferry bridgehead, and you can hear the ferry at night. Lødingen has long been an important ferry gateway connecting mainland Norway (via the E10 highway) and the Lofoten Islands (it was once one of the main starting and ending points for car ferry routes).✅Trash ✅Views.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-87.',
-                title: '🅿️|Vestersia,Ramberg ',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 68.05680,
-                lng: 13.23196,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7xLmnBOpUP2OL-UAOusUluCYyYiqgIbKBbKnhbWIY4w&s=10',
-                locationName: '弗拉克斯塔德島.挪威|Flakstadoya.Norway',
-                description: '島上保留了許多充滿極圈風情的純樸村落，如充滿紅色木屋的雷訥鄰近區域、滕貝格等地，展現出濃厚的人文氣息與百年漁業歷史,停車場位於當地曬魚場,須留意當地居民作業時間。The island retains many rustic villages full of Arctic charm, such as the area near Reine and Ttenberg, filled with red wooden houses, showcasing a rich cultural atmosphere and a century-old fishing history. The parking lot is located at the local fish drying area, so be aware of the local working hours.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-             {
-                id: 'spot-88.',
-                title: '🅿️|Narvik ',
-                country: 'Norway',
-                category: 'campsite',
-                lat: 68.50153,
-                lng: 17.80256,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0YJE82BDTxkmaGtiQ1OCGk9uD_jRJaMC0r9Sgu_4e7Q&s=10',
-                locationName: '納爾維克.挪威|Narvik.Norway',
-                description: '停車場位於黑湖旁,這座湖泊坐落於納爾維克附近的荒野與群山之間，四周多為壯麗的北極圈山脈與苔原景致，展現出典型挪威北部遺世獨立的原始風貌。✅垃圾✅景觀。The parking lot is located next to Black Lake, which is nestled among the wilderness and mountains near Narvik. Surrounded by magnificent Arctic mountain ranges and tundra scenery, it showcases the typical pristine and isolated landscape of northern Norway.✅Trash ✅Views.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-89.',
-                title: '巨魔之路|Trollstigen ',
-                country: 'Norway',
-                category: 'europe',
-                lat: 62.45858,
-                lng: 7.67391,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5LEdJTfeQsHcd25SjYFXXF8fShoSl9SVsybaoWJjM_Q&s=10',
-                locationName: '納爾維克.挪威|Narvik.Norway',
-                description: '挪威最著名、最壯麗的國家級景觀公路之一，位於挪威西部的勒姆敘爾地區，連接了安達爾斯內斯與瓦爾德達爾，是許多自駕旅客造訪北歐時心目中的夢幻朝聖路線。One of most famous and magnificent national scenic highways in Norway,located in the Lemsyur region of western Norway, it connects Andalsnes and Walddar and is a dream pilgrimage route for many self-driving travelers visiting Scandinavia.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-            },
-            {
-                id: 'spot-90.',
-                title: '☕️|espresso house',
-                country: 'Norway',
-                category: 'coffee',
-                lat: 64.01135, 
-                lng: 11.49203,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfj-PIp9zvvkm6AFZe0ipYdsvQmsacF-Es6OBGvy38iQ&s=10',
-                locationName: '斯滕克耶.挪威|Steinkjer.Norway',
-                description: '當地知名的連鎖咖啡廳,城鎮斯滕克耶坐落于特隆赫姆峽灣的最內端，是內陸與海岸交會的交通與生活重鎮,咖啡廳坐落於購物中心內。The town of Stunkje, located at the innermost tip of Trondheim Fjord, is a major transportation and lifestyle hub where the inland and coastal areas meet. It is home to a well-known chain of coffee shops.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-             {
-                id: 'spot-91.',
-                title: '☕️|Nyrudstu Café',
-                country: 'Norway',
-                category: 'coffee',
-                lat: 64.92949, 
-                lng: 13.15972,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtORqZbVZ7q589Z3eLMKxC796QV2OZ8UQFCFcjYzf_w&s',
-                locationName: '納姆斯庫甘.挪威|Namsskogan.Norway',
-                description: 'Namsskogan地區位於coop超市建築內的一處溫馨在地咖啡館與中途休憩站，對於長途駕車行經 E6 公路的自駕旅客而言，是一個非常舒適且便利的補給據點。Located inside coop supermarket building in the Namsskogan area, this cozy local cafe and rest stop is a very comfortable and convenient supply point for travelers on long drives along the E6 highway.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'norway1.html'
-             },
-            {
-                id: 'spot-92.',
-                title: '☕️|Ekbergs Konditori',
-                country: 'Sweden',
-                category: 'coffee',
-                lat: 65.31673, 
-                lng: 21.48100,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRS8sNr-Q-9eB1O5eotg_mJalYaRiVjRlUwj-7qG6xWQ&s=10',
-                locationName: '皮特奧.瑞典|Piteå.Sweden',
-                description: '創立於1923年，這家老字號是諾爾博滕地區少數僅存的正宗傳統瑞典咖啡館，完美保留了瑞典經典的 fika（下午茶/咖啡歇息）文化與傳統烘焙手藝。Founded in 1923, this long-established coffee shop is one of the few remaining authentic traditional Swedish coffee shops in the Norbertunden region, perfectly preserving the classic Swedish fika (afternoon tea/coffee break) culture and traditional roasting techniques.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-             },
-            {
-                id: 'spot-93.',
-                title: '☕️|Gruvstugan',
-                country: 'Sweden',
-                category: 'coffee',
-                lat: 60.67004, 
-                lng: 16.81753,
-                photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7VH2nP12wMxYtAcVLCaovgPfSAkW6tYJ4gvCQXr3PqA&s=10',
-                locationName: '桑德維肯.瑞典|Sandviken.Sweden',
-                description: '著名的歷史文化與休閒度假區海格博布魯克內的一家極具特色的餐飲與休憩據點。這裡完美融合了當地的工業歷史背景與自然田園風光，是造訪海格博布魯克的遊客與當地居民喜愛的熱門聚會與歇腳處。A unique dining and relaxation spot in the renowned historical and leisure resort area of ​​Högbo Bruk.It perfectly blends the local industrial history with natural pastoral scenery, making it a popular gathering and rest stop for both tourists and locals visiting Högbo Bruk.',
-                likes: 910,
-                fbLink: 'https://www.facebook.com/profile.php?id=61593630944835',
-                guideLink: 'sweden2.html'
-             }
-        ];
+        let currentPage = 1;
+        const totalPages = 10;
+        let currentLang = 'zh'; // 'zh' or 'en'
 
-        // --- Application State ---
-        let spots = [...initialSpots];
-        let savedSpots = JSON.parse(localStorage.getItem('saved_photo_spots') || '[]');
-        let isShowingSaved = false;
-        let currentFilter = 'all';
-        let currentSearch = '';
-        let currentCountry = 'all';
-        let userLocation = null; // { lat, lng }
-        let userMarker = null;
-        let userAccuracyCircle = null;
-        let map, markersGroup;
-        let watchPositionId = null; // 用於記錄定位追蹤的 ID
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
 
-        // --- Google Maps Tile Layers ---
-        const googleTileLayers = {
-            googleStreets: L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                maxZoom: 20,
-                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                attribution: '&copy; Google Maps'
-            }),
-            googleHybrid: L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-                maxZoom: 20,
-                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                attribution: '&copy; Google Maps'
-            }),
-            googleSatellite: L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-                maxZoom: 20,
-                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                attribution: '&copy; Google Maps'
-            }),
-            googleTerrain: L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
-                maxZoom: 20,
-                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                attribution: '&copy; Google Maps'
-            })
+            const progress = Math.round((currentPage / totalPages) * 100);
+            document.getElementById('progress-text').textContent = progress;
+
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (currentPage === totalPages) {
+                nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+            } else {
+                nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+            }
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+
+            document.getElementById('book-content-area').scrollTop = 0;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('norway_journey_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('norway_journey_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
         };
 
-        let currentActiveLayer = googleTileLayers.googleStreets;
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
 
-        function initMap() {
-            map = L.map('map', {
-                center: [25.0330, 121.5654], // Default Taipei
-                zoom: 10,
-                zoomControl: false
-            });
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
 
-            currentActiveLayer.addTo(map);
-
-            markersGroup = L.layerGroup().addTo(map);
-
-            // Click map to view coordinates (純瀏覽座標，不包含打卡)
-            map.on('click', (e) => {
-                const lat = e.latlng.lat.toFixed(5);
-                const lng = e.latlng.lng.toFixed(5);
-
-                const popupContent = `
-                    <div class="text-center p-2 min-w-[140px]">
-                        <div class="font-bold text-slate-800 mb-1 text-sm flex justify-center items-center gap-1">
-                            <i class="fa-solid fa-map-pin text-sky-600"></i> 地圖座標
-                        </div>
-                        <div class="text-[11px] text-slate-500 font-mono bg-slate-100 rounded px-1 py-0.5 inline-block">${lat}, ${lng}</div>
-                    </div>
-                `;
-
-                L.popup({ className: 'custom-popup', closeButton: true })
-                    .setLatLng(e.latlng)
-                    .setContent(popupContent)
-                    .openOn(map);
-            });
-
-            renderSpots();
-        }
-
-        function renderSpots() {
-            markersGroup.clearLayers();
-            const listEl = document.getElementById('spotList');
-            listEl.innerHTML = '';
-
-            // 判斷當前是否處於「僅顯示收藏」模式，動態切換基底資料
-            let baseData = isShowingSaved ? initialSpots.filter(s => savedSpots.includes(s.id)) : initialSpots;
-
-            let filtered = baseData.filter(spot => {
-                const matchCat = currentFilter === 'all' || spot.category === currentFilter;
-                const matchSearch = spot.title.toLowerCase().includes(currentSearch.toLowerCase()) || 
-                                    spot.locationName.toLowerCase().includes(currentSearch.toLowerCase()) ||
-                                    spot.description.toLowerCase().includes(currentSearch.toLowerCase());
-                const matchCountry = currentCountry === 'all' || spot.country === currentCountry;
-                
-                return matchCat && matchSearch && matchCountry;
-            });
-
-            // Default sorting by popularity (likes)
-            filtered.sort((a, b) => (b.likes || 0) - (a.likes || 0));
-
-            document.getElementById('spotCount').textContent = filtered.length;
-
-            if (filtered.length === 0) {
-                listEl.innerHTML = `
-                    <div class="text-center py-12 text-slate-500">
-                        <i class="fa-solid fa-camera-slash text-4xl mb-3"></i>
-                        <p class="text-sm">沒有找到符合條件的照片地點</p>
-                    </div>
-                `;
-                return;
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
             }
-
-            const bounds = [];
-
-            filtered.forEach(spot => {
-                bounds.push([spot.lat, spot.lng]);
-
-                // Calculate distance if user location is known
-                let distText = '';
-                if (userLocation) {
-                    const km = getDistanceInKm(userLocation.lat, userLocation.lng, spot.lat, spot.lng);
-                    distText = km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
-                }
-
-                // 1. Create Custom Map Marker with Photo Badge
-                const customIcon = L.divIcon({
-                    className: 'custom-photo-marker',
-                    html: `
-                        <div class="marker-pin">
-                            <img src="${spot.photo}" alt="${spot.title}" onerror="this.src='https://placehold.co/100x100/0284c7/fff?text=Photo'">
-                        </div>
-                    `,
-                    iconSize: [44, 44],
-                    iconAnchor: [22, 44],
-                    popupAnchor: [0, -40]
-                });
-
-                const marker = L.marker([spot.lat, spot.lng], { icon: customIcon });
-
-                // Leaflet Popup HTML
-                const popupContent = `
-                    <div class="bg-slate-800 text-slate-100 font-sans">
-                        <img src="${spot.photo}" class="w-full h-32 object-cover" onerror="this.src='https://placehold.co/300x200/0284c7/fff?text=Photo'">
-                        <div class="p-3">
-                            <h4 class="font-bold text-sm text-white truncate mb-1">${spot.title}</h4>
-                            <p class="text-[11px] text-sky-400 mb-1 truncate"><i class="fa-solid fa-location-dot"></i> ${spot.locationName}</p>
-                            ${distText ? `<p class="text-[10px] text-amber-400 font-medium mb-2"><i class="fa-solid fa-route mr-1"></i>距離您約 ${distText}</p>` : ''}
-                            <button onclick="openSpotModal('${spot.id}')" class="w-full py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-medium transition">
-                                景點導覽 Spot Guide
-                            </button>
-                        </div>
-                    </div>
-                `;
-
-                marker.bindPopup(popupContent);
-                markersGroup.addLayer(marker);
-
-                // 2. Render Card to Sidebar with scrollable layout (no compression, fixed height, text truncation)
-                const isSaved = savedSpots.includes(spot.id);
-                const card = document.createElement('div');
-                card.className = 'bg-[#1e293b] hover:bg-slate-700/80 border border-slate-700/70 hover:border-sky-500/50 rounded-2xl overflow-hidden shadow-sm transition cursor-pointer flex items-center h-[72px] shrink-0 group relative p-1 pr-3';
-                
-                card.onclick = () => {
-                    map.flyTo([spot.lat, spot.lng], 15, { duration: 1.2 });
-                    marker.openPopup();
-                };
-
-                card.innerHTML = `
-                    <div class="w-[120px] h-full rounded-xl overflow-hidden shrink-0 relative bg-slate-900 group/img mr-3 ml-0.5" onclick="event.stopPropagation(); openSpotModal('${spot.id}')" title="點擊查看相片大圖與拍攝指南">
-                        <img src="${spot.photo}" alt="${spot.title}" class="w-full h-full object-cover group-hover/img:scale-110 transition duration-300" onerror="this.src='https://placehold.co/200x200/0284c7/fff?text=Photo'">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition flex items-center justify-center text-white text-xs font-medium">
-                            <i class="fa-solid fa-eye"></i>
-                        </div>
-                        <span class="absolute top-1.5 left-1.5 bg-sky-600 text-white text-[10px] px-1.5 py-0.5 rounded-sm shadow-md font-medium tracking-wide">
-                            ${getCategoryLabel(spot.category)}
-                        </span>
-                    </div>
-                    
-                    <div class="flex-1 flex items-center justify-between min-w-0 pr-1">
-                        <h3 class="font-bold text-[13px] text-slate-100 group-hover:text-sky-400 transition truncate leading-tight">${spot.title}</h3>
-                        
-                        <div class="flex items-center gap-3 shrink-0 ml-2">
-                             ${distText ? `<span class="text-amber-400 font-medium text-[10px] hidden sm:block whitespace-nowrap"><i class="fa-solid fa-location-arrow mr-0.5"></i>${distText}</span>` : ''}
-                            <button onclick="event.stopPropagation(); toggleSaveSpot('${spot.id}')" class="text-slate-400 hover:text-sky-400 p-1 transition" title="收藏景點">
-                                <i class="${isSaved ? 'fa-solid text-sky-400' : 'fa-regular'} fa-bookmark"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                listEl.appendChild(card);
-            });
-
-            // Adjust view to fit markers if initial load
-            if (bounds.length > 0 && currentSearch === '' && currentFilter === 'all' && !userLocation) {
-                map.fitBounds(bounds, { padding: [50, 50], maxZoom: 12 });
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
             }
         }
-
-        function getDistanceInKm(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Earth's radius in km
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            return R * c;
-        }
-
-        function getCategoryLabel(cat) {
-            const catMap = {
-                'asia-pacific': '亞洲',
-                'oceania': '大洋洲',
-                'europe': '歐洲',
-                'campsite': '營區'
-            };
-            return catMap[cat] || '咖啡';
-        }
-
-        // --- Layout Toggles ---
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            closeDetailPanel(); // 開啟列表時自動關閉詳細攻略
-            sidebar.classList.toggle('-translate-x-full');
-        }
-
-        function closeDetailPanel() {
-            const detailSidebar = document.getElementById('detailSidebar');
-            // 套用隱藏動畫：手機版往下隱藏，電腦版往左隱藏
-            detailSidebar.classList.remove('translate-y-0', 'sm:translate-x-0');
-            detailSidebar.classList.add('translate-y-full', 'sm:-translate-x-full');
-        }
-
-        function trackUserLocation(flyToUser = false) {
-            if (!navigator.geolocation) {
-                showToast('您的瀏覽器不支援地理定位功能');
-                return;
-            }
-
-            const myLocBtn = document.getElementById('myLocationBtn');
-            if (myLocBtn && flyToUser) {
-                // 點擊按鈕時顯示旋轉動畫
-                myLocBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-base"></i>';
-            }
-
-            if (flyToUser) {
-                showToast('正在精準定位並追蹤您的地理位置...');
-            }
-
-            // 清除之前的追蹤
-            if (watchPositionId) {
-                navigator.geolocation.clearWatch(watchPositionId);
-            }
-
-            // 改用 watchPosition 進行持續追蹤
-            watchPositionId = navigator.geolocation.watchPosition(
-                (pos) => {
-                    const { latitude, longitude, accuracy } = pos.coords;
-                    userLocation = { lat: latitude, lng: longitude };
-
-                    if (userMarker) map.removeLayer(userMarker);
-                    if (userAccuracyCircle) map.removeLayer(userAccuracyCircle);
-
-                    userAccuracyCircle = L.circle([latitude, longitude], {
-                        radius: accuracy || 100,
-                        color: '#0284c7',
-                        fillColor: '#38bdf8',
-                        fillOpacity: 0.15,
-                        weight: 1
-                    }).addTo(map);
-
-                    const userIcon = L.divIcon({
-                        className: 'user-location-marker',
-                        html: `<div class="user-location-dot"></div>`,
-                        iconSize: [24, 24],
-                        iconAnchor: [12, 12]
-                    });
-
-                    userMarker = L.marker([latitude, longitude], { icon: userIcon, zIndexOffset: 2000 })
-                        .bindPopup('<div class="p-2 text-xs font-semibold text-slate-800"><i class="fa-solid fa-street-view text-sky-600 mr-1"></i>您目前的所在位置</div>')
-                        .addTo(map);
-
-                    if (flyToUser) {
-                        map.flyTo([latitude, longitude], 15, { duration: 1.5 });
-                        // 飛行動畫結束後開啟彈窗
-                        setTimeout(() => { if (userMarker) userMarker.openPopup(); }, 1500);
-                        flyToUser = false; // 只在首次點擊時飛去該地點，後續在背景默默更新座標
-                        showToast('已成功鎖定您的目前位置！');
-                    }
-
-                    if (myLocBtn) {
-                        // 恢復準星圖示並亮起藍色表示正在追蹤中
-                        myLocBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs text-base"></i>';
-                        myLocBtn.classList.add('text-sky-400', 'bg-slate-700');
-                    }
-
-                    renderSpots();
-                },
-                (err) => {
-                    console.warn('Location access denied or unavailable:', err);
-                    if (flyToUser) {
-                        let errorMsg = '無法取得您的位置';
-                        if (err.code === 1) errorMsg = '定位失敗：您已拒絕瀏覽器存取位置權限。';
-                        if (err.code === 2) errorMsg = '定位失敗：無法獲取目前的訊號位置。';
-                        if (err.code === 3) errorMsg = '定位失敗：取得位置資訊超時，請重試。';
-                        showToast(errorMsg);
-                    }
-                    if (myLocBtn) myLocBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs text-base"></i>';
-                },
-                { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
-            );
-        }
-
-        function openSpotModal(spotId) {
-            const spot = spots.find(s => s.id === spotId);
-            if (!spot) return;
-
-            document.getElementById('modalPhoto').src = spot.photo;
-            document.getElementById('modalTitle').textContent = spot.title;
-            
-            let locationText = `<i class="fa-solid fa-location-dot"></i> ${spot.locationName}`;
-            if (userLocation) {
-                const km = getDistanceInKm(userLocation.lat, userLocation.lng, spot.lat, spot.lng);
-                const distStr = km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
-                locationText += ` <span class="ml-2 text-amber-400 font-normal">(距您 ${distStr})</span>`;
-            }
-            document.getElementById('modalLocation').innerHTML = locationText;
-            document.getElementById('modalDescription').textContent = spot.description;
-            document.getElementById('modalCategoryBadge').textContent = getCategoryLabel(spot.category);
-            
-            // 設定外部連結網址（Facebook 專屬連結與該篇攻略手冊的自訂下載網址）
-            document.getElementById('modalFacebookLink').href = spot.fbLink || 'https://www.facebook.com/profile.php?id=61593630944835';
-            document.getElementById('modalGuideLink').href = spot.guideLink || '#';
-
-            // Save state button
-            const isSaved = savedSpots.includes(spot.id);
-            const saveBtn = document.getElementById('modalSaveBtn');
-            saveBtn.innerHTML = `<i class="${isSaved ? 'fa-solid text-sky-400' : 'fa-regular'} fa-bookmark"></i>`;
-            saveBtn.onclick = () => {
-                toggleSaveSpot(spot.id);
-                openSpotModal(spot.id);
-            };
-
-            // Google Maps Navigation button
-            document.getElementById('modalNavigateBtn').onclick = () => {
-                window.open(`https://www.google.com/maps/dir/?api=1&destination=${spot.lat},${spot.lng}`, '_blank');
-            };
-
-            // Google Maps Street View button
-            document.getElementById('modalStreetViewBtn').onclick = () => {
-                window.open(`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${spot.lat},${spot.lng}`, '_blank');
-            };
-
-            // Copy Coordinates button
-            document.getElementById('modalCopyCoordBtn').onclick = () => {
-                const text = `${spot.lat}, ${spot.lng}`;
-                navigator.clipboard ? navigator.clipboard.writeText(text) : document.execCommand('copy');
-                showToast('已複製經緯度至剪貼簿！');
-            };
-
-            // --- Enable Responsive Drawer Layout ---
-            const detailSidebar = document.getElementById('detailSidebar');
-            const sidebar = document.getElementById('sidebar');
-
-            // 關閉列表面板
-            sidebar.classList.add('-translate-x-full');
-
-            // 滑出詳細攻略面板 (響應式自動判斷底部滑出或左側滑出)
-            detailSidebar.classList.remove('translate-y-full', 'sm:-translate-x-full');
-            detailSidebar.classList.add('translate-y-0', 'sm:translate-x-0');
-
-            // Fly map to selected coordinates
-            map.flyTo([spot.lat, spot.lng], 15, { duration: 1.2 });
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toastMsg');
-            if (!toast || !toastMsg) return;
-            toastMsg.textContent = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-            }, 3000);
-        }
-
-        function toggleSaveSpot(id) {
-            const idx = savedSpots.indexOf(id);
-            if (idx > -1) {
-                savedSpots.splice(idx, 1);
-                showToast((typeof isEnglish !== 'undefined' && isEnglish) ? 'Removed from saved' : '已從口袋名單移除');
-                
-                // 如果在「收藏模式」下取消收藏，且名單清空了，則自動返回「最初始的全集列表」
-                if (isShowingSaved && savedSpots.length === 0) {
-                    isShowingSaved = false;
-                    
-                    // 重置條件：回到全部地區與全部國家
-                    currentFilter = 'all';
-                    currentCountry = 'all';
-                    
-                    // 同步更新介面顯示
-                    document.getElementById('countrySelect').value = 'all';
-                    document.querySelectorAll('#categoryFilter button').forEach(b => {
-                        b.className = b.dataset.cat === 'all' 
-                            ? 'px-3 py-1.5 rounded-lg bg-sky-600 text-white text-xs font-medium shrink-0 transition flex flex-col items-center justify-center gap-0.5'
-                            : 'px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5';
-                    });
-
-                    const btn = document.getElementById('savedSpotsBtn');
-                    if (btn) {
-                        btn.classList.remove('bg-sky-600', 'text-white');
-                        btn.classList.add('bg-slate-700/60', 'text-slate-200');
-                    }
-                    showToast((typeof isEnglish !== 'undefined' && isEnglish) ? 'No saved spots left, resetting to all spots' : '口袋名單已空，自動返回初始全集列表');
-                }
-            } else {
-                savedSpots.push(id);
-                showToast((typeof isEnglish !== 'undefined' && isEnglish) ? 'Saved to pocket list!' : '已儲存至口袋名單！');
-            }
-            localStorage.setItem('saved_photo_spots', JSON.stringify(savedSpots));
-            updateSavedBadge();
-            renderSpots();
-        }
-
-        function updateSavedBadge() {
-            const badge = document.getElementById('savedBadge');
-            if (!badge) return;
-            if (savedSpots.length > 0) {
-                badge.textContent = savedSpots.length;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initMap();
-            updateSavedBadge();
-
-            // Search Input Event
-            const searchInput = document.getElementById('searchInput');
-            const searchBtn = document.getElementById('searchGlobalBtn');
-            
-            if (searchInput) {
-                // 即時過濾列表
-                searchInput.addEventListener('input', (e) => {
-                    currentSearch = e.target.value;
-                    renderSpots();
-                });
-                // 按下 Enter 搜尋全球地點
-                searchInput.addEventListener('keyup', (e) => {
-                    if (e.key === 'Enter' && searchInput.value.trim() !== '') {
-                        searchGlobalLocation(searchInput.value);
-                    }
-                });
-            }
-            
-            if (searchBtn && searchInput) {
-                // 點擊按鈕搜尋全球地點
-                searchBtn.addEventListener('click', () => {
-                    if (searchInput.value.trim() !== '') {
-                        searchGlobalLocation(searchInput.value);
-                    }
-                });
-            }
-
-            // Close Detail Panel Button
-            const closeBtn = document.getElementById('closeDetailBtn');
-            if (closeBtn) {
-                closeBtn.onclick = () => {
-                    closeDetailPanel();
-                };
-            }
-
-            // Google Maps Style Selector Menu
-            const styleBtn = document.getElementById('mapStyleBtn');
-            const styleMenu = document.getElementById('mapStyleMenu');
-
-            styleBtn.onclick = (e) => {
-                e.stopPropagation();
-                styleMenu.classList.toggle('hidden');
-            };
-
-            document.addEventListener('click', () => {
-                styleMenu.classList.add('hidden');
-            });
-
-            styleMenu.querySelectorAll('button').forEach(btn => {
-                btn.onclick = () => {
-                    const layerKey = btn.dataset.layer;
-                    if (googleTileLayers[layerKey]) {
-                        map.removeLayer(currentActiveLayer);
-                        currentActiveLayer = googleTileLayers[layerKey];
-                        currentActiveLayer.addTo(map);
-                        document.getElementById('mapStyleLabel').textContent = btn.textContent.trim();
-                        showToast(`已切換為 ${btn.textContent.trim()}`);
-                    }
-                };
-            });
-
-            // Category Filter Buttons
-            document.getElementById('categoryFilter').addEventListener('click', (e) => {
-                const btn = e.target.closest('button');
-                if (!btn) return;
-
-                document.querySelectorAll('#categoryFilter button').forEach(b => {
-                    b.className = 'px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition';
-                });
-                btn.className = 'px-3 py-1.5 rounded-lg bg-sky-600 text-white text-xs font-medium shrink-0 transition';
-
-                currentFilter = btn.dataset.cat;
-                renderSpots();
-            });
-
-            // Country Select Event Listener
-            document.getElementById('countrySelect').addEventListener('change', (e) => {
-                currentCountry = e.target.value;
-                renderSpots();
-            });
-
-            // User My Location Button Click
-            document.getElementById('myLocationBtn').onclick = () => {
-                trackUserLocation(true);
-            };
-
-            // Automatically attempt user location on app launch
-            trackUserLocation(false);
-
-            // Saved Spots Drawer / Filter
-            const savedBtn = document.getElementById('savedSpotsBtn');
-            if (savedBtn) {
-                savedBtn.onclick = () => {
-                    if (isShowingSaved) {
-                        // 狀態：關閉收藏模式，返回全部列表
-                        isShowingSaved = false;
-                        savedBtn.classList.remove('bg-sky-600', 'text-white');
-                        savedBtn.classList.add('bg-slate-700/60', 'text-slate-200');
-                        renderSpots();
-                        showToast((typeof isEnglish !== 'undefined' && isEnglish) ? 'Showing all spots' : '已返回顯示全集列表');
-                    } else {
-                        // 狀態：開啟收藏模式
-                        if (savedSpots.length === 0) {
-                            showToast((typeof isEnglish !== 'undefined' && isEnglish) ? 'You haven\'t saved any spots yet!' : '您尚未收藏任何口袋地點喔！');
-                            return;
-                        }
-                        isShowingSaved = true;
-                        savedBtn.classList.add('bg-sky-600', 'text-white');
-                        savedBtn.classList.remove('bg-slate-700/60', 'text-slate-200');
-                        renderSpots();
-                        showToast((typeof isEnglish !== 'undefined' && isEnglish) ? 'Showing saved spots' : '已為您顯示已收藏口袋名單');
-                    }
-                };
-            }
-
-            // Map Zoom & Fullscreen Controls
-            document.getElementById('zoomInBtn').onclick = (e) => {
-                e.stopPropagation();
-                map.zoomIn();
-            };
-
-            document.getElementById('zoomOutBtn').onclick = (e) => {
-                e.stopPropagation();
-                map.zoomOut();
-            };
-
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
-            let isCssFullscreen = false; // 新增 CSS 全螢幕狀態標記
-
-            fullscreenBtn.onclick = async (e) => {
-                e.stopPropagation();
-                const elem = document.documentElement;
-                const mapContainer = document.getElementById('mapContainer');
-
-                if (!document.fullscreenElement && !isCssFullscreen) {
-                    try {
-                        // 嘗試使用原生全螢幕 API
-                        if (elem.requestFullscreen) {
-                            await elem.requestFullscreen();
-                        } else if (elem.webkitRequestFullscreen) { /* Safari */
-                            await elem.webkitRequestFullscreen();
-                        } else if (elem.msRequestFullscreen) { /* IE11 */
-                            await elem.msRequestFullscreen();
-                        }
-                    } catch (err) {
-                        // 如果因為 iFrame 或權限政策被阻擋，改用 CSS 網頁內全螢幕備用方案
-                        console.warn("原生全螢幕被阻擋，啟用網頁內全螢幕備用方案", err);
-                        isCssFullscreen = true;
-                        mapContainer.classList.add('fixed', 'inset-0', 'z-[9999]');
-                        fullscreenBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
-                        fullscreenBtn.title = "退出全螢幕";
-                        showToast('已啟用網頁內全螢幕模式');
-                        setTimeout(() => map.invalidateSize(), 300);
-                    }
-                } else {
-                    if (document.fullscreenElement) {
-                        // 退出原生全螢幕
-                        if (document.exitFullscreen) {
-                            await document.exitFullscreen();
-                        } else if (document.webkitExitFullscreen) { /* Safari */
-                            await document.webkitExitFullscreen();
-                        } else if (document.msExitFullscreen) { /* IE11 */
-                            await document.msExitFullscreen();
-                        }
-                    } else if (isCssFullscreen) {
-                        // 退出 CSS 網頁內全螢幕
-                        isCssFullscreen = false;
-                        mapContainer.classList.remove('fixed', 'inset-0', 'z-[9999]');
-                        fullscreenBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
-                        fullscreenBtn.title = "切換全螢幕";
-                        setTimeout(() => map.invalidateSize(), 300);
-                    }
-                }
-            };
-
-            // 監聽全螢幕狀態改變（例如使用者按 ESC 退出原生全螢幕時，需更新按鈕圖示）
-            document.addEventListener('fullscreenchange', () => {
-                if (!document.fullscreenElement && !isCssFullscreen) {
-                    fullscreenBtn.innerHTML = '<i class="fa-solid fa-expand"></i>';
-                    fullscreenBtn.title = "切換全螢幕";
-                } else if (document.fullscreenElement) {
-                    fullscreenBtn.innerHTML = '<i class="fa-solid fa-compress"></i>';
-                    fullscreenBtn.title = "退出全螢幕";
-                }
-                setTimeout(() => map.invalidateSize(), 300);
-            });
-        });
     </script>
 </body>
 </html>
