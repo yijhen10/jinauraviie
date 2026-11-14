@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>挪威峽灣與景觀公路探索之旅：木板教堂、極地冰川與 Lofoten 絕景電子書報 | Norway Fjord & Scenic Route Discovery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0b1329;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #0284c7;
+            border-top: 1px solid #0284c7;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #0284c7;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#f8fafc] shadow-2xl rounded-xl overflow-hidden border border-[#cbd5e1] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#0284c7] text-[#f8fafc] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-sky-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 挪威峽灣與景觀公路探索" data-en="Gazette • Norway Fjord Discovery">Gazette • 挪威峽灣與景觀公路探索</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-sky-900 hover:bg-sky-800 text-sky-200 px-2 py-0.5 rounded text-[10px] font-mono border border-sky-700 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-sky-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-sky-800 text-sky-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="挪威峽灣與公路自駕手冊 2026" data-en="Norway Fjord & Scenic Route Handbook 2026">挪威峽灣與公路自駕手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="挪威峽灣極境" data-en="Norway Fjord Majesty">挪威峽灣極境</span><br>
+                        <span class="text-sky-700" data-zh="景觀公路羅弗敦群島之旅" data-en="Scenic Roads & Lofoten Journey">景觀公路羅弗敦群島之旅</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Norway: Stave Churches, Trolls, Glaciers & Lofoten" data-en="Norway: Stave Churches, Trolls, Glaciers & Lofoten">Norway: Stave Churches, Trolls, Glaciers & Lofoten.</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTw-qivQ7YnIwQ_CWngxDsYdWTg1T1ESUpGb0pplX-zHw&s=10" 
+                         onerror="this.src='https://placehold.co/600x400/0284c7/ffffff?text=Norway+Fjord'" 
+                         alt="Norway Fjord" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-sky-300 uppercase" data-zh="壯麗峽灣與木板教堂" data-en="Fjords & Stave Churches">壯麗峽灣與木板教堂</p>
+                        <p class="text-xs font-serif font-medium" data-zh="涵蓋 24 個指定景點、渡輪指南與頂級營區" data-en="Covering 24 destinations, ferry guide & top campsites">涵蓋 24 個指定景點、渡輪指南與頂級營區</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎展開挪威峽灣深度探索之旅。本手冊完整收錄從哈林達爾木板教堂、精靈之路、大西洋海濱公路到羅弗敦群島（Lofoten）的絕美景致、渡輪交通與露營勝地。" data-en="Welcome to the Norway Fjord & Scenic Route Discovery. This handbook features 24 epic destinations, comprehensive ferry transit guides, and top campsites like Setnes Feriesenter and Lofoten Beach Camp.">
+                        歡迎展開挪威峽灣深度探索之旅。本手冊完整收錄從哈林達爾木板教堂、精靈之路、大西洋海濱公路到羅弗敦群島的絕美景致、渡輪交通與露營勝地。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-sky-800 hover:bg-sky-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Norwegian Ferry Transit Guide (渡輪交通指南) -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 01 • 渡輪交通指南" data-en="Chapter 01 • Ferry Transit Guide">Chapter 01 • 渡輪交通指南</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="挪威峽灣渡輪交通方式指南" data-en="Norwegian Fjord Ferry Transit Guide">挪威峽灣渡輪交通方式指南</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="⛴️ 1. 峽灣車輛渡輪（Bilferge）" data-en="⛴️ 1. Car Ferries (Bilferge)">⛴️ 1. 峽灣車輛渡輪（Bilferge）</strong>
+                        <p data-zh="挪威海岸線曲折，許多景觀公路（如往返Geiranger、Lofoten）必須依賴渡輪。多數渡輪允許車輛與行人直接登船，多數採用先到先排或線上預約（AutoPASS）。" data-en="Norway's rugged coastline relies on car ferries connecting scenic routes. Most ferries accept cars and foot passengers on a first-come basis or via AutoPASS.">挪威海岸線曲折，許多景觀公路必須依賴渡輪。多數渡輪允許車輛與行人直接登船，支援 AutoPASS 電子收費或現場刷卡。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="💳 2. 付費系統與 AutoPASS" data-en="💳 2. Payment & AutoPASS">💳 2. 付費系統與 AutoPASS</strong>
+                        <p data-zh="強烈建議租車時裝設 AutoPASS 標籤，不僅能享有過路費折扣，也能自動扣繳各大渡輪通行費（FerryCard），省去排隊買票時間。" data-en="Installing an AutoPASS tag in rental cars is highly recommended for toll discounts and seamless ferry payments.">強烈建議租車時裝設 AutoPASS 標籤，不僅能享有過路費折扣，也能自動扣繳各大渡輪通行費，省去排隊買票時間。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="⏱️ 3. 航班時刻與季節調整" data-en="⏱️ 3. Timetables & Seasonal Adjustments">⏱️ 3. 航班時刻與季節調整</strong>
+                        <p data-zh="夏季班次頻繁（每20-40分鐘一班），冬季或極北地區（如Bodø至Lofoten的Moskenes渡輪）班次較少且易受天候影響，務必提前查詢 Torghatten Nord 或 Ruter 官網。" data-en="Summer schedules are frequent, while winter and northern routes (e.g., Bodø to Moskenes) have reduced sailings and depend on weather.">夏季班次頻繁，冬季或極北地區（如Bodø至Lofoten渡輪）班次較少且易受天候影響，務必提前查詢官方時刻表。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(3)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：氣候與穿搭建議 ➔" data-en="Next: Weather & Clothing ➔">下一頁：氣候與穿搭建議 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 02 • 氣候與穿搭" data-en="Chapter 02 • Weather & Clothing">Chapter 02 • 氣候與穿搭</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="挪威月份天氣與穿搭建議" data-en="Norwegian Monthly Weather & Clothing">挪威月份天氣與穿搭建議</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="❄️ 冬季 (11月 - 3月)：極光與冰雪" data-en="❄️ Winter (Nov - Mar): Aurora & Snow">❄️ 冬季 (11月 - 3月)：極光與冰雪</strong>
+                        <p data-zh="氣溫約 -15°C 至 2°C。穿搭：極地防水防風羽絨外套、羊毛排汗內衣、防滑雪靴、毛帽與保暖手套。" data-en="Temperatures -15°C to 2°C. Clothing: Polar waterproof down jacket, merino wool thermals, snow boots, and beanies.">氣溫約 -15°C 至 2°C。穿搭：極地防水防風羽絨外套、羊毛排汗內衣、防滑雪靴、毛帽與保暖手套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🌷 春季 (4月 - 5月)：萬物復甦與融雪" data-en="🌷 Spring (Apr - May): Blossoms & Melting Snow">🌷 春季 (4月 - 5月)：萬物復甦與融雪</strong>
+                        <p data-zh="氣溫約 2°C 至 14°C，瀑布水量最豐沛。穿搭：防風防水夾克、刷毛衣、防滑健行鞋。" data-en="Temperatures 2°C to 14°C with roaring waterfalls. Clothing: Windproof/waterproof jacket, fleece, and hiking boots.">氣溫約 2°C 至 14°C，瀑布水量最豐沛。穿搭：防風防水夾克、刷毛衣、防滑健行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="☀️ 夏季 (6月 - 8月)：極晝健行季" data-en="☀️ Summer (Jun - Aug): Midnight Sun & Hiking">☀️ 夏季 (6月 - 8月)：極晝健行季</strong>
+                        <p data-zh="氣溫約 12°C 至 25°C。穿搭：輕量排汗衣、防風夾克、太陽眼鏡、防曬乳與舒適健行鞋。" data-en="Temperatures 12°C to 25°C. Clothing: Lightweight moisture-wicking shirts, wind jacket, sunglasses, sunscreen, and hiking shoes.">氣溫約 12°C 至 25°C。穿搭：輕量排汗衣、防風夾克、太陽眼鏡、防曬乳與舒適健行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🍁 秋季 (9月 - 10月)：金黃峽灣秋景" data-en="🍁 Autumn (Sep - Oct): Golden Fjords">🍁 秋季 (9月 - 10月)：金黃峽灣秋景</strong>
+                        <p data-zh="氣溫約 3°C 至 12°C，降雨機率較高。穿搭：高品質防水外套、刷毛保暖衣、防水靴。" data-en="Temperatures 3°C to 12°C with higher rainfall. Clothing: High-quality waterproof jacket, fleece, and waterproof boots.">氣溫約 3°C 至 12°C，降雨機率較高。穿搭：高品質防水外套、刷毛保暖衣、防水靴。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(4)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：北角專頁 ➔" data-en="Next: North Cape Page ➔">下一頁：北角專頁 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Standalone Destination - North Cape (北角) -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點專頁 [1/4]" data-en="Chapter 03 • Destination [1/4]">Chapter 03 • 景點專頁 [1/4]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="北角 (North Cape)" data-en="North Cape (Nordkapp)">北角 (North Cape / Nordkapp)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUwDQEDUOm-uSYFCwvMN_Keg7sGdtj0vSiy-PGeglFbw&s=10" alt="North Cape" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="歐洲最北端的標誌性懸崖，巍峨聳立於冰冷的大海之上，是觀賞永恆夏日日落與壯麗極光的絕佳聖地。" data-en="The iconic northernmost cliff of Europe towering over the Arctic Ocean, legendary for midnight sun and aurora.">
+                        歐洲最北端的標誌性懸崖，巍峨聳立於冰冷的大海之上，是觀賞永恆夏日日落與壯麗極光的絕佳聖地。
+                    </p>
+                    <a href="https://maps.app.goo.gl/XHmGoPtQ8DyMydvLA" target="_blank" class="block text-center bg-sky-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：北角導航" data-en="Open Google Maps: North Cape">開啟 Google Maps：北角導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(5)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Alta 阿爾塔 ➔" data-en="Next: Alta Page ➔">下一頁：Alta 阿爾塔 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Standalone Destination - Alta (阿爾塔) -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點專頁 [2/4]" data-en="Chapter 03 • Destination [2/4]">Chapter 03 • 景點專頁 [2/4]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Alta (阿爾塔)" data-en="Alta (Town of Aurora)">Alta (阿爾塔)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqD3Nu5vCdOmQP2UdLXc0MCzqiFncG7DT71P9tmLlzjQ&s=10" alt="Alta" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="被譽為「北極光之城」，擁有世界遺產史前岩刻藝術與現代化的極光教堂，是挪威北部極重要的文化與極光重鎮。" data-en="Known as the 'Town of the Northern Lights', featuring UNESCO rock art and the modern Aurora Cathedral.">
+                        被譽為「北極光之城」，擁有世界遺產史前岩刻藝術與現代極光教堂，是挪威北部極重要的文化與極光重鎮。
+                    </p>
+                    <a href="https://maps.app.goo.gl/bEhy6kSDqaC5w1Pr8" target="_blank" class="block text-center bg-sky-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Alta 導航" data-en="Open Google Maps: Alta">開啟 Google Maps：Alta 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(6)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：諾爾蘭之門 ➔" data-en="Next: Gates of Nordland Page ➔">下一頁：諾爾蘭之門 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Standalone Destination - Gates of Nordland (諾爾蘭之門) -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點專頁 [3/4]" data-en="Chapter 03 • Destination [3/4]">Chapter 03 • 景點專頁 [3/4]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="諾爾蘭之門 (Gates of Nordland)" data-en="Gates of Nordland (Vestfjorden)">諾爾蘭之門 (Gates of Nordland)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf02fQZadwuwOPx1GNl2HZOw7Scweshopk03XjAOT0pw&s=10" alt="Gates of Nordland" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="壯麗的峽灣與海上門戶，群山自海面直衝天際，是連接大陸與羅弗敦群島最具史詩感的航道交界。" data-en="The majestic maritime gateway where dramatic mountains rise straight from the sea between the mainland and Lofoten.">
+                        壯麗的峽灣與海上門戶，群山自海面直衝天際，是連接大陸與羅弗敦群島最具史詩感的航道交界。
+                    </p>
+                    <a href="https://maps.app.goo.gl/Lyp21rW3gzv25sPC6" target="_blank" class="block text-center bg-sky-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：諾爾蘭之門導航" data-en="Open Google Maps: Gates of Nordland">開啟 Google Maps：諾爾蘭之門導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(7)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：基律納 ➔" data-en="Next: Kiruna Page ➔">下一頁：基律納 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Standalone Destination - Kiruna (基律納) -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 03 • 景點專頁 [4/4]" data-en="Chapter 03 • Destination [4/4]">Chapter 03 • 景點專頁 [4/4]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="基律納 (Kiruna)" data-en="Kiruna (Sweden)">基律納 (Kiruna)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbp81n-B3orHD02uVX-eZ-dqiqSgOsAGMNz6jOFWh6eg&s=10" alt="Kiruna" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="位於瑞典北部拉普蘭的傳奇礦業之城，擁有著名的冰旅館（Icehotel）與極光基地，是連接北極圈鐵路的樞紐。" data-en="A legendary northern Swedish mining town featuring the famous Icehotel and gateway to Arctic railways.">
+                        位於瑞典北部拉普蘭的傳奇礦業之城，擁有冰旅館與極光基地，是極圈鐵路樞紐。
+                    </p>
+                    <a href="https://maps.app.goo.gl/5N1kc67df8yDUPAc7" target="_blank" class="block text-center bg-sky-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="Opens Google Maps: Kiruna" data-en="Open Google Maps: Kiruna">開啟 Google Maps：基律納導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(8)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：推薦營區 ➔" data-en="Next: Campsites ➔">下一頁：推薦營區 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Campsites -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 04 • 推薦營區" data-en="Chapter 04 • Campsites">Chapter 04 • 推薦營區</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="極地特色營區指南" data-en="Arctic Campsite Guide">極地特色營區指南</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-sky-50 p-2.5 rounded border border-sky-200 space-y-1">
+                        <h3 class="font-serif font-bold text-sky-900">🏕️ Setnes Feriesenter</h3>
+                        <p class="text-[11px]" data-zh="位於安道爾山腳下的頂級營地，鄰近景觀公路，提供完善木屋與露營車設施。" data-en="Top-rated campsite at the foot of the mountains near Åndalsnes, offering cabins and camper facilities.">位於安道爾山腳下的頂級營地，鄰近景觀公路，提供完善木屋與露營車設施。</p>
+                        <a href="https://maps.app.goo.gl/BG2xP8mDJT792Ake7" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                    <div class="bg-sky-50 p-2.5 rounded border border-sky-200 space-y-1">
+                        <h3 class="font-serif font-bold text-sky-900">🏕️ Lofoten beach camp</h3>
+                        <p class="text-[11px]" data-zh="坐落於羅弗敦群島絕美海灘旁的夢幻營地，可直接在帳篷或露營車前欣賞極光與海浪。" data-en="Dreamy beachfront campsite in Lofoten offering direct views of waves and the Aurora.">坐落於羅弗敦群島絕美海灘旁的夢幻營地，可直接欣賞極光與海浪。</p>
+                        <a href="https://maps.app.goo.gl/ejmtyqTEXpaecoXv9" target="_blank" class="text-sky-700 underline text-[10px]">🗺️ Google Maps 導航</a>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(9)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：10天精華行程 ➔" data-en="Next: Itinerary ➔">下一頁：10天精華行程 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 9: 10-Day Grand Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 05 • 10天精華行程" data-en="Chapter 05 • 10-Day Grand Itinerary">Chapter 05 • 10天精華行程</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="北角與基律納 10 天大環線行程" data-en="10-Day Arctic Grand Itinerary">北角與基律納 10 天大環線行程</h2>
+                </div>
+
+                <div class="bg-[#0b1329] text-[#f8fafc] p-2.5 rounded-lg space-y-1 text-xs font-serif shadow-inner overflow-y-auto max-h-60">
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 1</span>
+                        <span data-zh="抵達基律納 (Kiruna) ➔ 參觀冰旅館" data-en="Arrive Kiruna ➔ Icehotel Tour">抵達基律納 (Kiruna) ➔ 參觀冰旅館</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 2</span>
+                        <span data-zh="前往極光之城 Alta (阿爾塔) ➔ 歷史岩刻" data-en="Head to Alta ➔ Ancient Rock Art">前往 Alta (阿爾塔) ➔ 歷史岩刻</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 3</span>
+                        <span data-zh="北上挑戰極北懸崖 ➔ 達陣北角 (North Cape)" data-en="Drive North ➔ Reach North Cape">北上挑戰極北懸崖 ➔ 達陣北角 (North Cape)</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 4</span>
+                        <span data-zh="南下挪威峽灣 ➔ Setnes 營區紮營" data-en="Head South to Fjords ➔ Setnes Campsite">南下挪威峽灣 ➔ Setnes 營區紮營</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 5</span>
+                        <span data-zh="穿越風景公路 ➔ 諾爾蘭之門交界" data-en="Scenic Roads ➔ Gates of Nordland">穿越風景公路 ➔ 諾爾蘭之門交界</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 6</span>
+                        <span data-zh="搭乘渡輪前往羅弗敦群島 ➔ Svolvær" data-en="Ferry to Lofoten ➔ Svolvær">搭乘渡輪前往羅弗敦群島 ➔ Svolvær</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 7</span>
+                        <span data-zh="Hamnøy 絕景 ➔ 漫步群島傳統漁村" data-en="Hamnøy View ➔ Traditional Fishing Villages">Hamnøy 絕景 ➔ 漫步群島傳統漁村</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 8</span>
+                        <span data-zh="Lofoten beach camp 營區賞極光" data-en="Lofoten Beach Camp Aurora Stargazing">Lofoten beach camp 營區賞極光</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-sky-300 font-bold">Day 9</span>
+                        <span data-zh="深入峽灣與冰川健行" data-en="Fjord Exploration & Glacier Hiking">深入峽灣與冰川健行</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-sky-300 font-bold">Day 10</span>
+                        <span data-zh="整理極地行囊 ➔ 快樂賦歸" data-en="Arctic Packing ➔ Departure">整理極地行囊 ➔ 快樂賦歸</span>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(10)" class="w-full bg-sky-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：私人旅遊筆記 ➔" data-en="Next: Traveler Notes ➔">下一頁：私人旅遊筆記 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Traveler Notes & Completion -->
+            <div class="page-slide flex-col space-y-4" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-sky-800" data-zh="Chapter 06 • 旅客備忘錄" data-en="Chapter 06 • Traveler Notes">Chapter 06 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的極地之旅筆記" data-en="Your Personal Travel Notes">您的極地之旅筆記</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人筆記：" data-en="📝 Enter your personal notes:">📝 在此輸入您的私人筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-2.5 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-sky-600 focus:outline-none resize-none"
+                        placeholder="例如：北角保暖裝備、基律納冰旅館預約..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-sky-800 hover:bg-sky-700 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">10</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-sky-800 hover:bg-sky-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Storage -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 10;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            const progressEl = document.getElementById('progress-text');
+            if (progressEl) progressEl.textContent = progress;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) prevBtn.disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            if (prevBtn) {
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('norway_journey_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('norway_journey_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
