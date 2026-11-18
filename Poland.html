@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>波蘭深度探索之旅：華沙、克拉科夫與波羅的海童話電子書報 | Poland Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0f172a;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #dc2626;
+            border-top: 1px solid #dc2626;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #dc2626;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fef2f2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f87171;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#fef2f2] shadow-2xl rounded-xl overflow-hidden border border-[#fca5a5] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#991b1b] text-[#fef2f2] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-rose-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 波蘭深度探索之旅" data-en="Gazette • Poland Discovery Journey">Gazette • 波蘭深度探索之旅</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-red-950 hover:bg-red-900 text-rose-200 px-2 py-0.5 rounded text-[10px] font-mono border border-red-800 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-rose-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (14 Pages) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-red-800 text-red-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="波蘭中歐文化五日手冊 2026" data-en="Poland Cultural Handbook 2026">波蘭中歐文化五日手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="波蘭深度探索" data-en="Poland Discovery">波蘭深度探索</span><br>
+                        <span class="text-red-700" data-zh="古城、海灣與營區之旅" data-en="Castles, Coast & Campsite Journey">古城、海灣與營區之旅</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Poland: Warsaw, Kraków, Gdańsk, Wrocław, Zakopane, Toruń & Zodiak" data-en="Poland: Warsaw, Kraków, Gdańsk, Wrocław, Zakopane, Toruń & Zodiak">Poland: Warsaw, Kraków, Gdańsk, Wrocław, Zakopane, Toruń & Zodiak.</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNXKcIktrA93RSazfauNE9UJ02GgiPCpD1BpCEZc2COg&s=10" 
+                         onerror="this.src='https://placehold.co/600x400/991b1b/ffffff?text=Poland+Krakow'" 
+                         alt="Poland Krakow" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-rose-300 uppercase" data-zh="中歐童話與露營天堂" data-en="Central European Heritage & Campsites">中歐童話與露營天堂</p>
+                        <p class="text-xs font-serif font-medium" data-zh="華沙、克拉科夫、ZODIAK 營區全覽" data-en="Warsaw, Kraków, Gdańsk & Zodiak Park">華沙、克拉科夫、ZODIAK 營區全覽</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎展開波蘭深度旅遊指南。本手冊完整涵蓋華沙、克拉科夫、格但斯克、弗羅茨瓦夫、扎科帕內、托倫、Caravan & Camper Park ZODIAK 營區與特色餐廳 Bar Pod Sosnami，並附有道地美食與交通導航。" data-en="Welcome to the Poland Discovery Journey. This guide covers all 6 destinations, Zodiak campsite, Bar Pod Sosnami restaurant, traditional cuisine, weather advice, and Google Maps navigation.">
+                        歡迎展開波蘭深度旅遊指南。本手冊完整涵蓋華沙、克拉科夫、格但斯克、弗羅茨瓦夫、扎科帕內、托倫、Caravan & Camper Park ZODIAK 營區與特色餐廳 Bar Pod Sosnami，並附有道地美食與交通導航。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-red-800 hover:bg-red-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 01 • 氣候與穿搭" data-en="Chapter 01 • Weather & Clothing">Chapter 01 • 氣候與穿搭</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="波蘭月份天氣與穿搭建議" data-en="Polish Monthly Weather & Clothing">波蘭月份天氣與穿搭建議</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="❄️ 冬季 (12月 - 2月)：雪景聖誕與山區滑雪" data-en="❄️ Winter (Dec - Feb): Snow & Skiing">❄️ 冬季 (12月 - 2月)：雪景聖誕與山區滑雪</strong>
+                        <p data-zh="氣溫約 -5°C 至 2°C。山區（扎科帕內）更冷。穿搭：保暖羽絨衣、羊毛衛生衣、雪靴、毛帽與防風手套。" data-en="Temperatures -5°C to 2°C. Mountains are colder. Clothing: Down jacket, wool thermal layer, snow boots, beanie, and windproof gloves.">氣溫約 -5°C 至 2°C。山區（扎科帕內）更冷。穿搭：保暖羽絨衣、羊毛衛生衣、雪靴、毛帽與防風手套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🌷 春季 (3月 - 5月)：花開與微風" data-en="🌷 Spring (Mar - May): Blossoms & Mild Breeze">🌷 春季 (3月 - 5月)：花開與微風</strong>
+                        <p data-zh="氣溫約 5°C 至 18°C。穿搭：防風夾克、刷毛衣、層次穿搭、舒適步行鞋。" data-en="Temperatures 5°C to 18°C. Clothing: Windproof jacket, fleece, layer clothing, and comfortable walking shoes.">氣溫約 5°C 至 18°C。穿搭：防風夾克、刷毛衣、層次穿搭、舒適步行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="☀️ 夏季 (6月 - 8月)：波蘭陽光與海灘" data-en="☀️ Summer (Jun - Aug): Sunshine & Coast">☀️ 夏季 (6月 - 8月)：波蘭陽光與海灘</strong>
+                        <p data-zh="氣溫約 18°C 至 28°C（格但斯克海灣極宜人）。穿搭：輕量排汗衣、太陽眼鏡、防曬乳、輕便外套。" data-en="Temperatures 18°C to 28°C. Clothing: Lightweight shirts, sunglasses, sunscreen, and light jacket for evenings.">氣溫約 18°C 至 28°C。穿搭：輕量排汗衣、太陽眼鏡、防曬乳、輕便外套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🍁 秋季 (9月 - 11月)：金秋楓紅" data-en="🍁 Autumn (Sep - Nov): Golden Foliage">🍁 秋季 (9月 - 11月)：金秋楓紅</strong>
+                        <p data-zh="氣溫約 5°C 至 15°C。穿搭：防水防風夾克、毛衣、防滑健行靴。" data-en="Temperatures 5°C to 15°C. Clothing: Waterproof windproof jacket, sweaters, and slip-resistant boots.">氣溫約 5°C 至 15°C。穿搭：防水防風夾克、毛衣、防滑健行靴。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(3)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：華沙景點專頁 ➔" data-en="Next: Warsaw Destination ➔">下一頁：華沙景點專頁 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Destination - Warsaw (華沙) -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 02 • 景點專頁 [1/6]" data-en="Chapter 02 • Destination [1/6]">Chapter 02 • 景點專頁 [1/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Warsaw (華沙：浴火重生的首都)" data-en="Warsaw (Phoenix Capital)">Warsaw (華沙：浴火重生的首都)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Aleja_Niepdleglosci_Warsaw_2022_aerial_%28cropped%29.jpg/330px-Aleja_Niepdleglosci_Warsaw_2022_aerial_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" alt="Warsaw" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="波蘭首都華沙（Warsaw）在二戰後奇蹟般地重建了聯合國世界遺產的舊城区（Stare Miasto）。這裡結合了宏偉的王宮城堡、蕭邦音樂紀念碑與現代化的摩天大樓。" data-en="Warsaw, Poland's capital, miraculously reconstructed its UNESCO-listed Old Town after WWII, blending the Royal Castle and modern skyline.">
+                        波蘭首都華沙在二戰後奇蹟般地重建了聯合國世界遺產的舊城區。這裡結合了宏偉的王宮城堡、蕭邦音樂紀念碑與現代化的摩天大樓。
+                    </p>
+                    <a href="https://maps.app.goo.gl/HR9Bmuy4dJxh2bE56" target="_blank" class="block text-center bg-red-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：華沙導航" data-en="Open Google Maps: Warsaw">開啟 Google Maps：華沙導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(4)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Kraków 克拉科夫 ➔" data-en="Next: Kraków ➔">下一頁：Kraków 克拉科夫 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Destination - Kraków (克拉科夫) -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 02 • 景點專頁 [2/6]" data-en="Chapter 02 • Destination [2/6]">Chapter 02 • 景點專頁 [2/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Kraków (克拉科夫：中世紀王城)" data-en="Kraków (Medieval Royal City)">Kraków (克拉科夫：中世紀王城)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXUZKXZJYOmSow1b_P7VOzEBOyqtMfjAdDLdEHI1pmSw&s=10" alt="Krakow" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="克拉科夫（Kraków）是波蘭保存最完好的文藝復興與中世紀名城。擁有歐洲最大的中世紀集市廣場、瓦維爾皇家城堡（Wawel Castle）與世界奇觀維利奇卡鹽礦。" data-en="Kraków is Poland's best-preserved medieval and Renaissance jewel, featuring Europe's largest market square, Wawel Castle, and the Wieliczka Salt Mine.">
+                        克拉科夫是波蘭保存最完好的文藝復興與中世紀名城。擁有歐洲最大的中世紀集市廣場、瓦維爾皇家城堡與世界奇觀維利奇卡鹽礦。
+                    </p>
+                    <a href="https://maps.app.goo.gl/LjAdwPWWMkEqRHg39" target="_blank" class="block text-center bg-red-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：克拉科夫導航" data-en="Open Google Maps: Kraków">開啟 Google Maps：克拉科夫導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(5)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Gdańsk 格但斯克 ➔" data-en="Next: Gdańsk ➔">下一頁：Gdańsk 格但斯克 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destination - Gdańsk (格但斯克) -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 02 • 景點專頁 [3/6]" data-en="Chapter 02 • Destination [3/6]">Chapter 02 • 景點專頁 [3/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Gdańsk (格但斯克：波羅的海明珠)" data-en="Gdańsk (Baltic Pearl)">Gdańsk (格但斯克：波羅的海明珠)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL1zvCqVx0XH-NwzLXvPFEaDptW_z8mIPmgf_KtqLXsA&s" alt="Gdansk" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="位於波羅的海畔的格但斯克（Gdańsk）以其精美的漢薩同盟建築、琥珀街與莫特拉瓦河畔風光聞名，是自由與歷史交織的港口之城。" data-en="Situated on the Baltic Sea, Gdańsk is renowned for its Hanseatic architecture, amber street, and picturesque Motława River waterfront.">
+                        位於波羅的海畔的格但斯克以其精美的漢薩同盟建築、琥珀街與莫特拉瓦河畔風光聞名，是自由與歷史交織的港口之城。
+                    </p>
+                    <a href="https://maps.app.goo.gl/1gep1rz7DcA6QqRYA" target="_blank" class="block text-center bg-red-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：格但斯克導航" data-en="Open Google Maps: Gdańsk">開啟 Google Maps：格但斯克導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(6)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Wrocław 弗羅茨瓦夫 ➔" data-en="Next: Wrocław ➔">下一頁：Wrocław 弗羅茨瓦夫 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destination - Wrocław (弗羅茨瓦夫) -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 02 • 景點專頁 [4/6]" data-en="Chapter 02 • Destination [4/6]">Chapter 02 • 景點專頁 [4/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Wrocław (弗羅茨瓦夫：百橋之城與小矮人)" data-en="Wrocław (City of Bridges & Dwarfs)">Wrocław (弗羅茨瓦夫：百橋之城)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-CopsSklsUtPJUcxQd0Lsworbc-LvNxXsgvh2TJdojg&s=10" alt="Wroclaw" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="波蘭西南部最大城市弗羅茨瓦夫（Wrocław）橫跨奧得河，擁有上百座橋樑、色彩繽紛的市政廳廣場，以及散布全城的數百尊可愛小矮人銅像。" data-en="Wrocław spans the Oder River with over a hundred bridges, colorful market squares, and hundreds of whimsical bronze dwarfs hidden across town.">
+                        波蘭西南部最大城市弗羅茨瓦夫橫跨奧得河，擁有上百座橋樑、色彩繽紛的市政廳廣場，以及散布全城的數百尊可愛小矮人銅像。
+                    </p>
+                    <a href="https://maps.app.goo.gl/t7fqHSeidDrfTxdn8" target="_blank" class="block text-center bg-red-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：弗羅茨瓦夫導航" data-en="Open Google Maps: Wrocław">開啟 Google Maps：弗羅茨瓦夫導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(7)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Zakopane 扎科帕內 ➔" data-en="Next: Zakopane ➔">下一頁：Zakopane 扎科帕內 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destination - Zakopane (扎科帕內) -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 02 • 景點專頁 [5/6]" data-en="Chapter 02 • Destination [5/6]">Chapter 02 • 景點專頁 [5/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Zakopane (扎科帕內：塔特拉山冬季首都)" data-en="Zakopane (Winter Capital of Tatra)">Zakopane (扎科帕內：塔特拉山)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlZs0L9ua3YJWmBjYveNz8tvrphcGrRbw010C03eD6uQ&s=10" alt="Zakopane" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="坐落於南部塔特拉山脈腳下的扎科帕內是波蘭的冬季運動首都。擁有獨特的木造建築藝術、溫馨木屋與壯麗的高山健行步道。" data-en="Nested in the Tatra Mountains, Zakopane is Poland's winter capital, featuring unique wooden architecture and alpine hiking trails.">
+                        坐落於南部塔特拉山脈腳下的扎科帕內是波蘭的冬季運動首都。擁有獨特的木造建築藝術、溫馨木屋與壯麗的高山健行步道。
+                    </p>
+                    <a href="https://maps.app.goo.gl/voUv5kXBpWpR22bF9" target="_blank" class="block text-center bg-red-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：扎科帕內導航" data-en="Open Google Maps: Zakopane">開啟 Google Maps：扎科帕內導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(8)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Toruń 托倫專頁 ➔" data-en="Next: Toruń Destination ➔">下一頁：Toruń 托倫專頁 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destination - Toruń (托倫專頁 - 完整修正) -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 02 • 景點專頁 [6/6]" data-en="Chapter 02 • Destination [6/6]">Chapter 02 • 景點專頁 [6/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Toruń (托倫：哥白尼故鄉與哥德古城)" data-en="Toruń (Gothic Old Town & Copernicus)">Toruń (托倫：哥白尼故鄉與哥德古城)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoEgsWEJ6Jm3D1ewRBl3V0L-qOe4NnGn1xugXzDroJQQ&s=10" alt="Torun" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="<strong>托倫（Toruń）</strong>是波蘭保存最完好的中世紀哥德式古城之一，已被列入聯合國教科文組織世界遺產。這裡不僅是偉大天文學家<strong>尼古拉·哥白尼（Nicolaus Copernicus）</strong>的出生地，更以雄偉的舊市政廳、哥德式紅磚教堂以及享譽全歐洲的傳統香料蜂蜜餅乾（Pierniki）聞名於世。" data-en="<strong>Toruń</strong> is one of Poland's best-preserved medieval Gothic old towns, a UNESCO World Heritage site. It is the birthplace of the astronomer <strong>Nicolaus Copernicus</strong>, famous for its magnificent Old Town Hall, Gothic red-brick architecture, and traditional gingerbread (Pierniki).">
+                        <strong>托倫（Toruń）</strong>是波蘭保存最完好的中世紀哥德式古城之一，已被列入聯合國教科文組織世界遺產。這裡不僅是偉大天文學家<strong>尼古拉·哥白尼</strong>的出生地，更以雄偉的舊市政廳與傳統香料蜂蜜餅乾聞名。
+                    </p>
+                    <a href="https://maps.app.goo.gl/xXiYPnHvUCWXUqm7A" target="_blank" class="block text-center bg-red-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：托倫導航" data-en="Open Google Maps: Toruń">開啟 Google Maps：托倫導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(9)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：推薦營區 ZODIAK ➔" data-en="Next: Zodiak Campsite ➔">下一頁：推薦營區 ZODIAK ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Campsite - Caravan & Camper Park ZODIAK -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 03 • 推薦營區專頁" data-en="Chapter 03 • Recommended Campsite">Chapter 03 • 推薦營區專頁</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Caravan & Camper Park ZODIAK" data-en="Caravan & Camper Park ZODIAK">Caravan & Camper Park ZODIAK</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://zodiak.gliwice.pl/wp-content/uploads/2025/02/DJI_20230910_120453_133.png" alt="Zodiak Park" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="<strong>Caravan & Camper Park ZODIAK</strong> 是波蘭備受推崇的現代化露營車與房車專用營地。這裡提供完善的電力補給、清潔設施、綠意盎然的休憩環境以及便利的交通位置，是波蘭自駕露營的理想中繼站。" data-en="<strong>Caravan & Camper Park ZODIAK</strong> is a top-rated modern camper and caravan park in Poland, offering full hookups, clean facilities, and a peaceful green environment for road-trippers.">
+                        <strong>Caravan & Camper Park ZODIAK</strong> 是波蘭備受推崇的現代化露營車與房車專用營地。這裡提供完善的電力補給、清潔設施、綠意盎然的休憩環境以及便利的交通位置。
+                    </p>
+                    <a href="https://maps.app.goo.gl/EszAbLpQoUwtKBQn7" target="_blank" class="block text-center bg-red-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：ZODIAK 營區導航" data-en="Open Google Maps: Zodiak Campsite">開啟 Google Maps：ZODIAK 營區導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(10)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：餐廳推薦 Bar Pod Sosnami ➔" data-en="Next: Bar Pod Sosnami Restaurant ➔">下一頁：餐廳推薦 Bar Pod Sosnami ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Restaurant Recommendation - Bar Pod Sosnami (新增餐廳專頁) -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 04 • 特色餐廳推薦" data-en="Chapter 04 • Restaurant Recommendation">Chapter 04 • 特色餐廳推薦</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Bar Pod Sosnami 傳統波蘭風味餐廳" data-en="Bar Pod Sosnami Traditional Restaurant">Bar Pod Sosnami 傳統波蘭風味餐廳</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAxCtbq9aavkkCVVGs0cKEkkE8FRhZvcp9gd3cLQNmzg&s=10" alt="Bar Pod Sosnami" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="<strong>Bar Pod Sosnami</strong> 是波蘭深受在地人與旅行者喜愛的著名傳統餐館。餐廳提供道地的波蘭家常料理，包括鮮美多汁的炸豬排（Kotlet Schabowy）、手工水餃與溫暖濃郁的酸麵包湯，環境溫馨且充滿濃厚的中歐人情味。" data-en="<strong>Bar Pod Sosnami</strong> is a beloved traditional Polish restaurant renowned for serving authentic homestyle dishes like classic breaded pork cutlets (Kotlet Schabowy), pierogi, and hearty soups in a warm, welcoming atmosphere.">
+                        <strong>Bar Pod Sosnami</strong> 是波蘭深受在地人與旅行者喜愛的著名傳統餐館。餐廳提供道地的波蘭家常料理，包括鮮美多汁的炸豬排、手工水餃與溫暖濃郁的酸麵包湯。
+                    </p>
+                    <a href="https://maps.app.goo.gl/kGfwxr6UVMByesT79" target="_blank" class="block text-center bg-red-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Bar Pod Sosnami 導航" data-en="Open Google Maps: Bar Pod Sosnami">開啟 Google Maps：Bar Pod Sosnami 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(11)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：5日精華行程 ➔" data-en="Next: 5-Day Itinerary ➔">下一頁：5日精華行程 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 11: 5-Day Poland Grand Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 05 • 5日精華行程" data-en="Chapter 05 • 5-Day Itinerary">Chapter 05 • 5日精華行程</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="波蘭文化經典 5 天深度行程" data-en="5-Day Poland Cultural Itinerary">波蘭文化經典 5 天深度行程</h2>
+                </div>
+
+                <div class="bg-[#0f172a] text-[#fef2f2] p-2.5 rounded-lg space-y-1 text-xs font-serif shadow-inner overflow-y-auto max-h-60">
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-rose-300 font-bold">Day 1</span>
+                        <span data-zh="抵達首都華沙 ➔ 舊城區與王宮城堡" data-en="Arrive Warsaw ➔ Old Town & Royal Castle">抵達首都華沙 ➔ 舊城區與王宮城堡</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-rose-300 font-bold">Day 2</span>
+                        <span data-zh="前往克拉科夫 ➔ 瓦維爾城堡與市集廣場" data-en="Head to Kraków ➔ Wawel Castle & Market">前往克拉科夫 ➔ 瓦維爾城堡與市集廣場</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-rose-300 font-bold">Day 3</span>
+                        <span data-zh="南下扎科帕內 ➔ 塔特拉山健行與 ZODIAK 營區紮營" data-en="Zakopane Tatra Hike ➔ Zodiak Campsite">南下扎科帕內 ➔ 塔特拉山健行與 ZODIAK 營區紮營</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-rose-300 font-bold">Day 4</span>
+                        <span data-zh="北上弗羅茨瓦夫 ➔ 品嚐 Bar Pod Sosnami 道地美食" data-en="Wrocław ➔ Dine at Bar Pod Sosnami">北上弗羅茨瓦夫 ➔ 品嚐 Bar Pod Sosnami 道地美食</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-rose-300 font-bold">Day 5</span>
+                        <span data-zh="哥白尼故鄉托倫 ➔ 品嚐香薑餅 ➔ 賦歸" data-en="Toruń Copernicus Town ➔ Gingerbread ➔ Departure">托倫哥白尼故鄉 ➔ 品嚐薑餅 ➔ 賦歸</span>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(12)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：波蘭特色美食 ➔" data-en="Next: Culinary Specialties ➔">下一頁：特色美食專頁 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Polish Culinary Specialties -->
+            <div class="page-slide flex-col space-y-3" data-page="12">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 06 • 波蘭特色美食" data-en="Chapter 06 • Polish Culinary Specialties">Chapter 06 • 波蘭特色美食</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="波蘭必吃傳統餃子與湯品" data-en="Must-Try Polish Pierogi & Soups">波蘭必吃傳統餃子與湯品</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🥟 波蘭餃子 (Pierogi)" data-en="🥟 Polish Pierogi">🥟 波蘭餃子 (Pierogi)</h3>
+                        <p data-zh="波蘭國寶級美食。半月形水餃內餡豐富，常見有起司馬鈴薯（Ruskie）、肉末或野莓甜餡，水煮或煎至金黃酥脆後搭配酸奶食用。" data-en="Poland's national dish. Half-moon dumplings filled with potato-cheese, meat, or berries, boiled or pan-fried with sour cream.">波蘭國寶級美食。半月形水餃內餡豐富，常見有起司馬鈴薯、肉末或野莓甜餡，水煮或煎至金黃酥脆後搭配酸奶食用。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🥣 傳統酸麵包湯 (Żurek)" data-en="🥣 Traditional Sour Rye Soup (Żurek)">🥣 傳統酸麵包湯 (Żurek)</h3>
+                        <p data-zh="以發酵黑麥麵粉為基底的濃郁酸湯，常加入白香腸、水煮蛋與馬鈴薯，盛裝在挖空的圓麵包中食用，風味獨特。" data-en="A rich sour rye soup loaded with white sausage, hard-boiled eggs, and potatoes, often served inside a hollowed-out bread bowl.">以發酵黑麥麵粉為基底的濃郁酸湯，常加入白香腸、水煮蛋與馬鈴薯，盛裝在挖空的圓麵包中食用，風味獨特。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🫓 托倫傳統香薑餅 (Piernik)" data-en="🫓 Toruń Gingerbread (Piernik)">🫓 托倫傳統香薑餅 (Piernik)</h3>
+                        <p data-zh="源自托倫中世紀的傳統香料蜂蜜餅乾，外層常覆蓋糖霜或巧克力，是波蘭最具代表性的甜點伴手禮。" data-en="Originating from Toruń in the Middle Ages, spiced honey cookies often glazed with icing or chocolate, Poland's classic sweet souvenir.">源自托倫中世紀的傳統香料蜂蜜餅乾，外層常覆蓋糖霜或巧克力，是波蘭最具代表性的甜點伴手禮。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(13)" class="w-full bg-red-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：私人旅遊筆記 ➔" data-en="Next: Traveler Notes ➔">下一頁：私人旅遊筆記 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 13: Traveler Notes & Completion -->
+            <div class="page-slide flex-col space-y-4" data-page="13">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-red-800" data-zh="Chapter 07 • 旅客備忘錄" data-en="Chapter 07 • Traveler Notes">Chapter 07 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的波蘭之旅筆記" data-en="Your Personal Travel Notes">您的波蘭之旅筆記</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人筆記：" data-en="📝 Enter your personal notes:">📝 在此輸入您的私人筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-2.5 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-red-600 focus:outline-none resize-none"
+                        placeholder="例如：ZODIAK營區預約、Bar Pod Sosnami 餐廳訂位..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-red-800 hover:bg-red-700 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">13</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-red-800 hover:bg-red-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Storage -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 13;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            const progressEl = document.getElementById('progress-text');
+            if (progressEl) progressEl.textContent = progress;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) prevBtn.disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            if (prevBtn) {
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('poland_journey_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('poland_journey_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
