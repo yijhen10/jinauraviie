@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瑞士阿爾卑斯山水深度五日之旅電子書報 | Switzerland Alpine Discovery 5-Day Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0b1329;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #e11d48;
+            border-top: 1px solid #e11d48;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #e11d48;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#f8fafc] shadow-2xl rounded-xl overflow-hidden border border-[#cbd5e1] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#be123c] text-[#f8fafc] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-rose-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 瑞士阿爾卑斯深度五日之旅" data-en="Gazette • Switzerland Alpine Discovery">Gazette • 瑞士阿爾卑斯深度五日之旅</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-rose-950 hover:bg-rose-900 text-rose-200 px-2 py-0.5 rounded text-[10px] font-mono border border-rose-800 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-rose-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (Expanded to 12 Pages) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-rose-800 text-rose-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="瑞士阿爾卑斯五日自駕手冊 2026" data-en="Switzerland 5-Day Alpine Handbook 2026">瑞士阿爾卑斯五日自駕手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="瑞士阿爾卑斯" data-en="Swiss Alps Majesty">瑞士阿爾卑斯</span><br>
+                        <span class="text-rose-700" data-zh="山水秘境深度之旅" data-en="5-Day Alpine & Lakes Journey">山水秘境深度之旅</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Switzerland: Interlaken, Zermatt, Lucerne, Gadmen & More" data-en="Switzerland: Interlaken, Zermatt, Lucerne, Gadmen & More">Switzerland: Interlaken, Zermatt, Lucerne, Gadmen & More.</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpo-AzyZeSRCTNkO1eDONA3bnjJvISdxRwwQKQrjXczw&s=10" 
+                         onerror="this.src='https://placehold.co/600x400/be123c/ffffff?text=Swiss+Alps'" 
+                         alt="Swiss Alps" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-rose-300 uppercase" data-zh="景點特刊" data-en="Expanded Destinations">景點特刊</p>
+                        <p class="text-xs font-serif font-medium" data-zh="策馬特、琉森、少女峰與格林德瓦等傳奇地標" data-en="Now featuring Zermatt, Lucerne, Jungfrau & Grindelwald">策馬特、琉森、少女峰與格林德瓦等傳奇地標</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎閱讀瑞士阿爾卑斯山水深度之旅。本手冊包含策馬特（Zermatt）馬特洪峰、琉森（Lucerne）湖畔與格林德瓦冰川村，讓您的自駕與鐵道之旅更加豐富完美。" data-en="Welcome to the expanded Switzerland Alpine Discovery Journey, featuring newly added destinations like Zermatt, Lucerne, and Grindelwald alongside Interlaken, Olsberg, Gadmen, and Ascona.">
+                        歡迎閱讀瑞士阿爾卑斯山水深度五日之旅。本手冊包含策馬特馬特洪峰、琉森湖畔與格林德瓦冰川村，讓您的自駕與鐵道之旅更加豐富完美。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-rose-800 hover:bg-rose-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 01 • 氣候與穿搭" data-en="Chapter 01 • Weather & Clothing">Chapter 01 • 氣候與穿搭</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="瑞士月份天氣與穿搭建議" data-en="Swiss Monthly Weather & Clothing">瑞士月份天氣與穿搭建議</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="❄️ 冬季 (12月 - 2月)：雪景滑雪季" data-en="❄️ Winter (Dec - Feb): Snow & Ski">❄️ 冬季 (12月 - 2月)：雪景滑雪季</strong>
+                        <p data-zh="山區氣溫約 -5°C 至 5°C。穿搭：保暖防風羽絨外套、羊毛內衣、雪靴、毛帽與手套。" data-en="Mountain temperatures -5°C to 5°C. Clothing: Down jacket, wool thermal layer, snow boots, beanie, and gloves.">山區氣溫約 -5°C 至 5°C。穿搭：保暖防風羽絨外套、羊毛內衣、雪靴、毛帽與手套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🌷 春季 (3月 - 5月)：花開與融雪" data-en="🌷 Spring (Mar - May): Blossoms & Melting Snow">🌷 春季 (3月 - 5月)：花開與融雪</strong>
+                        <p data-zh="氣溫約 5°C 至 18°C。穿搭：防風夾克、刷毛衣、層次穿搭、舒適健行鞋。" data-en="Temperatures 5°C to 18°C. Clothing: Windproof jacket, fleece, layers, and hiking shoes.">氣溫約 5°C 至 18°C。穿搭：防風夾克、刷毛衣、層次穿搭、舒適健行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="☀️ 夏季 (6月 - 8月)：阿爾卑斯健行季" data-en="☀️ Summer (Jun - Aug): Alpine Hiking">☀️ 夏季 (6月 - 8月)：阿爾卑斯健行季</strong>
+                        <p data-zh="氣溫約 15°C 至 28°C（南部提契諾州更暖）。穿搭：輕量排汗衣、太陽眼鏡、防曬乳、輕便外套。" data-en="Temperatures 15°C to 28°C. Clothing: Lightweight shirts, sunglasses, sunscreen, and light jacket.">氣溫約 15°C 至 28°C。穿搭：輕量排汗衣、太陽眼鏡、防曬乳、輕便外套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🍁 秋季 (9月 - 11月)：金黃秋景" data-en="🍁 Autumn (Sep - Nov): Golden Foliage">🍁 秋季 (9月 - 11月)：金黃秋景</strong>
+                        <p data-zh="氣溫約 5°C 至 15°C。穿搭：保暖防風夾克、毛衣、防滑防水鞋。" data-en="Temperatures 5°C to 15°C. Clothing: Warm windproof jacket, sweaters, and slip-resistant shoes.">氣溫約 5°C 至 15°C。穿搭：保暖防風夾克、毛衣、防滑防水鞋。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(3)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Interlaken 因特拉肯 ➔" data-en="Next: Interlaken Page ➔">下一頁：Interlaken 因特拉肯 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Destination - Interlaken -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 02 • 景點專頁 [1/7]" data-en="Chapter 02 • Destination [1/7]">Chapter 02 • 景點專頁 [1/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Interlaken (因特拉肯)" data-en="Interlaken">Interlaken (因特拉肯)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="642.jpg" alt="Interlaken" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="夾在圖恩湖與布里恩茨湖之間的傳奇度假小鎮，背倚少女峰，是探索伯爾尼高地的核心門戶。" data-en="Nestled between Lake Thun and Lake Brienz against the backdrop of the Jungfrau, Interlaken is the adventure capital of the Bernese Oberland.">
+                        夾在圖恩湖與布里恩茨湖之間的傳奇度假小鎮，背倚少女峰，是探索伯爾尼高地的核心門戶。
+                    </p>
+                    <a href="https://maps.app.goo.gl/sxWJMoLyHVWmPhRS8" target="_blank" class="block text-center bg-rose-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Interlaken 導航" data-en="Open Google Maps: Interlaken">開啟 Google Maps：Interlaken 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(4)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Zermatt 策馬特 ➔" data-en="Next: Zermatt Page ➔">下一頁：Zermatt 策馬特 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Destination - Zermatt (策馬特 - 新增) -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 02 • 景點專頁 [2/7]" data-en="Chapter 02 • Destination [2/7]">Chapter 02 • 景點專頁 [2/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Zermatt (策馬特與馬特洪峰)" data-en="Zermatt & Matterhorn">Zermatt (策馬特與馬特洪峰)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://www.travelandleisure.com/thmb/F3V1ei2YrUH4Qd_fvSgkAneZ4R8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/TAL-header-zermatt-switzerland-ZERMATT0123-08b7127082434b9f83db57251c051c1b.jpg" alt="Zermatt" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="無車山城策馬特坐落於雄偉的馬特洪峰（Matterhorn）腳下。這裡空氣清新、高山滑雪場世界聞名，搭乘戈爾內格拉特鐵路（Gornergrat）可俯瞰壯麗冰川。" data-en="Car-free mountain resort Zermatt sits beneath the majestic Matterhorn peak, offering world-class skiing and breathtaking glacier views.">
+                        無車山城策馬特坐落於雄偉的馬特洪峰腳下。空氣清新、滑雪場世界聞名，搭乘戈爾內格拉特鐵路可俯瞰壯麗冰川。
+                    </p>
+                    <a href="https://maps.app.goo.gl/F4jfJGLxTXvfw3AU8" target="_blank" class="block text-center bg-rose-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Zermatt 導航" data-en="Open Google Maps: Zermatt">開啟 Google Maps：Zermatt 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(5)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Lucerne 琉森 ➔" data-en="Next: Lucerne Page ➔">下一頁：Lucerne 琉森 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destination - Lucerne (琉森 - 新增) -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 02 • 景點專頁 [3/7]" data-en="Chapter 02 • Destination [3/7]">Chapter 02 • 景點專頁 [3/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Lucerne (琉森湖畔)" data-en="Lucerne">Lucerne (琉森湖畔)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyXjKYvgagWZAyI62uBDAKS9ATm4vpcUr3PyMXi1qI3Q&s=10" alt="Lucerne" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="瑞士中部的明珠城市琉森（Lucerne），擁有中世紀著名的卡貝爾木橋（Kapellbrücke）、雪山環繞的琉森湖與典雅舊城，散發濃厚文藝氣息。" data-en="Lucerne, the jewel of central Switzerland, features the medieval Chapel Bridge, Lake Lucerne surrounded by snow peaks, and historic old town charm.">
+                        瑞士中部的明珠城市琉森，擁有中世紀著名的卡貝爾木橋、雪山環繞的琉森湖與典雅舊城，散發濃厚文藝氣息。
+                    </p>
+                    <a href="https://maps.app.goo.gl/REWR96qisNHWLbJm8" target="_blank" class="block text-center bg-rose-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Lucerne 導航" data-en="Open Google Maps: Lucerne">開啟 Google Maps：Lucerne 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(6)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Grindelwald 格林德瓦 ➔" data-en="Next: Grindelwald Page ➔">下一頁：Grindelwald 格林德瓦 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destination - Grindelwald (格林德瓦 - 新增) -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 02 • 景點專頁 [4/7]" data-en="Chapter 02 • Destination [4/7]">Chapter 02 • 景點專頁 [4/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Grindelwald (格林德瓦)" data-en="Grindelwald">Grindelwald (格林德瓦)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQner9p4xLyVJD7k-Gywowq9WkLwy5CJ-Sbpb9dYhjKBg&s=10" alt="Grindelwald" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="座落於艾格峰（Eiger）北壁山腳下的冰川村莊格林德瓦，是全球登山客與健行者的夢想天堂，擁有第一崖頂步道與壯麗高山纜車。" data-en="Nestled at the foot of the Eiger North Face, Grindelwald is a glacier village paradise for hikers, featuring the First Cliff Walk and cable cars.">
+                        座落於艾格峰北壁山腳下的冰川村莊格林德瓦，是全球登山客與健行者的夢想天堂，擁有第一崖頂步道與壯麗高山纜車。
+                    </p>
+                    <a href="https://maps.app.goo.gl/zGeAfTXYXWJEzn8CA" target="_blank" class="block text-center bg-rose-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Grindelwald 導航" data-en="Open Google Maps: Grindelwald">開啟 Google Maps：Grindelwald 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(7)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Olsberg 奧爾斯貝格 ➔" data-en="Next: Olsberg Page ➔">下一頁：Olsberg 奧爾斯貝格 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destination - Olsberg -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 02 • 景點專頁 [5/7]" data-en="Chapter 02 • Destination [5/7]">Chapter 02 • 景點專頁 [5/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Olsberg (奧爾斯貝格)" data-en="Olsberg">Olsberg (奧爾斯貝格)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTah5jUJg_ysJZvOUoFODpwB3UoquMcW8GZ_4swozRBKQ&s=10" alt="Olsberg" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="位於瑞士阿爾高州萊茵河畔的優美市鎮，以其溫泉文化、歷史建築與寧靜的河畔步道聞名，展現瑞士北部典雅的鄉村風情。" data-en="A picturesque town along the Rhine River in Aargau, renowned for thermal spa culture, historic architecture, and serene riverside walks.">
+                        位於瑞士阿爾高州萊茵河畔的優美市鎮，以其溫泉文化、歷史建築與寧靜的河畔步道聞名，展現瑞士北部典雅的鄉村風情。
+                    </p>
+                    <a href="https://maps.app.goo.gl/TS3iFEFkajdFAgvW9" target="_blank" class="block text-center bg-rose-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Olsberg 導航" data-en="Open Google Maps: Olsberg">開啟 Google Maps：Olsberg 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(8)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Gadmen 加德門 ➔" data-en="Next: Gadmen Page ➔">下一頁：Gadmen 加德門 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destination - Gadmen -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 02 • 景點專頁 [6/7]" data-en="Chapter 02 • Destination [6/7]">Chapter 02 • 景點專頁 [6/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Gadmen (加德門)" data-en="Gadmen">Gadmen (加德門)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6cfhEPeJRUtw5cflzjvzSGV2MnF92l_TRGQDjpmNqFw&s=10" alt="Gadmen" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="座落於通往著名的蘇斯滕山口高山谷地中的傳統村落。四周被巍峨雪山與翠綠草甸環繞，是絕佳的登山與自駕觀景勝地。" data-en="A traditional mountain village nestled in the valley leading to the famous Susten Pass, surrounded by majestic snow-capped peaks and alpine meadows.">
+                        座落於通往著名的蘇斯滕山口高山谷地中的傳統村落。四周被巍峨雪山與翠綠草甸環繞，是絕佳的登山與自駕觀景勝地。
+                    </p>
+                    <a href="https://maps.app.goo.gl/u4FM4GKVBUSfBcZA7" target="_blank" class="block text-center bg-rose-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Gadmen 導航" data-en="Open Google Maps: Gadmen">開啟 Google Maps：Gadmen 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(9)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Ascona 阿斯科納 ➔" data-en="Next: Ascona Page ➔">下一頁：Ascona 阿斯科納 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Destination - Ascona -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 02 • 景點專頁 [7/7]" data-en="Chapter 02 • Destination [7/7]">Chapter 02 • 景點專頁 [7/7]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Ascona (阿斯科納)" data-en="Ascona">Ascona (阿斯科納)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8xa4IY4De14SX9P1nq0tr8zdstTaTOq-pZmROei3_GA&s=10" alt="Ascona" class="w-full h-32 object-cover">
+                    </div>
+                    <p data-zh="位於瑞士南部提契諾州馬焦雷湖畔的陽光度假小鎮。擁有棕櫚樹、色彩斑斕的地中海風情老街與浪漫的湖濱長廊，散發義式浪漫氣息。" data-en="A sunny resort town on the shores of Lake Maggiore in Ticino, featuring palm trees, colorful Mediterranean old streets, and a romantic lakeside promenade.">
+                        位於瑞士南部提契諾州馬焦雷湖畔的陽光度假小鎮。擁有棕櫚樹、色彩斑斕的地中海風情老街與浪漫的湖濱長廊，散發義式浪漫氣息。
+                    </p>
+                    <a href="https://maps.app.goo.gl/UWTWEc5YjU8Lvw5Z9" target="_blank" class="block text-center bg-rose-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Ascona 導航" data-en="Open Google Maps: Ascona">開啟 Google Maps：Ascona 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(10)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：5日精華行程 ➔" data-en="Next: 5-Day Itinerary ➔">下一頁：5日精華行程 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 10: 5-Day Switzerland Grand Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 03 • 5日精華行程" data-en="Chapter 03 • 5-Day Alpine Itinerary">Chapter 03 • 5日精華行程</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="瑞士阿爾卑斯 5 天深度自駕行程" data-en="5-Day Switzerland Alpine Itinerary">瑞士阿爾卑斯 5 天深度自駕行程</h2>
+                </div>
+
+                <div class="bg-[#0b1329] text-[#f8fafc] p-2.5 rounded-lg space-y-1 text-xs font-serif shadow-inner overflow-y-auto max-h-60">
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-rose-300 font-bold">Day 1</span>
+                        <span data-zh="抵達因特拉肯 ➔ 格林德瓦艾格峰健行" data-en="Arrive Interlaken ➔ Grindelwald Eiger Hike">抵達因特拉肯 ➔ 格林德瓦艾格峰健行</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-rose-300 font-bold">Day 2</span>
+                        <span data-zh="前往加德門 ➔ 挑戰蘇斯滕高山公路" data-en="Head to Gadmen ➔ Drive Susten Pass">前往加德門 ➔ 挑戰蘇斯滕高山公路</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-rose-300 font-bold">Day 3</span>
+                        <span data-zh="北上琉森與奧爾斯貝格 ➔ 湖濱與溫泉漫步" data-en="Travel to Lucerne & Olsberg ➔ Lake & Spa">北上琉森與奧爾斯貝格 ➔ 湖濱與溫泉漫步</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-700 pb-1">
+                        <span class="font-mono text-rose-300 font-bold">Day 4</span>
+                        <span data-zh="南下跨越阿爾卑斯 ➔ 策馬特馬特洪峰" data-en="Head South ➔ Zermatt & Matterhorn">南下跨越阿爾卑斯 ➔ 策馬特馬特洪峰</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-rose-300 font-bold">Day 5</span>
+                        <span data-zh="地中海風情阿斯科納 ➔ 快樂賦歸" data-en="Mediterranean Ascona ➔ Departure">地中海風情阿斯科納 ➔ 快樂賦歸</span>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(11)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：瑞士特色美食 ➔" data-en="Next: Culinary Specialties ➔">下一頁：特色美食專頁 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Swiss Culinary Specialties -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 04 • 瑞士特色美食" data-en="Chapter 04 • Swiss Culinary Specialties">Chapter 04 • 瑞士特色美食</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="瑞士必吃起司鍋與阿爾卑斯美食" data-en="Must-Try Swiss Alpine Specialties">瑞士必吃起司鍋與阿爾卑斯美食</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🧀 瑞士傳統起司鍋 (Fondue)" data-en="🧀 Traditional Swiss Fondue">🧀 瑞士傳統起司鍋 (Fondue)</h3>
+                        <p data-zh="將多種融化的瑞士起司加入白酒與大蒜，以麵包塊沾食，是經典的阿爾卑斯山區冬日暖心美食。" data-en="Melted Swiss cheese blend with white wine and garlic, enjoyed with bread cubes—a quintessential alpine winter comfort food.">將多種融化的瑞士起司加入白酒與大蒜，以麵包塊沾食，是經典的阿爾卑斯山區冬日暖心美食。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🥔 瑞士煎馬鈴薯餅 (Rösti)" data-en="🥔 Swiss Rösti">🥔 瑞士煎馬鈴薯餅 (Rösti)</h3>
+                        <p data-zh="瑞士德語區的國民美食。將粗磨馬鈴薯煎至外皮金黃酥脆，常搭配培根、煎蛋或起司食用。" data-en="A Swiss German national staple of grated potato fried to a golden crisp, often served with bacon, eggs, or cheese.">瑞士德語區的國民美食。將粗磨馬鈴薯煎至外皮金黃酥脆，常搭配培根、煎蛋或起司食用。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🍫 瑞士手工巧克力 (Swiss Chocolate)" data-en="🍫 Swiss Chocolate">🍫 瑞士手工巧克力 (Swiss Chocolate)</h3>
+                        <p data-zh="世界聞名的頂級甜點工藝，濃郁絲滑，是造訪瑞士不可錯過的伴手禮與午茶享受。" data-en="World-renowned for its velvety texture and confectionery mastery, an absolute must-try treat and souvenir.">世界聞名的頂級甜點工藝，濃郁絲滑，是造訪瑞士不可錯過的伴手禮與午茶享受。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(12)" class="w-full bg-rose-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：私人旅遊筆記 ➔" data-en="Next: Traveler Notes ➔">下一頁：私人旅遊筆記 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Traveler Notes & Completion -->
+            <div class="page-slide flex-col space-y-4" data-page="12">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-rose-800" data-zh="Chapter 05 • 旅客備忘錄" data-en="Chapter 05 • Traveler Notes">Chapter 05 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的瑞士之旅筆記" data-en="Your Personal Travel Notes">您的瑞士之旅筆記</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人筆記：" data-en="📝 Enter your personal notes:">📝 在此輸入您的私人筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-2.5 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-rose-600 focus:outline-none resize-none"
+                        placeholder="例如：策馬特馬特洪峰纜車預約、格林德瓦健行裝備..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-rose-800 hover:bg-rose-700 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">12</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-rose-800 hover:bg-rose-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Storage -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 12;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            const progressEl = document.getElementById('progress-text');
+            if (progressEl) progressEl.textContent = progress;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) prevBtn.disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            if (prevBtn) {
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('switzerland_journey_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('switzerland_journey_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
