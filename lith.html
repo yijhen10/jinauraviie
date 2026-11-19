@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>立陶宛深度探索之旅：波羅的海琥珀與哥德古城電子書報 | Lithuania Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #064e3b;
+            color: #2c2c2c;
+            touch-action: pan-y;
+        }
+
+        .newspaper-header {
+            border-bottom: 3px double #047857;
+            border-top: 1px solid #047857;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.2rem;
+            float: left;
+            line-height: 0.8;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #047857;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ecfdf5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #34d399;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-2 px-1 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile Device Ratio Optimized) -->
+    <div class="w-full max-w-md h-[92vh] max-h-[880px] bg-[#ecfdf5] shadow-2xl rounded-xl overflow-hidden border border-[#a7f3d0] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#065f46] text-[#ecfdf5] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-widest font-mono z-10 shadow">
+            <div class="flex items-center space-x-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                <span id="issue-title" data-zh="Gazette • 立陶宛深度探索之旅" data-en="Gazette • Lithuania Discovery Journey">Gazette • 立陶宛深度探索之旅</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-emerald-950 hover:bg-emerald-900 text-emerald-200 px-2 py-0.5 rounded text-[10px] font-mono border border-emerald-800 transition" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-emerald-200 hover:text-white transition-colors" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (13 Pages) -->
+        <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover & Welcome -->
+            <div class="page-slide active flex-col justify-between h-full space-y-4" data-page="1">
+                <div class="text-center space-y-3 pt-2">
+                    <span class="bg-emerald-800 text-emerald-100 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="波羅的海立陶宛旅遊手冊 2026" data-en="Lithuania Travel Handbook 2026">波羅的海立陶宛旅遊手冊 2026</span>
+                    <h1 class="text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="立陶宛深度探索" data-en="Lithuania Discovery">立陶宛深度探索</span><br>
+                        <span class="text-emerald-700" data-zh="琥珀、水上城堡與波羅的海" data-en="Amber, Water Castles & Coast">琥珀、水上城堡與波羅的海</span>
+                    </h1>
+                    <p class="text-xs font-serif italic text-stone-600" data-zh="Lithuania: Vilnius, Kaunas, Trakai, Klaipėda & Curonian Spit" data-en="Lithuania: Vilnius, Kaunas, Trakai, Klaipėda & Curonian Spit">Lithuania: Vilnius, Kaunas, Trakai, Klaipėda & Curonian Spit.</p>
+                </div>
+
+                <div class="relative rounded-lg overflow-hidden shadow-md my-2 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUrVD0rPOrSudNNjZPqW2JLLNBtGPpU1_ovKRXLpawVA&s=10" 
+                         onerror="this.src='https://placehold.co/600x400/065f46/ffffff?text=Lithuania+Trakai'" 
+                         alt="Lithuania Trakai" class="w-full h-40 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-emerald-300 uppercase" data-zh="波羅的海心臟" data-en="Heart of the Baltics">波羅的海心臟</p>
+                        <p class="text-xs font-serif font-medium" data-zh="探索維爾紐斯、特拉凱水上城堡與庫爾斯沙嘴" data-en="Vilnius, Trakai Castle & Curonian Spit">探索維爾紐斯、特拉凱水上城堡與庫爾斯沙嘴</p>
+                    </div>
+                </div>
+
+                <div class="bg-stone-100 p-3.5 rounded-lg border border-stone-200 text-xs text-stone-700 leading-relaxed space-y-2">
+                    <p class="drop-cap" data-zh="歡迎展開立陶宛深度旅遊指南。本手冊將每個精選景點（維爾紐斯、考納斯、特拉凱、克萊佩達、帕蘭加、庫爾斯沙嘴）與傳統美食獨立設頁，帶領您領略波羅的海的迷人風情。" data-en="Welcome to the Lithuania Discovery Journey. Each destination and culinary specialty is featured on its own standalone page for an immersive reading experience.">
+                        歡迎展開立陶宛深度旅遊指南。本手冊將每個精選景點與傳統美食獨立設頁，帶領您領略波羅的海的迷人風情、哥德建築與琥珀海岸。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-emerald-800 hover:bg-emerald-700 text-white text-xs py-3 rounded-md font-mono uppercase tracking-widest shadow transition-all active:scale-95" data-zh="翻開指南篇章 ➔" data-en="Open Chapter 01 ➔">
+                        翻開指南篇章 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 01 • 氣候與穿搭" data-en="Chapter 01 • Weather & Clothing">Chapter 01 • 氣候與穿搭</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="立陶宛月份天氣與穿搭建議" data-en="Lithuanian Monthly Weather & Clothing">立陶宛月份天氣與穿搭建議</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="❄️ 冬季 (12月 - 2月)：雪景與寒冷" data-en="❄️ Winter (Dec - Feb): Snow & Chill">❄️ 冬季 (12月 - 2月)：雪景與寒冷</strong>
+                        <p data-zh="氣溫約 -6°C 至 0°C。穿搭：極地防風羽絨外套、保暖排汗衣、雪靴、毛帽與防風手套。" data-en="Temperatures -6°C to 0°C. Clothing: Down jacket, thermal layers, snow boots, beanie, and windproof gloves.">氣溫約 -6°C 至 0°C。穿搭：極地防風羽絨外套、保暖排汗衣、雪靴、毛帽與防風手套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🌷 春季 (3月 - 5月)：萬物復甦" data-en="🌷 Spring (Mar - May): Awakening">🌷 春季 (3月 - 5月)：萬物復甦</strong>
+                        <p data-zh="氣溫約 2°C 至 15°C。穿搭：防風外套、層次穿搭（毛衣搭配輕便夾克）、舒適健行鞋。" data-en="Temperatures 2°C to 15°C. Clothing: Windbreaker, layered sweaters, light jacket, and comfortable walking shoes.">氣溫約 2°C 至 15°C。穿搭：防風外套、層次穿搭、舒適健行鞋。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="☀️ 夏季 (6月 - 8月)：溫暖陽光海岸" data-en="☀️ Summer (Jun - Aug): Warm Coastal Days">☀️ 夏季 (6月 - 8月)：溫暖陽光海岸</strong>
+                        <p data-zh="氣溫約 18°C 至 26°C，帕蘭加海灘極為舒適。穿搭：輕便休閒服裝、太陽眼鏡、防曬乳，晚間備薄外套。" data-en="Temperatures 18°C to 26°C. Clothing: Casual clothing, sunglasses, sunscreen, and a light jacket for cool evenings.">氣溫約 18°C 至 26°C，帕蘭加海灘極為舒適。穿搭：輕便休閒服裝、太陽眼鏡、防曬乳，晚間備薄外套。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200">
+                        <strong class="text-stone-900 block font-serif text-sm" data-zh="🍁 秋季 (9月 - 11月)：金秋楓紅" data-en="🍁 Autumn (Sep - Nov): Golden Foliage">🍁 秋季 (9月 - 11月)：金秋楓紅</strong>
+                        <p data-zh="氣溫約 4°C 至 14°C，雨水漸多。穿搭：防水防風夾克、刷毛衣、防滑防水靴。" data-en="Temperatures 4°C to 14°C with increasing rain. Clothing: Waterproof/windproof jacket, fleece, and slip-resistant boots.">氣溫約 4°C 至 14°C，雨水漸多。穿搭：防水防風夾克、刷毛衣、防滑防水靴。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(3)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：立陶宛特色美食專頁 ➔" data-en="Next: Lithuanian Cuisine ➔">下一頁：立陶宛特色美食專頁 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Standalone Lithuania Culinary Specialties -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 02 • 當地特色美食專頁" data-en="Chapter 02 • Lithuanian Culinary Specialties">Chapter 02 • 當地特色美食專頁</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="立陶宛必吃經典道地美食" data-en="Must-Try Lithuanian Specialties">立陶宛必吃經典道地美食</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🥔 齊柏林飛船馬鈴薯餃 (Cepelinai)" data-en="🥔 Cepelinai (Potato Dumplings)">🥔 齊柏林飛船馬鈴薯餃 (Cepelinai)</h3>
+                        <p data-zh="立陶宛國寶級國民美食。由生馬鈴薯與熟馬鈴薯泥混合包入碎肉或起司，外形酷似齊柏林飛船，搭配酸奶與培根醬食用。" data-en="Lithuania's national dish. Large potato dumplings stuffed with minced meat or cheese, shaped like a Zeppelin and served with sour cream and bacon gravy.">立陶宛國寶級國民美食。由生熟馬鈴薯泥包入碎肉或起司，外形酷似飛船，搭配濃郁酸奶與培根醬食用。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🥣 冷甜菜湯 (Šaltibarščiai)" data-en="🥣 Cold Beet Soup (Šaltibarščiai)">🥣 冷甜菜湯 (Šaltibarščiai)</h3>
+                        <p data-zh="色彩鮮豔的粉紅色夏日湯品。由甜菜根、克菲爾優格、小黃瓜與新鮮蒔蘿製成，常搭配熱騰騰的水煮馬鈴薯一同享用。" data-en="A vibrant pink cold soup made from beets, kefir, cucumbers, and dill, typically served alongside hot boiled potatoes.">色彩鮮豔的粉紅色夏日湯品。由甜菜根、克菲爾優格、小黃瓜與新鮮蒔蘿製成，搭配熱水煮馬鈴薯享用。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🌲 立陶宛樹幹蛋糕 (Šakotis)" data-en="🌲 Šakotis (Tree Cake)">🌲 立陶宛樹幹蛋糕 (Šakotis)</h3>
+                        <p data-zh="傳統立陶宛節慶蛋糕。將麵糊一層層淋在轉動的尖錐烘烤器上，烤出如樹木年輪與尖刺般的獨特外型，口感酥脆濃郁。" data-en="A traditional spit cake baked by rotating layers of batter around a spit, creating a unique tree-like spiked appearance.">傳統立陶宛節慶蛋糕。將麵糊一層層淋在轉動的尖錐上烘烤，形如樹木年輪與尖刺，口感酥脆濃郁。</p>
+                    </div>
+                    <div class="bg-stone-100 p-2.5 rounded border border-stone-200 space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🧄 炸黑麥蒜香麵包 (Kepta Duona)" data-en="🧄 Garlic Rye Bread (Kepta Duona)">🧄 炸黑麥蒜香麵包 (Kepta Duona)</h3>
+                        <p data-zh="立陶宛最經典的下酒菜。將傳統黑麥麵包切條油炸，抹上濃郁大蒜與融化起司，香脆夠味。" data-en="A beloved bar snack of fried dark rye bread sticks rubbed generously with garlic and topped with melted cheese.">立陶宛最經典的下酒菜。將傳統黑麥麵包切條油炸，抹上濃郁大蒜與融化起司，香脆夠味。</p>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(4)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Vilnius 維爾紐斯 ➔" data-en="Next: Vilnius Destination ➔">下一頁：Vilnius 維爾紐斯 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Standalone Vilnius -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 03 • 景點專頁 [1/6]" data-en="Chapter 03 • Destination [1/6]">Chapter 03 • 景點專頁 [1/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Vilnius (維爾紐斯：巴洛克與舊城心臟)" data-en="Vilnius (Baroque Old Town)">Vilnius (維爾紐斯：巴洛克古城)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIRTUGPWgbzDy24JsWlXDesf_-tcqC3Kcb97YjZyAEtw&s=10" onerror="this.src='https://placehold.co/600x300/065f46/ffffff?text=Vilnius'" alt="Vilnius">
+                    </div>
+                    <p data-zh="立陶宛首都維爾紐斯（Vilnius）擁有歐洲最大的中世紀舊城區之一。這裡集結了壯麗的哥德式與巴洛克式教堂、格迪米納斯城堡塔以及充滿文藝氣息的對岸共和國（Užupis）。" data-en="Vilnius, the capital of Lithuania, boasts one of Europe's largest medieval old towns featuring stunning Baroque churches and the bohemian Republic of Užupis.">
+                        立陶宛首都維爾紐斯擁有歐洲最大的中世紀舊城區之一。這裡集結了壯麗的哥德式與巴洛克式教堂、格迪米納斯城堡塔以及充滿文藝氣息的對岸共和國。
+                    </p>
+                    <a href="https://maps.app.goo.gl/RucpWYMA9byZ22L87" target="_blank" class="block text-center bg-emerald-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Vilnius 導航" data-en="Open Google Maps: Vilnius">開啟 Google Maps：Vilnius 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(5)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Kaunas 考納斯 ➔" data-en="Next: Kaunas ➔">下一頁：Kaunas 考納斯 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Standalone Kaunas -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 03 • 景點專頁 [2/6]" data-en="Chapter 03 • Destination [2/6]">Chapter 03 • 景點專頁 [2/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Kaunas (考納斯：現代主義與尼曼河畔)" data-en="Kaunas (Modernist Architecture)">Kaunas (考納斯：現代主義建築)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKb53VnaPC76bD775fSX2NCCO1G2PxDWCMNWYHOmw8mg&s=10" onerror="this.src='https://placehold.co/600x400/065f46/ffffff?text=Kaunas'" alt="Kaunas">
+                    </div>
+                    <p data-zh="考納斯（Kaunas）是立陶宛第二大城，曾為戰時臨時首都。這裡以獨特的戰間期現代主義建築群入選世界遺產，並擁有中世紀考納斯城堡與熱鬧的自由大道（Laisvės alėja）。" data-en="Kaunas is Lithuania's second-largest city, renowned for its UNESCO-listed interwar modernist architecture and vibrant Laisvės alėja pedestrian boulevard.">
+                        考納斯是立陶宛第二大城，曾為戰時臨時首都。這裡以獨特的戰間期現代主義建築群入選世界遺產，並擁有中世紀考納斯城堡與熱鬧的自由大道。
+                    </p>
+                    <a href="https://maps.app.goo.gl/bLYLPnZ8vVWy6zJs9" target="_blank" class="block text-center bg-emerald-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Kaunas 導航" data-en="Open Google Maps: Kaunas">開啟 Google Maps：Kaunas 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(6)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Trakai 特拉凱水上城堡 ➔" data-en="Next: Trakai ➔">下一頁：Trakai 特拉凱水上城堡 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Standalone Trakai -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 03 • 景點專頁 [3/6]" data-en="Chapter 03 • Destination [3/6]">Chapter 03 • 景點專頁 [3/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Trakai (特拉凱：湖心紅磚水上城堡)" data-en="Trakai (Island Castle)">Trakai (特拉凱：湖心水上城堡)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Traku_pilis_by_Augustas_Didzgalvis.jpg?utm_source=zh.wikipedia.org&utm_campaign=index&utm_content=original" onerror="this.src='https://placehold.co/600x400/065f46/ffffff?text=Trakai'" alt="Trakai">
+                    </div>
+                    <p data-zh="特拉凱（Trakai）距離維爾紐斯不遠，座落於加夫湖（Galvė Lake）中央，是立陶宛中世紀大公國的宏偉紅磚水上城堡。湖光山色與木造卡拉伊姆民居相映成趣。" data-en="Trakai sits on an island in Lake Galvė, featuring the iconic 14th-century red-brick island castle and serene surrounding national park nature.">
+                        特拉凱座落於加夫湖中央，是立陶宛中世紀大公國的宏偉紅磚水上城堡。湖光山色與木造卡拉伊姆傳統民居相映成趣，是立陶宛最著名的明信片景致。
+                    </p>
+                    <a href="https://maps.app.goo.gl/RyxvGcWZ5EAr5AoB6" target="_blank" class="block text-center bg-emerald-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Trakai 導航" data-en="Open Google Maps: Trakai">開啟 Google Maps：Trakai 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(7)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Klaipėda 克萊佩達 ➔" data-en="Next: Klaipėda ➔">下一頁：Klaipėda 克萊佩達 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Standalone Klaipėda -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 03 • 景點專頁 [4/6]" data-en="Chapter 03 • Destination [4/6]">Chapter 03 • 景點專頁 [4/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Klaipėda (克萊佩達：德式風情海港)" data-en="Klaipėda (Port & Sculpture Park)">Klaipėda (克萊佩達：濱海港口)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUIILgplTYQaBffd3NXfnDfS7vMY-etVG-vhMWk4cHlA&s=10" onerror="this.src='https://placehold.co/600x400/065f46/ffffff?text=Klaipeda'" alt="Klaipeda">
+                    </div>
+                    <p data-zh="克萊佩達（Klaipėda）是立陶宛唯一的天然海港城市，曾受日耳曼文化影響，擁有獨特的德式木骨架建築、劇院廣場的安卡森雕像與通往庫爾斯沙嘴的渡輪碼頭。" data-en="Klaipėda is Lithuania's primary seaport, featuring German-style half-timbered architecture, Theater Square, and ferries to the Curonian Spit.">
+                        克萊佩達是立陶宛唯一的天然海港城市，曾受日耳曼文化影響，擁有獨特的德式木骨架建築、劇院廣場的安卡森雕像與通往庫爾斯沙嘴的渡輪碼頭。
+                    </p>
+                    <a href="https://maps.app.goo.gl/WboTBThBsnUzp9iu7" target="_blank" class="block text-center bg-emerald-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Klaipėda 導航" data-en="Open Google Maps: Klaipėda">開啟 Google Maps：Klaipėda 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(8)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Palanga 帕蘭加 ➔" data-en="Next: Palanga ➔">下一頁：Palanga 帕蘭加 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Standalone Palanga -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 03 • 景點專頁 [5/6]" data-en="Chapter 03 • Destination [5/6]">Chapter 03 • 景點專頁 [5/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Palanga (帕蘭加：琥珀博物館與海灘)" data-en="Palanga (Amber Museum & Beach)">Palanga (帕蘭加：琥珀海岸)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOz0BarQsQ8yxfb0TKgLpugfmNmHW6dUlQtoq9M8vEHA&s=10" onerror="this.src='https://placehold.co/600x400/065f46/ffffff?text=Palanga'" alt="Palanga">
+                    </div>
+                    <p data-zh="帕蘭加（Palanga）是立陶宛最著名的波羅的海濱海度假勝地。這裡擁有細緻的沙灘、延伸入海的木造碼頭，以及坐落於美麗伯爵宮殿內的珍貴琥珀博物館（Amber Museum）。" data-en="Palanga is Lithuania's premier Baltic resort town, featuring sandy beaches, a wooden pier, and the famous Amber Museum housed in a historic palace.">
+                        帕蘭加是立陶宛最著名的波羅的海濱海度假勝地。這裡擁有細緻沙灘、延伸入海的木造碼頭，以及坐落於宮殿內的珍貴琥珀博物館。
+                    </p>
+                    <a href="https://maps.app.goo.gl/dk1jBb5weoP6rvGr7" target="_blank" class="block text-center bg-emerald-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Palanga 導航" data-en="Open Google Maps: Palanga">開啟 Google Maps：Palanga 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(9)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：Curonian Spit 庫爾斯沙嘴 ➔" data-en="Next: Curonian Spit ➔">下一頁：Curonian Spit 庫爾斯沙嘴 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Standalone Curonian Spit -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 03 • 景點專頁 [6/6]" data-en="Chapter 03 • Destination [6/6]">Chapter 03 • Destination [6/6]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Curonian Spit (庫爾斯沙嘴與世界遺產沙丘)" data-en="Curonian Spit (UNESCO Dunes)">Curonian Spit (庫爾斯沙嘴與沙丘)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-64">
+                    <div class="rounded-lg overflow-hidden shadow-sm">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX2juY1r3jZb5BLDgPKXdyoV1NuHR7YiLbnQj6__9KUg&s=10" onerror="this.src='https://placehold.co/600x400/065f46/ffffff?text=Curonian+Spit'" alt="Curonian Spit">
+                    </div>
+                    <p data-zh="庫爾斯沙嘴（Curonian Spit）是一條綿延的狹長沙洲，被聯合國列為世界自然遺產。這裡擁有歐洲最高的動態沙丘（如納林加 Neringa）、神話山丘與寧靜的漁村風光。" data-en="The Curonian Spit is a stunning UNESCO-listed curved sand dune spit separating the Curonian Lagoon from the Baltic Sea, featuring Neringa dunes.">
+                        庫爾斯沙嘴是一條綿延的狹長沙洲，被聯合國列為世界自然遺產。這裡擁有歐洲最高的動態沙丘（納林加）、神話山丘與寧靜漁村風光。
+                    </p>
+                    <a href="https://maps.app.goo.gl/1gCzGAz8FjJT5eBv5" target="_blank" class="block text-center bg-emerald-800 text-white py-2 rounded font-mono text-xs">
+                        🗺️ <span data-zh="開啟 Google Maps：Curonian Spit 導航" data-en="Open Google Maps: Curonian Spit">開啟 Google Maps：Curonian Spit 導航</span>
+                    </a>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(10)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：5日精華行程 ➔" data-en="Next: 5-Day Itinerary ➔">下一頁：5日精華行程 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 10: 5-Day Lithuania Grand Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 04 • 5日精華行程" data-en="Chapter 04 • 5-Day Itinerary">Chapter 04 • 5日精華行程</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="立陶宛波羅的海 5 天深度精華行程" data-en="5-Day Lithuania Grand Itinerary">立陶宛波羅的海 5 天深度精華行程</h2>
+                </div>
+
+                <div class="bg-[#064e3b] text-[#ecfdf5] p-2.5 rounded-lg space-y-1 text-xs font-serif shadow-inner overflow-y-auto max-h-60">
+                    <div class="flex justify-between border-b border-emerald-800 pb-1">
+                        <span class="font-mono text-emerald-300 font-bold">Day 1</span>
+                        <span data-zh="抵達維爾紐斯 ➔ 舊城巴洛克巡禮與對岸共和國" data-en="Arrive Vilnius ➔ Old Town & Užupis">抵達維爾紐斯 ➔ 舊城巴洛克巡禮與對岸共和國</span>
+                    </div>
+                    <div class="flex justify-between border-b border-emerald-800 pb-1">
+                        <span class="font-mono text-emerald-300 font-bold">Day 2</span>
+                        <span data-zh="特拉凱水上城堡 ➔ 品嚐傳統肉餅 ➔ 前往考納斯" data-en="Trakai Water Castle ➔ Head to Kaunas">特拉凱水上城堡 ➔ 品嚐肉餅 ➔ 前往考納斯</span>
+                    </div>
+                    <div class="flex justify-between border-b border-emerald-800 pb-1">
+                        <span class="font-mono text-emerald-300 font-bold">Day 3</span>
+                        <span data-zh="考納斯現代主義建築巡禮 ➔ 西行至克萊佩達" data-en="Kaunas Modernism ➔ Travel to Klaipėda">考納斯現代主義建築巡禮 ➔ 西行至克萊佩達</span>
+                    </div>
+                    <div class="flex justify-between border-b border-emerald-800 pb-1">
+                        <span class="font-mono text-emerald-300 font-bold">Day 4</span>
+                        <span data-zh="渡輪前往庫爾斯沙嘴 ➔ 探索納林加世界遺產沙丘" data-en="Curonian Spit Ferry ➔ Neringa Sand Dunes">渡輪前往庫爾斯沙嘴 ➔ 探索納林加沙丘</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-mono text-emerald-300 font-bold">Day 5</span>
+                        <span data-zh="帕蘭加琥珀博物館與海灘漫步 ➔ 快樂賦歸" data-en="Palanga Amber Museum & Beach ➔ Departure">帕蘭加琥珀博物館與海灘 ➔ 快樂賦歸</span>
+                    </div>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(11)" class="w-full bg-emerald-800 text-white text-xs py-2 rounded font-mono" data-zh="下一頁：私人旅遊筆記 ➔" data-en="Next: Traveler Notes ➔">下一頁：私人旅遊筆記 ➔</button>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Traveler Notes & Completion -->
+            <div class="page-slide flex-col space-y-4" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-emerald-800" data-zh="Chapter 05 • 旅客備忘錄" data-en="Chapter 05 • Traveler Notes">Chapter 05 • 旅客備忘錄</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="您的立陶宛之旅筆記" data-en="Your Personal Travel Notes">您的立陶宛之旅筆記</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700">
+                    <label for="travel-notes" class="font-serif font-bold text-stone-900 block" data-zh="📝 在此輸入您的私人筆記：" data-en="📝 Enter your personal notes:">📝 在此輸入您的私人筆記：</label>
+                    <textarea id="travel-notes" rows="4" 
+                        class="w-full p-2.5 rounded border border-stone-300 bg-white text-xs focus:ring-2 focus:ring-emerald-600 focus:outline-none resize-none"
+                        placeholder="例如：特拉凱城堡門票、庫爾斯沙嘴渡輪班次..."></textarea>
+                </div>
+
+                <div class="flex space-x-2">
+                    <button onclick="saveNotes()" class="flex-1 bg-emerald-800 hover:bg-emerald-700 text-white text-xs py-2.5 rounded font-mono uppercase tracking-widest transition shadow" data-zh="儲存筆記" data-en="Save Notes">
+                        儲存筆記
+                    </button>
+                    <button onclick="resetBook()" class="bg-stone-300 hover:bg-stone-400 text-stone-800 text-xs px-4 py-2.5 rounded font-mono uppercase tracking-widest transition" data-zh="回到封面" data-en="Cover">
+                        回到封面
+                    </button>
+                </div>
+
+                <div id="save-status" class="text-center text-[11px] text-emerald-700 font-mono h-4"></div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-stone-200 border-t border-stone-300 px-4 py-3 flex justify-between items-center z-10">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-4 py-2 rounded text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="text-[11px] font-mono text-stone-600 font-medium">
+                <span data-zh="進度" data-en="Progress">進度</span>: <span id="progress-text">11</span>%
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-emerald-800 hover:bg-emerald-700 text-white px-4 py-2 rounded text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, Bilingual Toggle & Storage -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 11;
+        let currentLang = 'zh'; // 'zh' or 'en'
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'));
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const progress = Math.round((currentPage / totalPages) * 100);
+            const progressEl = document.getElementById('progress-text');
+            if (progressEl) progressEl.textContent = progress;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) prevBtn.disabled = (currentPage === 1);
+            
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '完成 ↺' : 'Finish ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            if (prevBtn) {
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateDisplay();
+            } else {
+                currentPage = 1;
+                updateDisplay();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function resetBook() {
+            currentPage = 1;
+            updateDisplay();
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            document.getElementById('html-root').setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+
+            updateDisplay();
+            showStatusMessage(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English interface');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showStatusMessage(currentLang === 'zh' ? '已加入當前頁面書籤' : 'Bookmarked current page');
+            } else {
+                btn.textContent = '🔖';
+                showStatusMessage(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('travel-notes').value;
+            localStorage.setItem('lithuania_journey_notes', notes);
+            showStatusMessage(currentLang === 'zh' ? '旅遊筆記已成功儲存！' : 'Notes saved successfully!');
+        }
+
+        function showStatusMessage(msg) {
+            const statusEl = document.getElementById('save-status');
+            if(statusEl) {
+                statusEl.textContent = msg;
+                setTimeout(() => {
+                    statusEl.textContent = '';
+                }, 2500);
+            }
+        }
+
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('lithuania_journey_notes');
+            if (savedNotes) {
+                const notesEl = document.getElementById('travel-notes');
+                if(notesEl) notesEl.value = savedNotes;
+            }
+            updateDisplay();
+        };
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        bookArea.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        bookArea.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage();
+            }
+        }
+    </script>
+</body>
+</html>
