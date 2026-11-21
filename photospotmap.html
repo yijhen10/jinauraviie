@@ -249,7 +249,7 @@
   </div>
   <span class="text-[10px] opacity-80 leading-none">WORLDWIDE</span>
 </button>
-                <button data-cat="asia-pacific" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
+  <button data-cat="asia-pacific" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
   <div class="flex items-center gap-1">
     <i class="fa-solid fa-earth-asia mr-1"></i>
     <span>亞洲</span>
@@ -283,6 +283,13 @@
   </div>
   <span class="text-[10px] opacity-80 leading-none">FOODIE</span>
 </button>
+      <button data-cat="ferry" class="px-3 py-1.5 rounded-lg bg-transparent text-slate-300 hover:bg-slate-700 text-xs shrink-0 transition flex flex-col items-center justify-center gap-0.5">
+  <div class="flex items-center gap-1">
+    <i class="fa-solid fa-ferry"></i>
+    <span>渡輪</span>
+  </div>
+  <span class="text-[10px] opacity-80 leading-none">FERRY</span>
+</button>ㄍ
             </div>
             
             <!-- Country Select -->
@@ -2884,8 +2891,9 @@
                 'oceania': '大洋洲',
                 'europe': '歐洲',
                 'campsite': '營區'
+                'foodie': '美食'
             };
-            return catMap[cat] || '美食';
+            return catMap[cat] || '渡輪';
         }
 
         // --- Layout Toggles ---
