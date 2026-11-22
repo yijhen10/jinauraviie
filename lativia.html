@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拉脫維亞深度探索之旅：波羅的海明珠電子書報 | Latvia Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #2c0b12;
+            color: #1f2937;
+            touch-action: pan-y;
+        }
+
+        /* Latvian Carmine Red & Linen Cream Editorial Theme */
+        .newspaper-header {
+            border-bottom: 3px double #9e1b34;
+            border-top: 1px solid #9e1b34;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.1rem;
+            float: left;
+            line-height: 0.82;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #9e1b34;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdfbf7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9e1b34;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-0 sm:py-3 px-0 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile-First 480px Max Width) -->
+    <div class="w-full max-w-[480px] h-[100dvh] sm:h-[92vh] sm:max-h-[880px] bg-[#fdfbf7] shadow-2xl sm:rounded-2xl overflow-hidden border-0 sm:border sm:border-[#e5d8d0] flex flex-col justify-between relative select-none">
+        
+        <!-- Top Navigation / Magazine Issue Bar -->
+        <div class="bg-[#9e1b34] text-[#fdfbf7] px-4 py-2.5 text-xs flex justify-between items-center uppercase tracking-wider font-mono z-20 shadow">
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleToc()" class="bg-[#781225] hover:bg-[#5c0d1c] text-rose-100 px-2 py-1 rounded text-[11px] flex items-center space-x-1 border border-rose-800/60 transition" title="Table of Contents / 目錄">
+                    <span>☰</span>
+                    <span data-zh="目錄" data-en="TOC">目錄</span>
+                </button>
+                <span class="truncate max-w-[170px] sm:max-w-[210px]" id="issue-title" data-zh="Gazette • 拉脫維亞探索" data-en="Gazette • Latvia Discovery">Gazette • 拉脫維亞探索</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-[#781225] hover:bg-[#5c0d1c] text-amber-100 px-2.5 py-1 rounded text-[10px] font-mono border border-rose-800/60 transition font-bold" title="Switch Language / 切換語言">
+                    EN / 中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-rose-200 hover:text-white transition-colors text-sm" title="加入書籤">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide-Out Table of Contents Drawer -->
+        <div id="toc-drawer" class="hidden absolute inset-x-0 top-[42px] bottom-[54px] bg-[#fdfbf7]/98 backdrop-blur-md z-30 flex-col justify-between p-5 overflow-y-auto border-b border-stone-300">
+            <div class="space-y-3">
+                <div class="flex justify-between items-center border-b-2 border-[#9e1b34] pb-2">
+                    <h3 class="font-serif font-bold text-lg text-[#9e1b34]" data-zh="📖 電子書報章節目錄" data-en="📖 Magazine Contents">📖 電子書報章節目錄</h3>
+                    <button onclick="toggleToc()" class="text-stone-500 hover:text-stone-900 font-mono text-xs px-2 py-1 bg-stone-200 rounded">✕</button>
+                </div>
+                <div class="grid grid-cols-1 gap-1.5 text-xs font-serif" id="toc-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+            <div class="pt-4 text-center text-[10px] font-mono text-stone-400">
+                Latvia Discovery Digital Edition • 13 Standalone Pages
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (13 Standalone Pages) -->
+        <div class="flex-1 overflow-y-auto px-5 py-5 space-y-5 relative" id="book-content-area">
+
+            <!-- PAGE 1: Cover Page -->
+            <div class="page-slide active flex-col justify-between h-full space-y-3" data-page="1">
+                <div class="text-center space-y-2 pt-1">
+                    <span class="bg-[#9e1b34] text-amber-50 text-[10px] px-3 py-1 font-mono tracking-widest rounded-full uppercase" data-zh="波羅的海三國深度指南 2026" data-en="Baltic States Travel Edition 2026">波羅的海三國深度指南 2026</span>
+                    <h1 class="text-3xl sm:text-4xl font-bold font-serif tracking-tight text-stone-900 leading-tight">
+                        <span data-zh="拉脫維亞深度探索" data-en="Latvia Discovery">拉脫維亞深度探索</span><br>
+                        <span class="text-[#9e1b34] text-2xl sm:text-3xl" data-zh="新藝術建築、古堡與松林海岸" data-en="Art Nouveau, Castles & Pine Forests">新藝術建築、古堡與松林海岸</span>
+                    </h1>
+                    <p class="text-[11px] font-serif italic text-stone-600" data-zh="Baltic Pearl: Art Nouveau, Medieval Castles & Pine Forests" data-en="波羅的海明珠：新藝術建築、中世紀古堡與松林海岸">Baltic Pearl: Art Nouveau, Medieval Castles & Pine Forests</p>
+                </div>
+
+                <div class="relative rounded-xl overflow-hidden shadow-lg my-1 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG3y3VkO_F57IBxsrMU4xTz43mX7Xpa6csL31lx-HlDA&s=10" 
+                         onerror="this.src='https://placehold.co/600x400/9e1b34/ffffff?text=Riga+Old+Town+Latvia'" 
+                         alt="Riga Old Town Latvia" class="w-full h-44 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-3.5 text-white">
+                        <p class="text-[10px] font-mono text-amber-300 uppercase tracking-wider" data-zh="波羅的海幾何中心 • BALTIC PEARL" data-en="CENTER OF THE BALTICS • BALTIC PEARL">波羅的海幾何中心 • BALTIC PEARL</p>
+                        <p class="text-xs font-serif font-medium" data-zh="里加古城、尤爾馬拉白沙灘、凱梅里沼澤與倫達爾宮" data-en="Riga Old Town, Jūrmala Beach, Kemeri Bog & Rundāle Palace">里加古城、尤爾馬拉白沙灘、凱梅里沼澤與倫達爾宮</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#f5efe6] p-3.5 rounded-xl border border-[#e5d8d0] text-xs text-stone-700 leading-relaxed space-y-1.5">
+                    <p class="drop-cap" data-zh="歡迎開啟《拉脫維亞深度探索之旅》。位於波羅的海三國正中央的拉脫維亞，擁有超過半數國土覆蓋著原始森林，首都里加更被譽為「世界新藝術建築之都」。本電子書報為您完整收錄國家地理概況、十二月份氣候穿搭、五日經典路線、八大必訪景點與道地美食。" data-en="Welcome to the Latvia Discovery Journey. Nestled at the heart of the Baltic States, Latvia boasts vast pine forests, 500 km of sandy coastline, and Riga—the Art Nouveau capital of Europe. Explore 13 curated standalone pages with bilingual guides and Google Maps links.">
+                        歡迎開啟《拉脫維亞深度探索之旅》。位於波羅的海三國正中央的拉脫維亞，擁有超過半數國土覆蓋著原始森林，首都里加更被譽為「世界新藝術建築之都」。本電子書報為您完整收錄國家地理概況、十二月份氣候穿搭、五日經典路線、八大必訪景點與道地美食。
+                    </p>
+                </div>
+
+                <div class="pt-1 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-[#9e1b34] hover:bg-[#781225] text-white text-xs py-3 rounded-lg font-mono uppercase tracking-widest shadow-md transition-all active:scale-95" data-zh="開始閱讀 / Start Reading ➔" data-en="Start Reading / 開始閱讀 ➔">
+                        開始閱讀 / Start Reading ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Country Overview & Geographical Location -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 01 • 國家與地理概況" data-en="Chapter 01 • Country & Geography">Chapter 01 • 國家與地理概況</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="拉脫維亞國家介紹與地理位置" data-en="Country Overview & Geographical Location">拉脫維亞國家介紹與地理位置</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px] pr-1">
+                    <!-- Quick Fact Grid -->
+                    <div class="grid grid-cols-2 gap-2 bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] font-mono text-[11px]">
+                        <div>
+                            <span class="text-stone-500 block text-[9px]" data-zh="首都 / CAPITAL" data-en="CAPITAL">首都 / CAPITAL</span>
+                            <strong class="text-stone-900" data-zh="里加 (Riga)" data-en="Riga">里加 (Riga)</strong>
+                        </div>
+                        <div>
+                            <span class="text-stone-500 block text-[9px]" data-zh="國土面積 / AREA" data-en="AREA">國土面積 / AREA</span>
+                            <strong class="text-stone-900">~64,589 km²</strong>
+                        </div>
+                        <div>
+                            <span class="text-stone-500 block text-[9px]" data-zh="貨幣 / CURRENCY" data-en="CURRENCY">貨幣 / CURRENCY</span>
+                            <strong class="text-stone-900" data-zh="歐元 Euro (€)" data-en="Euro (€)">歐元 Euro (€)</strong>
+                        </div>
+                        <div>
+                            <span class="text-stone-500 block text-[9px]" data-zh="官方語言 / LANGUAGE" data-en="LANGUAGE">官方語言 / LANGUAGE</span>
+                            <strong class="text-stone-900" data-zh="拉脫維亞語 (Latvian)" data-en="Latvian">拉脫維亞語 (Latvian)</strong>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-stone-200 space-y-1.5 shadow-sm">
+                        <h3 class="font-serif font-bold text-[#9e1b34] text-sm" data-zh="🧭 波羅的海三國的地理中心" data-en="🧭 Heart of the Baltic States">🧭 波羅的海三國的地理中心</h3>
+                        <p data-zh="拉脫維亞位於北歐波羅的海東岸，恰處「波羅的海三國」正中央：北鄰愛沙尼亞（Estonia），南接立陶宛（Lithuania），東與俄羅斯、白俄羅斯接壤，西瀕波羅的海與里加灣（Gulf of Riga）。" data-en="Situated on the eastern shore of the Baltic Sea in Northern Europe, Latvia lies squarely in the center of the Baltic States—bordering Estonia to the north, Lithuania to the south, Russia and Belarus to the east, and the Baltic Sea / Gulf of Riga to the west.">
+                            拉脫維亞位於北歐波羅的海東岸，恰處「波羅的海三國」正中央：北鄰愛沙尼亞（Estonia），南接立陶宛（Lithuania），東與俄羅斯、白俄羅斯接壤，西瀕波羅的海與里加灣（Gulf of Riga）。
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-stone-200 space-y-1.5 shadow-sm">
+                        <h3 class="font-serif font-bold text-[#9e1b34] text-sm" data-zh="🌲 森林、大河與 500 公里白沙海岸" data-en="🌲 Forests, Rivers & 500 km Coastline">🌲 森林、大河與 500 公里白沙海岸</h3>
+                        <p data-zh="全國約 54% 國土為鬱鬱蔥蔥的松林與樺樹林覆蓋。母親河「道加瓦河（Daugava River）」貫穿國境注入里加灣；高亞國家公園（Gauja National Park）擁有壯麗的砂岩河谷；西部更擁有長達 500 公里的細白沙灘與原始沙丘。" data-en="Over 54% of Latvia is covered by lush pine and birch forests. The mighty Daugava River flows through Riga into the Gulf of Riga, Gauja National Park carves scenic sandstone valleys, and 500 km of pristine sandy coastline stretches along the Baltic.">
+                            全國約 54% 國土為鬱鬱蔥蔥的松林與樺樹林覆蓋。母親河「道加瓦河（Daugava River）」貫穿國境注入里加灣；高亞國家公園（Gauja National Park）擁有壯麗的砂岩河谷；西部更擁有長達 500 公里的細白沙灘與原始沙丘。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#f5efe6] p-3 rounded-lg border border-[#e5d8d0] space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🎶 文化靈魂：歌舞節與仲夏節 (Jāņi)" data-en="🎶 Cultural Soul: Song Festival & Jāņi">🎶 文化靈魂：歌舞節與仲夏節 (Jāņi)</h3>
+                        <p data-zh="拉脫維亞以聯合國非物質文化遺產「波羅的海歌舞節」與傳統「仲夏節（Jāņi）」聞名。每年夏至，人們戴上橡樹葉與野花花環、點燃篝火徹夜歡唱，展現與大自然緊密相連的波羅的海民族精神。" data-en="Famous for the UNESCO-listed Latvian Song and Dance Celebration and Midsummer Solstice (Jāņi), where locals wear oak-leaf and wildflower wreaths around bonfires all night.">
+                            拉脫維亞以聯合國非物質文化遺產「波羅的海歌舞節」與傳統「仲夏節（Jāņi）」聞名。每年夏至，人們戴上橡樹葉與野花花環、點燃篝火徹夜歡唱，展現與大自然緊密相連的波羅的海民族精神。
+                        </p>
+                    </div>
+
+                    <a href="https://maps.app.goo.gl/ZUTDFQoVjhqaRz8z6" target="_blank" class="block text-center bg-stone-800 hover:bg-stone-700 text-white py-2 rounded-lg font-mono text-[11px] transition">
+                        🗺️ <span data-zh="在 Google Maps 查看拉脫維亞全境地圖" data-en="View Latvia Map on Google Maps">在 Google Maps 查看拉脫維亞全境地圖</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Interactive Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 02 • 氣候與穿搭" data-en="Chapter 02 • Weather & Clothing">Chapter 02 • 氣候與穿搭</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="拉脫維亞每月氣候與穿搭指南" data-en="Monthly Weather & Clothing Guide">拉脫維亞每月氣候與穿搭指南</h2>
+                </div>
+
+                <p class="text-[11px] text-stone-600 font-serif" data-zh="點擊下方月份按鈕，即時查看當地平均氣溫、日照時數與精準穿搭建議：" data-en="Select any month below to view average temperatures, daylight hours, and packing advice:">
+                    點擊下方月份按鈕，即時查看當地平均氣溫、日照時數與精準穿搭建議：
+                </p>
+
+                <!-- 12-Month Interactive Grid -->
+                <div class="grid grid-cols-4 gap-1.5" id="month-selector">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Dynamic Month Detail Card -->
+                <div id="month-detail-card" class="bg-white p-4 rounded-xl border-2 border-[#9e1b34]/30 shadow-sm space-y-2.5 text-xs text-stone-700">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="bg-[#f5efe6] p-3 rounded-lg border border-[#e5d8d0] text-[11px] text-stone-700 space-y-1">
+                    <strong class="text-[#9e1b34] block font-serif" data-zh="💡 波羅的海旅遊穿搭黃金法則" data-en="💡 Baltic Packing Golden Rule">💡 波羅的海旅遊穿搭黃金法則</strong>
+                    <p data-zh="波羅的海沿岸海風較強，即使是盛夏夜晚或清晨前往凱梅里沼澤看日出，也建議攜帶一件防風防水薄外套與防滑好走的健行鞋。" data-en="Baltic sea breezes can be brisk even in midsummer. Always pack a lightweight windproof/waterproof shell and sturdy walking shoes for cobblestone streets and bog boardwalks.">
+                        波羅的海沿岸海風較強，即使是盛夏夜晚或清晨前往凱梅里沼澤看日出，也建議攜帶一件防風防水薄外套與防滑好走的健行鞋。
+                    </p>
+                </div>
+            </div>
+
+            <!-- PAGE 4: 5-Day Classic Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 03 • 五日經典行程" data-en="Chapter 03 • 5-Day Classic Itinerary">Chapter 03 • 五日經典行程</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="拉脫維亞精華 5 日深度路線" data-en="5-Day Classic Latvia Itinerary">拉脫維亞精華 5 日深度路線</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs overflow-y-auto max-h-[540px] pr-1">
+                    <!-- Day 1 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#9e1b34] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9e1b34]">DAY 01</span>
+                            <a href="https://maps.app.goo.gl/W5x2imr8cD6JkfuK6" target="_blank" class="text-[10px] font-mono text-stone-500 hover:text-[#9e1b34] underline">🗺️ Maps</a>
+                        </div>
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="里加老城與新藝術建築巡禮" data-en="Riga Old Town & Art Nouveau">里加老城與新藝術建築巡禮</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="漫步黑頭宮、聖彼得教堂登頂俯瞰紅屋頂，午後走訪阿爾伯特街（Alberta iela）新藝術建築群與里加中央市場。" data-en="Explore House of the Blackheads, St. Peter's Church panoramic tower, Alberta iela Art Nouveau masterpieces, and Riga Central Market.">
+                            漫步黑頭宮、聖彼得教堂登頂俯瞰紅屋頂，午後走訪阿爾伯特街（Alberta iela）新藝術建築群與里加中央市場。
+                        </p>
+                    </div>
+
+                    <!-- Day 2 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#9e1b34] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9e1b34]">DAY 02</span>
+                            <a href="https://maps.app.goo.gl/1TUYrKYHABqPr19F9" target="_blank" class="text-[10px] font-mono text-stone-500 hover:text-[#9e1b34] underline">🗺️ Maps</a>
+                        </div>
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="尤爾馬拉海岸與凱梅里國家公園" data-en="Jūrmala Baltic Coast & Kemeri Bog">尤爾馬拉海岸與凱梅里國家公園</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="清晨走上大凱梅里沼澤木棧道欣賞仙境晨霧，午後前往尤爾馬拉（Jūrmala）欣賞木雕別墅與波羅的海白沙灘。" data-en="Morning walk on Great Kemeri Bog Boardwalk, followed by Jūrmala's wooden villas, Jomas Street, and white sandy beach.">
+                            清晨走上大凱梅里沼澤木棧道欣賞仙境晨霧，午後前往尤爾馬拉（Jūrmala）欣賞木雕別墅與波羅的海白沙灘。
+                        </p>
+                    </div>
+
+                    <!-- Day 3 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#9e1b34] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9e1b34]">DAY 03</span>
+                            <a href="https://maps.app.goo.gl/KtLGh9AMnCEpC69w7" target="_blank" class="text-[10px] font-mono text-stone-500 hover:text-[#9e1b34] underline">🗺️ Maps</a>
+                        </div>
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="高亞國家公園：錫古爾達與圖賴達城堡" data-en="Gauja National Park: Sigulda & Turaida">高亞國家公園：錫古爾達與圖賴達城堡</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="深入「拉脫維亞瑞士」，搭乘高空纜車橫越河谷、探訪古特曼尼斯洞穴與紅磚圖賴達城堡（Turaida Castle）。" data-en="Discover the 'Switzerland of Latvia' via cable car over Gauja Valley, Gutmanis Cave, and medieval red-brick Turaida Castle.">
+                            深入「拉脫維亞瑞士」，搭乘高空纜車橫越河谷、探訪古特曼尼斯洞穴與紅磚圖賴達城堡（Turaida Castle）。
+                        </p>
+                    </div>
+
+                    <!-- Day 4 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#9e1b34] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9e1b34]">DAY 04</span>
+                            <a href="https://maps.app.goo.gl/pm8dJzBayzvrXWUn7" target="_blank" class="text-[10px] font-mono text-stone-500 hover:text-[#9e1b34] underline">🗺️ Maps</a>
+                        </div>
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="采西斯中世紀城堡與阿賴希湖堡" data-en="Cēsis Castle & Āraiši Lake Fortress">采西斯中世紀城堡與阿賴希湖堡</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="手提傳統燭光燈籠登上采西斯中世紀城堡塔樓，漫步木造老城並順訪維京時期阿賴希湖上木堡。" data-en="Ascend Cēsis Medieval Castle towers by candlelight lantern, stroll the wooden old town, and visit Āraiši Lake Fortress.">
+                            手提傳統燭光燈籠登上采西斯中世紀城堡塔樓，漫步木造老城並順訪維京時期阿賴希湖上木堡。
+                        </p>
+                    </div>
+
+                    <!-- Day 5 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#9e1b34] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9e1b34]">DAY 05</span>
+                            <a href="https://maps.app.goo.gl/TokoahttNLzSbYNs5" target="_blank" class="text-[10px] font-mono text-stone-500 hover:text-[#9e1b34] underline">🗺️ Maps</a>
+                        </div>
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="倫達爾宮「波羅的海凡爾賽」與包斯卡" data-en="Rundāle Palace & Bauska Castle">倫達爾宮「波羅的海凡爾賽」與包斯卡</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="南下參觀冬宮建築師拉斯特雷利設計的巴洛克宮殿倫達爾宮與法式玫瑰花園，順遊包斯卡雙河交匯古堡。" data-en="Tour the Baroque & Rococo Rundāle Palace designed by Rastrelli, its French rose gardens, and nearby Bauska Castle.">
+                            南下參觀冬宮建築師拉斯特雷利設計的巴洛克宮殿倫達爾宮與法式玫瑰花園，順遊包斯卡雙河交匯古堡。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destination 1 - Riga -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 04 • 精選景點 [1/8]" data-en="Chapter 04 • Destination [1/8]">Chapter 04 • 精選景點 [1/8]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Riga (里加：新藝術建築之都)" data-en="Riga (Art Nouveau Capital)">Riga (里加：新藝術建築之都)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px]">
+                    <div class="rounded-xl overflow-hidden shadow-md">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Ah8EjB0HV2WG0o43Mzbm9uNR_2qnJKAFlxC9sB5Jpw&s=10" 
+                             onerror="this.src='https://placehold.co/600x360/9e1b34/ffffff?text=Riga+House+of+Blackheads'" 
+                             alt="Riga House of Blackheads" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="拉脫維亞首都里加（Riga）是波羅的海最大的城市，其歷史中心被列入聯合國世界文化遺產。老城區內矗立著華麗的<strong>黑頭宮（House of the Blackheads）</strong>與中世紀「三兄弟之屋」；而新城區的<strong>阿爾伯特街（Alberta iela）</strong>更保存了超過 800 棟新藝術風格（Art Nouveau）建築，精雕細琢的女神與神獸浮雕令人嘆為觀止。" data-en="Riga, Latvia's vibrant capital, boasts a UNESCO-listed Old Town starring the ornate House of the Blackheads and Three Brothers. Just north, Alberta iela showcases Europe's finest concentration of Art Nouveau architecture.">
+                        拉脫維亞首都里加（Riga）是波羅的海最大的城市，其歷史中心被列入聯合國世界文化遺產。老城區內矗立著華麗的<strong>黑頭宮（House of the Blackheads）</strong>與中世紀「三兄弟之屋」；而新城區的<strong>阿爾伯特街（Alberta iela）</strong>更保存了超過 800 棟新藝術風格（Art Nouveau）建築，精雕細琢的女神與神獸浮雕令人嘆為觀止。
+                    </p>
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] text-[11px]">
+                        <strong class="text-[#9e1b34]" data-zh="✨ 必訪亮點：" data-en="✨ Must-Do Highlights:">✨ 必訪亮點：</strong>
+                        <span data-zh="由一戰齊柏林飛船機庫改建的「里加中央市場（Riga Central Market）」，品嚐現烤黑麥麵包與煙燻波羅的海魚類。" data-en="Visit Riga Central Market—housed inside historic WWI Zeppelin hangars—for fresh smoked fish and dark rye bread.">
+                            由一戰齊柏林飛船機庫改建的「里加中央市場（Riga Central Market）」，品嚐現烤黑麥麵包與煙燻波羅的海魚類。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/i6kjEmzuGYceN9dC8" target="_blank" class="block text-center bg-[#9e1b34] hover:bg-[#781225] text-white py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：Riga 里加導航" data-en="Open Google Maps: Riga">開啟 Google Maps：Riga 里加導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destination 2 - Jūrmala -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 04 • 精選景點 [2/8]" data-en="Chapter 04 • Destination [2/8]">Chapter 04 • 精選景點 [2/8]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Jūrmala (尤爾馬拉：波羅的海度假勝地)" data-en="Jūrmala (Baltic Riviera Resort)">Jūrmala (尤爾馬拉：波羅的海度假勝地)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px]">
+                    <div class="rounded-xl overflow-hidden shadow-md">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0qw3CeZSYHK_yR6whQK8UbMlUMxdRMf1TMkkTB-Q3tQ&s=10
+                        " 
+                             onerror="this.src='https://placehold.co/600x360/9e1b34/ffffff?text=Jurmala+Baltic+Beach'" 
+                             alt="Jurmala Baltic Beach" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="距離里加僅 30 分鐘火車車程的<strong>尤爾馬拉（Jūrmala）</strong>，是波羅的海最負盛名的海濱溫泉度假城。這裡擁有長達 33 公里的細白石英沙灘與清澈淺海，沿著海岸松林分布著數百棟 19 世紀末至 20 世紀初的精緻木雕蕾絲別墅（Majori 與 Dzintari 區），充滿優雅浪漫的北歐度假氛圍。" data-en="Just 30 minutes by train from Riga, Jūrmala is the Baltic Riviera—famous for its 33 km white quartz sand beach, fragrant pine dunes, and over 400 ornate historic wooden villas in Majori and Dzintari.">
+                        距離里加僅 30 分鐘火車車程的<strong>尤爾馬拉（Jūrmala）</strong>，是波羅的海最負盛名的海濱溫泉度假城。這裡擁有長達 33 公里的細白石英沙灘與清澈淺海，沿著海岸松林分布著數百棟 19 世紀末至 20 世紀初的精緻木雕蕾絲別墅（Majori 與 Dzintari 區），充滿優雅浪漫的北歐度假氛圍。
+                    </p>
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] text-[11px]">
+                        <strong class="text-[#9e1b34]" data-zh="✨ 必訪亮點：" data-en="✨ Must-Do Highlights:">✨ 必訪亮點：</strong>
+                        <span data-zh="漫步熱鬧的尤馬斯步行街（Jomas Street），登上 Dzintari 森林公園觀景塔俯瞰松林與里加灣。" data-en="Stroll lively Jomas Street and climb the architectural Dzintari Forest Park observation tower for sweeping views over pines and sea.">
+                            漫步熱鬧的尤馬斯步行街（Jomas Street），登上 Dzintari 森林公園觀景塔俯瞰松林與里加灣。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/7B4i3B2X9AYS8uGJ6" target="_blank" class="block text-center bg-[#9e1b34] hover:bg-[#781225] text-white py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：Jūrmala 尤爾馬拉導航" data-en="Open Google Maps: Jūrmala">開啟 Google Maps：Jūrmala 尤爾馬拉導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destination 3 - Kemeri National Park -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 04 • 精選景點 [3/8]" data-en="Chapter 04 • Destination [3/8]">Chapter 04 • 精選景點 [3/8]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Kemeri National Park (凱梅里國家公園)" data-en="Kemeri National Park (Great Bog)">Kemeri National Park (凱梅里國家公園)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px]">
+                    <div class="rounded-xl overflow-hidden shadow-md">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvO83GKLirls1fFo9BY8MeJVRBYSbpeIqoxQXPvCgNRw&s=10" 
+                             onerror="this.src='https://placehold.co/600x360/9e1b34/ffffff?text=Kemeri+National+Park'" 
+                             alt="Kemeri National Park" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="<strong>凱梅里國家公園（Ķemeri National Park）</strong>擁有超過 8,000 年歷史的原始高位泥炭沼澤。園區內最具代表性的<strong>大凱梅里沼澤木棧道（Great Ķemeri Bog Boardwalk）</strong>蜿蜒穿梭於無數深邃的鏡面水潭與矮松之間，日出時分水氣氤氳，宛如置身夢幻仙境。" data-en="Ķemeri National Park protects an 8,000-year-old raised peat bog. Its iconic Great Ķemeri Bog Boardwalk winds past dark mirror-like bog lakes and stunted pines, creating an otherworldly sunrise mist spectacle.">
+                        <strong>凱梅里國家公園（Ķemeri National Park）</strong>擁有超過 8,000 年歷史的原始高位泥炭沼澤。園區內最具代表性的<strong>大凱梅里沼澤木棧道（Great Ķemeri Bog Boardwalk）</strong>蜿蜒穿梭於無數深邃的鏡面水潭與矮松之間，日出時分水氣氤氳，宛如置身夢幻仙境。
+                    </p>
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] text-[11px]">
+                        <strong class="text-[#9e1b34]" data-zh="✨ 必訪亮點：" data-en="✨ Must-Do Highlights:">✨ 必訪亮點：</strong>
+                        <span data-zh="選擇 3.4 公里大環線木棧道登上中央木造觀景台，拍攝沼澤湖泊倒映朝霞的絕美攝影大片。" data-en="Take the 3.4 km long loop to the central wooden watchtower for breathtaking sunrise reflections over the bog pools.">
+                            選擇 3.4 公里大環線木棧道登上中央木造觀景台，拍攝沼澤湖泊倒映朝霞的絕美攝影大片。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/1TUYrKYHABqPr19F9" target="_blank" class="block text-center bg-[#9e1b34] hover:bg-[#781225] text-white py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：Kemeri 沼澤棧道導航" data-en="Open Google Maps: Kemeri Bog">開啟 Google Maps：Kemeri 沼澤棧道導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destination 4 - Sigulda & Turaida -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 04 • 精選景點 [4/8]" data-en="Chapter 04 • Destination [4/8]">Chapter 04 • 精選景點 [4/8]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Sigulda & Turaida (錫古爾達與圖賴達)" data-en="Sigulda & Turaida Castle">Sigulda & Turaida (錫古爾達與圖賴達)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px]">
+                    <div class="rounded-xl overflow-hidden shadow-md">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjxV_NaieNw9QixUFx_IIk0f7iDpqAzMDhBFcJlALQFw&s=10" 
+                             onerror="this.src='https://placehold.co/600x360/9e1b34/ffffff?text=Turaida+Castle+Sigulda'" 
+                             alt="Turaida Castle Sigulda" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="位於高亞河谷心臟地帶的<strong>錫古爾達（Sigulda）</strong>素有「拉脫維亞的瑞士」美譽。高聳於對岸山丘的<strong>圖賴達城堡（Turaida Castle）</strong>建於 1214 年，紅磚主塔在翠綠或金黃林海中格外耀眼；山谷中還有波羅的海最大的砂岩洞穴「古特曼尼斯洞穴（Gutmanis Cave）」。" data-en="Nestled in the Gauja River Valley, Sigulda is affectionately called the 'Switzerland of Latvia.' Across the valley rises 13th-century red-brick Turaida Castle, alongside Gutmanis Cave—the largest grotto in the Baltics.">
+                        位於高亞河谷心臟地帶的<strong>錫古爾達（Sigulda）</strong>素有「拉脫維亞的瑞士」美譽。高聳於對岸山丘的<strong>圖賴達城堡（Turaida Castle）</strong>建於 1214 年，紅磚主塔在翠綠或金黃林海中格外耀眼；山谷中還有波羅的海最大的砂岩洞穴「古特曼尼斯洞穴（Gutmanis Cave）」。
+                    </p>
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] text-[11px]">
+                        <strong class="text-[#9e1b34]" data-zh="✨ 必訪亮點：" data-en="✨ Must-Do Highlights:">✨ 必訪亮點：</strong>
+                        <span data-zh="搭乘波羅的海唯一的高空景觀纜車（Sigulda Cable Car）橫越高亞河谷，秋季楓紅時節更是美不勝收。" data-en="Ride the Sigulda Cable Car suspended 42 meters above the Gauja River—especially spectacular during golden autumn foliage.">
+                            搭乘波羅的海唯一的高空景觀纜車（Sigulda Cable Car）橫越高亞河谷，秋季楓紅時節更是美不勝收。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/sH42w3JkAjd2aci2A" target="_blank" class="block text-center bg-[#9e1b34] hover:bg-[#781225] text-white py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：Turaida 圖賴達城堡導航" data-en="Open Google Maps: Turaida Castle">開啟 Google Maps：Turaida 圖賴達城堡導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Destination 5 - Cēsis -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 04 • 精選景點 [5/8]" data-en="Chapter 04 • Destination [5/8]">Chapter 04 • 精選景點 [5/8]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Cēsis (采西斯：燭光古堡與木造老城)" data-en="Cēsis (Medieval Lantern Castle)">Cēsis (采西斯：燭光古堡與木造老城)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px]">
+                    <div class="rounded-xl overflow-hidden shadow-md">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" 
+                             onerror="this.src='https://placehold.co/600x360/9e1b34/ffffff?text=Cesis+Medieval+Castle'" 
+                             alt="Cesis Medieval Castle" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="擁有逾 800 年歷史的<strong>采西斯（Cēsis）</strong>是拉脫維亞最具文藝氣息的古城之一。宏偉的<strong>采西斯中世紀城堡（Cēsis Medieval Castle）</strong>曾是利沃尼亞騎士團總部，遊客可領取一盞真實燭火燈籠，親自走進漆黑的螺旋石梯與古堡西塔探險。" data-en="With over 800 years of history, Cēsis is one of Latvia's most charming heritage towns. Visitors at Cēsis Medieval Castle are handed real candlelit lanterns to explore the dark spiral staircases of the West Tower.">
+                        擁有逾 800 年歷史的<strong>采西斯（Cēsis）</strong>是拉脫維亞最具文藝氣息的古城之一。宏偉的<strong>采西斯中世紀城堡（Cēsis Medieval Castle）</strong>曾是利沃尼亞騎士團總部，遊客可領取一盞真實燭火燈籠，親自走進漆黑的螺旋石梯與古堡西塔探險。
+                    </p>
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] text-[11px]">
+                        <strong class="text-[#9e1b34]" data-zh="✨ 必訪亮點：" data-en="✨ Must-Do Highlights:">✨ 必訪亮點：</strong>
+                        <span data-zh="順道造訪不遠處的「阿賴希考古公園（Āraiši Archaeological Park）」，欣賞重建於湖心小島上的 9 世紀木造水上村落。" data-en="Combine with nearby Āraiši Archaeological Park, a reconstructed 9th-century Latgalian wooden lake fortress.">
+                            順道造訪不遠處的「阿賴希考古公園（Āraiši Archaeological Park）」，欣賞重建於湖心小島上的 9 世紀木造水上村落。
+                        </span>
+                    </div>
+                    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaon5AMxfcUfj80c-8IHPkB0_7Clu2AeZt4WPYJ8kMUg&s=10" target="_blank" class="block text-center bg-[#9e1b34] hover:bg-[#781225] text-white py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：Cēsis 采西斯城堡導航" data-en="Open Google Maps: Cēsis Castle">開啟 Google Maps：Cēsis 采西斯城堡導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Destination 6 - Rundāle Palace -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 04 • 精選景點 [6/8]" data-en="Chapter 04 • Destination [6/8]">Chapter 04 • 精選景點 [6/8]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Rundāle Palace (倫達爾宮：波羅的海凡爾賽)" data-en="Rundāle Palace (Baltic Versailles)">Rundāle Palace (倫達爾宮：波羅的海凡爾賽)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px]">
+                    <div class="rounded-xl overflow-hidden shadow-md">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsSLzSHfjBuNSHVoeGZOQx_WZWV6MeKl_tnJn2Dc8IUQ&s=10" 
+                             onerror="this.src='https://placehold.co/600x360/9e1b34/ffffff?text=Rundale+Palace+Gardens'" 
+                             alt="Rundale Palace Gardens" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="位於拉脫維亞南部澤姆加萊平原的<strong>倫達爾宮（Rundāle Palace）</strong>，由聖彼得堡冬宮御用建築師拉斯特雷利（Francesco Bartolomeo Rastrelli）於 18 世紀設計建造。金碧輝煌的黃金大廳、洛可可白廳與佔地 10 公頃的對稱法式花園，為其贏得「波羅的海凡爾賽宮」的美譽。" data-en="Set amidst the fertile Zemgale plains, Rundāle Palace is a Baroque and Rococo masterpiece designed by Winter Palace architect Francesco Bartolomeo Rastrelli, earning the title 'Versailles of the Baltics.'">
+                        位於拉脫維亞南部澤姆加萊平原的<strong>倫達爾宮（Rundāle Palace）</strong>，由聖彼得堡冬宮御用建築師拉斯特雷利（Francesco Bartolomeo Rastrelli）於 18 世紀設計建造。金碧輝煌的黃金大廳、洛可可白廳與佔地 10 公頃的對稱法式花園，為其贏得「波羅的海凡爾賽宮」的美譽。
+                    </p>
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] text-[11px]">
+                        <strong class="text-[#9e1b34]" data-zh="✨ 必訪亮點：" data-en="✨ Must-Do Highlights:">✨ 必訪亮點：</strong>
+                        <span data-zh="每年 6 月底至 7 月初玫瑰花園盛開期，超過 2,200 種各色玫瑰齊放，香氣撲鼻。" data-en="Visit in late June or early July when over 2,200 varieties of roses burst into bloom across the French formal gardens.">
+                            每年 6 月底至 7 月初玫瑰花園盛開期，超過 2,200 種各色玫瑰齊放，香氣撲鼻。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/mPCJNJnhgmf1F5FaA" target="_blank" class="block text-center bg-[#9e1b34] hover:bg-[#781225] text-white py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：Rundāle 倫達爾宮導航" data-en="Open Google Maps: Rundāle Palace">開啟 Google Maps：Rundāle 倫達爾宮導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Destination 7 - Kuldīga -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 04 • 精選景點 [7/8]" data-en="Chapter 04 • Destination [7/8]">Chapter 04 • 精選景點 [7/8]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Kuldīga (庫爾迪加：歐洲最寬瀑布小鎮)" data-en="Kuldīga (Europe's Widest Waterfall)">Kuldīga (庫爾迪加：歐洲最寬瀑布小鎮)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px]">
+                    <div class="rounded-xl overflow-hidden shadow-md">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzXBouDS8wEQqWq1O2QCP0dZXkbLa-r_lPE5FolUGWOQ&s=10" 
+                             onerror="this.src='https://placehold.co/600x360/9e1b34/ffffff?text=Kuldiga+Ventas+Rumba'" 
+                             alt="Kuldiga Ventas Rumba" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="被列入世界文化遺產的<strong>庫爾迪加（Kuldīga）</strong>擁有全歐洲最寬的天然瀑布——<strong>文塔瀑布（Ventas Rumba）</strong>，寬度達 249 公尺！小鎮內小河 Alekšupīte 緊貼紅瓦木屋牆基流淌，因此被浪漫地稱為「拉脫維亞的威尼斯」。" data-en="UNESCO-listed Kuldīga is home to Ventas Rumba—Europe's widest natural waterfall at 249 meters across. With the Alekšupīte stream flowing directly past historic house walls, it is known as the 'Venice of Latvia.'">
+                        被列入世界文化遺產的<strong>庫爾迪加（Kuldīga）</strong>擁有全歐洲最寬的天然瀑布——<strong>文塔瀑布（Ventas Rumba）</strong>，寬度達 249 公尺！小鎮內小河 Alekšupīte 緊貼紅瓦木屋牆基流淌，因此被浪漫地稱為「拉脫維亞的威尼斯」。
+                    </p>
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] text-[11px]">
+                        <strong class="text-[#9e1b34]" data-zh="✨ 必訪亮點：" data-en="✨ Must-Do Highlights:">✨ 必訪亮點：</strong>
+                        <span data-zh="站在 1874 年建成的古老紅磚拱橋上欣賞文塔瀑布；春季時分還可見到「飛魚」逆流躍過瀑布的奇景！" data-en="Walk across the 1874 brick bridge overlooking Ventas Rumba; in spring, watch vimba fish leap upstream right over the falls!">
+                            站在 1874 年建成的古老紅磚拱橋上欣賞文塔瀑布；春季時分還可見到「飛魚」逆流躍過瀑布的奇景！
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/HRQuSmgfVsVA5rKB9" target="_blank" class="block text-center bg-[#9e1b34] hover:bg-[#781225] text-white py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：Kuldīga 文塔瀑布導航" data-en="Open Google Maps: Kuldīga">開啟 Google Maps：Kuldīga 文塔瀑布導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Destination 8 - Cape Kolka -->
+            <div class="page-slide flex-col space-y-3" data-page="12">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 04 • 精選景點 [8/8]" data-en="Chapter 04 • Destination [8/8]">Chapter 04 • 精選景點 [8/8]</p>
+                    <h2 class="text-2xl font-bold font-serif text-stone-900" data-zh="Cape Kolka (科爾卡角：雙海交匯奇景)" data-en="Cape Kolka (Where Two Seas Meet)">Cape Kolka (科爾卡角：雙海交匯奇景)</h2>
+                </div>
+
+                <div class="space-y-3 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px]">
+                    <div class="rounded-xl overflow-hidden shadow-md">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTx3JXdTmRlJj2zvG2X7IcGFEac-oYbmUgR_vbrmjRaA&s=10" 
+                             onerror="this.src='https://placehold.co/600x360/9e1b34/ffffff?text=Cape+Kolka+Latvia'" 
+                             alt="Cape Kolka Latvia" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="位於庫爾蘭半島最北端的<strong>科爾卡角（Cape Kolka / Kolkasrags）</strong>，是浩瀚波羅的海與平靜里加灣交匯的戲劇性岬角。兩股海流在狹長沙嘴尖端碰撞激起十字浪花，周圍環繞著斯利泰雷國家公園的原始松林與古老利沃尼亞漁村文化。" data-en="At the northernmost tip of the Courland Peninsula, Cape Kolka is the dramatic meeting point where open Baltic Sea waves collide with the calmer Gulf of Riga, surrounded by Slītere National Park pine forests and Livonian heritage.">
+                        位於庫爾蘭半島最北端的<strong>科爾卡角（Cape Kolka / Kolkasrags）</strong>，是浩瀚波羅的海與平靜里加灣交匯的戲劇性岬角。兩股海流在狹長沙嘴尖端碰撞激起十字浪花，周圍環繞著斯利泰雷國家公園的原始松林與古老利沃尼亞漁村文化。
+                    </p>
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] text-[11px]">
+                        <strong class="text-[#9e1b34]" data-zh="✨ 必訪亮點：" data-en="✨ Must-Do Highlights:">✨ 必訪亮點：</strong>
+                        <span data-zh="這裡是拉脫維亞少數能同時在海灘上欣賞「海上日出」與「海上日落」的絕美天涯海角。" data-en="One of the rare coastal spots in Latvia where you can witness both sunrise and sunset directly over the sea.">
+                            這裡是拉脫維亞少數能同時在海灘上欣賞「海上日出」與「海上日落」的絕美天涯海角。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/hz8LTq7BUDvU7jhR7" target="_blank" class="block text-center bg-[#9e1b34] hover:bg-[#781225] text-white py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：Cape Kolka 科爾卡角導航" data-en="Open Google Maps: Cape Kolka">開啟 Google Maps：Cape Kolka 科爾卡角導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 13: Traditional Latvian Culinary Specialties -->
+            <div class="page-slide flex-col space-y-3" data-page="13">
+                <div class="newspaper-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e1b34]" data-zh="Chapter 05 • 當地特色美食" data-en="Chapter 05 • Culinary Specialties">Chapter 05 • 當地特色美食</p>
+                    <h2 class="text-xl font-bold font-serif text-stone-900" data-zh="拉脫維亞必吃傳統經典美食" data-en="Traditional Latvian Culinary Specialties">拉脫維亞必吃傳統經典美食</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-700 leading-relaxed overflow-y-auto max-h-[540px] pr-1">
+                    <!-- 1. Rupjmaize -->
+                    <div class="bg-white p-2.5 rounded-lg border border-stone-200 shadow-sm space-y-1">
+                        <h3 class="font-serif font-bold text-[#9e1b34] text-sm" data-zh="🍞 傳統黑麥酸麵包 (Rupjmaize)" data-en="🍞 Dark Rye Bread (Rupjmaize)">🍞 傳統黑麥酸麵包 (Rupjmaize)</h3>
+                        <p class="text-[11px]" data-zh="拉脫維亞餐桌的靈魂主食！以粗磨黑麥粉與天然酵母在木柴烤爐中慢火烘焙，口感扎實微酸、麥香濃郁，常製成香甜的「黑麥麵包層層杯（Rupjmaizes kārtojums）」甜點。" data-en="The sacred staple of Latvian tables. Baked in wood-fired ovens from coarse rye flour with caraway seeds; also layered with whipped cream and lingonberry jam into a beloved dessert.">
+                            拉脫維亞餐桌的靈魂主食！以粗磨黑麥粉與天然酵母在木柴烤爐中慢火烘焙，口感扎實微酸、麥香濃郁，常製成香甜的「黑麥麵包層層杯（Rupjmaizes kārtojums）」甜點。
+                        </p>
+                    </div>
+
+                    <!-- 2. Pelēkie zirņi ar speķi -->
+                    <div class="bg-white p-2.5 rounded-lg border border-stone-200 shadow-sm space-y-1">
+                        <h3 class="font-serif font-bold text-[#9e1b34] text-sm" data-zh="🥓 煙燻培根燉灰豌豆 (Pelēkie zirņi ar speķi)" data-en="🥓 Grey Peas with Bacon (Pelēkie zirņi ar speķi)">🥓 煙燻培根燉灰豌豆 (Pelēkie zirņi ar speķi)</h3>
+                        <p class="text-[11px]" data-zh="獲歐盟原產地保護認證的國寶級傳統料理！將顆粒飽滿的拉脫維亞灰豌豆煮至綿密，拌入香煎煙燻培根丁與洋蔥，搭配一杯冰涼克菲爾優格飲（Kefīrs）最為道地。" data-en="An EU-protected national dish made from hearty Latvian grey peas tossed with crispy smoked bacon bits and sautéed onions, traditionally paired with a glass of cold kefir.">
+                            獲歐盟原產地保護認證的國寶級傳統料理！將顆粒飽滿的拉脫維亞灰豌豆煮至綿密，拌入香煎煙燻培根丁與洋蔥，搭配一杯冰涼克菲爾優格飲（Kefīrs）最為道地。
+                        </p>
+                    </div>
+
+                    <!-- 3. Aukstā zupa -->
+                    <div class="bg-white p-2.5 rounded-lg border border-stone-200 shadow-sm space-y-1">
+                        <h3 class="font-serif font-bold text-[#9e1b34] text-sm" data-zh="🥣 粉紅冷甜菜湯 (Aukstā zupa)" data-en="🥣 Cold Pink Beetroot Soup (Aukstā zupa)">🥣 粉紅冷甜菜湯 (Aukstā zupa)</h3>
+                        <p class="text-[11px]" data-zh="夏季最受歡迎的夢幻粉紅色冷湯！以克菲爾優格、醃漬紅甜菜根、清脆小黃瓜、水煮蛋與新鮮蒔蘿調製，酸甜清爽開胃。" data-en="A vibrant pink summer favorite made with kefir, pickled red beetroot, crisp cucumbers, hard-boiled eggs, and fresh dill.">
+                            夏季最受歡迎的夢幻粉紅色冷湯！以克菲爾優格、醃漬紅甜菜根、清脆小黃瓜、水煮蛋與新鮮蒔蘿調製，酸甜清爽開胃。
+                        </p>
+                    </div>
+
+                    <!-- 4. Sklandrausis -->
+                    <div class="bg-white p-2.5 rounded-lg border border-stone-200 shadow-sm space-y-1">
+                        <h3 class="font-serif font-bold text-[#9e1b34] text-sm" data-zh="🥧 庫爾蘭胡蘿蔔馬鈴薯黑麥塔 (Sklandrausis)" data-en="🥧 Sweet Carrot & Potato Rye Tart (Sklandrausis)">🥧 庫爾蘭胡蘿蔔馬鈴薯黑麥塔 (Sklandrausis)</h3>
+                        <p class="text-[11px]" data-zh="源自庫爾蘭地區的古老利沃尼亞傳統點心。以無酵黑麥麵皮捏成小圓碗，填入香甜馬鈴薯泥與金黃胡蘿蔔泥烘烤，表面撒上肉桂粉與葛縷子。" data-en="An ancient Livonian specialty from Courland: a crisp rye-dough tartlet filled with layers of sweet mashed potato and bright orange carrot, dusted with cinnamon and caraway.">
+                            源自庫爾蘭地區的古老利沃尼亞傳統點心。以無酵黑麥麵皮捏成小圓碗，填入香甜馬鈴薯泥與金黃胡蘿蔔泥烘烤，表面撒上肉桂粉與葛縷子。
+                        </p>
+                    </div>
+
+                    <!-- 5. Pīrāgi -->
+                    <div class="bg-white p-2.5 rounded-lg border border-stone-200 shadow-sm space-y-1">
+                        <h3 class="font-serif font-bold text-[#9e1b34] text-sm" data-zh="🥐 月牙煙燻培根麵包捲 (Pīrāgi / Speķrauši)" data-en="🥐 Latvian Bacon Buns (Pīrāgi)">🥐 月牙煙燻培根麵包捲 (Pīrāgi / Speķrauši)</h3>
+                        <p class="text-[11px]" data-zh="金黃油亮的新月形小麵包，內餡包滿煙燻培根碎與炒香洋蔥，是拉脫維亞家家戶戶節慶與日常必備的鹹香茶點。" data-en="Golden crescent-shaped yeast buns stuffed with finely diced smoked bacon and caramelized onions—essential at every Latvian gathering.">
+                            金黃油亮的新月形小麵包，內餡包滿煙燻培根碎與炒香洋蔥，是拉脫維亞家家戶戶節慶與日常必備的鹹香茶點。
+                        </p>
+                    </div>
+
+                    <!-- 6. Riga Black Balsam -->
+                    <div class="bg-[#f5efe6] p-2.5 rounded-lg border border-[#e5d8d0] space-y-1">
+                        <h3 class="font-serif font-bold text-stone-900 text-sm" data-zh="🥃 里加黑藥酒 (Riga Black Balsam)" data-en="🥃 Riga Black Balsam (Rīgas Melnais balzams)">🥃 里加黑藥酒 (Riga Black Balsam)</h3>
+                        <p class="text-[11px]" data-zh="誕生於 1752 年的傳奇草本利口酒！以 24 種天然植物、花朵、樹皮與漿果釀製並裝入經典陶瓶中，推薦品嚐黑醋栗口味（Black Currant）調酒或加入熱咖啡中暖身。" data-en="Created in 1752 using 24 natural herbs, roots, and berries bottled in signature stoneware. Try the Black Currant edition neat, in cocktails, or splashed into hot coffee.">
+                            誕生於 1752 年的傳奇草本利口酒！以 24 種天然植物、花朵、樹皮與漿果釀製並裝入經典陶瓶中，推薦品嚐黑醋栗口味（Black Currant）調酒或加入熱咖啡中暖身。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Page Controls Bar -->
+        <div class="bg-[#f5efe6] border-t border-[#e5d8d0] px-4 py-2.5 flex justify-between items-center z-20">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-stone-100 text-stone-800 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm border border-stone-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-xs font-mono font-bold text-[#9e1b34]" id="page-indicator">1 / 13</span>
+                <div class="w-20 h-1 bg-stone-300 rounded-full overflow-hidden mt-1">
+                    <div id="progress-bar" class="h-full bg-[#9e1b34] transition-all duration-300" style="width: 7.7%;"></div>
+                </div>
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-[#9e1b34] hover:bg-[#781225] text-white px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+        <!-- Floating Status Toast -->
+        <div id="toast-msg" class="hidden absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-stone-900/90 text-white text-[11px] font-mono px-3.5 py-1.5 rounded-full shadow-lg z-40 whitespace-nowrap"></div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, 12-Month Weather Selector, TOC & Bilingual Toggle -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 13;
+        let currentLang = 'zh';
+        let selectedMonthIndex = 6; // Default to July (index 6)
+
+        const tocData = [
+            { page: 1, zh: "封面 • 拉脫維亞深度探索之旅", en: "Cover • Latvia Discovery Journey" },
+            { page: 2, zh: "01. 拉脫維亞國家介紹與地理位置", en: "01. Country Overview & Geography" },
+            { page: 3, zh: "02. 每月氣候與穿搭指南 (1–12月)", en: "02. Monthly Weather & Clothing Guide" },
+            { page: 4, zh: "03. 拉脫維亞五日經典行程規劃", en: "03. 5-Day Classic Itinerary" },
+            { page: 5, zh: "04. 景點 [1/8] Riga 里加", en: "04. Destination [1/8] Riga" },
+            { page: 6, zh: "05. 景點 [2/8] Jūrmala 尤爾馬拉", en: "05. Destination [2/8] Jūrmala" },
+            { page: 7, zh: "06. 景點 [3/8] Kemeri 凱梅里國家公園", en: "06. Destination [3/8] Kemeri National Park" },
+            { page: 8, zh: "07. 景點 [4/8] Sigulda & Turaida 錫古爾達", en: "07. Destination [4/8] Sigulda & Turaida" },
+            { page: 9, zh: "08. 景點 [5/8] Cēsis 采西斯", en: "08. Destination [5/8] Cēsis" },
+            { page: 10, zh: "09. 景點 [6/8] Rundāle Palace 倫達爾宮", en: "09. Destination [6/8] Rundāle Palace" },
+            { page: 11, zh: "10. 景點 [7/8] Kuldīga 庫爾迪加", en: "10. Destination [7/8] Kuldīga" },
+            { page: 12, zh: "11. 景點 [8/8] Cape Kolka 科爾卡角", en: "11. Destination [8/8] Cape Kolka" },
+            { page: 13, zh: "12. 拉脫維亞當地特色美食專頁", en: "12. Traditional Latvian Cuisine" }
+        ];
+
+        const monthlyWeatherData = [
+            {
+                mZh: "1月", mEn: "Jan", temp: "-6°C ~ -1°C", daylight: "7.5 hrs",
+                icon: "❄️",
+                highlightZh: "白雪覆蓋里加古城尖塔，室內新藝術博物館與水療中心最舒適。",
+                highlightEn: "Snow-draped Riga spires; ideal for Art Nouveau museums and cozy thermal spas.",
+                clothZh: "厚羽絨外套、羊毛發熱衣、防水防滑雪靴、毛帽、圍巾與保暖手套。",
+                clothEn: "Heavy down parka, merino thermal layers, waterproof snow boots, beanie, scarf & gloves."
+            },
+            {
+                mZh: "2月", mEn: "Feb", temp: "-6°C ~ 0°C", daylight: "9.5 hrs",
+                icon: "⛄",
+                highlightZh: "冬季運動旺季，錫古爾達雪橇道與結冰的文塔瀑布景色壯觀。",
+                highlightEn: "Peak winter sports in Sigulda and dramatic ice formations along Ventas Rumba.",
+                clothZh: "防風極地羽絨衣、抓絨中層、防滑冰爪鞋套與保濕護唇膏。",
+                clothEn: "Windproof winter jacket, fleece mid-layer, slip-resistant boots, and cold-weather skincare."
+            },
+            {
+                mZh: "3月", mEn: "Mar", temp: "-2°C ~ 4°C", daylight: "12 hrs",
+                icon: "🌬️",
+                highlightZh: "初春融雪時節，文塔瀑布水量充沛，遊客較少且住宿實惠。",
+                highlightEn: "Early spring thaw swells Ventas Rumba waterfall; quiet streets and great value.",
+                clothZh: "防風防水中厚外套、針織毛衣、防水短靴與折疊傘。",
+                clothEn: "Wind/water-resistant coat, knit sweaters, waterproof ankle boots, and compact umbrella."
+            },
+            {
+                mZh: "4月", mEn: "Apr", temp: "3°C ~ 11°C", daylight: "14.5 hrs",
+                icon: "🌷",
+                highlightZh: "春回大地，庫爾迪加文塔瀑布可見「飛魚」逆流躍瀑奇景。",
+                highlightEn: "Spring awakens; witness vimba fish leaping up Ventas Rumba waterfall in Kuldīga.",
+                clothZh: "洋蔥式多層次穿搭、風衣夾克、輕薄毛衣與舒適健行鞋。",
+                clothEn: "Layered outfits, trench or windbreaker jacket, light sweater, and comfortable walking shoes."
+            },
+            {
+                mZh: "5月", mEn: "May", temp: "8°C ~ 17°C", daylight: "16.5 hrs",
+                icon: "🌿",
+                highlightZh: "丁香花盛開，戶外露天咖啡座全面開放，氣候清爽宜人。",
+                highlightEn: "Lilacs bloom across Riga, outdoor terraces open, and crisp sunny weather prevails.",
+                clothZh: "長袖襯衫、薄針織衫、輕便防風外套與太陽眼鏡。",
+                clothEn: "Long-sleeve shirts, light cardigan, breathable windbreaker, and sunglasses."
+            },
+            {
+                mZh: "6月", mEn: "Jun", temp: "12°C ~ 21°C", daylight: "18 hrs",
+                icon: "🔥",
+                highlightZh: "白夜與盛大「仲夏節（Jāņi）」慶典，倫達爾宮玫瑰園月底盛放。",
+                highlightEn: "White nights & Jāņi Midsummer celebrations; Rundāle rose gardens bloom late June.",
+                clothZh: "短袖與透氣長褲、防曬乳、太陽眼鏡，夜間篝火活動備一件薄外套。",
+                clothEn: "T-shirts, breathable trousers/dresses, sunscreen, sunglasses, and a light evening jacket."
+            },
+            {
+                mZh: "7月", mEn: "Jul", temp: "15°C ~ 24°C", daylight: "17 hrs",
+                icon: "☀️",
+                highlightZh: "最溫暖陽光月！尤爾馬拉白沙灘戲水與凱梅里沼澤日出最佳季節。",
+                highlightEn: "Warmest summer month! Ideal for Jūrmala beach days and Kemeri Bog sunrise walks.",
+                clothZh: "夏裝、泳衣、遮陽帽、防曬用品，以及清晨沼澤健行用的防蚊液與薄風衣。",
+                clothEn: "Summer attire, swimwear, sun hat, SPF, plus insect repellent and a light shell for dawn hikes."
+            },
+            {
+                mZh: "8月", mEn: "Aug", temp: "14°C ~ 23°C", daylight: "15 hrs",
+                icon: "🏖️",
+                highlightZh: "里加城市節慶熱鬧登場，波羅的海海水溫度最適合游泳。",
+                highlightEn: "Riga City Festival celebrations and warmest Baltic Sea temperatures of the year.",
+                clothZh: "輕便透氣夏裝、舒適涼鞋與步行鞋，晚間海邊散步加件薄開襟衫。",
+                clothEn: "Light breathable summer clothes, walking shoes, and a light cardigan for breezy evenings."
+            },
+            {
+                mZh: "9月", mEn: "Sep", temp: "9°C ~ 16°C", daylight: "12.5 hrs",
+                icon: "🍂",
+                highlightZh: "秋高氣爽、遊客減少，中央市場滿是新鮮野菇、蔓越莓與蜂蜜。",
+                highlightEn: "Crisp air, fewer crowds, and autumn harvest of wild mushrooms and cranberries at markets.",
+                clothZh: "長袖上衣、休閒西裝外套或風衣、牛仔褲與防潑水步行鞋。",
+                clothEn: "Long sleeves, trench coat or utility jacket, jeans, and water-resistant walking shoes."
+            },
+            {
+                mZh: "10月", mEn: "Oct", temp: "4°C ~ 10°C", daylight: "10 hrs",
+                icon: "🍁",
+                highlightZh: "高亞國家公園（錫古爾達、采西斯）化為金黃與火紅楓葉仙境！",
+                highlightEn: "Peak golden autumn foliage transforms Gauja National Park (Sigulda & Cēsis) into a fairy tale!",
+                clothZh: "保暖夾克、厚毛衣、圍巾與防滑健行鞋（山谷落葉步道微濕）。",
+                clothEn: "Warm jacket, chunky knitwear, scarf, and grippy hiking shoes for damp forest trails."
+            },
+            {
+                mZh: "11月", mEn: "Nov", temp: "-1°C ~ 4°C", daylight: "8 hrs",
+                icon: "🕯️",
+                highlightZh: "11月18日國慶「Staro Rīga 燈光節」點亮里加夜空，充滿人文氛圍。",
+                highlightEn: "National Independence Day & Staro Rīga Light Festival illuminate Riga's dark November nights.",
+                clothZh: "防風防水保暖大衣、羊毛襪、毛帽與防水靴。",
+                clothEn: "Insulated windproof/waterproof coat, wool socks, beanie, and waterproof boots."
+            },
+            {
+                mZh: "12月", mEn: "Dec", temp: "-4°C ~ 1°C", daylight: "6.5 hrs",
+                icon: "🎄",
+                highlightZh: "里加老城廣場舉辦世界第一棵聖誕樹發源地市集，熱紅酒香氣四溢。",
+                highlightEn: "Riga Old Town hosts the world's first Christmas tree market with mulled wine and crafts.",
+                clothZh: "極地羽絨大衣、發熱內衣褲、羊毛圍巾、手套與防滑保暖雪靴。",
+                clothEn: "Heavy down coat, thermal base layers, wool scarf, gloves, and insulated snow boots."
+            }
+        ];
+
+        function renderToc() {
+            const tocList = document.getElementById('toc-list');
+            if (!tocList) return;
+            tocList.innerHTML = tocData.map(item => `
+                <button onclick="goToPage(${item.page}); toggleToc();" 
+                        class="text-left px-3 py-2 rounded-lg transition flex justify-between items-center ${item.page === currentPage ? 'bg-[#9e1b34] text-white font-bold' : 'bg-white hover:bg-[#f5efe6] text-stone-800 border border-stone-200'}">
+                    <span>${currentLang === 'zh' ? item.zh : item.en}</span>
+                    <span class="font-mono text-[10px] opacity-75">P.${item.page}</span>
+                </button>
+            `).join('');
+        }
+
+        function renderMonthSelector() {
+            const selector = document.getElementById('month-selector');
+            if (!selector) return;
+            selector.innerHTML = monthlyWeatherData.map((m, idx) => `
+                <button onclick="selectMonth(${idx})" 
+                        class="py-1.5 px-1 rounded-lg font-mono text-[11px] transition border ${idx === selectedMonthIndex ? 'bg-[#9e1b34] text-white border-[#9e1b34] font-bold shadow-sm' : 'bg-white hover:bg-[#f5efe6] text-stone-700 border-stone-300'}">
+                    ${currentLang === 'zh' ? m.mZh : m.mEn}
+                </button>
+            `).join('');
+            renderMonthDetail();
+        }
+
+        function renderMonthDetail() {
+            const card = document.getElementById('month-detail-card');
+            if (!card) return;
+            const m = monthlyWeatherData[selectedMonthIndex];
+            card.innerHTML = `
+                <div class="flex justify-between items-center border-b border-stone-200 pb-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-2xl">${m.icon}</span>
+                        <div>
+                            <h3 class="font-serif font-bold text-base text-stone-900">${currentLang === 'zh' ? m.mZh + ' 氣候概況' : m.mEn + ' Overview'}</h3>
+                            <span class="text-[10px] font-mono text-[#9e1b34]">☀️ ${currentLang === 'zh' ? '平均日照' : 'Daylight'}: ${m.daylight}</span>
+                        </div>
+                    </div>
+                    <div class="bg-[#f5efe6] px-2.5 py-1 rounded-lg border border-[#e5d8d0] font-mono font-bold text-[#9e1b34] text-xs">
+                        ${m.temp}
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <div>
+                        <strong class="text-stone-900 font-serif block text-[11px]">${currentLang === 'zh' ? '🌤️ 季節亮點：' : '🌤️ Seasonal Highlights:'}</strong>
+                        <p class="text-stone-600 text-[11px]">${currentLang === 'zh' ? m.highlightZh : m.highlightEn}</p>
+                    </div>
+                    <div>
+                        <strong class="text-stone-900 font-serif block text-[11px]">${currentLang === 'zh' ? '🧥 建議穿搭：' : '🧥 Recommended Clothing:'}</strong>
+                        <p class="text-stone-600 text-[11px]">${currentLang === 'zh' ? m.clothZh : m.clothEn}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectMonth(idx) {
+            selectedMonthIndex = idx;
+            renderMonthSelector();
+        }
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'), 10);
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const indicator = document.getElementById('page-indicator');
+            if (indicator) indicator.textContent = `${currentPage} / ${totalPages}`;
+
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) progressBar.style.width = `${(currentPage / totalPages) * 100}%`;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.disabled = (currentPage === 1);
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '回封面 ↺' : 'Cover ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+
+            renderToc();
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+            } else {
+                currentPage = 1;
+            }
+            updateDisplay();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function toggleToc() {
+            const drawer = document.getElementById('toc-drawer');
+            if (!drawer) return;
+            if (drawer.classList.contains('hidden')) {
+                renderToc();
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+            }
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            const htmlRoot = document.getElementById('html-root');
+            if (htmlRoot) htmlRoot.setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+
+            renderMonthSelector();
+            updateDisplay();
+            showToast(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (!btn) return;
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showToast(currentLang === 'zh' ? `已加入第 ${currentPage} 頁書籤` : `Bookmarked Page ${currentPage}`);
+            } else {
+                btn.textContent = '🔖';
+                showToast(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2200);
+        }
+
+        window.onload = function() {
+            renderMonthSelector();
+            updateDisplay();
+        };
+
+        // Touch swipe navigation support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        if (bookArea) {
+            bookArea.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            bookArea.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                if (diff < -55) nextPage();
+                if (diff > 55) prevPage();
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
