@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>維也納皇室藝術與古典音樂深度之旅電子書報 | Vienna Imperial & Classical Discovery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #1c1014;
+            color: #261c1a;
+            touch-action: pan-y;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        /* Imperial Viennese Burgundy, Gold & Warm Cream Editorial Theme */
+        .imperial-header {
+            border-bottom: 3px double #b48a3e;
+            border-top: 1px solid #b48a3e;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.1rem;
+            float: left;
+            line-height: 0.82;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #6b1d2f;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fbf8f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b48a3e;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-0 sm:py-3 px-0 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile-First 430px Max Width) -->
+    <div class="w-full max-w-[430px] h-[100dvh] sm:h-[92vh] sm:max-h-[880px] bg-[#fbf8f1] shadow-2xl sm:rounded-2xl overflow-hidden border-0 sm:border sm:border-[#d6c5a3] flex flex-col justify-between relative select-none">
+
+        <!-- Persistent Top Navigation / Imperial Issue Bar -->
+        <div class="bg-[#6b1d2f] text-[#fbf8f1] px-3.5 py-2.5 text-xs flex justify-between items-center tracking-wider font-mono z-20 shadow-md border-b border-[#b48a3e]/50">
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleToc()" class="bg-[#4f1321] hover:bg-[#3b0d18] text-[#f3e5c2] px-2 py-1 rounded text-[11px] flex items-center space-x-1 border border-[#b48a3e]/50 transition" title="Table of Contents / 目錄">
+                    <span>☰</span>
+                    <span data-zh="目錄" data-en="TOC">目錄</span>
+                </button>
+                <span class="bg-[#4f1321]/80 text-[#e6c883] px-2 py-0.5 rounded text-[10px] font-bold border border-[#b48a3e]/30" id="top-page-indicator">1 / 13</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Persistent Bilingual Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-[#b48a3e] hover:bg-[#9c742d] text-[#1c1014] px-2.5 py-1 rounded text-[10px] font-mono transition font-bold shadow-sm" title="Switch Language / 切換語言">
+                    EN / 繁中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-[#f3e5c2] hover:text-white transition-colors text-sm" title="加入書籤 / Bookmark">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide-Out Table of Contents Drawer -->
+        <div id="toc-drawer" class="hidden absolute inset-x-0 top-[44px] bottom-[56px] bg-[#fbf8f1]/98 backdrop-blur-md z-30 flex-col justify-between p-4 overflow-y-auto border-b border-[#d6c5a3]">
+            <div class="space-y-2.5">
+                <div class="flex justify-between items-center border-b-2 border-[#b48a3e] pb-2">
+                    <h3 class="font-editorial font-bold text-lg text-[#6b1d2f]" data-zh="📖 維也納電子書報目錄" data-en="📖 Vienna Edition Contents">📖 維也納電子書報目錄</h3>
+                    <button onclick="toggleToc()" class="text-stone-600 hover:text-stone-900 font-mono text-xs px-2.5 py-1 bg-[#efe7d6] rounded border border-[#d6c5a3]">✕</button>
+                </div>
+                <div class="grid grid-cols-1 gap-1.5 text-xs font-serif" id="toc-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+            <div class="pt-3 text-center text-[10px] font-mono text-stone-500">
+                Vienna Imperial & Classical Edition • 13 Standalone Pages
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (13 Standalone Pages) -->
+        <div class="flex-1 overflow-y-auto px-5 py-4 space-y-4 relative" id="book-content-area">
+
+            <!-- PAGE 1: Editorial Cover Page -->
+            <div class="page-slide active flex-col justify-between h-full space-y-3" data-page="1">
+                <div class="text-center space-y-1.5 pt-1">
+                    <span class="bg-[#6b1d2f] text-[#f3e5c2] border border-[#b48a3e] text-[10px] px-3 py-0.5 font-mono tracking-widest rounded-full uppercase" data-zh="奧地利帝國文化典藏版 2026" data-en="Imperial Austria Collector's Edition 2026">奧地利帝國文化典藏版 2026</span>
+                    <h1 class="text-3xl font-bold font-editorial tracking-tight text-stone-900 leading-tight">
+                        <span class="text-[#6b1d2f] tracking-widest text-2xl block">VIENNA • 維也納</span>
+                        <span class="text-xl text-stone-900 block mt-0.5" data-zh="帝國風華、咖啡館文化與古典樂章" data-en="Imperial Elegance, Coffeehouse Culture & Classical Music">帝國風華、咖啡館文化與古典樂章</span>
+                    </h1>
+                    <p class="text-[11px] font-editorial italic text-[#8a6424]" data-zh="Imperial Elegance, Coffeehouse Culture & Classical Music" data-en="帝國風華、咖啡館文化與古典樂章">Imperial Elegance, Coffeehouse Culture & Classical Music</p>
+                </div>
+
+                <div class="relative rounded-xl overflow-hidden shadow-lg border border-[#d6c5a3] group">
+                    <img src="https://images.unsplash.com/photo-1516550893923-42d28e5677af?auto=format&fit=crop&w=900&q=80"
+                         onerror="this.src='https://placehold.co/600x400/6b1d2f/f3e5c2?text=Vienna+Imperial+Palace'"
+                         alt="Vienna Imperial Architecture" class="w-full h-44 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#1c1014]/90 via-[#1c1014]/45 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-[#e6c883] uppercase tracking-wider" data-zh="哈布斯堡皇室遺產 • WORLD MUSIC CAPITAL" data-en="HABSBURG HERITAGE • WORLD MUSIC CAPITAL">哈布斯堡皇室遺產 • WORLD MUSIC CAPITAL</p>
+                        <p class="text-xs font-serif font-medium" data-zh="熊布朗宮、金色大廳、克林姆《吻》與百年咖啡沙龍" data-en="Schönbrunn Palace, Musikverein, Klimt's Kiss & Grand Cafés">熊布朗宮、金色大廳、克林姆《吻》與百年咖啡沙龍</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#f4ede0] p-3.5 rounded-xl border border-[#d6c5a3] text-xs text-stone-800 leading-relaxed space-y-1.5">
+                    <p class="drop-cap" data-zh="歡迎翻閱《維也納皇室藝術與古典音樂深度之旅》。多瑙河畔的維也納曾是哈布斯堡帝國心臟，也是莫札特、貝多芬與史特勞斯譜寫不朽樂章的聖殿。本手冊完整收錄城市地理概況、十二月份氣候穿搭、五日經典行程、八大皇室藝術地標與百年咖啡館指南。" data-en="Welcome to Vienna Imperial & Classical Discovery. Once the heart of the Habsburg Empire along the Danube, Vienna is where Mozart, Beethoven, and Strauss composed timeless masterpieces. Explore 13 standalone pages with bilingual guides, weather advice, and Google Maps links.">
+                        歡迎翻閱《維也納皇室藝術與古典音樂深度之旅》。多瑙河畔的維也納曾是哈布斯堡帝國心臟，也是莫札特、貝多芬與史特勞斯譜寫不朽樂章的聖殿。本手冊完整收錄城市地理概況、十二月份氣候穿搭、五日經典行程、八大皇室藝術地標與百年咖啡館指南。
+                    </p>
+                </div>
+
+                <div class="pt-0.5 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] border border-[#b48a3e] text-xs py-3 rounded-lg font-mono uppercase tracking-widest shadow-md transition-all active:scale-95" data-zh="開始閱讀 / Start Reading ➔" data-en="Start Reading / 開始閱讀 ➔">
+                        開始閱讀 / Start Reading ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Vienna & Austria Overview & Geographical Location -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 01 • 城市與地理概況" data-en="Chapter 01 • City & Geography">Chapter 01 • 城市與地理概況</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="維也納城市介紹與地理位置" data-en="Vienna & Austria Overview & Geography">維也納城市介紹與地理位置</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Quick Fact Grid -->
+                    <div class="grid grid-cols-2 gap-2 bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] font-mono text-[11px]">
+                        <div>
+                            <span class="text-stone-500 block text-[9px]" data-zh="國家與地位 / COUNTRY" data-en="COUNTRY & STATUS">國家與地位 / COUNTRY</span>
+                            <strong class="text-[#6b1d2f]" data-zh="奧地利首都 (Austria)" data-en="Capital of Austria">奧地利首都 (Austria)</strong>
+                        </div>
+                        <div>
+                            <span class="text-stone-500 block text-[9px]" data-zh="城市人口 / POPULATION" data-en="POPULATION">城市人口 / POPULATION</span>
+                            <strong class="text-stone-900" data-zh="約 200 萬人 (~2.0M)" data-en="~2.0 Million">約 200 萬人 (~2.0M)</strong>
+                        </div>
+                        <div>
+                            <span class="text-stone-500 block text-[9px]" data-zh="流通貨幣 / CURRENCY" data-en="CURRENCY">流通貨幣 / CURRENCY</span>
+                            <strong class="text-stone-900" data-zh="歐元 Euro (€)" data-en="Euro (€)">歐元 Euro (€)</strong>
+                        </div>
+                        <div>
+                            <span class="text-stone-500 block text-[9px]" data-zh="官方語言 / LANGUAGE" data-en="LANGUAGE">官方語言 / LANGUAGE</span>
+                            <strong class="text-stone-900" data-zh="德語 (German)" data-en="German (Deutsch)">德語 (German)</strong>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-[#e3d7be] space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#6b1d2f] text-sm" data-zh="🧭 多瑙河畔的中歐十字路口" data-en="🧭 Danube Crossroads of Central Europe">🧭 多瑙河畔的中歐十字路口</h3>
+                        <p data-zh="維也納（Wien）位於奧地利東北部、阿爾卑斯山脈最東端山麓與維也納盆地交界處，藍色多瑙河（Danube River）蜿蜒穿城而過。地處中歐核心樞紐，鄰近捷克、斯洛伐克與匈牙利邊境，自古便是東西歐貿易、外交與文化交匯的黃金門戶。" data-en="Located in northeastern Austria at the eastern foothills of the Alps where the Danube River flows through the Vienna Basin, Vienna sits at the crossroads of Central Europe—within an hour of Slovakia, Czechia, and Hungary.">
+                            維也納（Wien）位於奧地利東北部、阿爾卑斯山脈最東端山麓與維也納盆地交界處，藍色多瑙河（Danube River）蜿蜒穿城而過。地處中歐核心樞紐，鄰近捷克、斯洛伐克與匈牙利邊境，自古便是東西歐貿易、外交與文化交匯的黃金門戶。
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-[#e3d7be] space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#6b1d2f] text-sm" data-zh="👑 哈布斯堡帝國與世界遺產舊城" data-en="👑 Habsburg Heritage & UNESCO Center">👑 哈布斯堡帝國與世界遺產舊城</h3>
+                        <p data-zh="作為統治中歐長達六百餘年的哈布斯堡王朝皇都，維也納第一區「內城區（Innere Stadt）」與環城大道（Ringstrasse）匯聚了巴洛克宮殿、哥德大教堂與新古典主義議會建築，整座歷史中心獲列入聯合國世界文化遺產，並長年蟬聯全球最宜居城市榜首。" data-en="As the imperial seat of the Habsburg Dynasty for over six centuries, Vienna's Historic Center (Innere Stadt) and Ringstrasse boulevard showcase Baroque palaces, Gothic spires, and grand ensembles, earning UNESCO World Heritage status and top global livability rankings.">
+                            作為統治中歐長達六百餘年的哈布斯堡王朝皇都，維也納第一區「內城區（Innere Stadt）」與環城大道（Ringstrasse）匯聚了巴洛克宮殿、哥德大教堂與新古典主義議會建築，整座歷史中心獲列入聯合國世界文化遺產，並長年蟬聯全球最宜居城市榜首。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#f4ede0] p-3 rounded-lg border border-[#d6c5a3] space-y-1">
+                        <h3 class="font-editorial font-bold text-stone-900 text-sm" data-zh="🍇 維也納森林與都市葡萄園" data-en="🍇 Vienna Woods & Urban Vineyards">🍇 維也納森林與都市葡萄園</h3>
+                        <p data-zh="維也納是全球唯一在市區範圍內擁有超過 700 公頃商業葡萄園的首都！西北郊的維也納森林（Wienerwald）與卡倫山（Kahlenberg）為城市提供清新綠肺與經典白酒。" data-en="Vienna is the only capital city in the world cultivating over 700 hectares of commercial vineyards within city limits, framed by the lush Vienna Woods (Wienerwald).">
+                            維也納是全球唯一在市區範圍內擁有超過 700 公頃商業葡萄園的首都！西北郊的維也納森林（Wienerwald）與卡倫山（Kahlenberg）為城市提供清新綠肺與經典白酒。
+                        </p>
+                    </div>
+
+                    <a href="hhttps://maps.app.goo.gl/6PdTDg97z56dJzg19" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2 rounded-lg font-mono text-[11px] transition shadow-sm">
+                        🗺️ <span data-zh="在 Google Maps 查看維也納城市地圖" data-en="View Vienna Map on Google Maps">在 Google Maps 查看維也納城市地圖</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Interactive 12-Month Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 02 • 四季氣候與穿搭" data-en="Chapter 02 • Weather & Clothing">Chapter 02 • 四季氣候與穿搭</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="維也納四季氣候與穿搭指南" data-en="Interactive 12-Month Weather & Packing">維也納四季氣候與穿搭指南</h2>
+                </div>
+
+                <p class="text-[11px] text-stone-600 font-serif" data-zh="點擊下方月份（1月–12月），查看高低均溫、雨雪概況、季節盛事與穿搭建議：" data-en="Tap any month (Jan–Dec) to view high/low temperatures, rain/snow notes, highlights & attire:">
+                    點擊下方月份（1月–12月），查看高低均溫、雨雪概況、季節盛事與穿搭建議：
+                </p>
+
+                <!-- 12-Month Interactive Grid -->
+                <div class="grid grid-cols-4 gap-1.5" id="month-selector">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Dynamic Month Detail Card -->
+                <div id="month-detail-card" class="bg-white p-3.5 rounded-xl border-2 border-[#b48a3e]/50 shadow-sm space-y-2 text-xs text-stone-800">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px] text-stone-700 space-y-1">
+                    <strong class="text-[#6b1d2f] block font-editorial" data-zh="🎻 維也納演藝廳與舞會著裝禮儀" data-en="🎻 Concert Hall & Ball Dress Code">🎻 維也納演藝廳與舞會著裝禮儀</strong>
+                    <p data-zh="前往金色大廳或國家歌劇院欣賞晚間演出時，建議採用「Smart Casual 正式休閒」以上服裝（襯衫、西裝外套或洋裝），避免短褲與運動拖鞋。" data-en="For evening performances at Musikverein or State Opera, smart-casual or formal attire is customary—avoid shorts, athletic wear, or flip-flops.">
+                        前往金色大廳或國家歌劇院欣賞晚間演出時，建議採用「Smart Casual 正式休閒」以上服裝（襯衫、西裝外套或洋裝），避免短褲與運動拖鞋。
+                    </p>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Classic 5-Day Vienna Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 03 • 五日經典行程" data-en="Chapter 03 • 5-Day Classic Itinerary">Chapter 03 • 五日經典行程</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="維也納經典五日深度行程" data-en="Classic 5-Day Vienna Itinerary">維也納經典五日深度行程</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Day 1 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#6b1d2f] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#6b1d2f]">DAY 01</span>
+                            <a href="https://maps.app.goo.gl/Z7wt3ZMQiKPE2vqP8" target="_blank" class="text-[10px] font-mono text-[#8a6424] hover:text-[#6b1d2f] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-stone-900 text-sm" data-zh="內城區舊城與霍夫堡皇宮" data-en="Innere Stadt & Hofburg Imperial Palace">內城區舊城與霍夫堡皇宮</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="上午參訪聖史蒂芬大教堂與格拉本大街，午後探索霍夫堡皇宮、西西公主博物館與西班牙馬術學校，傍晚於中央咖啡館品嚐維也納咖啡。" data-en="Morning at St. Stephen's Cathedral & Graben; afternoon at Hofburg Palace, Sisi Museum & Spanish Riding School; evening Melange at Café Central.">
+                            上午參訪聖史蒂芬大教堂與格拉本大街，午後探索霍夫堡皇宮、西西公主博物館與西班牙馬術學校，傍晚於中央咖啡館品嚐維也納咖啡。
+                        </p>
+                    </div>
+
+                    <!-- Day 2 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#b48a3e] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#8a6424]">DAY 02</span>
+                            <a href="https://maps.app.goo.gl/HGAis7qQUhRfWWgj9" target="_blank" class="text-[10px] font-mono text-[#8a6424] hover:text-[#6b1d2f] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-stone-900 text-sm" data-zh="熊布朗宮夏宮與納許市場" data-en="Schönbrunn Palace & Naschmarkt">熊布朗宮夏宮與納許市場</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="清晨造訪哈布斯堡夏宮熊布朗宮與凱旋門（Gloriette）俯瞰全城，午後前往百年露天市集納許市場（Naschmarkt）與分離派會館。" data-en="Morning tour of Schönbrunn Palace & Gloriette hilltop viewpoint; afternoon culinary stroll through historic Naschmarkt and Secession Building.">
+                            清晨造訪哈布斯堡夏宮熊布朗宮與凱旋門（Gloriette）俯瞰全城，午後前往百年露天市集納許市場（Naschmarkt）與分離派會館。
+                        </p>
+                    </div>
+
+                    <!-- Day 3 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#6b1d2f] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#6b1d2f]">DAY 03</span>
+                            <a href="https://maps.app.goo.gl/zrAhDukV2JUVWone9" target="_blank" class="text-[10px] font-mono text-[#8a6424] hover:text-[#6b1d2f] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-stone-900 text-sm" data-zh="美景宮《吻》與環城大道巡禮" data-en="Belvedere Palace & Ringstrasse">美景宮《吻》與環城大道巡禮</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="上午於上美景宮欣賞克林姆名畫《吻》與巴洛克水景花園，午後搭乘電車沿環城大道（Ringstrasse）欣賞國會大廈、市政廳與卡爾教堂。" data-en="Morning at Upper Belvedere admiring Klimt's 'The Kiss' and Baroque gardens; afternoon tram loop along Ringstrasse past Parliament, Rathaus & Karlskirche.">
+                            上午於上美景宮欣賞克林姆名畫《吻》與巴洛克水景花園，午後搭乘電車沿環城大道（Ringstrasse）欣賞國會大廈、市政廳與卡爾教堂。
+                        </p>
+                    </div>
+
+                    <!-- Day 4 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#b48a3e] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#8a6424]">DAY 04</span>
+                            <a href="https://maps.app.goo.gl/ZKEUyYZZXDFA1M2j8" target="_blank" class="text-[10px] font-mono text-[#8a6424] hover:text-[#6b1d2f] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-stone-900 text-sm" data-zh="藝術史博物館、普拉特與古典音樂會" data-en="Kunsthistorisches Museum, Prater & Concert">藝術史博物館、普拉特與古典音樂會</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="沉浸於藝術史博物館皇家珍藏與穹頂咖啡廳，黃昏搭乘普拉特百年摩天輪，夜晚在維也納金色大廳或國家歌劇院聆聽古典樂。" data-en="Explore Kunsthistorisches Museum's royal masterpieces and dome café; sunset ride on Prater Giant Ferris Wheel; evening concert at Musikverein or State Opera.">
+                            沉浸於藝術史博物館皇家珍藏與穹頂咖啡廳，黃昏搭乘普拉特百年摩天輪，夜晚在維也納金色大廳或國家歌劇院聆聽古典樂。
+                        </p>
+                    </div>
+
+                    <!-- Day 5 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#6b1d2f] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#6b1d2f]">DAY 05</span>
+                            <a href="https://maps.app.goo.gl/MzQCSZwrER6ZptP46" target="_blank" class="text-[10px] font-mono text-[#8a6424] hover:text-[#6b1d2f] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-stone-900 text-sm" data-zh="格林津新酒莊、卡倫山與多瑙河谷" data-en="Grinzing Wine Taverns, Kahlenberg & Danube">格林津新酒莊、卡倫山與多瑙河谷</h3>
+                        <p class="text-stone-600 text-[11px]" data-zh="上午可選乘火車與遊船探訪世界遺產瓦豪河谷（Wachau Valley），午後登上卡倫山俯瞰多瑙河全景，夜晚於格林津（Grinzing）新酒酒館微醺。" data-en="Optional morning Danube cruise in Wachau Valley; afternoon panoramic views from Kahlenberg hill; farewell dinner at a traditional Grinzing Heuriger wine tavern.">
+                            上午可選乘火車與遊船探訪世界遺產瓦豪河谷（Wachau Valley），午後登上卡倫山俯瞰多瑙河全景，夜晚於格林津（Grinzing）新酒酒館微醺。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destination 1 - Schönbrunn Palace & Gardens -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 04 • 精選地標 [1/8]" data-en="Chapter 04 • Destination [1/8]">Chapter 04 • 精選地標 [1/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="Schönbrunn Palace (熊布朗宮與皇室花園)" data-en="Schönbrunn Palace & Gardens">Schönbrunn Palace (熊布朗宮與皇室花園)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d6c5a3]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbj2jr3SCyKXTsqyLE_O-m-a_MWd8jv2dyE19ihl8FGQ&s=10"
+                             onerror="this.src='https://placehold.co/600x360/6b1d2f/f3e5c2?text=Schonbrunn+Palace+Vienna'"
+                             alt="Schönbrunn Palace and Gardens" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="獲列入聯合國世界文化遺產的<strong>熊布朗宮（Schönbrunn Palace）</strong>又稱「美泉宮」，是哈布斯堡王朝最輝煌的巴洛克夏宮。宮殿外牆採用標誌性的「瑪麗亞·特蕾莎黃」，擁有 1,441 間華麗廳室，見證了女皇瑪麗亞·特蕾莎的盛世、六歲神童莫札特的宮廷演奏，以及法蘭茲·約瑟夫皇帝與西西皇后的傳奇歲月。" data-en="A UNESCO World Heritage masterpiece, Schönbrunn Palace served as the summer residence of the Habsburg monarchs. Painted in signature 'Maria Theresa Yellow,' its 1,441 Rococo rooms hosted 6-year-old Mozart's debut and Emperor Franz Joseph's court.">
+                        獲列入聯合國世界文化遺產的<strong>熊布朗宮（Schönbrunn Palace）</strong>又稱「美泉宮」，是哈布斯堡王朝最輝煌的巴洛克夏宮。宮殿外牆採用標誌性的「瑪麗亞·特蕾莎黃」，擁有 1,441 間華麗廳室，見證了女皇瑪麗亞·特蕾莎的盛世、六歲神童莫札特的宮廷演奏，以及法蘭茲·約瑟夫皇帝與西西皇后的傳奇歲月。
+                    </p>
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px]">
+                        <strong class="text-[#6b1d2f]" data-zh="✨ 凱旋門觀景秘訣：" data-en="✨ Gloriette Viewpoint Tip:">✨ 凱旋門觀景秘訣：</strong>
+                        <span data-zh="沿著法式對稱大花壇步行登上山丘頂端的「凱旋門（Gloriette）」，不僅能將熊布朗宮與維也納天際線盡收眼底，還能在拱廊咖啡廳享用皇室早午餐。" data-en="Walk uphill past the Neptune Fountain to the hilltop Gloriette colonnade for sweeping panoramic views over the palace and Vienna's skyline.">
+                            沿著法式對稱大花壇步行登上山丘頂端的「凱旋門（Gloriette）」，不僅能將熊布朗宮與維也納天際線盡收眼底，還能在拱廊咖啡廳享用皇室早午餐。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/HGAis7qQUhRfWWgj9" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：熊布朗宮導航" data-en="Open Google Maps: Schönbrunn Palace">開啟 Google Maps：熊布朗宮導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destination 2 - St. Stephen's Cathedral & Innere Stadt -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 04 • 精選地標 [2/8]" data-en="Chapter 04 • Destination [2/8]">Chapter 04 • 精選地標 [2/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="St. Stephen's Cathedral (聖史蒂芬大教堂)" data-en="St. Stephen's Cathedral & Innere Stadt">St. Stephen's Cathedral (聖史蒂芬大教堂)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d6c5a3]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7zjwF9OEip1bJKkUBWRQE4KvJItiIJKnaGjtElV52ug&s=10"
+                             onerror="this.src='https://placehold.co/600x360/6b1d2f/f3e5c2?text=St.+Stephens+Cathedral+Vienna'"
+                             alt="St. Stephen's Cathedral Vienna" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="坐落於維也納地理與精神正中心的<strong>聖史蒂芬大教堂（Stephansdom）</strong>，擁有高達 136 公尺的哥德式南塔「Steffl」與鑲嵌 23 萬片彩色琉璃瓦拼出的哈布斯堡雙頭鷹屋頂。北塔內懸掛著全奧地利最大的「普默林大鐘（Pummerin）」，每逢跨年與重大慶典響徹全城。" data-en="Standing at the geographic heart of Innere Stadt, St. Stephen's Cathedral captivates visitors with its 136-meter Gothic South Tower ('Steffl'), vibrant 230,000-tile mosaic roof depicting the Habsburg double-headed eagle, and the massive Pummerin bell.">
+                        坐落於維也納地理與精神正中心的<strong>聖史蒂芬大教堂（Stephansdom）</strong>，擁有高達 136 公尺的哥德式南塔「Steffl」與鑲嵌 23 萬片彩色琉璃瓦拼出的哈布斯堡雙頭鷹屋頂。北塔內懸掛著全奧地利最大的「普默林大鐘（Pummerin）」，每逢跨年與重大慶典響徹全城。
+                    </p>
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px]">
+                        <strong class="text-[#6b1d2f]" data-zh="✨ 舊城區優雅漫步：" data-en="✨ Graben & Kohlmarkt Stroll:">✨ 舊城區優雅漫步：</strong>
+                        <span data-zh="從教堂廣場轉入高雅的「格拉本大街（Graben）」欣賞巴洛克黑死病紀念柱，再沿著精品名店林立的「科爾市場大街（Kohlmarkt）」直達霍夫堡皇宮。" data-en="Stroll down pedestrian Graben past the Baroque Plague Column and turn onto historic Kohlmarkt—once home to Chopin and imperial purveyors.">
+                            從教堂廣場轉入高雅的「格拉本大街（Graben）」欣賞巴洛克黑死病紀念柱，再沿著精品名店林立的「科爾市場大街（Kohlmarkt）」直達霍夫堡皇宮。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/Z7wt3ZMQiKPE2vqP8" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：聖史蒂芬大教堂導航" data-en="Open Google Maps: St. Stephen's Cathedral">開啟 Google Maps：聖史蒂芬大教堂導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destination 3 - Hofburg Imperial Palace & Spanish Riding School -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 04 • 精選地標 [3/8]" data-en="Chapter 04 • Destination [3/8]">Chapter 04 • 精選地標 [3/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="Hofburg Palace (霍夫堡與西班牙馬術學校)" data-en="Hofburg Imperial Palace & Riding School">Hofburg Palace (霍夫堡與西班牙馬術學校)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d6c5a3]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7isrgLoktFhVZgXsBFnFKoFlnIQWGJnwk8nwmnSCc6g&s=10"
+                             onerror="this.src='https://placehold.co/600x360/6b1d2f/f3e5c2?text=Hofburg+Imperial+Palace'"
+                             alt="Hofburg Imperial Palace Vienna" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="<strong>霍夫堡皇宮（Hofburg）</strong>自 13 世紀起便是哈布斯堡王朝的冬宮與權力中樞，如今也是奧地利總統府所在地。建築群融合哥德、文藝復興與巴洛克風格，館內的<strong>西西公主博物館（Sisi Museum）</strong>與皇家寢宮生動重現伊莉莎白皇后的傳奇人生與宮廷儀典。" data-en="Serving as the Habsburg winter residence since the 13th century, the sprawling Hofburg complex houses the Imperial Apartments, the Sisi Museum dedicated to Empress Elisabeth, and the Imperial Treasury.">
+                        <strong>霍夫堡皇宮（Hofburg）</strong>自 13 世紀起便是哈布斯堡王朝的冬宮與權力中樞，如今也是奧地利總統府所在地。建築群融合哥德、文藝復興與巴洛克風格，館內的<strong>西西公主博物館（Sisi Museum）</strong>與皇家寢宮生動重現伊莉莎白皇后的傳奇人生與宮廷儀典。
+                    </p>
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px]">
+                        <strong class="text-[#6b1d2f]" data-zh="🐎 西班牙馬術學校與皇家圖書館：" data-en="🐎 Lipizzaner Stallions & State Hall:">🐎 西班牙馬術學校與皇家圖書館：</strong>
+                        <span data-zh="在巴洛克冬宮騎術廳欣賞世界最古老「西班牙馬術學校（Spanish Riding School）」利比扎白馬的古典馬術芭蕾，並造訪如電影場景般壯麗的奧地利國家圖書館大廳（Prunksaal）。" data-en="Witness the world-famous Lipizzaner stallions perform classical dressage at the Spanish Riding School, and visit the breathtaking Baroque State Hall of the Austrian National Library.">
+                            在巴洛克冬宮騎術廳欣賞世界最古老「西班牙馬術學校（Spanish Riding School）」利比扎白馬的古典馬術芭蕾，並造訪如電影場景般壯麗的奧地利國家圖書館大廳（Prunksaal）。
+                        </span>
+                    </div>
+                    <a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9GuhPBaW3O7qmnKINFVb6nWOsJNdkD_XobkuM1_0OwA&s=10" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：霍夫堡皇宮導航" data-en="Open Google Maps: Hofburg Palace">開啟 Google Maps：霍夫堡皇宮導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destination 4 - Belvedere Palace & Klimt Gallery -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 04 • 精選地標 [4/8]" data-en="Chapter 04 • Destination [4/8]">Chapter 04 • 精選地標 [4/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="Belvedere Palace (美景宮與克林姆藝術館)" data-en="Belvedere Palace & Klimt Gallery">Belvedere Palace (美景宮與克林姆藝術館)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d6c5a3]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2X8BqEeVUVL2rhe-kcLyGsLUX7JVfoc539dqCJdqMdA&s=10"
+                             onerror="this.src='https://placehold.co/600x360/6b1d2f/f3e5c2?text=Belvedere+Palace+Vienna'"
+                             alt="Belvedere Palace Vienna" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="由名將歐根親王委託建造的<strong>美景宮（Belvedere Palace）</strong>分為「上美景宮」與「下美景宮」，中間以階梯式巴洛克水景花園與獅身人面像雕塑相連。上美景宮典藏了全球最豐富的奧地利分離派大師<strong>古斯塔夫·克林姆（Gustav Klimt）</strong>真跡，包括金箔璀璨的鎮館之寶《吻（The Kiss）》與《朱迪斯》。" data-en="Built as the summer residence for Prince Eugene of Savoy, the Baroque Upper and Lower Belvedere palaces are linked by terraced fountains and gardens. Upper Belvedere houses the world's largest Gustav Klimt collection, led by his golden masterpiece 'The Kiss.'">
+                        由名將歐根親王委託建造的<strong>美景宮（Belvedere Palace）</strong>分為「上美景宮」與「下美景宮」，中間以階梯式巴洛克水景花園與獅身人面像雕塑相連。上美景宮典藏了全球最豐富的奧地利分離派大師<strong>古斯塔夫·克林姆（Gustav Klimt）</strong>真跡，包括金箔璀璨的鎮館之寶《吻（The Kiss）》與《朱迪斯》。
+                    </p>
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px]">
+                        <strong class="text-[#6b1d2f]" data-zh="🎨 觀展與攝影建議：" data-en="🎨 Gallery & Photo Tip:">🎨 觀展與攝影建議：</strong>
+                        <span data-zh="除了克林姆外，館內亦展出埃貢·席勒（Egon Schiele）與莫內名作；建議事先線上預約《吻》的入場時段，並在南側倒影池拍攝上美景宮對稱倒影。" data-en="Also admire works by Egon Schiele and Claude Monet; book timed tickets online in advance and capture the palace's reflection in the southern pond.">
+                            除了克林姆外，館內亦展出埃貢·席勒（Egon Schiele）與莫內名作；建議事先線上預約《吻》的入場時段，並在南側倒影池拍攝上美景宮對稱倒影。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/imTBDfYABKMvyzas5" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：美景宮導航" data-en="Open Google Maps: Belvedere Palace">開啟 Google Maps：美景宮導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Destination 5 - Kunsthistorisches Museum & MuseumsQuartier -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 04 • 精選地標 [5/8]" data-en="Chapter 04 • Destination [5/8]">Chapter 04 • 精選地標 [5/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="Kunsthistorisches Museum (藝術史博物館)" data-en="Kunsthistorisches Museum & MQ">Kunsthistorisches Museum (藝術史博物館)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d6c5a3]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoP9LCd5ZJIRHLZ7qAEwO2KIAZEyVaE730iJZtjEKyiA&s=10"
+                             onerror="this.src='https://placehold.co/600x360/6b1d2f/f3e5c2?text=Kunsthistorisches+Museum'"
+                             alt="Kunsthistorisches Museum Vienna" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="<strong>維也納藝術史博物館（Kunsthistorisches Museum, KHM）</strong>由法蘭茲·約瑟夫皇帝下令興建，專為典藏哈布斯堡皇室數百年累積的無價藝術珍品。館內擁有全球最完整的老彼得·布勒哲爾（Pieter Bruegel the Elder）《巴別塔》與《雪中獵人》真跡，以及拉斐爾、維梅爾與林布蘭巨作。" data-en="Commissioned by Emperor Franz Joseph to house the Habsburgs' vast imperial collections, the Kunsthistorisches Museum holds the world's finest collection of Pieter Bruegel the Elder ('Tower of Babel'), alongside Raphael, Vermeer, and Rembrandt.">
+                        <strong>維也納藝術史博物館（Kunsthistorisches Museum, KHM）</strong>由法蘭茲·約瑟夫皇帝下令興建，專為典藏哈布斯堡皇室數百年累積的無價藝術珍品。館內擁有全球最完整的老彼得·布勒哲爾（Pieter Bruegel the Elder）《巴別塔》與《雪中獵人》真跡，以及拉斐爾、維梅爾與林布蘭巨作。
+                    </p>
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px]">
+                        <strong class="text-[#6b1d2f]" data-zh="☕ 穹頂咖啡廳與博物館區（MQ）：" data-en="☕ Iconic Dome Café & MuseumsQuartier:">☕ 穹頂咖啡廳與博物館區（MQ）：</strong>
+                        <span data-zh="館內八角形大理石穹頂下的「Cupola Café」被譽為世界最美博物館咖啡廳；過馬路即是前皇家馬廄改建的「維也納博物館區（MuseumsQuartier）」，匯聚當代藝術與活力露天廣場。" data-en="Pause beneath the octagonal marble cupola at the museum's legendary dome café, then cross into MuseumsQuartier (MQ)—one of the world's largest contemporary art quarters.">
+                            館內八角形大理石穹頂下的「Cupola Café」被譽為世界最美博物館咖啡廳；過馬路即是前皇家馬廄改建的「維也納博物館區（MuseumsQuartier）」，匯聚當代藝術與活力露天廣場。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/4pL7W9dN3mK2xR6z9" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：藝術史博物館導航" data-en="Open Google Maps: Kunsthistorisches Museum">開啟 Google Maps：藝術史博物館導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Destination 6 - Musikverein & Vienna State Opera -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 04 • 精選地標 [6/8]" data-en="Chapter 04 • Destination [6/8]">Chapter 04 • 精選地標 [6/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="Musikverein & State Opera (金色大廳與歌劇院)" data-en="Musikverein & Vienna State Opera">Musikverein & State Opera (金色大廳與歌劇院)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d6c5a3]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSSWCwUiUzEZPelgw_dqUk5InQ4B1vsw0d5mpABxjA0g&s=10"
+                             onerror="this.src='https://placehold.co/600x360/6b1d2f/f3e5c2?text=Musikverein+and+State+Opera'"
+                             alt="Musikverein and Classical Concert Hall" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="<strong>維也納愛樂協會金色大廳（Musikverein）</strong>是世界公認音響效果最完美的音樂殿堂，每年 1 月 1 日維也納愛樂《新年音樂會》便在此向全球轉播。不遠處的<strong>維也納國家歌劇院（Wiener Staatsoper）</strong>則是世界四大歌劇院之一，每年上演逾 350 場不同劇目的頂尖歌劇與芭蕾。" data-en="The Golden Hall of the Musikverein is revered worldwide for its unrivaled shoebox acoustics and the annual Vienna Philharmonic New Year's Concert. Nearby, the Vienna State Opera stages over 350 world-class opera and ballet performances each season.">
+                        <strong>維也納愛樂協會金色大廳（Musikverein）</strong>是世界公認音響效果最完美的音樂殿堂，每年 1 月 1 日維也納愛樂《新年音樂會》便在此向全球轉播。不遠處的<strong>維也納國家歌劇院（Wiener Staatsoper）</strong>則是世界四大歌劇院之一，每年上演逾 350 場不同劇目的頂尖歌劇與芭蕾。
+                    </p>
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px]">
+                        <strong class="text-[#6b1d2f]" data-zh="🎟️ 國家歌劇院「站票」體驗秘訣：" data-en="🎟️ State Opera Standing-Room Tip:">🎟️ 國家歌劇院「站票」體驗秘訣：</strong>
+                        <span data-zh="想以親民價格體驗世界級歌劇？開演前 80 分鐘可於歌劇院側門排隊購買僅約 €13–€18 的「站票（Stehplatz）」，別忘了帶一條小絲巾綁在欄杆上佔位！" data-en="Experience world-class opera on a budget: queue at the side entrance 80 minutes before curtain for €13–€18 standing-room tickets (Stehplatz)—tie a scarf on the rail to mark your spot!">
+                            想以親民價格體驗世界級歌劇？開演前 80 分鐘可於歌劇院側門排隊購買僅約 €13–€18 的「站票（Stehplatz）」，別忘了帶一條小絲巾綁在欄杆上佔位！
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/ZMu7Uy1BKaB9fzjZ9" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：金色大廳與歌劇院導航" data-en="Open Google Maps: Musikverein & Opera">開啟 Google Maps：金色大廳與歌劇院導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Destination 7 - Naschmarkt & Prater Giant Ferris Wheel -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 04 • 精選地標 [7/8]" data-en="Chapter 04 • Destination [7/8]">Chapter 04 • 精選地標 [7/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="Naschmarkt & Prater (納許市場與百年摩天輪)" data-en="Naschmarkt & Prater Ferris Wheel">Naschmarkt & Prater (納許市場與百年摩天輪)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d6c5a3]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZXzyutMxP3jvyRpxba5-IjHJpGvWQP7fOA3Lj36GmLA&s"
+                             onerror="this.src='https://placehold.co/600x360/6b1d2f/f3e5c2?text=Wiener+Riesenrad+Prater'"
+                             alt="Wiener Riesenrad Prater Vienna" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="綿延 1.5 公里的<strong>納許市場（Naschmarkt）</strong>自 16 世紀起便是維也納人的美食廚房，超過 120 個攤位與小餐館匯聚奧地利起司、地中海橄欖、香料與現煮海鮮；每週六上午旁側更舉辦熱鬧的跳蚤市場。而建於 1897 年的<strong>普拉特百年摩天輪（Wiener Riesenrad）</strong>則是世界現存最古老的摩天輪，紅色木造車廂充滿復古電影《黑獄亡魂》的浪漫情懷。" data-en="Stretching 1.5 km since the 16th century, Naschmarkt is Vienna's culinary heart with 120 stalls of Austrian cheeses, spices, and lively bistros (plus a Saturday flea market). Nearby, the 1897 Wiener Riesenrad at Prater is the world's oldest operating Ferris wheel.">
+                        綿延 1.5 公里的<strong>納許市場（Naschmarkt）</strong>自 16 世紀起便是維也納人的美食廚房，超過 120 個攤位與小餐館匯聚奧地利起司、地中海橄欖、香料與現煮海鮮；每週六上午旁側更舉辦熱鬧的跳蚤市場。而建於 1897 年的<strong>普拉特百年摩天輪（Wiener Riesenrad）</strong>則是世界現存最古老的摩天輪，紅色木造車廂充滿復古電影《黑獄亡魂》的浪漫情懷。
+                    </p>
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px]">
+                        <strong class="text-[#6b1d2f]" data-zh="🎡 黃昏登高與分離派金球：" data-en="🎡 Sunset Ride & Golden Cabbage:">🎡 黃昏登高與分離派金球：</strong>
+                        <span data-zh="納許市場北端緊鄰克林姆等人創立的「分離派會館（Secession Building）」，屋頂金色月桂葉穹頂閃耀奪目；傍晚再搭地鐵前往普拉特摩天輪欣賞維也納日落。" data-en="At Naschmarkt's northern tip stands the gold-domed Secession Building; at dusk, take the U-Bahn to Prater for golden-hour views from a vintage wooden cabin.">
+                            納許市場北端緊鄰克林姆等人創立的「分離派會館（Secession Building）」，屋頂金色月桂葉穹頂閃耀奪目；傍晚再搭地鐵前往普拉特摩天輪欣賞維也納日落。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/nCkEfHg8aJ2NeboE8" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：納許市場與普拉特導航" data-en="Open Google Maps: Naschmarkt & Prater">開啟 Google Maps：納許市場與普拉特導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Destination 8 - Grinzing Heuriger Wine Taverns & Kahlenberg -->
+            <div class="page-slide flex-col space-y-3" data-page="12">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 04 • 精選地標 [8/8]" data-en="Chapter 04 • Destination [8/8]">Chapter 04 • 精選地標 [8/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="Grinzing & Kahlenberg (格林津酒莊與卡倫山)" data-en="Grinzing Wine Taverns & Kahlenberg">Grinzing & Kahlenberg (格林津酒莊與卡倫山)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d6c5a3]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGAC8vjCrJS5jNMkQz00z6aZialc1kXCZf-bZ41b9sdw&s=10"
+                             onerror="this.src='https://placehold.co/600x360/6b1d2f/f3e5c2?text=Grinzing+Vineyards+Vienna'"
+                             alt="Grinzing Vineyards and Kahlenberg View" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="搭乘 38 號電車直達維也納西北郊的<strong>格林津（Grinzing）</strong>，彷彿瞬間步入綠意盎然的田園酒鄉。這裡自古以傳統「新酒酒館（Heuriger）」聞名，門前掛著松枝花環即代表當季新酒開桶，必點維也納獨有的混種白酒<strong>「Wiener Gemischter Satz」</strong>搭配現烤豬肋排與手風琴民謠。" data-en="Take Tram 38 to Grinzing in Vienna's leafy northwest hills, famous for traditional 'Heuriger' wine taverns marked by pine branches above the doorway. Sip crisp local 'Wiener Gemischter Satz' white wine alongside hearty Austrian platters.">
+                        搭乘 38 號電車直達維也納西北郊的<strong>格林津（Grinzing）</strong>，彷彿瞬間步入綠意盎然的田園酒鄉。這裡自古以傳統「新酒酒館（Heuriger）」聞名，門前掛著松枝花環即代表當季新酒開桶，必點維也納獨有的混種白酒<strong>「Wiener Gemischter Satz」</strong>搭配現烤豬肋排與手風琴民謠。
+                    </p>
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] text-[11px]">
+                        <strong class="text-[#6b1d2f]" data-zh="⛰️ 卡倫山（Kahlenberg）全景露台：" data-en="⛰️ Kahlenberg Panorama Terrace:">⛰️ 卡倫山（Kahlenberg）全景露台：</strong>
+                        <span data-zh="從格林津轉乘 38A 巴士登上海拔 484 公尺的卡倫山，整片階梯式葡萄園、聖史蒂芬大教堂尖塔與銀色多瑙河曲線在腳下壯闊展開。" data-en="Continue on Bus 38A up to 484-meter Kahlenberg for Vienna's finest panoramic view over terraced vineyards, St. Stephen's spire, and the winding Danube River.">
+                            從格林津轉乘 38A 巴士登上海拔 484 公尺的卡倫山，整片階梯式葡萄園、聖史蒂芬大教堂尖塔與銀色多瑙河曲線在腳下壯闊展開。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/d3WtgoPdhT78d9DZ6" target="_blank" class="block text-center bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：格林津與卡倫山導航" data-en="Open Google Maps: Grinzing & Kahlenberg">開啟 Google Maps：格林津與卡倫山導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 13: Viennese Culinary & Coffeehouse Culture + Personal Travel Notes -->
+            <div class="page-slide flex-col space-y-3" data-page="13">
+                <div class="imperial-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6424]" data-zh="Chapter 05 • 帝國饗宴與咖啡沙龍" data-en="Chapter 05 • Gastronomy & Coffeehouses">Chapter 05 • 帝國饗宴與咖啡沙龍</p>
+                    <h2 class="text-xl font-bold font-editorial text-stone-900" data-zh="維也納經典美食與百年咖啡館文化" data-en="Viennese Culinary & Coffeehouse Culture">維也納經典美食與百年咖啡館文化</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-stone-800 leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- 1. Wiener Schnitzel -->
+                    <div class="bg-white p-2.5 rounded-lg border border-[#e3d7be] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#6b1d2f] text-sm" data-zh="🥩 維也納炸小牛排 (Wiener Schnitzel)" data-en="🥩 Wiener Schnitzel">🥩 維也納炸小牛排 (Wiener Schnitzel)</h3>
+                        <p class="text-[11px]" data-zh="奧地利國菜！選用薄切小牛肉裹上麵包粉以澄清奶油炸至金黃波浪酥脆，比盤子還大，擠上新鮮檸檬汁並搭配馬鈴薯沙拉享用。" data-en="Austria's national dish: paper-thin veal cutlet breaded and pan-fried in clarified butter until golden and blistered, served with fresh lemon and potato salad.">
+                            奧地利國菜！選用薄切小牛肉裹上麵包粉以澄清奶油炸至金黃波浪酥脆，比盤子還大，擠上新鮮檸檬汁並搭配馬鈴薯沙拉享用。
+                        </p>
+                    </div>
+
+                    <!-- 2. Tafelspitz -->
+                    <div class="bg-white p-2.5 rounded-lg border border-[#e3d7be] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#6b1d2f] text-sm" data-zh="🍲 皇室清燉牛肉 (Tafelspitz)" data-en="🍲 Imperial Boiled Beef (Tafelspitz)">🍲 皇室清燉牛肉 (Tafelspitz)</h3>
+                        <p class="text-[11px]" data-zh="法蘭茲·約瑟夫皇帝最愛的宮廷料理。以蔬菜與牛骨慢火清燉頂級牛臀肉至入口即化，佐以蘋果辣根醬（Apfelkren）與細香蔥酸奶醬。" data-en="Emperor Franz Joseph's favorite dish: prime beef simmered in aromatic vegetable broth, served with apple-horseradish sauce and chive cream.">
+                            法蘭茲·約瑟夫皇帝最愛的宮廷料理。以蔬菜與牛骨慢火清燉頂級牛臀肉至入口即化，佐以蘋果辣根醬（Apfelkren）與細香蔥酸奶醬。
+                        </p>
+                    </div>
+
+                    <!-- 3. Sachertorte & Apfelstrudel & Kaiserschmarrn -->
+                    <div class="bg-white p-2.5 rounded-lg border border-[#e3d7be] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#6b1d2f] text-sm" data-zh="🍰 薩赫蛋糕、蘋果捲與皇帝煎餅" data-en="🍰 Sachertorte, Apfelstrudel & Kaiserschmarrn">🍰 薩赫蛋糕、蘋果捲與皇帝煎餅</h3>
+                        <p class="text-[11px]" data-zh="<strong>薩赫蛋糕（Sachertorte）</strong>為濃郁巧克力海綿蛋糕夾杏桃果醬配無糖鮮奶油；<strong>維也納蘋果捲（Apfelstrudel）</strong>酥皮包裹肉桂葡萄乾蘋果餡；<strong>皇帝煎餅（Kaiserschmarrn）</strong>則是蓬鬆焦糖撕塊鬆餅配李子果醬。" data-en="<strong>Sachertorte</strong> pairs dense chocolate cake with apricot jam and unsweetened whipped cream; <strong>Apfelstrudel</strong> wraps spiced apples in flaky pastry; <strong>Kaiserschmarrn</strong> is caramelized shredded pancake with plum compote.">
+                            <strong>薩赫蛋糕（Sachertorte）</strong>為濃郁巧克力海綿蛋糕夾杏桃果醬配無糖鮮奶油；<strong>維也納蘋果捲（Apfelstrudel）</strong>酥皮包裹肉桂葡萄乾蘋果餡；<strong>皇帝煎餅（Kaiserschmarrn）</strong>則是蓬鬆焦糖撕塊鬆餅配李子果醬。
+                        </p>
+                    </div>
+
+                    <!-- 4. Melange & UNESCO Coffeehouse Etiquette -->
+                    <div class="bg-[#f4ede0] p-2.5 rounded-lg border border-[#d6c5a3] space-y-1">
+                        <h3 class="font-editorial font-bold text-stone-900 text-sm" data-zh="☕ 維也納米朗琪 (Melange) 與世界遺產咖啡館禮儀" data-en="☕ Viennese Melange & UNESCO Café Etiquette">☕ 維也納米朗琪 (Melange) 與世界遺產咖啡館禮儀</h3>
+                        <p class="text-[11px]" data-zh="維也納咖啡館文化獲列聯合國非物質文化遺產。點一杯半咖啡半熱牛奶與奶泡的<strong>「Wiener Melange」</strong>，侍者會用銀托盤附上一杯免費冰水，代表「您想待多久都歡迎」，盡情閱讀報紙或寫作也不會被催促。" data-en="Inscribed on UNESCO's Intangible Cultural Heritage list, Viennese coffeehouses welcome you to linger for hours over a frothy <strong>Wiener Melange</strong> served on a silver tray with a complimentary glass of tap water.">
+                            維也納咖啡館文化獲列聯合國非物質文化遺產。點一杯半咖啡半熱牛奶與奶泡的<strong>「Wiener Melange」</strong>，侍者會用銀托盤附上一杯免費冰水，代表「您想待多久都歡迎」，盡情閱讀報紙或寫作也不會被催促。
+                        </p>
+                    </div>
+
+                    <!-- Personal Travel Notes Scratchpad (localStorage) -->
+                    <div class="bg-white p-3 rounded-xl border border-[#b48a3e] shadow-sm space-y-1.5">
+                        <label for="vienna-notes" class="font-editorial font-bold text-[#6b1d2f] text-xs flex justify-between items-center">
+                            <span data-zh="✒️ 旅客私人筆記本 (自動本機保存)" data-en="✒️ Personal Travel Notes Scratchpad">✒️ 旅客私人筆記本 (自動本機保存)</span>
+                            <span id="note-saved-badge" class="text-[10px] font-mono text-emerald-700 hidden" data-zh="✓ 已儲存" data-en="✓ Saved">✓ 已儲存</span>
+                        </label>
+                        <textarea id="vienna-notes" rows="3"
+                            class="w-full p-2 rounded-lg border border-[#d6c5a3] bg-[#fbf8f1] text-xs text-stone-800 focus:ring-2 focus:ring-[#b48a3e] focus:outline-none resize-none"
+                            placeholder="記錄金色大廳場次、中央咖啡館訂位或伴手禮清單..."></textarea>
+                        <div class="flex space-x-2">
+                            <button onclick="saveNotes()" class="flex-1 bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] text-[11px] py-1.5 rounded-lg font-mono uppercase tracking-wider transition" data-zh="儲存筆記" data-en="Save Notes">
+                                儲存筆記
+                            </button>
+                            <button onclick="clearNotes()" class="bg-[#efe7d6] hover:bg-[#e3d7be] text-stone-700 text-[11px] px-3 py-1.5 rounded-lg font-mono transition" data-zh="清除" data-en="Clear">
+                                清除
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="bg-[#f4ede0] border-t border-[#d6c5a3] px-4 py-2.5 flex justify-between items-center z-20">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-[#fbf8f1] text-stone-800 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm border border-[#d6c5a3] disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-xs font-mono font-bold text-[#6b1d2f]" id="page-indicator">1 / 13</span>
+                <div class="w-24 h-1.5 bg-[#dfd3bc] rounded-full overflow-hidden mt-1">
+                    <div id="progress-bar" class="h-full bg-[#6b1d2f] transition-all duration-300" style="width: 7.7%;"></div>
+                </div>
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-[#6b1d2f] hover:bg-[#4f1321] text-[#f3e5c2] border border-[#b48a3e]/60 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+        <!-- Floating Status Toast -->
+        <div id="toast-msg" class="hidden absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-[#1c1014]/95 text-[#f3e5c2] border border-[#b48a3e] text-[11px] font-mono px-3.5 py-1.5 rounded-full shadow-lg z-40 whitespace-nowrap"></div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, 12-Month Weather Selector, TOC, LocalStorage Notes & Bilingual Toggle -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 13;
+        let currentLang = 'zh';
+        let selectedMonthIndex = 4; // Default to May (Spring gardens & concerts)
+
+        const tocData = [
+            { page: 1, zh: "封面 • 維也納帝國風華與古典樂章", en: "Cover • Vienna Imperial & Classical" },
+            { page: 2, zh: "01. 維也納城市介紹與地理位置", en: "01. Vienna Overview & Geography" },
+            { page: 3, zh: "02. 維也納四季氣候與穿搭指南", en: "02. 12-Month Weather & Clothing" },
+            { page: 4, zh: "03. 維也納經典五日深度行程", en: "03. Classic 5-Day Vienna Itinerary" },
+            { page: 5, zh: "04. 地標 [1/8] 熊布朗宮與皇室花園", en: "04. [1/8] Schönbrunn Palace" },
+            { page: 6, zh: "05. 地標 [2/8] 聖史蒂芬大教堂與舊城區", en: "05. [2/8] St. Stephen's Cathedral" },
+            { page: 7, zh: "06. 地標 [3/8] 霍夫堡與西班牙馬術學校", en: "06. [3/8] Hofburg & Riding School" },
+            { page: 8, zh: "07. 地標 [4/8] 美景宮與克林姆藝術館", en: "07. [4/8] Belvedere & Klimt Gallery" },
+            { page: 9, zh: "08. 地標 [5/8] 藝術史博物館與博物館區", en: "08. [5/8] Kunsthistorisches Museum" },
+            { page: 10, zh: "09. 地標 [6/8] 金色大廳與國家歌劇院", en: "09. [6/8] Musikverein & State Opera" },
+            { page: 11, zh: "10. 地標 [7/8] 納許市場與百年摩天輪", en: "10. [7/8] Naschmarkt & Prater" },
+            { page: 12, zh: "11. 地標 [8/8] 格林津酒莊與卡倫山全景", en: "11. [8/8] Grinzing & Kahlenberg" },
+            { page: 13, zh: "12. 維也納經典美食與百年咖啡館", en: "12. Gastronomy & Coffeehouses" }
+        ];
+
+        const monthlyWeatherData = [
+            {
+                mZh: "1月", mEn: "Jan", temp: "-2°C ~ 3°C", precip: "❄️ Snow / 偶雪",
+                icon: "🎻",
+                highlightZh: "新年音樂會與皇家舞會季高峰（Ball Season），室內博物館與咖啡館最暖心。",
+                highlightEn: "New Year's Concert & peak Viennese Ball Season; cozy museums and grand cafés.",
+                clothZh: "厚羽絨大衣、羊毛發熱衣、防滑雪靴、毛帽、圍巾與保暖手套（舞會需備正式禮服）。",
+                clothEn: "Heavy down coat, thermal base layers, snow boots, beanie, scarf & gloves (formalwear for balls)."
+            },
+            {
+                mZh: "2月", mEn: "Feb", temp: "-1°C ~ 5°C", precip: "❄️ Light Snow / 乾冷",
+                icon: "🎭",
+                highlightZh: "歌劇院舞會（Opera Ball）璀璨登場，冬日銀白熊布朗宮靜謐優雅。",
+                highlightEn: "Iconic Vienna Opera Ball takes center stage; serene winter views at Schönbrunn.",
+                clothZh: "防風羊毛大衣、針織毛衣、防滑皮靴與保濕護手霜。",
+                clothEn: "Windproof wool coat, knit sweaters, slip-resistant boots, and cold-weather skincare."
+            },
+            {
+                mZh: "3月", mEn: "Mar", temp: "2°C ~ 10°C", precip: "🌦️ Breezy / 微風陣雨",
+                icon: "🌷",
+                highlightZh: "初春氣息漸濃，復活節市集（Easter Markets）於熊布朗宮前廣場熱鬧展開。",
+                highlightEn: "Early spring blooms and festive Easter Markets at Schönbrunn and Freyung.",
+                clothZh: "洋蔥式多層次穿搭、風衣外套、薄毛衣與折疊傘。",
+                clothEn: "Layered outfits, trench coat, light sweater, and a compact travel umbrella."
+            },
+            {
+                mZh: "4月", mEn: "Apr", temp: "6°C ~ 15°C", precip: "🌦️ Showers / 春雨",
+                icon: "🌸",
+                highlightZh: "人民花園（Volksgarten）與美景宮繁花盛開，氣候清爽適合舊城漫步。",
+                highlightEn: "Spring blossoms fill Volksgarten and Belvedere gardens; crisp weather for walking.",
+                clothZh: "長袖襯衫、針織開襟衫、輕便防風夾克與舒適步行鞋。",
+                clothEn: "Long-sleeve shirts, cardigan, light windbreaker, and comfortable walking shoes."
+            },
+            {
+                mZh: "5月", mEn: "May", temp: "11°C ~ 20°C", precip: "🌤️ Mild / 晴朗宜人",
+                icon: "🌹",
+                highlightZh: "全年最佳旅遊月份之一！人民花園數百種玫瑰齊放，維也納藝術節開幕。",
+                highlightEn: "One of the finest months to visit: Volksgarten roses bloom and Vienna Festival begins.",
+                clothZh: "薄長袖或短袖搭配休閒西裝外套、太陽眼鏡與好走的平底鞋。",
+                clothEn: "Light shirts or T-shirts with a blazer/light jacket, sunglasses, and walking shoes."
+            },
+            {
+                mZh: "6月", mEn: "Jun", temp: "14°C ~ 24°C", precip: "☀️ Sunny / 偶午後雨",
+                icon: "🎶",
+                highlightZh: "熊布朗宮「仲夏夜露天音樂會」免費入場，多瑙河島音樂節盛大舉行。",
+                highlightEn: "Free Summer Night Concert at Schönbrunn Palace and Danube Island Festival.",
+                clothZh: "透氣夏裝、遮陽帽、防曬乳，晚間戶外音樂會攜帶一件薄外套。",
+                clothEn: "Breathable summer attire, sun hat, SPF, and a light layer for evening open-air concerts."
+            },
+            {
+                mZh: "7月", mEn: "Jul", temp: "16°C ~ 27°C", precip: "☀️ Warm / 陽光充沛",
+                icon: "🎬",
+                highlightZh: "市政廳廣場（Rathausplatz）舉辦夏季露天音樂電影節與多國美食市集。",
+                highlightEn: "Rathausplatz Film Festival brings open-air classical screenings and gourmet food stalls.",
+                clothZh: "輕薄短袖、亞麻長褲或洋裝、太陽眼鏡與舒適涼鞋或球鞋。",
+                clothEn: "Lightweight summer clothes, linen trousers or dresses, sunglasses, and breathable footwear."
+            },
+            {
+                mZh: "8月", mEn: "Aug", temp: "16°C ~ 26°C", precip: "☀️ Warm / 晴朗乾燥",
+                icon: "🛥️",
+                highlightZh: "多瑙河遊船與舊多瑙河（Alte Donau）划船戲水最佳時節，夏夜微風徐徐。",
+                highlightEn: "Peak summer for Danube River cruises and relaxing along Alte Donau waterfronts.",
+                clothZh: "夏裝與防曬用品，傍晚搭乘多瑙河遊船或登卡倫山可加件薄針織衫。",
+                clothEn: "Summer attire and sunscreen, plus a light cardigan for evening river cruises."
+            },
+            {
+                mZh: "9月", mEn: "Sep", temp: "12°C ~ 20°C", precip: "🌤️ Crisp / 秋高氣爽",
+                icon: "🍇",
+                highlightZh: "葡萄採收與「維也納酒鄉健行日（Wine Hiking Day）」，格林津新酒開桶。",
+                highlightEn: "Grape harvest & Vienna Wine Hiking Day; fresh Sturm young wine arrives in Grinzing.",
+                clothZh: "長袖上衣、風衣或休閒夾克、長褲與適合葡萄園小徑的健行鞋。",
+                clothEn: "Long sleeves, trench or utility jacket, trousers, and sturdy shoes for vineyard paths."
+            },
+            {
+                mZh: "10月", mEn: "Oct", temp: "7°C ~ 14°C", precip: "🍂 Mild / 乾燥金秋",
+                icon: "🍁",
+                highlightZh: "維也納森林與普拉特大道化為金黃秋色，歌劇院與愛樂新樂季全面展開。",
+                highlightEn: "Golden autumn foliage across Prater and Vienna Woods; new concert & opera season in full swing.",
+                clothZh: "保暖夾克、毛衣、圍巾與防潑水步行鞋。",
+                clothEn: "Warm jacket, knitwear, scarf, and water-resistant walking shoes."
+            },
+            {
+                mZh: "11月", mEn: "Nov", temp: "2°C ~ 8°C", precip: "🌫️ Mist / 微涼偶雨",
+                icon: "🕯️",
+                highlightZh: "11 月中旬各大聖誕市集陸續點燈，在百年咖啡館品嚐熱騰騰薩赫蛋糕最愜意。",
+                highlightEn: "Christmas markets begin lighting up mid-month; ideal weather for cozy coffeehouse afternoons.",
+                clothZh: "防風保暖大衣、羊毛圍巾、毛衣與防水短靴。",
+                clothEn: "Insulated windproof coat, wool scarf, sweaters, and waterproof ankle boots."
+            },
+            {
+                mZh: "12月", mEn: "Dec", temp: "-1°C ~ 4°C", precip: "❄️ Festive / 偶飄雪花",
+                icon: "🎄",
+                highlightZh: "市政廳前「維也納聖誕夢市集（Christkindlmarkt）」夢幻登場，熱紅酒香氣瀰漫。",
+                highlightEn: "Magical Christkindlmarkt at Rathausplatz fills the city with mulled punch and fairy lights.",
+                clothZh: "極地羽絨大衣、發熱內衣褲、毛帽、手套與防滑保暖雪靴。",
+                clothEn: "Heavy down parka, thermal layers, beanie, gloves, and insulated slip-resistant boots."
+            }
+        ];
+
+        function renderToc() {
+            const tocList = document.getElementById('toc-list');
+            if (!tocList) return;
+            tocList.innerHTML = tocData.map(item => `
+                <button onclick="goToPage(${item.page}); toggleToc();"
+                        class="text-left px-3 py-1.5 rounded-lg transition flex justify-between items-center ${item.page === currentPage ? 'bg-[#6b1d2f] text-[#f3e5c2] font-bold border border-[#b48a3e]' : 'bg-white hover:bg-[#f4ede0] text-stone-800 border border-[#e3d7be]'}">
+                    <span>${currentLang === 'zh' ? item.zh : item.en}</span>
+                    <span class="font-mono text-[10px] opacity-80">P.${item.page}</span>
+                </button>
+            `).join('');
+        }
+
+        function renderMonthSelector() {
+            const selector = document.getElementById('month-selector');
+            if (!selector) return;
+            selector.innerHTML = monthlyWeatherData.map((m, idx) => `
+                <button onclick="selectMonth(${idx})"
+                        class="py-1.5 px-1 rounded-lg font-mono text-[11px] transition border ${idx === selectedMonthIndex ? 'bg-[#6b1d2f] text-[#f3e5c2] border-[#b48a3e] font-bold shadow-sm' : 'bg-white hover:bg-[#f4ede0] text-stone-700 border-[#d6c5a3]'}">
+                    ${currentLang === 'zh' ? m.mZh : m.mEn}
+                </button>
+            `).join('');
+            renderMonthDetail();
+        }
+
+        function renderMonthDetail() {
+            const card = document.getElementById('month-detail-card');
+            if (!card) return;
+            const m = monthlyWeatherData[selectedMonthIndex];
+            card.innerHTML = `
+                <div class="flex justify-between items-center border-b border-[#e3d7be] pb-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-2xl">${m.icon}</span>
+                        <div>
+                            <h3 class="font-editorial font-bold text-base text-stone-900">${currentLang === 'zh' ? m.mZh + ' 氣候與盛事' : m.mEn + ' Climate & Events'}</h3>
+                            <span class="text-[10px] font-mono text-[#8a6424]">${m.precip}</span>
+                        </div>
+                    </div>
+                    <div class="bg-[#f4ede0] px-2.5 py-1 rounded-lg border border-[#d6c5a3] font-mono font-bold text-[#6b1d2f] text-xs">
+                        ${m.temp}
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <div>
+                        <strong class="text-stone-900 font-editorial block text-[11px]">${currentLang === 'zh' ? '✨ 季節亮點：' : '✨ Seasonal Highlights:'}</strong>
+                        <p class="text-stone-700 text-[11px]">${currentLang === 'zh' ? m.highlightZh : m.highlightEn}</p>
+                    </div>
+                    <div>
+                        <strong class="text-stone-900 font-editorial block text-[11px]">${currentLang === 'zh' ? '🧥 穿搭與行李建議：' : '🧥 Clothing & Packing Advice:'}</strong>
+                        <p class="text-stone-700 text-[11px]">${currentLang === 'zh' ? m.clothZh : m.clothEn}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectMonth(idx) {
+            selectedMonthIndex = idx;
+            renderMonthSelector();
+        }
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'), 10);
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const pageLabel = `${currentPage} / ${totalPages}`;
+            const indicator = document.getElementById('page-indicator');
+            if (indicator) indicator.textContent = pageLabel;
+            const topIndicator = document.getElementById('top-page-indicator');
+            if (topIndicator) topIndicator.textContent = pageLabel;
+
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) progressBar.style.width = `${(currentPage / totalPages) * 100}%`;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.disabled = (currentPage === 1);
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '回封面 ↺' : 'Cover ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+
+            renderToc();
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+            } else {
+                currentPage = 1;
+            }
+            updateDisplay();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function toggleToc() {
+            const drawer = document.getElementById('toc-drawer');
+            if (!drawer) return;
+            if (drawer.classList.contains('hidden')) {
+                renderToc();
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+            }
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            const htmlRoot = document.getElementById('html-root');
+            if (htmlRoot) htmlRoot.setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+
+            const notesEl = document.getElementById('vienna-notes');
+            if (notesEl) {
+                notesEl.placeholder = (currentLang === 'zh')
+                    ? '記錄金色大廳場次、中央咖啡館訂位或伴手禮清單...'
+                    : 'Jot down Musikverein tickets, Café Central plans, or souvenirs...';
+            }
+
+            renderMonthSelector();
+            updateDisplay();
+            showToast(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (!btn) return;
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showToast(currentLang === 'zh' ? `已加入第 ${currentPage} 頁書籤` : `Bookmarked Page ${currentPage}`);
+            } else {
+                btn.textContent = '🔖';
+                showToast(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notesEl = document.getElementById('vienna-notes');
+            if (!notesEl) return;
+            try {
+                localStorage.setItem('vienna_journey_notes', notesEl.value);
+                const badge = document.getElementById('note-saved-badge');
+                if (badge) {
+                    badge.classList.remove('hidden');
+                    setTimeout(() => badge.classList.add('hidden'), 2000);
+                }
+                showToast(currentLang === 'zh' ? '旅遊筆記已儲存！' : 'Travel notes saved!');
+            } catch (e) {
+                showToast(currentLang === 'zh' ? '無法存取本機儲存空間' : 'Storage unavailable');
+            }
+        }
+
+        function clearNotes() {
+            const notesEl = document.getElementById('vienna-notes');
+            if (!notesEl) return;
+            notesEl.value = '';
+            try {
+                localStorage.removeItem('vienna_journey_notes');
+            } catch (e) {}
+            showToast(currentLang === 'zh' ? '筆記已清除' : 'Notes cleared');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2200);
+        }
+
+        window.onload = function() {
+            try {
+                const savedNotes = localStorage.getItem('vienna_journey_notes');
+                const notesEl = document.getElementById('vienna-notes');
+                if (savedNotes && notesEl) {
+                    notesEl.value = savedNotes;
+                }
+            } catch (e) {}
+            renderMonthSelector();
+            updateDisplay();
+        };
+
+        // Keyboard Arrow Navigation Support
+        document.addEventListener('keydown', e => {
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (activeTag === 'textarea' || activeTag === 'input') return;
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') prevPage();
+        });
+
+        // Touch Swipe Navigation Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        if (bookArea) {
+            bookArea.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            bookArea.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                if (diff < -55) nextPage();
+                if (diff > 55) prevPage();
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
