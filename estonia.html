@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>愛沙尼亞北歐古韻與波羅的海深度之旅電子書報 | Estonia Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', serif;
+            background-color: #0b1628;
+            color: #1e293b;
+            touch-action: pan-y;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        /* Nordic Baltic Slate/Navy (#1B365D), Crisp Ice (#F8FAFC) & Pine Amber Gold (#C58B2A) */
+        .nordic-header {
+            border-bottom: 3px double #C58B2A;
+            border-top: 1px solid #C58B2A;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.1rem;
+            float: left;
+            line-height: 0.82;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #1B365D;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F8FAFC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C58B2A;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-0 sm:py-3 px-0 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile-First 480px Max Width) -->
+    <div class="w-full max-w-[480px] h-[100dvh] sm:h-[92vh] sm:max-h-[880px] bg-[#F8FAFC] shadow-2xl sm:rounded-2xl overflow-hidden border-0 sm:border sm:border-[#cbd5e1] flex flex-col justify-between relative select-none">
+
+        <!-- Persistent Top Navigation / Nordic Baltic Issue Bar -->
+        <div class="bg-[#1B365D] text-[#F8FAFC] px-3.5 py-2.5 text-xs flex justify-between items-center tracking-wider font-mono z-20 shadow-md border-b border-[#C58B2A]/60">
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleToc()" class="bg-[#122642] hover:bg-[#0c1a2e] text-[#f5deb3] px-2.5 py-1 rounded text-[11px] flex items-center space-x-1 border border-[#C58B2A]/50 transition" title="Table of Contents / 目錄">
+                    <span>☰</span>
+                    <span data-zh="目錄" data-en="TOC">目錄</span>
+                </button>
+                <span class="bg-[#122642]/90 text-[#f3cf8a] px-2 py-0.5 rounded text-[10px] font-bold border border-[#C58B2A]/40" id="top-page-indicator">1 / 14</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Persistent Bilingual Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-[#C58B2A] hover:bg-[#ad7720] text-[#0b1628] px-2.5 py-1 rounded text-[10px] font-mono transition font-bold shadow-sm" title="Switch Language / 切換語言">
+                    EN / 繁中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-[#f5deb3] hover:text-white transition-colors text-sm" title="加入書籤 / Bookmark">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide-Out Table of Contents Drawer -->
+        <div id="toc-drawer" class="hidden absolute inset-x-0 top-[44px] bottom-[56px] bg-[#F8FAFC]/98 backdrop-blur-md z-30 flex-col justify-between p-4 overflow-y-auto border-b border-slate-300">
+            <div class="space-y-2.5">
+                <div class="flex justify-between items-center border-b-2 border-[#C58B2A] pb-2">
+                    <h3 class="font-editorial font-bold text-lg text-[#1B365D]" data-zh="📖 愛沙尼亞電子書報目錄" data-en="📖 Estonia Edition Contents">📖 愛沙尼亞電子書報目錄</h3>
+                    <button onclick="toggleToc()" class="text-slate-600 hover:text-slate-900 font-mono text-xs px-2.5 py-1 bg-slate-200 rounded border border-slate-300">✕</button>
+                </div>
+                <div class="grid grid-cols-1 gap-1.5 text-xs font-serif" id="toc-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+            <div class="pt-3 text-center text-[10px] font-mono text-slate-500">
+                Estonia Discovery Digital Edition • 14 Standalone Pages
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (14 Standalone Pages) -->
+        <div class="flex-1 overflow-y-auto px-5 py-4 space-y-4 relative" id="book-content-area">
+
+            <!-- PAGE 1: Editorial Cover Page -->
+            <div class="page-slide active flex-col justify-between h-full space-y-3" data-page="1">
+                <div class="text-center space-y-1.5 pt-1">
+                    <span class="bg-[#1B365D] text-[#f5deb3] border border-[#C58B2A] text-[10px] px-3 py-0.5 font-mono tracking-widest rounded-full uppercase" data-zh="波羅的海北歐典藏版 2026" data-en="Nordic Baltic Collector's Edition 2026">波羅的海北歐典藏版 2026</span>
+                    <h1 class="text-3xl font-bold font-editorial tracking-tight text-slate-900 leading-tight">
+                        <span class="text-[#1B365D] tracking-wider text-2xl block">ESTONIA DISCOVERY JOURNEY</span>
+                        <span class="text-xl text-slate-900 block mt-0.5" data-zh="愛沙尼亞：中世紀古城與波羅的海秘境之旅" data-en="Medieval Spires, Digital Innovation & Baltic Isles">愛沙尼亞：中世紀古城與波羅的海秘境之旅</span>
+                    </h1>
+                    <p class="text-[11px] font-editorial italic text-[#9e6d1c]" data-zh="Medieval Hanseatic Charm, Ancient Peat Bogs & 2,222 Islands" data-en="中世紀漢薩古韻、原始泥炭沼澤與 2,222 座波羅的海島嶼">Medieval Hanseatic Charm, Ancient Peat Bogs & 2,222 Islands</p>
+                </div>
+
+                <div class="relative rounded-xl overflow-hidden shadow-lg border border-slate-300 group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTms5PlRUmjT5MCikE_-KH21rTZoFRmojHF7yYwwAHoQw&s=10"
+                         onerror="handleImgFallback(this, 'Tallinn Medieval Spires')"
+                         alt="Tallinn Old Town Spires Estonia" class="w-full h-44 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#0b1628]/90 via-[#0b1628]/45 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-[#f3cf8a] uppercase tracking-wider" data-zh="波羅的海最北端明珠 • E-ESTONIA" data-en="NORTHERNMOST BALTIC GEM • E-ESTONIA">波羅的海最北端明珠 • E-ESTONIA</p>
+                        <p class="text-xs font-serif font-medium" data-zh="塔林老城、維魯沼澤棧道、薩雷馬島古堡與夏都派爾努" data-en="Tallinn Old Town, Viru Bog, Saaremaa Castle & Pärnu Coast">塔林老城、維魯沼澤棧道、薩雷馬島古堡與夏都派爾努</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#eef3f9] p-3.5 rounded-xl border border-[#cbd7e8] text-xs text-slate-800 leading-relaxed space-y-1.5">
+                    <p class="drop-cap" data-zh="歡迎開啟《愛沙尼亞北歐古韻與波羅的海深度之旅》。作為波羅的海三國最北端的國度，愛沙尼亞既保有歐洲保存最完好的中世紀漢薩古城塔林，又以全球領先的「數位國度（e-Estonia）」與覆蓋半數國土的原始森林與沼澤聞名。本手冊完整收錄國家地理概況、十二月份氣候穿搭、五日經典行程、八大必訪地標與道地美食。" data-en="Welcome to the Estonia Discovery Journey. The northernmost of the three Baltic states, Estonia seamlessly blends UNESCO-listed medieval Hanseatic heritage in Tallinn with pioneering digital innovation ('e-Estonia') and tranquil boreal wilderness. Explore 14 standalone pages with bilingual guides, weather advice, and Google Maps links.">
+                        歡迎開啟《愛沙尼亞北歐古韻與波羅的海深度之旅》。作為波羅的海三國最北端的國度，愛沙尼亞既保有歐洲保存最完好的中世紀漢薩古城塔林，又以全球領先的「數位國度（e-Estonia）」與覆蓋半數國土的原始森林與沼澤聞名。本手冊完整收錄國家地理概況、十二月份氣候穿搭、五日經典行程、八大必訪地標與道地美食。
+                    </p>
+                </div>
+
+                <div class="pt-0.5 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] border border-[#C58B2A] text-xs py-3 rounded-lg font-mono uppercase tracking-widest shadow-md transition-all active:scale-95" data-zh="開始閱讀 / Start Reading ➔" data-en="Start Reading / 開始閱讀 ➔">
+                        開始閱讀 / Start Reading ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Country Overview & Geographical Location -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 01 • 國家與地理概況" data-en="Chapter 01 • Country & Geography">Chapter 01 • 國家與地理概況</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="愛沙尼亞國家介紹與地理位置" data-en="Country Overview & Geographical Location">愛沙尼亞國家介紹與地理位置</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Quick Fact Grid -->
+                    <div class="grid grid-cols-2 gap-2 bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] font-mono text-[11px]">
+                        <div>
+                            <span class="text-slate-500 block text-[9px]" data-zh="首都 / CAPITAL" data-en="CAPITAL">首都 / CAPITAL</span>
+                            <strong class="text-[#1B365D]" data-zh="塔林 (Tallinn)" data-en="Tallinn">塔林 (Tallinn)</strong>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block text-[9px]" data-zh="國土與島嶼 / TERRITORY" data-en="AREA & ISLANDS">國土與島嶼 / TERRITORY</span>
+                            <strong class="text-slate-900" data-zh="45,339 km² • 2,222+ 島" data-en="45,339 km² • 2,222+ Isles">45,339 km² • 2,222+ 島</strong>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block text-[9px]" data-zh="流通貨幣 / CURRENCY" data-en="CURRENCY">流通貨幣 / CURRENCY</span>
+                            <strong class="text-slate-900" data-zh="歐元 Euro (EUR €)" data-en="Euro (EUR €)">歐元 Euro (EUR €)</strong>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block text-[9px]" data-zh="官方語言 / LANGUAGE" data-en="LANGUAGE">官方語言 / LANGUAGE</span>
+                            <strong class="text-slate-900" data-zh="愛沙尼亞語 (Estonian)" data-en="Estonian (Eesti keel)">愛沙尼亞語 (Estonian)</strong>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-slate-200 space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#1B365D] text-sm" data-zh="🧭 波羅的海三國最北端的北歐門戶" data-en="🧭 Northernmost of the Three Baltic States">🧭 波羅的海三國最北端的北歐門戶</h3>
+                        <p data-zh="愛沙尼亞（Estonia）位於北歐波羅的海東岸，是「波羅的海三國」中最北端的國家：北隔芬蘭灣（Gulf of Finland）與芬蘭赫爾辛基相望（搭快船僅約 2 小時），西瀕波羅的海與里加灣，南與拉脫維亞接壤，東界則為楚德湖（Lake Peipus）及俄羅斯。在語言與文化血緣上，愛沙尼亞與芬蘭同屬烏拉語系芬蘭-烏戈爾語族，散發濃厚的北歐氣質。" data-en="Positioned on the eastern shore of the Baltic Sea, Estonia is the northernmost of the three Baltic states—bordered by the Gulf of Finland to the north (just a 2-hour ferry from Helsinki), the Baltic Sea to the west, Latvia to the south, and Lake Peipus / Russia to the east. Culturally and linguistically linked to Finland, it radiates unmistakable Nordic charm.">
+                            愛沙尼亞（Estonia）位於北歐波羅的海東岸，是「波羅的海三國」中最北端的國家：北隔芬蘭灣（Gulf of Finland）與芬蘭赫爾辛基相望（搭快船僅約 2 小時），西瀕波羅的海與里加灣，南與拉脫維亞接壤，東界則為楚德湖（Lake Peipus）及俄羅斯。在語言與文化血緣上，愛沙尼亞與芬蘭同屬烏拉語系芬蘭-烏戈爾語族，散發濃厚的北歐氣質。
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-slate-200 space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#1B365D] text-sm" data-zh="🌲 2,222 座島嶼、寒帶森林與千年泥炭沼澤" data-en="🌲 2,222 Islands, Boreal Forests & Peat Bogs">🌲 2,222 座島嶼、寒帶森林與千年泥炭沼澤</h3>
+                        <p data-zh="全國約 50% 國土覆蓋著茂密的松樹、雲杉與白樺寒帶森林，並擁有超過 2,222 座波羅的海島嶼（其中薩雷馬島與希烏馬島最為著名）以及 1,400 多座冰河湖泊。獨特的「高位泥炭沼澤（Raised Peat Bogs）」佔國土面積逾五分之一，木棧道步道讓人能安全深入原始濕地生態。" data-en="Roughly 50% of Estonia is blanketed in dense boreal forests of pine, spruce, and birch, complemented by over 2,222 Baltic islands (led by Saaremaa and Hiiumaa), 1,400 glacial lakes, and ancient raised peat bogs covering a fifth of the land.">
+                            全國約 50% 國土覆蓋著茂密的松樹、雲杉與白樺寒帶森林，並擁有超過 2,222 座波羅的海島嶼（其中薩雷馬島與希烏馬島最為著名）以及 1,400 多座冰河湖泊。獨特的「高位泥炭沼澤（Raised Peat Bogs）」佔國土面積逾五分之一，木棧道步道讓人能安全深入原始濕地生態。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#eef3f9] p-3 rounded-lg border border-[#cbd7e8] space-y-1">
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="💻 全球數位先驅：「e-Estonia」智慧國度" data-en="💻 Digital Pioneer: 'e-Estonia' Innovation">💻 全球數位先驅：「e-Estonia」智慧國度</h3>
+                        <p data-zh="愛沙尼亞是 Skype 的誕生地，也是全球第一個實施線上國會投票、數位身分證與「電子居民（e-Residency）」的國家，實現「在原始森林裡也能享受高速 5G 與無紙化生活」的北歐奇蹟。" data-en="Birthplace of Skype and the world's first nation to introduce online voting and e-Residency, Estonia uniquely pairs ultra-modern digital society with untouched wilderness.">
+                            愛沙尼亞是 Skype 的誕生地，也是全球第一個實施線上國會投票、數位身分證與「電子居民（e-Residency）」的國家，實現「在原始森林裡也能享受高速 5G 與無紙化生活」的北歐奇蹟。
+                        </p>
+                    </div>
+
+                    <a href="https://maps.app.goo.gl/HDbABKZRxPGqGym78" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2 rounded-lg font-mono text-[11px] transition shadow-sm">
+                        🗺️ <span data-zh="在 Google Maps 查看愛沙尼亞全境地圖" data-en="View Estonia Map on Google Maps">在 Google Maps 查看愛沙尼亞全境地圖</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Monthly Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 02 • 每月氣候與穿搭" data-en="Chapter 02 • Monthly Weather & Clothing">Chapter 02 • 每月氣候與穿搭</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="愛沙尼亞每月氣候與穿搭指南" data-en="Monthly Weather & Clothing Guide">愛沙尼亞每月氣候與穿搭指南</h2>
+                </div>
+
+                <p class="text-[11px] text-slate-600 font-serif" data-zh="點擊下方月份按鈕（1月–12月），查看平均氣溫、日照時數（含夏季白夜）、降水概況與穿搭建議：" data-en="Select any month (Jan–Dec) to view average temperatures, daylight hours (including June/July White Nights), precipitation & packing advice:">
+                    點擊下方月份按鈕（1月–12月），查看平均氣溫、日照時數（含夏季白夜）、降水概況與穿搭建議：
+                </p>
+
+                <!-- 12-Month Interactive Grid -->
+                <div class="grid grid-cols-4 gap-1.5" id="month-selector">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Dynamic Month Detail Card -->
+                <div id="month-detail-card" class="bg-white p-3.5 rounded-xl border-2 border-[#C58B2A]/50 shadow-sm space-y-2 text-xs text-slate-800">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px] text-slate-700 space-y-1">
+                    <strong class="text-[#1B365D] block font-editorial" data-zh="🧭 塔林石板路與沼澤棧道鞋履建議" data-en="🧭 Cobblestone & Bog Boardwalk Footwear Tip">🧭 塔林石板路與沼澤棧道鞋履建議</strong>
+                    <p data-zh="塔林老城區擁有大量中世紀鵝卵石坡道，加上維魯沼澤木棧道清晨易有露水，建議全程穿著防滑、抓地力佳的平底步行鞋或輕量防水健行鞋。" data-en="Tallinn's historic center features steep medieval cobblestones, and bog boardwalks can be dewy at dawn—pack sturdy, slip-resistant walking or hiking shoes.">
+                        塔林老城區擁有大量中世紀鵝卵石坡道，加上維魯沼澤木棧道清晨易有露水，建議全程穿著防滑、抓地力佳的平底步行鞋或輕量防水健行鞋。
+                    </p>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Classic 5-Day Estonia Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 03 • 經典五日深度行程" data-en="Chapter 03 • Classic 5-Day Itinerary">Chapter 03 • 經典五日深度行程</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="愛沙尼亞經典五日深度行程規劃" data-en="Classic 5-Day Estonia Itinerary">愛沙尼亞經典五日深度行程規劃</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Day 1 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#1B365D] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#1B365D]">DAY 01</span>
+                            <a href="https://maps.app.goo.gl/E5RptGZ6XJiUH5Na9" target="_blank" class="text-[10px] font-mono text-[#9e6d1c] hover:text-[#1B365D] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="塔林中世紀老城與特利斯基維創意園區" data-en="Tallinn Old Town & Telliskivi Creative City">塔林中世紀老城與特利斯基維創意園區</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="上午漫步市政廳廣場、亞歷山大·涅夫斯基大教堂與觀景台俯瞰紅屋頂；午後走訪卡拉馬亞木屋區與特利斯基維文創園區（Telliskivi）欣賞北歐設計與攝影展。" data-en="Morning in Tallinn Old Town: Town Hall Square, Alexander Nevsky Cathedral & Kohtuotsa viewpoint; afternoon in Kalamaja wooden district & Telliskivi Creative City.">
+                            上午漫步市政廳廣場、亞歷山大·涅夫斯基大教堂與觀景台俯瞰紅屋頂；午後走訪卡拉馬亞木屋區與特利斯基維文創園區（Telliskivi）欣賞北歐設計與攝影展。
+                        </p>
+                    </div>
+
+                    <!-- Day 2 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#C58B2A] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9e6d1c]">DAY 02</span>
+                            <a href="https://maps.app.goo.gl/VnXuz9KZpvFMkdYKA" target="_blank" class="text-[10px] font-mono text-[#9e6d1c] hover:text-[#1B365D] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="卡德里奧宮與拉赫瑪國家公園莊園巡禮" data-en="Kadriorg Palace & Lahemaa National Park">卡德里奧宮與拉赫瑪國家公園莊園巡禮</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="清晨先訪塔林東郊巴洛克式卡德里奧宮與天鵝湖花園，隨即向東駛入拉赫瑪國家公園，走上維魯沼澤（Viru Bog）木棧道並探訪帕爾姆塞與薩加迪貴族莊園。" data-en="Morning visit to Baroque Kadriorg Palace & gardens, then drive east to Lahemaa National Park to walk the Viru Bog boardwalk and explore Palmse & Sagadi Manors.">
+                            清晨先訪塔林東郊巴洛克式卡德里奧宮與天鵝湖花園，隨即向東駛入拉赫瑪國家公園，走上維魯沼澤（Viru Bog）木棧道並探訪帕爾姆塞與薩加迪貴族莊園。
+                        </p>
+                    </div>
+
+                    <!-- Day 3 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#1B365D] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#1B365D]">DAY 03</span>
+                            <a href="https://maps.app.goo.gl/baiNtti4oeB31Ggr9" target="_blank" class="text-[10px] font-mono text-[#9e6d1c] hover:text-[#1B365D] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="文化智識之都：塔爾圖大學城與托梅山" data-en="Intellectual Capital: Tartu & Toome Hill">文化智識之都：塔爾圖大學城與托梅山</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="南下前往「波羅的海牛津」塔爾圖（Tartu），於市政廳廣場親吻學生噴泉留念，漫步托梅山（Toome Hill）天使橋與大教堂遺址，並參觀前衛的愛沙尼亞國家博物館（ERM）。" data-en="Head south to Tartu: visit Kissing Students Fountain, stroll Toome Hill's Angel's Bridge and Cathedral ruins, and tour the architectural Estonian National Museum (ERM).">
+                            南下前往「波羅的海牛津」塔爾圖（Tartu），於市政廳廣場親吻學生噴泉留念，漫步托梅山（Toome Hill）天使橋與大教堂遺址，並參觀前衛的愛沙尼亞國家博物館（ERM）。
+                        </p>
+                    </div>
+
+                    <!-- Day 4 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#C58B2A] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9e6d1c]">DAY 04</span>
+                            <a href="https://maps.app.goo.gl/6DfQWTxCXsgpUHp3A" target="_blank" class="text-[10px] font-mono text-[#9e6d1c] hover:text-[#1B365D] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="派爾努夏都海灘與渡輪登陸薩雷馬島" data-en="Pärnu Summer Resort & Ferry to Saaremaa">派爾努夏都海灘與渡輪登陸薩雷馬島</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="上午於愛沙尼亞官方「夏都」派爾努（Pärnu）享受海岸木棧道與松林水療公園，午後前往維爾楚（Virtsu）搭乘跨海渡輪登陸最大島嶼薩雷馬島（Saaremaa）。" data-en="Morning along Pärnu's white sandy beach and spa villas; afternoon ferry from Virtsu across to Estonia's largest island, Saaremaa.">
+                            上午於愛沙尼亞官方「夏都」派爾努（Pärnu）享受海岸木棧道與松林水療公園，午後前往維爾楚（Virtsu）搭乘跨海渡輪登陸最大島嶼薩雷馬島（Saaremaa）。
+                        </p>
+                    </div>
+
+                    <!-- Day 5 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#1B365D] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#1B365D]">DAY 05</span>
+                            <a href="hhttps://maps.app.goo.gl/nyPg1WHA8xHFiiKb9" target="_blank" class="text-[10px] font-mono text-[#9e6d1c] hover:text-[#1B365D] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="庫雷薩雷主教城堡、風車群與返程塔林" data-en="Kuressaare Castle, Windmills & Return">庫雷薩雷主教城堡、風車群與返程塔林</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="參觀護城河環繞的 14 世紀庫雷薩雷主教城堡，順訪安格拉傳統風車山（Angla Windmills）與卡利隕石坑（Kaali Crater），傍晚搭渡輪返回大陸並回到塔林賦歸。" data-en="Explore moat-encircled 14th-century Kuressaare Episcopal Castle, Angla Windmills, and Kaali Meteorite Crater before returning to Tallinn.">
+                            參觀護城河環繞的 14 世紀庫雷薩雷主教城堡，順訪安格拉傳統風車山（Angla Windmills）與卡利隕石坑（Kaali Crater），傍晚搭渡輪返回大陸並回到塔林賦歸。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destination 1 - Tallinn Old Town -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 04 • 精選地標 [1/8]" data-en="Chapter 04 • Destination [1/8]">Chapter 04 • 精選地標 [1/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Tallinn Old Town (塔林中世紀老城區)" data-en="Tallinn Old Town (Vanalinn)">Tallinn Old Town (塔林中世紀老城區)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-slate-300">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZYFhQ7QeqSgOFwkU_WJY-Yi27xAraiNNntS7Y1CnZTA&s=10"
+                             onerror="handleImgFallback(this, 'Tallinn Old Town Vanalinn')"
+                             alt="Tallinn Old Town" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="獲列聯合國世界文化遺產的<strong>塔林老城區（Vanalinn）</strong>是北歐保存最完好的中世紀漢薩同盟商業古城，分為「上城區（Toompea）」與「下城區」。蜿蜒的鵝卵石小巷、長達近 2 公里的古老城牆與紅瓦尖塔交織成童話畫卷。上城區矗立著洋蔥圓頂的<strong>亞歷山大·涅夫斯基大教堂</strong>與粉紅巴洛克議會大廈；下城區則以熱鬧的<strong>市政廳廣場（Raekoja plats）</strong>為心臟。" data-en="A UNESCO World Heritage treasure, Tallinn's Old Town (Vanalinn) is Northern Europe's best-preserved medieval Hanseatic trading city. Split into Toompea Hill and the Lower Town, it enchants with intact defensive walls, Alexander Nevsky Cathedral, and Town Hall Square.">
+                        獲列聯合國世界文化遺產的<strong>塔林老城區（Vanalinn）</strong>是北歐保存最完好的中世紀漢薩同盟商業古城，分為「上城區（Toompea）」與「下城區」。蜿蜒的鵝卵石小巷、長達近 2 公里的古老城牆與紅瓦尖塔交織成童話畫卷。上城區矗立著洋蔥圓頂的<strong>亞歷山大·涅夫斯基大教堂</strong>與粉紅巴洛克議會大廈；下城區則以熱鬧的<strong>市政廳廣場（Raekoja plats）</strong>為心臟。
+                    </p>
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px]">
+                        <strong class="text-[#1B365D]" data-zh="📸 絕佳全景機位與秘境：" data-en="📸 Best Viewpoint & Hidden Gem:">📸 絕佳全景機位與秘境：</strong>
+                        <span data-zh="登上「Kohtuotsa 觀景台」可將老城紅屋頂、聖奧拉夫教堂尖塔與遠方波羅的海海港同框收入鏡頭；別忘了順道探訪自 1422 年營業至今的歐洲最古老藥局「Raeapteek」。" data-en="Head to Kohtuotsa Viewing Platform for sweeping panoramas of red roofs, St. Olaf's spire, and the Baltic Sea, then peek inside Raeapteek—Europe's oldest continuously running pharmacy (since 1422).">
+                            登上「Kohtuotsa 觀景台」可將老城紅屋頂、聖奧拉夫教堂尖塔與遠方波羅的海海港同框收入鏡頭；別忘了順道探訪自 1422 年營業至今的歐洲最古老藥局「Raeapteek」。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/E8gUth2QLvXZQaXd7" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：塔林老城與觀景台導航" data-en="Open Google Maps: Tallinn Old Town">開啟 Google Maps：塔林老城與觀景台導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destination 2 - Telliskivi Creative City & Kalamaja -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 04 • 精選地標 [2/8]" data-en="Chapter 04 • Destination [2/8]">Chapter 04 • 精選地標 [2/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Telliskivi & Kalamaja (特利斯基維與卡拉馬亞)" data-en="Telliskivi Creative City & Kalamaja">Telliskivi & Kalamaja (特利斯基維與卡拉馬亞)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-slate-300">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxsM9t7iL3Inwf8drOF2KaX_b3KfQZp3K03qmjaXW1gQ&s=10"
+                             onerror="handleImgFallback(this, 'Telliskivi & Kalamaja Tallinn')"
+                             alt="Kalamaja Wooden Architecture and Creative District" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="緊鄰塔林火車站西北側的<strong>特利斯基維創意園區（Telliskivi Creative City）</strong>，由 19 世紀廢棄鐵路工廠華麗轉身為波羅的海最具活力的文創設計聚落。園區內匯聚超過 30 間獨立設計師選物店、前衛塗鴉牆、世界級攝影美術館<strong>Fotografiska Tallinn</strong>，以及由老火車車廂改建的特色餐廳。" data-en="Located just northwest of Baltic Station, Telliskivi Creative City transforms a 19th-century railway factory complex into Tallinn's premier hub of Nordic design, vibrant street murals, indie studios, and Fotografiska Tallinn.">
+                        緊鄰塔林火車站西北側的<strong>特利斯基維創意園區（Telliskivi Creative City）</strong>，由 19 世紀廢棄鐵路工廠華麗轉身為波羅的海最具活力的文創設計聚落。園區內匯聚超過 30 間獨立設計師選物店、前衛塗鴉牆、世界級攝影美術館<strong>Fotografiska Tallinn</strong>，以及由老火車車廂改建的特色餐廳。
+                    </p>
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px]">
+                        <strong class="text-[#1B365D]" data-zh="🏡 漫步卡拉馬亞百年木屋區（Kalamaja）：" data-en="🏡 Stroll Historic Wooden Kalamaja:">🏡 漫步卡拉馬亞百年木屋區（Kalamaja）：</strong>
+                        <span data-zh="緊鄰園區的卡拉馬亞曾是漁民聚落，保留了大量色彩繽紛的兩層樓北歐木造老屋（Tallinn Houses），並有「波羅的海車站市場（Balti Jaama Turg）」可品嚐道地街頭美食與復古古董。" data-en="Adjacent Kalamaja—once a historic fishing neighborhood—charms with colorful 19th-century wooden houses and the bustling Balti Jaama Turg market hall.">
+                            緊鄰園區的卡拉馬亞曾是漁民聚落，保留了大量色彩繽紛的兩層樓北歐木造老屋（Tallinn Houses），並有「波羅的海車站市場（Balti Jaama Turg）」可品嚐道地街頭美食與復古古董。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/qFVVVsEmN6DwLYLx9" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：特利斯基維園區導航" data-en="Open Google Maps: Telliskivi Creative City">開啟 Google Maps：特利斯基維園區導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destination 3 - Kadriorg Palace & Park -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 04 • 精選地標 [3/8]" data-en="Chapter 04 • Destination [3/8]">Chapter 04 • 精選地標 [3/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Kadriorg Palace & Park (卡德里奧宮與公園)" data-en="Kadriorg Palace & Royal Park">Kadriorg Palace & Park (卡德里奧宮與公園)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-slate-300">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwdZK86wu6ai1fUS2AeKkJwlupkksqRmLiC1Aw1AncCg&s=10"
+                             onerror="handleImgFallback(this, 'Kadriorg Palace & Park')"
+                             alt="Baroque Palace and Manicured Gardens" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="<strong>卡德里奧宮（Kadriorg Palace）</strong>是俄國沙皇彼得大帝於 1718 年為皇后葉卡捷琳娜一世興建的彼得巴洛克風格夏宮，其名在愛沙尼亞語中意為「凱瑟琳之谷」。赤陶紅與雪白相間的華麗外牆、金箔灰泥主廳與對稱幾何御花園展現皇室氣派，現為愛沙尼亞外國藝術博物館。" data-en="Built in 1718 by Tsar Peter the Great for Empress Catherine I, Kadriorg Palace ('Catherine's Valley') is a jewel of Petrine Baroque architecture featuring terracotta-and-white facades, gilded stucco halls, and symmetrical gardens.">
+                        <strong>卡德里奧宮（Kadriorg Palace）</strong>是俄國沙皇彼得大帝於 1718 年為皇后葉卡捷琳娜一世興建的彼得巴洛克風格夏宮，其名在愛沙尼亞語中意為「凱瑟琳之谷」。赤陶紅與雪白相間的華麗外牆、金箔灰泥主廳與對稱幾何御花園展現皇室氣派，現為愛沙尼亞外國藝術博物館。
+                    </p>
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px]">
+                        <strong class="text-[#1B365D]" data-zh="🦢 天鵝湖與 KUMU 當代美術館：" data-en="🦢 Swan Pond & KUMU Art Museum:">🦢 天鵝湖與 KUMU 當代美術館：</strong>
+                        <span data-zh="佔地 70 公頃的卡德里奧公園擁有優雅的天鵝池、日式庭園與愛沙尼亞總統府；公園山坡旁更坐落著榮獲歐洲年度博物館大獎的螺旋建築「KUMU 藝術博物館」。" data-en="Stroll past the romantic Swan Pond, Japanese Garden, and Presidential Palace, then explore the award-winning curved limestone KUMU Art Museum just up the hillside.">
+                            佔地 70 公頃的卡德里奧公園擁有優雅的天鵝池、日式庭園與愛沙尼亞總統府；公園山坡旁更坐落著榮獲歐洲年度博物館大獎的螺旋建築「KUMU 藝術博物館」。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/xpdSwYtXq696HSDNA" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：卡德里奧宮導航" data-en="Open Google Maps: Kadriorg Palace">開啟 Google Maps：卡德里奧宮導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destination 4 - Lahemaa National Park & Viru Bog -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 04 • 精選地標 [4/8]" data-en="Chapter 04 • Destination [4/8]">Chapter 04 • 精選地標 [4/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Lahemaa & Viru Bog (拉赫瑪國家公園)" data-en="Lahemaa National Park & Viru Bog">Lahemaa & Viru Bog (拉赫瑪國家公園)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-slate-300">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdu6k5q-OJgsoJk2MGoeM8HqycKAWoOo0LycDEO1zrBQ&s=10"
+                             onerror="handleImgFallback(this, 'Lahemaa National Park Viru Bog')"
+                             alt="Elevated Wooden Boardwalk in Viru Bog Estonia" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="距離塔林以東僅 50 公里的<strong>拉赫瑪國家公園（Lahemaa National Park）</strong>成立於 1971 年，是愛沙尼亞最古老且面積最大的國家公園。園內最令人屏息的<strong>維魯沼澤步道（Viru Bog / Viru raba）</strong>全長 3.5 公里，高架木棧道穿梭於金黃苔原、矮松林與深邃琥珀色泥炭水潭之間，中央木造瞭望台更可俯瞰整片原始濕地奇景。" data-en="Located just 50 km east of Tallinn, Lahemaa is Estonia's oldest and largest national park. Its signature 3.5 km Viru Bog (Viru raba) elevated wooden boardwalk winds across golden sphagnum moss, stunted pines, and dark mirror-like bog pools to a central watchtower.">
+                        距離塔林以東僅 50 公里的<strong>拉赫瑪國家公園（Lahemaa National Park）</strong>成立於 1971 年，是愛沙尼亞最古老且面積最大的國家公園。園內最令人屏息的<strong>維魯沼澤步道（Viru Bog / Viru raba）</strong>全長 3.5 公里，高架木棧道穿梭於金黃苔原、矮松林與深邃琥珀色泥炭水潭之間，中央木造瞭望台更可俯瞰整片原始濕地奇景。
+                    </p>
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px]">
+                        <strong class="text-[#1B365D]" data-zh="🏛️ 波羅的海貴族莊園與船長村：" data-en="🏛️ Baltic German Manors & Captains' Village:">🏛️ 波羅的海貴族莊園與船長村：</strong>
+                        <span data-zh="國家公園內還保存了典雅的「帕爾姆塞莊園（Palmse Manor）」、森林博物館「薩加迪莊園（Sagadi Manor）」以及滿布白色木屋的濱海「凱斯穆船長村（Käsmu）」。" data-en="Explore restored Baltic German estates including Palmse Manor and Sagadi Manor, plus the white wooden houses of historic Käsmu 'Captains' Village' on the coast.">
+                            國家公園內還保存了典雅的「帕爾姆塞莊園（Palmse Manor）」、森林博物館「薩加迪莊園（Sagadi Manor）」以及滿布白色木屋的濱海「凱斯穆船長村（Käsmu）」。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/SEHpXRNbQGE1prH8A" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：維魯沼澤與拉赫瑪導航" data-en="Open Google Maps: Viru Bog & Lahemaa">開啟 Google Maps：維魯沼澤與拉赫瑪導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Destination 5 - Tartu & Toome Hill -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 04 • 精選地標 [5/8]" data-en="Chapter 04 • Destination [5/8]">Chapter 04 • 精選地標 [5/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Tartu & Toome Hill (塔爾圖大學城與托梅山)" data-en="Tartu University City & Toome Hill">Tartu & Toome Hill (塔爾圖大學城與托梅山)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-slate-300">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDng_yGtH92CpH4sm-ETVzD8UMz3ahAhJFHIum6POPow&s=10"
+                             onerror="handleImgFallback(this, 'Tartu University & Toome Hill')"
+                             alt="Historic Classical University Campus Architecture" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="愛沙尼亞第二大城<strong>塔爾圖（Tartu）</strong>是全國的智識、文化與青春心臟，也是 2024 年歐洲文化之都。創立於 1632 年的<strong>塔爾圖大學（University of Tartu）</strong>六柱新古典主義主樓典雅莊嚴；市政廳廣場前的<strong>「親吻學生噴泉（Kissing Students Fountain）」</strong>更是全城最浪漫的青春地標。" data-en="Estonia's second-largest city and intellectual capital, Tartu is home to the prestigious University of Tartu (founded in 1632 by King Gustavus Adolphus) and the beloved Kissing Students Fountain on Town Hall Square.">
+                        愛沙尼亞第二大城<strong>塔爾圖（Tartu）</strong>是全國的智識、文化與青春心臟，也是 2024 年歐洲文化之都。創立於 1632 年的<strong>塔爾圖大學（University of Tartu）</strong>六柱新古典主義主樓典雅莊嚴；市政廳廣場前的<strong>「親吻學生噴泉（Kissing Students Fountain）」</strong>更是全城最浪漫的青春地標。
+                    </p>
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px]">
+                        <strong class="text-[#1B365D]" data-zh="🌉 托梅山天使橋與愛沙尼亞國家博物館：" data-en="🌉 Toome Hill & Estonian National Museum:">🌉 托梅山天使橋與愛沙尼亞國家博物館：</strong>
+                        <span data-zh="漫步綠意盎然的「托梅山（Toome Hill）」，走過許願必靈的「天使橋（Angel's Bridge）」與宏偉紅磚大教堂遺址，並造訪如飛機跑道延伸向天空的「愛沙尼亞國家博物館（ERM）」。" data-en="Wander leafy Toome Hill across Angel's Bridge and the dramatic red-brick Tartu Cathedral ruins, then visit the striking glass-and-steel Estonian National Museum (ERM).">
+                            漫步綠意盎然的「托梅山（Toome Hill）」，走過許願必靈的「天使橋（Angel's Bridge）」與宏偉紅磚大教堂遺址，並造訪如飛機跑道延伸向天空的「愛沙尼亞國家博物館（ERM）」。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/Nj2hX5boNiLME9TT8" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：塔爾圖與托梅山導航" data-en="Open Google Maps: Tartu & Toome Hill">開啟 Google Maps：塔爾圖與托梅山導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Destination 6 - Pärnu Beach & Resort Promenade -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 04 • 精選地標 [6/8]" data-en="Chapter 04 • Destination [6/8]">Chapter 04 • 精選地標 [6/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Pärnu Beach (派爾努夏都海灘與木棧道)" data-en="Pärnu Beach & Resort Promenade">Pärnu Beach (派爾努夏都海灘與木棧道)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-slate-300">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWcKBBNuTi_MUNoNp9vC6xlzqvrKA8KEuDP2tB_H7c_w&s=10"
+                             onerror="handleImgFallback(this, 'Parnu Baltic Summer Beach')"
+                             alt="White Sandy Beach and Coastal Promenade" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="坐落於西南海岸派爾努灣的<strong>派爾努（Pärnu）</strong>，自 1996 年起便被正式冊封為愛沙尼亞的<strong>「夏都（Summer Capital）」</strong>。這裡擁有綿延數公里的細白沙灘、平緩溫暖的波羅的海淺水區與現代化海濱木棧道，自 1838 年首座海水浴場開幕以來便是北歐知名的泥療水療度假勝地。" data-en="Nestled on Pärnu Bay in southwest Estonia, Pärnu has been officially crowned Estonia's 'Summer Capital' since 1996. Its broad white sand beach, warm shallow bay waters, and scenic coastal boardwalk have drawn spa-goers since 1838.">
+                        坐落於西南海岸派爾努灣的<strong>派爾努（Pärnu）</strong>，自 1996 年起便被正式冊封為愛沙尼亞的<strong>「夏都（Summer Capital）」</strong>。這裡擁有綿延數公里的細白沙灘、平緩溫暖的波羅的海淺水區與現代化海濱木棧道，自 1838 年首座海水浴場開幕以來便是北歐知名的泥療水療度假勝地。
+                    </p>
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px]">
+                        <strong class="text-[#1B365D]" data-zh="🏛️ 新藝術水療別墅與 Rannapark 公園：" data-en="🏛️ Art Nouveau Spa Villas & Rannapark:">🏛️ 新藝術水療別墅與 Rannapark 公園：</strong>
+                        <span data-zh="沿著海濱林蔭大道欣賞典雅的白色新古典主義「派爾努泥療浴場（Mudaravila）」與新藝術別墅 Ammende Villa，並漫步綠意盎然的 Rannapark 海濱公園。" data-en="Admire the iconic white neoclassical Pärnu Mud Baths building, Art Nouveau Ammende Villa, and shaded walking paths through lush Rannapark.">
+                            沿著海濱林蔭大道欣賞典雅的白色新古典主義「派爾努泥療浴場（Mudaravila）」與新藝術別墅 Ammende Villa，並漫步綠意盎然的 Rannapark 海濱公園。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/YVNpvFqm5UhL7mv89" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：派爾努海灘木棧道導航" data-en="Open Google Maps: Pärnu Beach">開啟 Google Maps：派爾努海灘木棧道導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Destination 7 - Saaremaa Island & Kuressaare Castle -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 04 • 精選地標 [7/8]" data-en="Chapter 04 • Destination [7/8]">Chapter 04 • 精選地標 [7/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Saaremaa & Kuressaare Castle (薩雷馬島)" data-en="Saaremaa Island & Kuressaare Castle">Saaremaa & Kuressaare Castle (薩雷馬島)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-slate-300">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1HsiXm7yl7BNwpLBH8EVyqrZjDoH5DO68kNT8bg4N9g&s=10"
+                             onerror="handleImgFallback(this, 'Kuressaare Castle Saaremaa')"
+                             alt="Medieval Stone Fortress Surrounded by Moat" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="<strong>薩雷馬島（Saaremaa）</strong>是愛沙尼亞最大的島嶼，以杜松樹林、茅草屋頂漁村與悠閒慢活節奏聞名。島首府的<strong>庫雷薩雷主教城堡（Kuressaare Episcopal Castle）</strong>建於 14 世紀，由星形稜堡與寬闊護城河環繞，是整個波羅的海地區唯一完整保留中世紀原貌、未遭戰火摧毀的石灰岩堡壘。" data-en="Estonia's largest island, Saaremaa charms with juniper groves, thatched-roof villages, and tranquil island pace. In its capital stands 14th-century Kuressaare Episcopal Castle—the only completely intact medieval fortress in the Baltic states.">
+                        <strong>薩雷馬島（Saaremaa）</strong>是愛沙尼亞最大的島嶼，以杜松樹林、茅草屋頂漁村與悠閒慢活節奏聞名。島首府的<strong>庫雷薩雷主教城堡（Kuressaare Episcopal Castle）</strong>建於 14 世紀，由星形稜堡與寬闊護城河環繞，是整個波羅的海地區唯一完整保留中世紀原貌、未遭戰火摧毀的石灰岩堡壘。
+                    </p>
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px]">
+                        <strong class="text-[#1B365D]" data-zh="☄️ 卡利隕石坑與安格拉風車群：" data-en="☄️ Kaali Meteorite Crater & Angla Windmills:">☄️ 卡利隕石坑與安格拉風車群：</strong>
+                        <span data-zh="島上必訪約 7,500 年前隕石撞擊形成的碧綠圓湖「卡利隕石坑（Kaali Crater）」，以及五座木造支架風車並立的「安格拉風車山（Angla Windmill Mount）」。" data-en="Visit the emerald lake inside Kaali Meteorite Crater (formed ~7,500 years ago) and the iconic quintet of wooden trestle windmills at Angla Windmill Mount.">
+                            島上必訪約 7,500 年前隕石撞擊形成的碧綠圓湖「卡利隕石坑（Kaali Crater）」，以及五座木造支架風車並立的「安格拉風車山（Angla Windmill Mount）」。
+                        </span>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Kuressaare+Castle+Saaremaa+Estoniahttps://maps.app.goo.gl/FRWnXYyftuocJypM6" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：薩雷馬島與庫雷薩雷城堡" data-en="Open Google Maps: Kuressaare Castle">開啟 Google Maps：薩雷馬島與庫雷薩雷城堡</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Destination 8 - Narva Hermann Castle -->
+            <div class="page-slide flex-col space-y-3" data-page="12">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 04 • 精選地標 [8/8]" data-en="Chapter 04 • Destination [8/8]">Chapter 04 • 精選地標 [8/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Narva Hermann Castle (納爾瓦赫爾曼城堡)" data-en="Narva Hermann Castle & River Promenade">Narva Hermann Castle (納爾瓦赫爾曼城堡)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-slate-300">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6SvRJxGa47xNL-cmOrmuLixxiJ4a-zjjF7yxUNSq4VQ&s=10"
+                             onerror="handleImgFallback(this, 'Narva Hermann Castle Fortress')"
+                             alt="Historic Riverside Border Fortress Tower" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="矗立於愛沙尼亞最東端納爾瓦河畔的<strong>納爾瓦赫爾曼城堡（Narva Hermann Castle）</strong>，始建於 13 世紀丹麥統治時期，高聳的「長赫爾曼塔（Pikk Hermann）」守護著歐盟與申根區的東部邊界。最震撼的是，僅一河之隔（約 150 公尺寬）的對岸便矗立著俄羅斯伊萬哥羅德要塞，形成全球罕見「雙堡隔河對峙」的歷史奇觀。" data-en="Standing on the eastern bank of the Narva River, 13th-century Narva Hermann Castle guards the eastern frontier of the EU. Directly across the narrow 150-meter river looms Russia's Ivangorod Fortress—an extraordinary face-off of two medieval strongholds.">
+                        矗立於愛沙尼亞最東端納爾瓦河畔的<strong>納爾瓦赫爾曼城堡（Narva Hermann Castle）</strong>，始建於 13 世紀丹麥統治時期，高聳的「長赫爾曼塔（Pikk Hermann）」守護著歐盟與申根區的東部邊界。最震撼的是，僅一河之隔（約 150 公尺寬）的對岸便矗立著俄羅斯伊萬哥羅德要塞，形成全球罕見「雙堡隔河對峙」的歷史奇觀。
+                    </p>
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px]">
+                        <strong class="text-[#1B365D]" data-zh="🌊 納爾瓦河濱長廊與觀景台：" data-en="🌊 Narva River Promenade & Panorama:">🌊 納爾瓦河濱長廊與觀景台：</strong>
+                        <span data-zh="登上 51 公尺高的長赫爾曼塔頂層，或沿著優雅設計的「納爾瓦河濱長廊（Narva River Promenade）」散步，近距離感受東西歐交會的壯闊歷史張力。" data-en="Climb the 51-meter Pikk Hermann tower or stroll the modern Narva River Promenade beneath the bastion walls for dramatic views of both fortresses.">
+                            登上 51 公尺高的長赫爾曼塔頂層，或沿著優雅設計的「納爾瓦河濱長廊（Narva River Promenade）」散步，近距離感受東西歐交會的壯闊歷史張力。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/mgoh71UdUzb6MM948" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：納爾瓦赫爾曼城堡導航" data-en="Open Google Maps: Narva Hermann Castle">開啟 Google Maps：納爾瓦赫爾曼城堡導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 13: Estonian Gastronomy & Café Culture -->
+            <div class="page-slide flex-col space-y-3" data-page="13">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 05 • 北歐飲食與百年咖啡館" data-en="Chapter 05 • Gastronomy & Café Culture">Chapter 05 • 北歐飲食與百年咖啡館</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="愛沙尼亞傳統美食與咖啡館文化" data-en="Estonian Gastronomy & Café Culture">愛沙尼亞傳統美食與咖啡館文化</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- 1. Kiluvõileib -->
+                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#1B365D] text-sm" data-zh="🐟 波羅的海鯡魚黑麥三明治 (Kiluvõileib)" data-en="🐟 Baltic Sprat Rye Sandwich (Kiluvõileib)">🐟 波羅的海鯡魚黑麥三明治 (Kiluvõileib)</h3>
+                        <p class="text-[11px]" data-zh="愛沙尼亞國慶與節慶餐桌必備經典！在扎實香濃的傳統黑麥麵包（Leib）上塗抹奶油，鋪上香料醃漬波羅的海小鯡魚片、水煮蛋切片與青蔥，鹹鮮開胃。" data-en="An iconic Estonian celebratory staple: dark sourdough rye bread (leib) layered with creamy butter, spiced Baltic sprat fillets, sliced hard-boiled egg, and fresh chives.">
+                            愛沙尼亞國慶與節慶餐桌必備經典！在扎實香濃的傳統黑麥麵包（Leib）上塗抹奶油，鋪上香料醃漬波羅的海小鯡魚片、水煮蛋切片與青蔥，鹹鮮開胃。
+                        </p>
+                    </div>
+
+                    <!-- 2. Mulgipuder & Verivorst -->
+                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#1B365D] text-sm" data-zh="🥔 穆爾吉大麥馬鈴薯泥與血腸 (Mulgipuder & Verivorst)" data-en="🥔 Mulgipuder & Blood Sausage (Verivorst)">🥔 穆爾吉大麥馬鈴薯泥與血腸 (Mulgipuder & Verivorst)</h3>
+                        <p class="text-[11px]" data-zh="列入聯合國非物質文化遺產的<strong>Mulgipuder</strong>將綿密馬鈴薯泥與大麥粒同煮，拌入香煎煙燻培根丁；冬季必嚐的<strong>Verivorst</strong>則為傳統黑麥大麥血腸，搭配酸甜越橘果醬（Lingonberry jam）解膩絕配。" data-en="UNESCO-listed <strong>Mulgipuder</strong> blends creamy mashed potatoes with pearl barley and crispy bacon bits; winter favorite <strong>Verivorst</strong> pairs spiced black pudding with tangy lingonberry jam.">
+                            列入聯合國非物質文化遺產的<strong>Mulgipuder</strong>將綿密馬鈴薯泥與大麥粒同煮，拌入香煎煙燻培根丁；冬季必嚐的<strong>Verivorst</strong>則為傳統黑麥大麥血腸，搭配酸甜越橘果醬（Lingonberry jam）解膩絕配。
+                        </p>
+                    </div>
+
+                    <!-- 3. Kama & Kohuke & Vana Tallinn -->
+                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#1B365D] text-sm" data-zh="🍨 烘焙穀粉甜品 Kama、乳酪棒與老塔林酒" data-en="🍨 Kama Dessert, Kohuke & Vana Tallinn">🍨 烘焙穀粉甜品 Kama、乳酪棒與老塔林酒</h3>
+                        <p class="text-[11px]" data-zh="<strong>Kama</strong>由大麥、黑麥、燕麥與豌豆烘焙研磨而成，常拌入克菲爾優格或鮮奶油製成堅果香氣甜點；超市必買國民點心<strong>Kohuke</strong>為巧克力脆皮包裹香甜凝乳；<strong>Vana Tallinn</strong>則是以蘭姆酒、肉桂與柑橘釀造的經典草本利口酒。" data-en="<strong>Kama</strong> is a nutty roasted grain flour mixed into kefir or mousse; <strong>Kohuke</strong> is a beloved chocolate-glazed sweet quark bar; <strong>Vana Tallinn</strong> is Estonia's signature rum-and-spice liqueur.">
+                            <strong>Kama</strong>由大麥、黑麥、燕麥與豌豆烘焙研磨而成，常拌入克菲爾優格或鮮奶油製成堅果香氣甜點；超市必買國民點心<strong>Kohuke</strong>為巧克力脆皮包裹香甜凝乳；<strong>Vana Tallinn</strong>則是以蘭姆酒、肉桂與柑橘釀造的經典草本利口酒。
+                        </p>
+                    </div>
+
+                    <!-- 4. Historic Maiasmokk Café (Since 1864) -->
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] space-y-1.5">
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="☕ 百年傳奇：Maiasmokk 咖啡館 (始於 1864 年)" data-en="☕ Historic Maiasmokk Café (Est. 1864)">☕ 百年傳奇：Maiasmokk 咖啡館 (始於 1864 年)</h3>
+                        <p class="text-[11px]" data-zh="坐落於塔林老城 Pikk 街的<strong>Maiasmokk Café</strong>（意為「愛吃甜食的人」）創立於 1864 年，是全愛沙尼亞最古老且持續營業的歷史咖啡館。木質雕花內裝保留 19 世紀典雅風貌，二樓更設有手工杏仁糖膏博物館（Marzipan Room），可現場欣賞彩繪杏仁糖工藝。" data-en="Located on Pikk Street in Tallinn Old Town, <strong>Maiasmokk Café</strong> ('Sweet Tooth') has operated continuously since 1864 as Estonia's oldest café, complete with historic wood interiors and an upstairs Marzipan Museum room.">
+                            坐落於塔林老城 Pikk 街的<strong>Maiasmokk Café</strong>（意為「愛吃甜食的人」）創立於 1864 年，是全愛沙尼亞最古老且持續營業的歷史咖啡館。木質雕花內裝保留 19 世紀典雅風貌，二樓更設有手工杏仁糖膏博物館（Marzipan Room），可現場欣賞彩繪杏仁糖工藝。
+                        </p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Maiasmokk+Cafe+Tallinn+Estonia" target="_blank" class="block text-center bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] py-2 rounded-lg font-mono text-[11px] shadow transition">
+                            🗺️ <span data-zh="開啟 Google Maps：Maiasmokk 百年咖啡館導航" data-en="Open Google Maps: Maiasmokk Café">開啟 Google Maps：Maiasmokk 百年咖啡館導航</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 14: Personal Travel Notes & Pre-Departure Checklist -->
+            <div class="page-slide flex-col space-y-3" data-page="14">
+                <div class="nordic-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9e6d1c]" data-zh="Chapter 06 • 旅行筆記與行前清單" data-en="Chapter 06 • Travel Notes & Checklist">Chapter 06 • 旅行筆記與行前清單</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="個人旅行筆記與行前準備清單" data-en="Personal Travel Notes & Checklist">個人旅行筆記與行前準備清單</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Interactive Pre-Departure Checklist -->
+                    <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-1.5">
+                            <h3 class="font-editorial font-bold text-[#1B365D] text-sm" data-zh="✅ 愛沙尼亞行前檢核清單" data-en="✅ Estonia Pre-Departure Checklist">✅ 愛沙尼亞行前檢核清單</h3>
+                            <span id="checklist-counter" class="text-[10px] font-mono bg-[#eef3f9] text-[#1B365D] px-2 py-0.5 rounded font-bold">0 / 6</span>
+                        </div>
+                        <div class="space-y-1.5 text-[11px]" id="checklist-items">
+                            <!-- Populated by JS with localStorage persistence -->
+                        </div>
+                    </div>
+
+                    <!-- Personal Travel Notes Scratchpad (localStorage) -->
+                    <div class="bg-white p-3 rounded-xl border-2 border-[#C58B2A]/60 shadow-sm space-y-2">
+                        <label for="estonia-notes" class="font-editorial font-bold text-[#1B365D] text-sm flex justify-between items-center">
+                            <span data-zh="✒️ 旅客私人筆記本 (自動本機保存)" data-en="✒️ Personal Travel Notes Scratchpad">✒️ 旅客私人筆記本 (自動本機保存)</span>
+                            <span id="note-saved-badge" class="text-[10px] font-mono text-emerald-700 hidden" data-zh="✓ 已儲存" data-en="✓ Saved">✓ 已儲存</span>
+                        </label>
+                        <textarea id="estonia-notes" rows="5"
+                            class="w-full p-2.5 rounded-lg border border-slate-300 bg-[#F8FAFC] text-xs text-slate-800 focus:ring-2 focus:ring-[#C58B2A] focus:outline-none resize-none"
+                            placeholder="記錄塔林餐廳訂位、薩雷馬島渡輪時刻、伴手禮清單（如 Kalev 巧克力、Vana Tallinn）..."></textarea>
+                        <div class="flex space-x-2">
+                            <button onclick="saveNotes()" class="flex-1 bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] text-xs py-2 rounded-lg font-mono uppercase tracking-wider transition shadow-sm" data-zh="儲存筆記" data-en="Save Notes">
+                                儲存筆記
+                            </button>
+                            <button onclick="clearNotes()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs px-3.5 py-2 rounded-lg font-mono transition" data-zh="清除筆記" data-en="Clear">
+                                清除筆記
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#eef3f9] p-2.5 rounded-lg border border-[#cbd7e8] text-[11px] text-slate-700 text-center font-serif">
+                        <span data-zh="祝您擁有一趟難忘的波羅的海與愛沙尼亞探索之旅！Head reisi!" data-en="Wishing you an unforgettable Baltic journey across Estonia! Head reisi!">
+                            祝您擁有一趟難忘的波羅的海與愛沙尼亞探索之旅！Head reisi!
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="bg-[#eef3f9] border-t border-[#cbd7e8] px-4 py-2.5 flex justify-between items-center z-20">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-slate-100 text-slate-800 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm border border-slate-300 disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-xs font-mono font-bold text-[#1B365D]" id="page-indicator">1 / 14</span>
+                <div class="w-24 h-1.5 bg-slate-300 rounded-full overflow-hidden mt-1">
+                    <div id="progress-bar" class="h-full bg-[#1B365D] transition-all duration-300" style="width: 7.14%;"></div>
+                </div>
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-[#1B365D] hover:bg-[#122642] text-[#f5deb3] border border-[#C58B2A]/60 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+        <!-- Floating Status Toast -->
+        <div id="toast-msg" class="hidden absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-[#0b1628]/95 text-[#f5deb3] border border-[#C58B2A] text-[11px] font-mono px-3.5 py-1.5 rounded-full shadow-lg z-40 whitespace-nowrap"></div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, 12-Month Weather Selector, TOC, Checklist, LocalStorage Notes & Bilingual Toggle -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 14;
+        let currentLang = 'zh';
+        let selectedMonthIndex = 5; // Default to June (White Nights & Summer Solstice)
+
+        const tocData = [
+            { page: 1, zh: "封面 • 愛沙尼亞中世紀古城與波羅的海秘境", en: "Cover • Estonia Discovery Journey" },
+            { page: 2, zh: "01. 愛沙尼亞國家介紹與地理位置", en: "01. Country Overview & Geography" },
+            { page: 3, zh: "02. 愛沙尼亞每月氣候與穿搭指南", en: "02. Monthly Weather & Clothing Guide" },
+            { page: 4, zh: "03. 愛沙尼亞經典五日深度行程規劃", en: "03. Classic 5-Day Estonia Itinerary" },
+            { page: 5, zh: "04. 地標 [1/8] 塔林中世紀老城區", en: "04. [1/8] Tallinn Old Town (Vanalinn)" },
+            { page: 6, zh: "05. 地標 [2/8] 特利斯基維與卡拉馬亞木屋區", en: "05. [2/8] Telliskivi & Kalamaja" },
+            { page: 7, zh: "06. 地標 [3/8] 卡德里奧宮與皇室公園", en: "06. [3/8] Kadriorg Palace & Park" },
+            { page: 8, zh: "07. 地標 [4/8] 拉赫瑪國家公園與維魯沼澤", en: "07. [4/8] Lahemaa & Viru Bog" },
+            { page: 9, zh: "08. 地標 [5/8] 塔爾圖大學城與托梅山", en: "08. [5/8] Tartu & Toome Hill" },
+            { page: 10, zh: "09. 地標 [6/8] 派爾努夏都海灘與木棧道", en: "09. [6/8] Pärnu Beach & Promenade" },
+            { page: 11, zh: "10. 地標 [7/8] 薩雷馬島與庫雷薩雷城堡", en: "10. [7/8] Saaremaa & Kuressaare Castle" },
+            { page: 12, zh: "11. 地標 [8/8] 納爾瓦赫爾曼城堡", en: "11. [8/8] Narva Hermann Castle" },
+            { page: 13, zh: "12. 愛沙尼亞傳統美食與百年咖啡館", en: "12. Estonian Gastronomy & Café Culture" },
+            { page: 14, zh: "13. 個人旅行筆記與行前準備清單", en: "13. Travel Notes & Checklist" }
+        ];
+
+        const monthlyWeatherData = [
+            {
+                mZh: "1月", mEn: "Jan", temp: "-7°C ~ -2°C", daylight: "7 hrs", precip: "❄️ Snow / 積雪",
+                icon: "❄️",
+                highlightZh: "白雪覆蓋塔林中世紀尖塔與城牆，適合體驗北歐煙燻桑拿與水療。",
+                highlightEn: "Snow-blanketed Tallinn spires; ideal for traditional Estonian smoke saunas and spas.",
+                clothZh: "極地厚羽絨大衣、羊毛發熱內衣、防水防滑雪靴、毛帽、圍巾與保暖手套。",
+                clothEn: "Heavy down parka, merino thermal layers, waterproof snow boots, beanie, scarf & gloves."
+            },
+            {
+                mZh: "2月", mEn: "Feb", temp: "-7°C ~ -2°C", daylight: "9.5 hrs", precip: "❄️ Crisp Snow / 乾冷",
+                icon: "🇪🇪",
+                highlightZh: "2月24日為愛沙尼亞獨立紀念日，全國舉行盛大慶典；冬季冰路偶有開放。",
+                highlightEn: "Estonian Independence Day celebrations on Feb 24; crisp winter sunshine.",
+                clothZh: "防風極地羽絨衣、刷毛中層、防滑保暖靴與保濕護唇膏。",
+                clothEn: "Windproof down coat, fleece mid-layer, insulated slip-resistant boots, and lip balm."
+            },
+            {
+                mZh: "3月", mEn: "Mar", temp: "-4°C ~ 2°C", daylight: "12 hrs", precip: "🌬️ Thaw / 融雪微風",
+                icon: "🌬️",
+                highlightZh: "初春融雪時分，日照迅速拉長，遊客稀少且飯店價格最實惠。",
+                highlightEn: "Early spring thaw with rapidly lengthening daylight, quiet streets, and great hotel rates.",
+                clothZh: "防風防水中厚外套、針織毛衣、防水短靴與折疊雨傘。",
+                clothEn: "Wind/water-resistant coat, knit sweaters, waterproof ankle boots, and compact umbrella."
+            },
+            {
+                mZh: "4月", mEn: "Apr", temp: "1°C ~ 9°C", daylight: "14.5 hrs", precip: "🌦️ Showers / 春雨",
+                icon: "🌷",
+                highlightZh: "塔爾圖學生春之日（Student Days）熱鬧登場，卡德里奧公園嫩芽初綻。",
+                highlightEn: "Tartu Student Spring Days festival enlivens the university city; spring buds appear.",
+                clothZh: "洋蔥式多層次穿搭、風衣夾克、輕薄毛衣與防滑平底步行鞋。",
+                clothEn: "Layered outfits, trench or windbreaker jacket, light sweater, and sturdy walking shoes."
+            },
+            {
+                mZh: "5月", mEn: "May", temp: "6°C ~ 15°C", daylight: "17 hrs", precip: "🌤️ Fresh / 清爽宜人",
+                icon: "🌿",
+                highlightZh: "丁香花盛開、露天咖啡座全面開放，拉赫瑪國家公園健行氣候絕佳。",
+                highlightEn: "Lilacs bloom, outdoor terraces open, and crisp sunny weather is ideal for Lahemaa hikes.",
+                clothZh: "長袖襯衫、薄針織開襟衫、輕便防風外套與太陽眼鏡。",
+                clothEn: "Long-sleeve shirts, light cardigan, breathable windbreaker, and sunglasses."
+            },
+            {
+                mZh: "6月", mEn: "Jun", temp: "11°C ~ 20°C", daylight: "18.5 hrs (白夜)", precip: "☀️ White Nights / 白夜",
+                icon: "🔥",
+                highlightZh: "夢幻「白夜（White Nights）」與 6月23–24日盛大「仲夏節（Jaanipäev）」篝火慶典！",
+                highlightEn: "Magical White Nights and June 23–24 Jaanipäev Midsummer bonfire celebrations nationwide!",
+                clothZh: "透氣長短袖混搭、太陽眼鏡、防曬乳，夜間篝火活動攜帶一件防風薄外套。",
+                clothEn: "Breathable shirts, sunglasses, SPF, and a windproof jacket for late-night bonfire festivities."
+            },
+            {
+                mZh: "7月", mEn: "Jul", temp: "14°C ~ 23°C", daylight: "17.5 hrs (白夜)", precip: "☀️ Warm / 陽光充沛",
+                icon: "🏖️",
+                highlightZh: "最溫暖陽光月！夏都派爾努海灘戲水、薩雷馬島跳島與中世紀節慶旺季。",
+                highlightEn: "Warmest summer month! Peak season for Pärnu Beach, Saaremaa island-hopping & medieval days.",
+                clothZh: "夏裝、泳衣、遮陽帽、防曬用品，清晨沼澤健行備防蚊液與薄風衣。",
+                clothEn: "Summer attire, swimwear, sun hat, SPF, plus insect repellent and a light shell for dawn hikes."
+            },
+            {
+                mZh: "8月", mEn: "Aug", temp: "13°C ~ 21°C", daylight: "15.5 hrs", precip: "🌤️ Mild / 偶陣雨",
+                icon: "🎶",
+                highlightZh: "波羅的海海水溫度最適宜，塔林音樂週與鄉村市集活動豐富。",
+                highlightEn: "Warmest Baltic Sea temperatures of the year with vibrant open-air concerts and markets.",
+                clothZh: "輕便夏裝、好走的石板路步行鞋，晚間海風涼爽建議加件薄毛衣。",
+                clothEn: "Light summer clothes, cobblestone-friendly walking shoes, and a light sweater for evenings."
+            },
+            {
+                mZh: "9月", mEn: "Sep", temp: "8°C ~ 15°C", daylight: "12.5 hrs", precip: "🌦️ Crisp / 秋高氣爽",
+                icon: "🍄",
+                highlightZh: "森林野菇與蔓越莓採收季，維魯沼澤苔原轉為迷人的紅褐色調。",
+                highlightEn: "Wild mushroom and cranberry foraging season; Viru Bog moss turns rich russet and gold.",
+                clothZh: "長袖上衣、休閒風衣、長褲與防潑水健行鞋。",
+                clothEn: "Long sleeves, trench coat or utility jacket, trousers, and water-resistant walking shoes."
+            },
+            {
+                mZh: "10月", mEn: "Oct", temp: "3°C ~ 9°C", daylight: "10 hrs", precip: "🍂 Rain & Mist / 金秋",
+                icon: "🍁",
+                highlightZh: "卡德里奧公園與托梅山滿布金黃楓葉，人潮減少適合深度博物館巡禮。",
+                highlightEn: "Golden autumn foliage blankets Kadriorg Park and Toome Hill; quiet museums and cafés.",
+                clothZh: "保暖夾克、厚毛衣、圍巾與防滑防水步行鞋。",
+                clothEn: "Warm jacket, chunky knitwear, scarf, and slip-resistant waterproof shoes."
+            },
+            {
+                mZh: "11月", mEn: "Nov", temp: "-1°C ~ 4°C", daylight: "7.5 hrs", precip: "🌫️ Sleet / 微冷初雪",
+                icon: "🎬",
+                highlightZh: "塔林黑夜電影節（PÖFF）登場，月底老城市政廳廣場聖誕市集正式點燈。",
+                highlightEn: "Tallinn Black Nights Film Festival (PÖFF) and late-November Christmas Market opening.",
+                clothZh: "防風防水保暖大衣、羊毛襪、毛帽與防水短靴。",
+                clothEn: "Insulated windproof/waterproof coat, wool socks, beanie, and waterproof ankle boots."
+            },
+            {
+                mZh: "12月", mEn: "Dec", temp: "-5°C ~ 0°C", daylight: "6 hrs", precip: "❄️ Festive Snow / 聖誕雪景",
+                icon: "🎄",
+                highlightZh: "歐洲最美「塔林聖誕市集」登場（歷史可溯至 1441 年首棵公開聖誕樹），熱香料酒飄香。",
+                highlightEn: "World-famous Tallinn Christmas Market (tradition dating to 1441) with mulled wine and snow.",
+                clothZh: "極地羽絨大衣、發熱內衣褲、羊毛圍巾、手套與防滑保暖雪靴。",
+                clothEn: "Heavy down coat, thermal base layers, wool scarf, gloves, and insulated snow boots."
+            }
+        ];
+
+        const defaultChecklist = [
+            { id: "chk1", zh: "護照（效期 6 個月以上）與申根保險證明", en: "Passport (6+ months validity) & Schengen travel insurance" },
+            { id: "chk2", zh: "歐元現金（少量）與免海外手續費信用卡（愛沙尼亞高度無現金化）", en: "Euros & contactless credit card (Estonia is nearly 100% cashless)" },
+            { id: "chk3", zh: "防滑石板路步行鞋 / 維魯沼澤防潑水健行鞋", en: "Sturdy non-slip shoes for Tallinn cobblestones & Viru Bog" },
+            { id: "chk4", zh: "多層次防風防水外套（因應波羅的海海風）", en: "Windproof & waterproof outer shell for Baltic sea breezes" },
+            { id: "chk5", zh: "歐規雙圓腳轉接頭（Type C / F，230V）", en: "European Type C / F two-pin power adapter (230V)" },
+            { id: "chk6", zh: "預訂薩雷馬島跨海渡輪（Praamid.ee）或赫爾辛基快船票", en: "Book Saaremaa ferry (Praamid.ee) or Helsinki ferry tickets" }
+        ];
+
+        function handleImgFallback(imgEl, label) {
+            imgEl.onerror = null;
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+                <defs>
+                    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#1B365D"/>
+                        <stop offset="100%" stop-color="#0b1628"/>
+                    </linearGradient>
+                </defs>
+                <rect width="800" height="420" fill="url(#g)"/>
+                <rect x="24" y="24" width="752" height="372" rx="16" fill="none" stroke="#C58B2A" stroke-width="2" stroke-opacity="0.6"/>
+                <text x="400" y="195" fill="#f5deb3" font-family="Georgia, serif" font-size="26" font-weight="bold" text-anchor="middle">${label}</text>
+                <text x="400" y="232" fill="#94a3b8" font-family="monospace" font-size="14" text-anchor="middle">ESTONIA DISCOVERY • BALTIC HERITAGE</text>
+            </svg>`;
+            imgEl.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+        }
+
+        function renderToc() {
+            const tocList = document.getElementById('toc-list');
+            if (!tocList) return;
+            tocList.innerHTML = tocData.map(item => `
+                <button onclick="goToPage(${item.page}); toggleToc();"
+                        class="text-left px-3 py-1.5 rounded-lg transition flex justify-between items-center ${item.page === currentPage ? 'bg-[#1B365D] text-[#f5deb3] font-bold border border-[#C58B2A]' : 'bg-white hover:bg-[#eef3f9] text-slate-800 border border-slate-200'}">
+                    <span>${currentLang === 'zh' ? item.zh : item.en}</span>
+                    <span class="font-mono text-[10px] opacity-80">P.${item.page}</span>
+                </button>
+            `).join('');
+        }
+
+        function renderMonthSelector() {
+            const selector = document.getElementById('month-selector');
+            if (!selector) return;
+            selector.innerHTML = monthlyWeatherData.map((m, idx) => `
+                <button onclick="selectMonth(${idx})"
+                        class="py-1.5 px-1 rounded-lg font-mono text-[11px] transition border ${idx === selectedMonthIndex ? 'bg-[#1B365D] text-[#f5deb3] border-[#C58B2A] font-bold shadow-sm' : 'bg-white hover:bg-[#eef3f9] text-slate-700 border-slate-300'}">
+                    ${currentLang === 'zh' ? m.mZh : m.mEn}
+                </button>
+            `).join('');
+            renderMonthDetail();
+        }
+
+        function renderMonthDetail() {
+            const card = document.getElementById('month-detail-card');
+            if (!card) return;
+            const m = monthlyWeatherData[selectedMonthIndex];
+            card.innerHTML = `
+                <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-2xl">${m.icon}</span>
+                        <div>
+                            <h3 class="font-editorial font-bold text-base text-slate-900">${currentLang === 'zh' ? m.mZh + ' 氣候與盛事' : m.mEn + ' Climate & Events'}</h3>
+                            <span class="text-[10px] font-mono text-[#9e6d1c]">☀️ ${currentLang === 'zh' ? '日照' : 'Daylight'}: ${m.daylight} • ${m.precip}</span>
+                        </div>
+                    </div>
+                    <div class="bg-[#eef3f9] px-2.5 py-1 rounded-lg border border-[#cbd7e8] font-mono font-bold text-[#1B365D] text-xs">
+                        ${m.temp}
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <div>
+                        <strong class="text-slate-900 font-editorial block text-[11px]">${currentLang === 'zh' ? '✨ 季節亮點：' : '✨ Seasonal Highlights:'}</strong>
+                        <p class="text-slate-700 text-[11px]">${currentLang === 'zh' ? m.highlightZh : m.highlightEn}</p>
+                    </div>
+                    <div>
+                        <strong class="text-slate-900 font-editorial block text-[11px]">${currentLang === 'zh' ? '🧥 穿搭與行李建議：' : '🧥 Clothing & Packing Advice:'}</strong>
+                        <p class="text-slate-700 text-[11px]">${currentLang === 'zh' ? m.clothZh : m.clothEn}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectMonth(idx) {
+            selectedMonthIndex = idx;
+            renderMonthSelector();
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-items');
+            const counter = document.getElementById('checklist-counter');
+            if (!container) return;
+
+            let savedState = {};
+            try {
+                savedState = JSON.parse(localStorage.getItem('estonia_checklist_state') || '{}');
+            } catch (e) {}
+
+            let checkedCount = 0;
+            container.innerHTML = defaultChecklist.map(item => {
+                const isChecked = !!savedState[item.id];
+                if (isChecked) checkedCount++;
+                return `
+                    <label class="flex items-start space-x-2 p-1.5 rounded-lg hover:bg-[#eef3f9] cursor-pointer transition">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleCheckItem('${item.id}')"
+                               class="mt-0.5 rounded text-[#1B365D] focus:ring-[#C58B2A]">
+                        <span class="${isChecked ? 'line-through text-slate-400' : 'text-slate-700'}">
+                            ${currentLang === 'zh' ? item.zh : item.en}
+                        </span>
+                    </label>
+                `;
+            }).join('');
+
+            if (counter) {
+                counter.textContent = `${checkedCount} / ${defaultChecklist.length}`;
+            }
+        }
+
+        function toggleCheckItem(id) {
+            let savedState = {};
+            try {
+                savedState = JSON.parse(localStorage.getItem('estonia_checklist_state') || '{}');
+                savedState[id] = !savedState[id];
+                localStorage.setItem('estonia_checklist_state', JSON.stringify(savedState));
+            } catch (e) {}
+            renderChecklist();
+        }
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'), 10);
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const pageLabel = `${currentPage} / ${totalPages}`;
+            const indicator = document.getElementById('page-indicator');
+            if (indicator) indicator.textContent = pageLabel;
+            const topIndicator = document.getElementById('top-page-indicator');
+            if (topIndicator) topIndicator.textContent = pageLabel;
+
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) progressBar.style.width = `${(currentPage / totalPages) * 100}%`;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.disabled = (currentPage === 1);
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '回封面 ↺' : 'Cover ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+
+            renderToc();
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+            } else {
+                currentPage = 1;
+            }
+            updateDisplay();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function toggleToc() {
+            const drawer = document.getElementById('toc-drawer');
+            if (!drawer) return;
+            if (drawer.classList.contains('hidden')) {
+                renderToc();
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+            }
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            const htmlRoot = document.getElementById('html-root');
+            if (htmlRoot) htmlRoot.setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+
+            const notesEl = document.getElementById('estonia-notes');
+            if (notesEl) {
+                notesEl.placeholder = (currentLang === 'zh')
+                    ? '記錄塔林餐廳訂位、薩雷馬島渡輪時刻、伴手禮清單（如 Kalev 巧克力、Vana Tallinn）...'
+                    : 'Jot down Tallinn dining reservations, Saaremaa ferry times, or souvenirs (Kalev chocolate, Vana Tallinn)...';
+            }
+
+            renderMonthSelector();
+            renderChecklist();
+            updateDisplay();
+            showToast(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (!btn) return;
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showToast(currentLang === 'zh' ? `已加入第 ${currentPage} 頁書籤` : `Bookmarked Page ${currentPage}`);
+            } else {
+                btn.textContent = '🔖';
+                showToast(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notesEl = document.getElementById('estonia-notes');
+            if (!notesEl) return;
+            try {
+                localStorage.setItem('estonia_journey_notes', notesEl.value);
+                const badge = document.getElementById('note-saved-badge');
+                if (badge) {
+                    badge.classList.remove('hidden');
+                    setTimeout(() => badge.classList.add('hidden'), 2000);
+                }
+                showToast(currentLang === 'zh' ? '旅遊筆記已儲存！' : 'Travel notes saved!');
+            } catch (e) {
+                showToast(currentLang === 'zh' ? '無法存取本機儲存空間' : 'Storage unavailable');
+            }
+        }
+
+        function clearNotes() {
+            const notesEl = document.getElementById('estonia-notes');
+            if (!notesEl) return;
+            notesEl.value = '';
+            try {
+                localStorage.removeItem('estonia_journey_notes');
+            } catch (e) {}
+            showToast(currentLang === 'zh' ? '筆記已清除' : 'Notes cleared');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2200);
+        }
+
+        window.onload = function() {
+            try {
+                const savedNotes = localStorage.getItem('estonia_journey_notes');
+                const notesEl = document.getElementById('estonia-notes');
+                if (savedNotes && notesEl) {
+                    notesEl.value = savedNotes;
+                }
+            } catch (e) {}
+            renderMonthSelector();
+            renderChecklist();
+            updateDisplay();
+        };
+
+        // Keyboard Arrow Navigation Support
+        document.addEventListener('keydown', e => {
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (activeTag === 'textarea' || activeTag === 'input') return;
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') prevPage();
+        });
+
+        // Touch Swipe Navigation Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        if (bookArea) {
+            bookArea.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            bookArea.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                if (diff < -55) nextPage();
+                if (diff > 55) prevPage();
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
