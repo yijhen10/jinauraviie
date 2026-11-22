@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斯洛維尼亞阿爾卑斯翠湖與溶洞深度之旅電子書報 | Slovenia Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #08231a;
+            color: #162b24;
+            touch-action: pan-y;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        /* Alpine Emerald Green (#0f3d2e), Glacial Soča Turquoise (#2ca69a) & Warm Gold (#d4a359) */
+        .alpine-header {
+            border-bottom: 3px double #d4a359;
+            border-top: 1px solid #d4a359;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.1rem;
+            float: left;
+            line-height: 0.82;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #0f3d2e;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f7faf8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2ca69a;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-0 sm:py-3 px-0 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile-First 480px Max Width) -->
+    <div class="w-full max-w-[480px] h-[100dvh] sm:h-[92vh] sm:max-h-[880px] bg-[#f7faf8] shadow-2xl sm:rounded-2xl overflow-hidden border-0 sm:border sm:border-[#b7d4ca] flex flex-col justify-between relative select-none">
+
+        <!-- Persistent Top Navigation / Alpine Emerald Issue Bar -->
+        <div class="bg-[#0f3d2e] text-[#f7faf8] px-3.5 py-2.5 text-xs flex justify-between items-center tracking-wider font-mono z-20 shadow-md border-b border-[#d4a359]/60">
+            <div class="flex items-center space-x-2">
+                <button onclick="toggleToc()" class="bg-[#0a291f] hover:bg-[#061b14] text-[#f6e3ba] px-2.5 py-1 rounded text-[11px] flex items-center space-x-1 border border-[#d4a359]/50 transition" title="Table of Contents / 目錄">
+                    <span>☰</span>
+                    <span data-zh="目錄" data-en="TOC">目錄</span>
+                </button>
+                <span class="bg-[#0a291f]/90 text-[#8ce0d6] px-2 py-0.5 rounded text-[10px] font-bold border border-[#2ca69a]/50" id="top-page-indicator">1 / 14</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <!-- Persistent Bilingual Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-[#2ca69a] hover:bg-[#238a80] text-[#08231a] px-2.5 py-1 rounded text-[10px] font-mono transition font-bold shadow-sm" title="Switch Language / 切換語言">
+                    EN / 繁中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-[#f6e3ba] hover:text-white transition-colors text-sm" title="加入書籤 / Bookmark">
+                    🔖
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide-Out Table of Contents Drawer -->
+        <div id="toc-drawer" class="hidden absolute inset-x-0 top-[44px] bottom-[56px] bg-[#f7faf8]/98 backdrop-blur-md z-30 flex-col justify-between p-4 overflow-y-auto border-b border-[#b7d4ca]">
+            <div class="space-y-2.5">
+                <div class="flex justify-between items-center border-b-2 border-[#d4a359] pb-2">
+                    <h3 class="font-editorial font-bold text-lg text-[#0f3d2e]" data-zh="📖 斯洛維尼亞電子書報目錄" data-en="📖 Slovenia Edition Contents">📖 斯洛維尼亞電子書報目錄</h3>
+                    <button onclick="toggleToc()" class="text-emerald-900 hover:text-black font-mono text-xs px-2.5 py-1 bg-[#e4f0ec] rounded border border-[#b7d4ca]">✕</button>
+                </div>
+                <div class="grid grid-cols-1 gap-1.5 text-xs" id="toc-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+            <div class="pt-3 text-center text-[10px] font-mono text-emerald-800/70">
+                Slovenia Discovery Digital Edition • 14 Standalone Pages
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (14 Standalone Pages) -->
+        <div class="flex-1 overflow-y-auto px-5 py-4 space-y-4 relative" id="book-content-area">
+
+            <!-- PAGE 1: Editorial Cover Page -->
+            <div class="page-slide active flex-col justify-between h-full space-y-3" data-page="1">
+                <div class="text-center space-y-1.5 pt-1">
+                    <span class="bg-[#0f3d2e] text-[#f6e3ba] border border-[#d4a359] text-[10px] px-3 py-0.5 font-mono tracking-widest rounded-full uppercase" data-zh="阿爾卑斯綠色永續典藏版 2026" data-en="Alpine Green Collector's Edition 2026">阿爾卑斯綠色永續典藏版 2026</span>
+                    <h1 class="text-3xl font-bold font-editorial tracking-tight text-slate-900 leading-tight">
+                        <span class="text-[#0f3d2e] tracking-wider text-2xl block">SLOVENIA DISCOVERY JOURNEY</span>
+                        <span class="text-xl text-slate-900 block mt-0.5" data-zh="斯洛維尼亞：阿爾卑斯翠湖與溶洞深度之旅" data-en="Julian Alps, Emerald Lakes & Karst Caves">斯洛維尼亞：阿爾卑斯翠湖與溶洞深度之旅</span>
+                    </h1>
+                    <p class="text-[11px] font-editorial italic text-[#1b5e46]" data-zh="Julian Alps, Lake Bled, Soča River & Adriatic Coast" data-en="朱利安阿爾卑斯山脈、布萊德湖、索查河與亞得里亞海">Julian Alps, Lake Bled, Soča River & Adriatic Coast</p>
+                </div>
+
+                <div class="relative rounded-xl overflow-hidden shadow-lg border border-[#b7d4ca] group">
+                    <img src="https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format&fit=crop&w=900&q=80"
+                         onerror="handleImgFallback(this, 'Lake Bled & Julian Alps')"
+                         alt="Lake Bled Island and Julian Alps Slovenia" class="w-full h-44 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#08231a]/90 via-[#08231a]/45 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-[#8ce0d6] uppercase tracking-wider" data-zh="全球首座認證綠色旅遊國度 • I FEEL SLOVENIA" data-en="WORLD'S FIRST GREEN DESTINATION • I FEEL SLOVENIA">全球首座認證綠色旅遊國度 • I FEEL SLOVENIA</p>
+                        <p class="text-xs font-medium" data-zh="布萊德湖心島、索查翡翠河、波斯托伊納溶洞與威尼斯風皮蘭" data-en="Bled Island, Emerald Soča, Postojna Cave & Venetian Piran">布萊德湖心島、索查翡翠河、波斯托伊納溶洞與威尼斯風皮蘭</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#e8f3ef] p-3.5 rounded-xl border border-[#b7d4ca] text-xs text-slate-800 leading-relaxed space-y-1.5">
+                    <p class="drop-cap" data-zh="歡迎開啟《斯洛維尼亞阿爾卑斯翠湖與溶洞深度之旅》。這座鑲嵌在阿爾卑斯山脈與亞得里亞海之間的翡翠之國，國名中正巧藏著「LOVE」四個字母。從雪峰環抱的布萊德湖與波茵湖、鬼斧神工的喀斯特溶洞群，到威尼斯共和國遺風的皮蘭海岸，本手冊為您完整收錄地理概況、十二月份氣候穿搭、五日經典行程與八大必訪地標。" data-en="Welcome to the Slovenia Discovery Journey—the only country in the world with LOVE in its name. Nestled between the Julian Alps and the Adriatic Sea, Slovenia dazzles with glacial lakes, emerald rivers, monumental karst caves, and Venetian coastal towns. Explore 14 standalone pages with bilingual guides, weather tips, and Google Maps links.">
+                        歡迎開啟《斯洛維尼亞阿爾卑斯翠湖與溶洞深度之旅》。這座鑲嵌在阿爾卑斯山脈與亞得里亞海之間的翡翠之國，國名中正巧藏著「LOVE」四個字母。從雪峰環抱的布萊德湖與波茵湖、鬼斧神工的喀斯特溶洞群，到威尼斯共和國遺風的皮蘭海岸，本手冊為您完整收錄地理概況、十二月份氣候穿搭、五日經典行程與八大必訪地標。
+                    </p>
+                </div>
+
+                <div class="pt-0.5 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] border border-[#d4a359] text-xs py-3 rounded-lg font-mono uppercase tracking-widest shadow-md transition-all active:scale-95" data-zh="開始翻閱 / Start Reading ➔" data-en="Start Reading / 開始翻閱 ➔">
+                        開始翻閱 / Start Reading ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Country Overview & Geographical Location -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 01 • 國家介紹與地理位置" data-en="Chapter 01 • Country & Geography">Chapter 01 • 國家介紹與地理位置</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="斯洛維尼亞國家介紹與地理位置" data-en="Country Overview & Geographical Location">斯洛維尼亞國家介紹與地理位置</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Quick Fact Grid -->
+                    <div class="grid grid-cols-2 gap-2 bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] font-mono text-[11px]">
+                        <div>
+                            <span class="text-emerald-800/70 block text-[9px]" data-zh="首都 / CAPITAL" data-en="CAPITAL">首都 / CAPITAL</span>
+                            <strong class="text-[#0f3d2e]" data-zh="盧比安納 (Ljubljana)" data-en="Ljubljana">盧比安納 (Ljubljana)</strong>
+                        </div>
+                        <div>
+                            <span class="text-emerald-800/70 block text-[9px]" data-zh="國土與海岸 / TERRITORY" data-en="AREA & COAST">國土與海岸 / TERRITORY</span>
+                            <strong class="text-slate-900" data-zh="20,273 km² • 47 km 海岸" data-en="20,273 km² • 47 km Coast">20,273 km² • 47 km 海岸</strong>
+                        </div>
+                        <div>
+                            <span class="text-emerald-800/70 block text-[9px]" data-zh="流通貨幣 / CURRENCY" data-en="CURRENCY">流通貨幣 / CURRENCY</span>
+                            <strong class="text-slate-900" data-zh="歐元 Euro (€)" data-en="Euro (€)">歐元 Euro (€)</strong>
+                        </div>
+                        <div>
+                            <span class="text-emerald-800/70 block text-[9px]" data-zh="官方語言 / LANGUAGE" data-en="LANGUAGE">官方語言 / LANGUAGE</span>
+                            <strong class="text-slate-900" data-zh="斯洛維尼亞語 (Slovenian)" data-en="Slovenian (Slovenščina)">斯洛維尼亞語 (Slovenian)</strong>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-[#cbe0d8] space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#0f3d2e] text-sm" data-zh="🧭 四大歐洲地理板塊交會的十字路口" data-en="🧭 Crossroads of Four European Worlds">🧭 四大歐洲地理板塊交會的十字路口</h3>
+                        <p data-zh="斯洛維尼亞（Slovenia）位於中歐南部，地處<strong>阿爾卑斯山脈、地中海、迪納拉山脈（喀斯特高原）與潘諾尼亞平原</strong>四大地理區域的獨特交會點。西鄰義大利、北接奧地利、東北毗鄰匈牙利、東南與克羅埃西亞相接，西南角更擁有一段 47 公里長的迷人亞得里亞海（Adriatic Sea）海岸線。" data-en="Positioned in southern Central Europe, Slovenia sits at the extraordinary crossroads of the Alps, the Mediterranean, the Dinaric Alps (Karst plateau), and the Pannonian Basin—bordering Italy, Austria, Hungary, and Croatia, with a 47-km Adriatic coastline.">
+                            斯洛維尼亞（Slovenia）位於中歐南部，地處<strong>阿爾卑斯山脈、地中海、迪納拉山脈（喀斯特高原）與潘諾尼亞平原</strong>四大地理區域的獨特交會點。西鄰義大利、北接奧地利、東北毗鄰匈牙利、東南與克羅埃西亞相接，西南角更擁有一段 47 公里長的迷人亞得里亞海（Adriatic Sea）海岸線。
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border border-[#cbe0d8] space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#0f3d2e] text-sm" data-zh="🕳️ 「喀斯特（Karst）」地形的全球發源地" data-en="🕳️ Global Birthplace of 'Karst' Topography">🕳️ 「喀斯特（Karst）」地形的全球發源地</h3>
+                        <p data-zh="地質學專有名詞「喀斯特（Karst）」正是源自斯洛維尼亞西南部的<strong>克拉斯高原（Kras）</strong>！全境擁有超過 13,000 座天然石灰岩溶洞、地下暗河與伏流湖，其中波斯托伊納溶洞與什科茨揚溶洞（UNESCO 世界遺產）更是舉世無雙的地底奇觀。" data-en="The geological term 'karst' originates directly from Slovenia's Kras plateau! The country harbors over 13,000 limestone caves, subterranean rivers, and disappearing lakes, led by Postojna Cave and UNESCO-listed Škocjan Caves.">
+                            地質學專有名詞「喀斯特（Karst）」正是源自斯洛維尼亞西南部的<strong>克拉斯高原（Kras）</strong>！全境擁有超過 13,000 座天然石灰岩溶洞、地下暗河與伏流湖，其中波斯托伊納溶洞與什科茨揚溶洞（UNESCO 世界遺產）更是舉世無雙的地底奇觀。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#e8f3ef] p-3 rounded-lg border border-[#b7d4ca] space-y-1">
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="🌲 60% 森林覆蓋率與全球首座「綠色旅遊國度」" data-en="🌲 60% Forest Cover & First Green Destination">🌲 60% 森林覆蓋率與全球首座「綠色旅遊國度」</h3>
+                        <p data-zh="斯洛維尼亞森林覆蓋率高達 60%（全歐前三），超過三分之一國土劃為自然保護區，榮獲全球首座「綠色旅遊目的地（Green Destination）」國家級認證，從雪山健行到海濱品酒皆可在兩小時車程內切換。" data-en="With 60% forest cover and over a third of its land protected, Slovenia was certified as the world's first Green Destination country—allowing travelers to go from alpine peaks to Adriatic beaches within two hours.">
+                            斯洛維尼亞森林覆蓋率高達 60%（全歐前三），超過三分之一國土劃為自然保護區，榮獲全球首座「綠色旅遊目的地（Green Destination）」國家級認證，從雪山健行到海濱品酒皆可在兩小時車程內切換。
+                        </p>
+                    </div>
+
+                    <a href="https://maps.app.goo.gl/dE9PUWw2jmnAGe5G6" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2 rounded-lg font-mono text-[11px] transition shadow-sm">
+                        🗺️ <span data-zh="在 Google Maps 查看斯洛維尼亞全境地圖" data-en="View Slovenia Map on Google Maps">在 Google Maps 查看斯洛維尼亞全境地圖</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Interactive 12-Month Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 02 • 每月氣候與穿搭指南" data-en="Chapter 02 • Monthly Weather & Clothing">Chapter 02 • 每月氣候與穿搭指南</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="斯洛維尼亞每月氣候與穿搭指南" data-en="Interactive 12-Month Weather & Packing">斯洛維尼亞每月氣候與穿搭指南</h2>
+                </div>
+
+                <p class="text-[11px] text-slate-600" data-zh="點擊下方月份按鈕（1月–12月），查看平均氣溫、降水降雪、阿爾卑斯山區與亞得里亞海微氣候穿搭：" data-en="Select any month (Jan–Dec) to view average temperatures, rain/snowfall, alpine vs. coastal microclimates & attire:">
+                    點擊下方月份按鈕（1月–12月），查看平均氣溫、降水降雪、阿爾卑斯山區與亞得里亞海微氣候穿搭：
+                </p>
+
+                <!-- 12-Month Interactive Grid -->
+                <div class="grid grid-cols-4 gap-1.5" id="month-selector">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Dynamic Month Detail Card -->
+                <div id="month-detail-card" class="bg-white p-3.5 rounded-xl border-2 border-[#2ca69a]/60 shadow-sm space-y-2 text-xs text-slate-800">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px] text-slate-700 space-y-1">
+                    <strong class="text-[#0f3d2e] block font-editorial" data-zh="🧥 溶洞恆溫 10°C 與高山溫差提醒" data-en="🧥 10°C Cave Constant & Alpine Microclimate Tip">🧥 溶洞恆溫 10°C 與高山溫差提醒</strong>
+                    <p data-zh="即使在 7、8 月盛夏前往波斯托伊納溶洞，洞內全年維持約 8°C–10°C 濕冷低溫；且阿爾卑斯山區午後易有對流陣雨，隨身攜帶一件防風防水薄外套與保暖中層最實用。" data-en="Even in July or August, Postojna Cave stays at a chilly 8°C–10°C year-round, and alpine valleys see brisk afternoon breezes—always carry a packable fleece and waterproof windbreaker.">
+                        即使在 7、8 月盛夏前往波斯托伊納溶洞，洞內全年維持約 8°C–10°C 濕冷低溫；且阿爾卑斯山區午後易有對流陣雨，隨身攜帶一件防風防水薄外套與保暖中層最實用。
+                    </p>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Classic 5-Day Slovenia Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 03 • 斯洛維尼亞經典五日遊行程" data-en="Chapter 03 • Classic 5-Day Itinerary">Chapter 03 • 斯洛維尼亞經典五日遊行程</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="斯洛維尼亞經典五日遊行程規劃" data-en="Classic 5-Day Slovenia Itinerary">斯洛維尼亞經典五日遊行程規劃</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Day 1 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#0f3d2e] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#0f3d2e]">DAY 01</span>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Ljubljana+Old+Town+Slovenia" target="_blank" class="text-[10px] font-mono text-[#1b5e46] hover:text-[#0f3d2e] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="盧比安納舊城區、三重橋、飛龍橋與城堡" data-en="Ljubljana Old Town, Triple Bridge, Dragon Bridge & Castle">盧比安納舊城區、三重橋、飛龍橋與城堡</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="漫步普列舍倫廣場與建築大師普列赤涅克設計的三重橋，與青銅飛龍橋合影，搭乘纜車登上盧比安納城堡俯瞰紅屋頂，傍晚於盧比安納河畔露天咖啡座小酌。" data-en="Stroll Prešeren Square and Plečnik's Triple Bridge, snap photos at Dragon Bridge, ride the funicular to Ljubljana Castle, and unwind at riverside cafés along the Ljubljanica.">
+                            漫步普列舍倫廣場與建築大師普列赤涅克設計的三重橋，與青銅飛龍橋合影，搭乘纜車登上盧比安納城堡俯瞰紅屋頂，傍晚於盧比安納河畔露天咖啡座小酌。
+                        </p>
+                    </div>
+
+                    <!-- Day 2 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#2ca69a] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#1b5e46]">DAY 02</span>
+                            <a href="https://maps.app.goo.gl/5s474HrQxkTj4JK76" target="_blank" class="text-[10px] font-mono text-[#1b5e46] hover:text-[#0f3d2e] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="布萊德湖（木船登島、城堡、奶油蛋糕）與文特加峽谷" data-en="Lake Bled (Pletna Boat, Castle & Cream Cake) & Vintgar Gorge">布萊德湖（木船登島、城堡、奶油蛋糕）與文特加峽谷</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="清晨走訪翡翠急流穿梭的文特加峽谷木棧道，午後搭乘傳統手搖木船（Pletna）登上布萊德湖心島敲響許願鐘，攀登懸崖布萊德城堡並品嚐正宗布萊德奶油蛋糕。" data-en="Morning boardwalk hike through emerald Vintgar Gorge; afternoon traditional Pletna boat ride to Bled Island's wishing bell, cliffside Bled Castle, and original Blejska kremšnita.">
+                            清晨走訪翡翠急流穿梭的文特加峽谷木棧道，午後搭乘傳統手搖木船（Pletna）登上布萊德湖心島敲響許願鐘，攀登懸崖布萊德城堡並品嚐正宗布萊德奶油蛋糕。
+                        </p>
+                    </div>
+
+                    <!-- Day 3 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#0f3d2e] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#0f3d2e]">DAY 03</span>
+                            <a href="https://maps.app.goo.gl/S9jKuuGse1JXNrSd9" target="_blank" class="text-[10px] font-mono text-[#1b5e46] hover:text-[#0f3d2e] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="特里格拉夫國家公園、波茵湖、薩維察瀑布與沃格爾山" data-en="Triglav National Park, Lake Bohinj, Savica & Vogel">特里格拉夫國家公園、波茵湖、薩維察瀑布與沃格爾山</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="深入特里格拉夫國家公園境內最大永久冰河湖「波茵湖（Lake Bohinj）」，健行探訪如 A 字傾瀉的薩維察瀑布（Savica Waterfall），再乘沃格爾高山纜車遠眺朱利安阿爾卑斯群峰。" data-en="Explore Lake Bohinj inside Triglav National Park, hike to twin-stream Savica Waterfall, and ride the Vogel panoramic cable car for sweeping Julian Alps vistas.">
+                            深入特里格拉夫國家公園境內最大永久冰河湖「波茵湖（Lake Bohinj）」，健行探訪如 A 字傾瀉的薩維察瀑布（Savica Waterfall），再乘沃格爾高山纜車遠眺朱利安阿爾卑斯群峰。
+                        </p>
+                    </div>
+
+                    <!-- Day 4 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#2ca69a] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#1b5e46]">DAY 04</span>
+                            <a href="https://maps.app.goo.gl/kAea6CNzk6vs2JVf7" target="_blank" class="text-[10px] font-mono text-[#1b5e46] hover:text-[#0f3d2e] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="弗爾希奇山口與翡翠索查河谷（博韋茨 / 托爾明峽谷）" data-en="Vršič Pass & Emerald Soča Valley (Bovec / Tolmin)">弗爾希奇山口與翡翠索查河谷（博韋茨 / 托爾明峽谷）</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="挑戰 50 道髮夾彎的弗爾希奇山口（Vršič Pass），沿世界最美綠松石色高山河流「索查河（Soča River）」南下，欣賞大索查峽谷深潭與博韋茨山谷風光。" data-en="Drive the 50 hairpin turns of Vršič Pass into the turquoise Soča Valley, stopping at Great Soča Gorge (Velika korita), Bovec, and Tolmin Gorges.">
+                            挑戰 50 道髮夾彎的弗爾希奇山口（Vršič Pass），沿世界最美綠松石色高山河流「索查河（Soča River）」南下，欣賞大索查峽谷深潭與博韋茨山谷風光。
+                        </p>
+                    </div>
+
+                    <!-- Day 5 -->
+                    <div class="bg-white p-3 rounded-lg border-l-4 border-[#d4a359] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9c6f27]">DAY 05</span>
+                            <a href="https://maps.app.goo.gl/gStgrBk3rboAwT327" target="_blank" class="text-[10px] font-mono text-[#1b5e46] hover:text-[#0f3d2e] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="波斯托伊納溶洞、普利雅瑪洞窟城堡與皮蘭海岸日落" data-en="Postojna Cave, Predjama Castle & Piran Sunset">波斯托伊納溶洞、普利雅瑪洞窟城堡與皮蘭海岸日落</h3>
+                        <p class="text-slate-600 text-[11px]" data-zh="上午搭乘地底小火車探秘波斯托伊納溶洞與懸崖上的普利雅瑪洞窟城堡，午後直奔伊斯特拉半島海岸古城皮蘭（Piran），在塔爾蒂尼廣場與海堤迎接亞得里亞海落日。" data-en="Morning underground train tour in Postojna Cave and cliffside Predjama Castle; afternoon arrival on the Istrian coast for an Adriatic sunset in Venetian-style Piran.">
+                            上午搭乘地底小火車探秘波斯托伊納溶洞與懸崖上的普利雅瑪洞窟城堡，午後直奔伊斯特拉半島海岸古城皮蘭（Piran），在塔爾蒂尼廣場與海堤迎接亞得里亞海落日。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destination 1 - Ljubljana Old Town & Castle -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 04 • 精選地標 [1/8]" data-en="Chapter 04 • Destination [1/8]">Chapter 04 • 精選地標 [1/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Ljubljana Old Town & Castle (盧比安納舊城與城堡)" data-en="Ljubljana Old Town & Castle">Ljubljana Old Town & Castle (盧比安納舊城與城堡)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#b7d4ca]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgTNq3WpfaKngagh97jUVJPh3oUCNkib1WtVswh1YByA&s=10"
+                             onerror="handleImgFallback(this, 'Ljubljana Old Town & Castle')"
+                             alt="Ljubljana Old Town and River" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="榮獲「歐洲綠色之都」美譽的首都<strong>盧比安納（Ljubljana）</strong>全城舊城區全面劃為無車行人徒步區，洋溢童話般的悠閒氣息。以浪漫主義詩人命名的<strong>普列舍倫廣場（Prešeren Square）</strong>與粉紅聖方濟教堂為中心，國寶建築師約熱·普列赤涅克（Jože Plečnik）設計的<strong>三重橋（Triple Bridge）</strong>橫跨翠綠河面，而四尊青銅翼龍守護的<strong>飛龍橋（Dragon Bridge）</strong>更是城市精神象徵。" data-en="Crowned European Green Capital, car-free Ljubljana charms with pastel Baroque facades, Prešeren Square, Jože Plečnik's iconic Triple Bridge, and the fierce bronze guardians of Dragon Bridge.">
+                        榮獲「歐洲綠色之都」美譽的首都<strong>盧比安納（Ljubljana）</strong>全城舊城區全面劃為無車行人徒步區，洋溢童話般的悠閒氣息。以浪漫主義詩人命名的<strong>普列舍倫廣場（Prešeren Square）</strong>與粉紅聖方濟教堂為中心，國寶建築師約熱·普列赤涅克（Jože Plečnik）設計的<strong>三重橋（Triple Bridge）</strong>橫跨翠綠河面，而四尊青銅翼龍守護的<strong>飛龍橋（Dragon Bridge）</strong>更是城市精神象徵。
+                    </p>
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px]">
+                        <strong class="text-[#0f3d2e]" data-zh="🏰 玻璃纜車登城堡與河岸咖啡時光：" data-en="🏰 Castle Funicular & Riverside Cafés:">🏰 玻璃纜車登城堡與河岸咖啡時光：</strong>
+                        <span data-zh="搭乘全透明玻璃登山纜車直達山頂「盧比安納城堡（Ljubljana Castle）」瞭望塔，遠眺卡姆尼克-薩維尼亞阿爾卑斯雪峰；下山後沿盧比安納河（Ljubljanica）岸挑選一間露天咖啡座，享受歐洲最愜意的慢生活。" data-en="Ride the glass funicular up to Ljubljana Castle's outlook tower for snow-dusted alpine views, then linger at the vibrant outdoor cafés lining the Ljubljanica River.">
+                            搭乘全透明玻璃登山纜車直達山頂「盧比安納城堡（Ljubljana Castle）」瞭望塔，遠眺卡姆尼克-薩維尼亞阿爾卑斯雪峰；下山後沿盧比安納河（Ljubljanica）岸挑選一間露天咖啡座，享受歐洲最愜意的慢生活。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/SFvEN5XxBExhYgBN7" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：盧比安納舊城與城堡導航" data-en="Open Google Maps: Ljubljana Old Town & Castle">開啟 Google Maps：盧比安納舊城與城堡導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destination 2 - Lake Bled & Bled Island -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 04 • 精選地標 [2/8]" data-en="Chapter 04 • Destination [2/8]">Chapter 04 • 精選地標 [2/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Lake Bled & Bled Island (布萊德湖與湖心小島)" data-en="Lake Bled & Bled Island">Lake Bled & Bled Island (布萊德湖與湖心小島)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#b7d4ca]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj0f6arpneR7aO-Msw_VUcctflylikmWcVBmTBRo5bjg&s=10"
+                             onerror="handleImgFallback(this, 'Lake Bled & Bled Island')"
+                             alt="Lake Bled Island Church and Castle" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="被譽為「阿爾卑斯之瞳」的<strong>布萊德湖（Lake Bled）</strong>是一座由冰河融水與溫泉滋養的翡翠色湖泊，湖中央矗立著斯洛維尼亞唯一的天然島嶼<strong>布萊德島（Bled Island）</strong>。搭乘數百年傳承的手搖平底木船<strong>「Pletna」</strong>登島，沿著 99 級石階走進聖母升天教堂，親手拉響傳說中能實現心願的古老許願鐘。" data-en="Known as the 'Eye of the Alps,' glacial Lake Bled cradles Slovenia's only natural island. Glide across the emerald water on a traditional wooden Pletna boat, climb 99 stone steps to the Church of the Assumption, and ring its famous wishing bell.">
+                        被譽為「阿爾卑斯之瞳」的<strong>布萊德湖（Lake Bled）</strong>是一座由冰河融水與溫泉滋養的翡翠色湖泊，湖中央矗立著斯洛維尼亞唯一的天然島嶼<strong>布萊德島（Bled Island）</strong>。搭乘數百年傳承的手搖平底木船<strong>「Pletna」</strong>登島，沿著 99 級石階走進聖母升天教堂，親手拉響傳說中能實現心願的古老許願鐘。
+                    </p>
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px]">
+                        <strong class="text-[#0f3d2e]" data-zh="📸 懸崖古堡與 Ojstrica 明信片機位：" data-en="📸 Cliffside Castle & Ojstrica Viewpoint:">📸 懸崖古堡與 Ojstrica 明信片機位：</strong>
+                        <span data-zh="北岸 130 公尺垂直峭壁上的「布萊德城堡（Bled Castle）」是全國最古老城堡，內設古法活字印刷工坊；若想拍攝湖心島與雪山同框的絕美明信片角度，推薦步行 20 分鐘登上西南岸「Ojstrica 觀景台」。" data-en="Visit 11th-century Bled Castle perched on a 130-meter cliff, and hike 20 minutes up to Ojstrica viewpoint on the southwest shore for the classic postcard panorama.">
+                            北岸 130 公尺垂直峭壁上的「布萊德城堡（Bled Castle）」是全國最古老城堡，內設古法活字印刷工坊；若想拍攝湖心島與雪山同框的絕美明信片角度，推薦步行 20 分鐘登上西南岸「Ojstrica 觀景台」。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/yPn8EaXgt3vje14A8" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：布萊德湖與城堡導航" data-en="Open Google Maps: Lake Bled & Castle">開啟 Google Maps：布萊德湖與城堡導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destination 3 - Vintgar Gorge -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 04 • 精選地標 [3/8]" data-en="Chapter 04 • Destination [3/8]">Chapter 04 • 精選地標 [3/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Vintgar Gorge (文特加峽谷木棧道)" data-en="Vintgar Gorge & Šum Waterfall">Vintgar Gorge (文特加峽谷木棧道)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#b7d4ca]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP9x6SS1XAIB2-tuXHCXJC05f34KMY7GAYRSSS8Zg5og&s=10"
+                             onerror="handleImgFallback(this, 'Vintgar Gorge Emerald Rapids')"
+                             alt="Emerald Forest Gorge and River Rapids" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="距離布萊德湖僅 4 公里的<strong>文特加峽谷（Vintgar Gorge / Soteska Vintgar）</strong>，由清澈見底的拉多夫納河（Radovna River）歷經萬年切割垂直岩壁而成。全長 1.6 公里的懸空木棧道緊貼岩壁與急流上方蜿蜒延伸，腳下是寶石般碧綠的深潭與白色水花，步道終點更迎來氣勢磅礴、落差 13 公尺的<strong>「Šum 瀑布」</strong>。" data-en="Just 4 km north of Lake Bled, Vintgar Gorge was carved through vertical limestone cliffs by the turquoise Radovna River. A thrilling 1.6-km wooden boardwalk suspended above emerald rapids and pools culminates at the thundering 13-meter Šum Waterfall.">
+                        距離布萊德湖僅 4 公里的<strong>文特加峽谷（Vintgar Gorge / Soteska Vintgar）</strong>，由清澈見底的拉多夫納河（Radovna River）歷經萬年切割垂直岩壁而成。全長 1.6 公里的懸空木棧道緊貼岩壁與急流上方蜿蜒延伸，腳下是寶石般碧綠的深潭與白色水花，步道終點更迎來氣勢磅礴、落差 13 公尺的<strong>「Šum 瀑布」</strong>。
+                    </p>
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px]">
+                        <strong class="text-[#0f3d2e]" data-zh="🎟️ 單向通行與清晨光影秘訣：" data-en="🎟️ Timed Entry & Morning Light Tip:">🎟️ 單向通行與清晨光影秘訣：</strong>
+                        <span data-zh="峽谷採用單向通行制（每年約 4 月至 11 月開放），強烈建議線上預約早上 8:00–9:00 首波入場時段，不僅能避開人潮，陽光斜射入峽谷水霧時更會折射出夢幻丁達爾光束！" data-en="The boardwalk operates one-way (open roughly April–November); book the earliest morning timed slot online to enjoy serene walkways and sunbeams piercing the gorge mist.">
+                            峽谷採用單向通行制（每年約 4 月至 11 月開放），強烈建議線上預約早上 8:00–9:00 首波入場時段，不僅能避開人潮，陽光斜射入峽谷水霧時更會折射出夢幻丁達爾光束！
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/wCEKFUuPmRgsm6mp6" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：文特加峽谷導航" data-en="Open Google Maps: Vintgar Gorge">開啟 Google Maps：文特加峽谷導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destination 4 - Lake Bohinj & Vogel -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 04 • 精選地標 [4/8]" data-en="Chapter 04 • Destination [4/8]">Chapter 04 • 精選地標 [4/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Lake Bohinj & Vogel (波茵湖與沃格爾山)" data-en="Lake Bohinj & Vogel Cable Car">Lake Bohinj & Vogel (波茵湖與沃格爾山)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#b7d4ca]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8DAqRHmirINGmYrmwWy2cfZ6k-xYG6TLISX617Dnorw&s=10"
+                             onerror="handleImgFallback(this, 'Lake Bohinj & Julian Alps')"
+                             alt="Alpine Glacial Lake and Mountain Peaks" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="若說布萊德湖是優雅名媛，坐落於<strong>特里格拉夫國家公園（Triglav National Park）</strong>懷抱中的<strong>波茵湖（Lake Bohinj）</strong>便是純淨無瑕的山林仙子。身為斯洛維尼亞最大的永久冰河湖，湖面如鏡般倒映著雄偉的朱利安阿爾卑斯群峰，東岸的石橋與 14 世紀施洗約翰教堂構成靜謐絕景。" data-en="Nestled deep inside Triglav National Park, Lake Bohinj is Slovenia's largest permanent glacial lake—a tranquil alpine sanctuary framed by towering limestone peaks and the iconic stone bridge at Ribčev Laz.">
+                        若說布萊德湖是優雅名媛，坐落於<strong>特里格拉夫國家公園（Triglav National Park）</strong>懷抱中的<strong>波茵湖（Lake Bohinj）</strong>便是純淨無瑕的山林仙子。身為斯洛維尼亞最大的永久冰河湖，湖面如鏡般倒映著雄偉的朱利安阿爾卑斯群峰，東岸的石橋與 14 世紀施洗約翰教堂構成靜謐絕景。
+                    </p>
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px]">
+                        <strong class="text-[#0f3d2e]" data-zh="🚡 沃格爾高山纜車與薩維察瀑布：" data-en="🚡 Vogel Cable Car & Savica Waterfall:">🚡 沃格爾高山纜車與薩維察瀑布：</strong>
+                        <span data-zh="西岸可搭乘「沃格爾高山纜車（Vogel Cable Car）」直上 1,535 公尺觀景台，無死角俯瞰整座波茵湖與全國最高峰特里格拉夫峰（2,864m）；亦可健行 550 級石階探訪從岩壁洞穴噴湧而出的「薩維察雙股瀑布（Savica Waterfall）」。" data-en="Ride the Vogel Cable Car up to 1,535m for panoramic views of Lake Bohinj and Mount Triglav (2,864m), and hike up to the dramatic A-shaped Savica Waterfall.">
+                            西岸可搭乘「沃格爾高山纜車（Vogel Cable Car）」直上 1,535 公尺觀景台，無死角俯瞰整座波茵湖與全國最高峰特里格拉夫峰（2,864m）；亦可健行 550 級石階探訪從岩壁洞穴噴湧而出的「薩維察雙股瀑布（Savica Waterfall）」。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/Heeh5T3yA4u9mE5v7" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：波茵湖與沃格爾山導航" data-en="Open Google Maps: Lake Bohinj & Vogel">開啟 Google Maps：波茵湖與沃格爾山導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Destination 5 - Soča Valley & Vršič Pass -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 04 • 精選地標 [5/8]" data-en="Chapter 04 • Destination [5/8]">Chapter 04 • 精選地標 [5/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Soča Valley & Vršič Pass (索查河谷與山口)" data-en="Soča Valley & Vršič Pass">Soča Valley & Vršič Pass (索查河谷與山口)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#b7d4ca]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToH-wTYT1EokzUYC--H36hRa9W_I0RDFu4u_i0qCJiDw&s=10"
+                             onerror="handleImgFallback(this, 'Turquoise Soca River Valley')"
+                             alt="Turquoise Alpine River and Mountain Valley" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="發源於朱利安阿爾卑斯山脈的<strong>索查河（Soča River）</strong>因河水呈現不可思議的寶石綠松石色澤，被公認為「歐洲最美高山河流」，更曾作為電影《納尼亞傳奇：賈思潘王子》取景地。自克蘭斯卡戈拉出發，翻越擁有 50 道經典髮夾彎、海拔 1,611 公尺的<strong>弗爾希奇山口（Vršič Pass）</strong>，沿途壯麗石灰岩峭壁令人屏息。" data-en="Famed as 'The Emerald Beauty,' the Soča River dazzles with surreal turquoise waters—a filming location for 'The Chronicles of Narnia: Prince Caspian.' Reach it by driving the 50 dramatic hairpin turns of 1,611-meter Vršič Pass.">
+                        發源於朱利安阿爾卑斯山脈的<strong>索查河（Soča River）</strong>因河水呈現不可思議的寶石綠松石色澤，被公認為「歐洲最美高山河流」，更曾作為電影《納尼亞傳奇：賈思潘王子》取景地。自克蘭斯卡戈拉出發，翻越擁有 50 道經典髮夾彎、海拔 1,611 公尺的<strong>弗爾希奇山口（Vršič Pass）</strong>，沿途壯麗石灰岩峭壁令人屏息。
+                    </p>
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px]">
+                        <strong class="text-[#0f3d2e]" data-zh="🌊 大索查峽谷與白水泛舟之都博韋茨：" data-en="🌊 Great Soča Gorge & Bovec Adventure:">🌊 大索查峽谷與白水泛舟之都博韋茨：</strong>
+                        <span data-zh="必訪「大索查峽谷（Velika korita Soče）」，看寬僅數公尺卻深達 15 公尺的碧藍河水奔騰穿過白色石灰岩槽；山谷重鎮「博韋茨（Bovec）」則是體驗白水泛舟、獨木舟與高空滑索的戶外天堂。" data-en="Stop at Velika korita (Great Soča Gorge) where brilliant turquoise water rushes through narrow white limestone troughs, and enjoy rafting or kayaking in Bovec.">
+                            必訪「大索查峽谷（Velika korita Soče）」，看寬僅數公尺卻深達 15 公尺的碧藍河水奔騰穿過白色石灰岩槽；山谷重鎮「博韋茨（Bovec）」則是體驗白水泛舟、獨木舟與高空滑索的戶外天堂。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/3EjJon89S7MZxEG36" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：索查河谷與山口導航" data-en="Open Google Maps: Soča Valley & Vršič Pass">開啟 Google Maps：索查河谷與山口導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Destination 6 - Postojna Cave -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 04 • 精選地標 [6/8]" data-en="Chapter 04 • Destination [6/8]">Chapter 04 • 精選地標 [6/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Postojna Cave (波斯托伊納地底溶洞)" data-en="Postojna Cave & Underground Train">Postojna Cave (波斯托伊納地底溶洞)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#b7d4ca]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4rZezoPP1Uj55yrtZRbN7SfXAaotVx_E6CWaUGhQWGQ&s=10"
+                             onerror="handleImgFallback(this, 'Postojna Karst Cave System')"
+                             alt="Illuminated Limestone Karst Cave Formations" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="擁有超過 24 公里地下通道的<strong>波斯托伊納溶洞（Postojna Cave）</strong>是歐洲最壯觀的喀斯特鐘乳石洞穴系統，自 1872 年起便鋪設了世界首條洞穴旅遊鐵路。遊客搭乘雙軌地底電動小火車深入地下 2 公里，沿途穿梭於千姿百態的鐘乳石柱、石筍與水晶幕簾之間，宛如踏入奇幻地心宮殿。" data-en="Spanning 24 km of subterranean passages, Postojna Cave is Europe's premier show cave. Board the historic double-track underground electric train to journey deep past monumental stalactites, pillars, and the vast acoustic Concert Hall.">
+                        擁有超過 24 公里地下通道的<strong>波斯托伊納溶洞（Postojna Cave）</strong>是歐洲最壯觀的喀斯特鐘乳石洞穴系統，自 1872 年起便鋪設了世界首條洞穴旅遊鐵路。遊客搭乘雙軌地底電動小火車深入地下 2 公里，沿途穿梭於千姿百態的鐘乳石柱、石筍與水晶幕簾之間，宛如踏入奇幻地心宮殿。
+                    </p>
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px]">
+                        <strong class="text-[#0f3d2e]" data-zh="🐉 「人魚」洞螈與雪白 Brilliant 石筍：" data-en="🐉 Baby Dragon 'Olm' & Brilliant Stalagmite:">🐉 「人魚」洞螈與雪白 Brilliant 石筍：</strong>
+                        <span data-zh="步行導覽段將親眼見到 5 公尺高純白無瑕的鎮洞之寶「Brilliant」石筍、能容納萬人的宏偉「音樂廳」，以及棲息於洞穴暗河中、壽命長達百年的盲眼兩棲奇珍<strong>洞螈（Proteus anguinus / 人魚）</strong>。" data-en="On the guided walk, marvel at the pure-white 5-meter 'Brilliant' stalagmite and meet the rare blind cave salamander Proteus anguinus—affectionately nicknamed the 'baby dragon.'">
+                            步行導覽段將親眼見到 5 公尺高純白無瑕的鎮洞之寶「Brilliant」石筍、能容納萬人的宏偉「音樂廳」，以及棲息於洞穴暗河中、壽命長達百年的盲眼兩棲奇珍<strong>洞螈（Proteus anguinus / 人魚）</strong>。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/hV1BWm5PTj6mFoKi9" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：波斯托伊納溶洞導航" data-en="Open Google Maps: Postojna Cave">開啟 Google Maps：波斯托伊納溶洞導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Destination 7 - Predjama Castle -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 04 • 精選地標 [7/8]" data-en="Chapter 04 • Destination [7/8]">Chapter 04 • 精選地標 [7/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Predjama Castle (普利雅瑪洞窟城堡)" data-en="Predjama Castle (Cliffside Cave Fortress)">Predjama Castle (普利雅瑪洞窟城堡)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#b7d4ca]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWiAFcsPfrocDsFY8A4SI21SDZpRySB9ytLb2fRuuJuQ&s=10"
+                             onerror="handleImgFallback(this, 'Predjama Cliffside Cave Castle')"
+                             alt="Medieval Stone Fortress Built into Cliffside" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="距離波斯托伊納溶洞僅 9 公里的<strong>普利雅瑪城堡（Predjama Castle）</strong>，奇蹟般鑲嵌在 123 公尺高垂直石灰岩峭壁半山腰的巨大洞口中，獲金氏世界紀錄認證為<strong>「世界最大洞窟城堡」</strong>。城堡背靠天然洞穴迷宮、前方俯瞰深谷，建築與天然岩石融為一體，宛如奇幻史詩場景。" data-en="Located just 9 km from Postojna Cave, Predjama Castle is dramatically wedged inside a gaping cave mouth halfway up a 123-meter vertical cliff—holding the Guinness World Record as the world's largest cave castle.">
+                        距離波斯托伊納溶洞僅 9 公里的<strong>普利雅瑪城堡（Predjama Castle）</strong>，奇蹟般鑲嵌在 123 公尺高垂直石灰岩峭壁半山腰的巨大洞口中，獲金氏世界紀錄認證為<strong>「世界最大洞窟城堡」</strong>。城堡背靠天然洞穴迷宮、前方俯瞰深谷，建築與天然岩石融為一體，宛如奇幻史詩場景。
+                    </p>
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px]">
+                        <strong class="text-[#0f3d2e]" data-zh="⚔️ 俠盜騎士伊拉澤姆（Erazem）的傳奇密道：" data-en="⚔️ Legend of Rebel Knight Erazem:">⚔️ 俠盜騎士伊拉澤姆（Erazem）的傳奇密道：</strong>
+                        <span data-zh="15 世紀時，反抗哈布斯堡皇室的騎士伊拉澤姆曾憑藉城堡後方直通山頂的天然溶洞密道，在帝國大軍圍城長達一年期間仍能運入新鮮櫻桃挑釁敵軍！建議購買「溶洞＋城堡」聯票一同造訪。" data-en="In the 15th century, knight Erazem withstood an imperial siege for over a year by smuggling fresh cherries and supplies through secret karst tunnels behind the castle. Purchase a combined Postojna + Predjama ticket to save.">
+                            15 世紀時，反抗哈布斯堡皇室的騎士伊拉澤姆曾憑藉城堡後方直通山頂的天然溶洞密道，在帝國大軍圍城長達一年期間仍能運入新鮮櫻桃挑釁敵軍！建議購買「溶洞＋城堡」聯票一同造訪。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/dkjbTvovWXpr87Q9A" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：普利雅瑪城堡導航" data-en="Open Google Maps: Predjama Castle">開啟 Google Maps：普利雅瑪城堡導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Destination 8 - Piran & Tartini Square -->
+            <div class="page-slide flex-col space-y-3" data-page="12">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 04 • 精選地標 [8/8]" data-en="Chapter 04 • Destination [8/8]">Chapter 04 • 精選地標 [8/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="Piran & Tartini Square (皮蘭古城與塔爾蒂尼廣場)" data-en="Piran & Tartini Square (Adriatic Coast)">Piran & Tartini Square (皮蘭古城與塔爾蒂尼廣場)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#b7d4ca]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_M_0SIEUzQkhI2ireJmlXuuwHngkIoqZsP3HRt--1Kg&s=10"
+                             onerror="handleImgFallback(this, 'Piran Venetian Adriatic Coast')"
+                             alt="Adriatic Coastal Town Red Roofs and Harbor" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="探入亞得里亞海狹長半島尖端的<strong>皮蘭（Piran）</strong>，曾受威尼斯共和國統治近五百年，赤陶色紅屋頂、哥德式拱窗與大理石橢圓形的<strong>塔爾蒂尼廣場（Tartini Square）</strong>處處散發濃厚威尼斯水都風情。廣場中央矗立著出生於此的小提琴大師朱塞佩·塔爾蒂尼雕像，緊鄰遊艇停泊的精緻內港。" data-en="Jutting into the Adriatic Sea on a narrow peninsula, Piran flourished under the Venetian Republic for nearly five centuries. Its oval marble Tartini Square, terracotta rooftops, and Venetian Gothic palaces radiate Mediterranean elegance.">
+                        探入亞得里亞海狹長半島尖端的<strong>皮蘭（Piran）</strong>，曾受威尼斯共和國統治近五百年，赤陶色紅屋頂、哥德式拱窗與大理石橢圓形的<strong>塔爾蒂尼廣場（Tartini Square）</strong>處處散發濃厚威尼斯水都風情。廣場中央矗立著出生於此的小提琴大師朱塞佩·塔爾蒂尼雕像，緊鄰遊艇停泊的精緻內港。
+                    </p>
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px]">
+                        <strong class="text-[#0f3d2e]" data-zh="🌅 中世紀城牆與聖喬治教堂鐘樓日落：" data-en="🌅 Medieval Town Walls & Sunset Views:">🌅 中世紀城牆與聖喬治教堂鐘樓日落：</strong>
+                        <span data-zh="登上山坡上的「皮蘭中世紀城牆（Walls of Piran）」或仿威尼斯聖馬可鐘樓而建的「聖喬治教堂鐘樓」，黃昏時分能將三面環海的紅瓦半島與對岸義大利海岸線一覽無遺。" data-en="Climb the Medieval Walls of Piran or the Venetian-style campanile of St. George's Parish Church at sunset for 360-degree views across the peninsula and Adriatic Sea.">
+                            登上山坡上的「皮蘭中世紀城牆（Walls of Piran）」或仿威尼斯聖馬可鐘樓而建的「聖喬治教堂鐘樓」，黃昏時分能將三面環海的紅瓦半島與對岸義大利海岸線一覽無遺。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/UPA1XpAh88eaprKy5" target="_blank" class="block text-center bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：皮蘭與塔爾蒂尼廣場導航" data-en="Open Google Maps: Piran & Tartini Square">開啟 Google Maps：皮蘭與塔爾蒂尼廣場導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 13: Slovenian Gastronomy & Wine Culture -->
+            <div class="page-slide flex-col space-y-3" data-page="13">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 05 • 斯洛維尼亞美食與佳釀" data-en="Chapter 05 • Gastronomy & Wine Culture">Chapter 05 • 斯洛維尼亞美食與佳釀</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="斯洛維尼亞經典美食與精品佳釀文化" data-en="Slovenian Gastronomy & Wine Culture">斯洛維尼亞經典美食與精品佳釀文化</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- 1. Blejska kremšnita -->
+                    <div class="bg-white p-2.5 rounded-lg border border-[#cbe0d8] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-editorial font-bold text-[#0f3d2e] text-sm" data-zh="🍰 布萊德奶油蛋糕 (Blejska kremšnita)" data-en="🍰 Bled Cream Cake (Blejska kremšnita)">🍰 布萊德奶油蛋糕 (Blejska kremšnita)</h3>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Kavarna+Park+Bled+Slovenia" target="_blank" class="text-[10px] font-mono text-[#1b5e46] underline">🗺️ Kavarna Park</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="誕生於 1953 年布萊德湖畔公園飯店（Kavarna Park）的國民甜點！嚴格遵守 7×7×7 公分黃金比例，金黃酥皮夾著厚實香草卡士達與輕盈鮮奶油，灑上糖粉入口即化。" data-en="Created in 1953 at Kavarna Park on Lake Bled: golden puff pastry layering velvety vanilla custard and whipped cream, dusted with powdered sugar.">
+                            誕生於 1953 年布萊德湖畔公園飯店（Kavarna Park）的國民甜點！嚴格遵守 7×7×7 公分黃金比例，金黃酥皮夾著厚實香草卡士達與輕盈鮮奶油，灑上糖粉入口即化。
+                        </p>
+                    </div>
+
+                    <!-- 2. Kranjska klobasa & Jota -->
+                    <div class="bg-white p-2.5 rounded-lg border border-[#cbe0d8] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#0f3d2e] text-sm" data-zh="🌭 卡尼奧拉香腸 (Kranjska klobasa) 與 Jota 燉湯" data-en="🌭 Carniolan Sausage & Jota Stew">🌭 卡尼奧拉香腸 (Kranjska klobasa) 與 Jota 燉湯</h3>
+                        <p class="text-[11px]" data-zh="獲歐盟地理標誌保護的<strong>Kranjska klobasa</strong>嚴選上等豬肉、培根與大蒜煙燻製成，搭配芥末醬與辣根最道地；<strong>Jota</strong>則是喀斯特與伊斯特拉地區經典的酸菜、馬鈴薯與紅豆煙燻肉濃湯。" data-en="EU-protected <strong>Kranjska klobasa</strong> is a juicy smoked pork sausage served with mustard and horseradish; <strong>Jota</strong> is a hearty Istrian/Karst stew of sauerkraut, beans, and potatoes.">
+                            獲歐盟地理標誌保護的<strong>Kranjska klobasa</strong>嚴選上等豬肉、培根與大蒜煙燻製成，搭配芥末醬與辣根最道地；<strong>Jota</strong>則是喀斯特與伊斯特拉地區經典的酸菜、馬鈴薯與紅豆煙燻肉濃湯。
+                        </p>
+                    </div>
+
+                    <!-- 3. Štruklji & Idrijski žlikrofi -->
+                    <div class="bg-white p-2.5 rounded-lg border border-[#cbe0d8] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#0f3d2e] text-sm" data-zh="🥟 傳統麵捲 Štruklji 與伊德里亞馬鈴薯餃" data-en="🥟 Rolled Štruklji & Idrijski Žlikrofi">🥟 傳統麵捲 Štruklji 與伊德里亞馬鈴薯餃</h3>
+                        <p class="text-[11px]" data-zh="<strong>Štruklji</strong>是將薄麵皮捲入龍蒿葉（Tarragon）、茅屋起司或核桃蒸煮切片的經典麵食，甜鹹皆宜；<strong>Idrijski žlikrofi</strong>則源自礦城伊德里亞，帽子造型的精巧麵餃包入香草馬鈴薯泥，常淋上羊肉燉汁享用。" data-en="<strong>Štruklji</strong> are rolled dough dumplings filled with cottage cheese, tarragon, or walnuts; <strong>Idrijski žlikrofi</strong> are hat-shaped pasta pockets stuffed with spiced potato and herbs.">
+                            <strong>Štruklji</strong>是將薄麵皮捲入龍蒿葉（Tarragon）、茅屋起司或核桃蒸煮切片的經典麵食，甜鹹皆宜；<strong>Idrijski žlikrofi</strong>則源自礦城伊德里亞，帽子造型的精巧麵餃包入香草馬鈴薯泥，常淋上羊肉燉汁享用。
+                        </p>
+                    </div>
+
+                    <!-- 4. Boutique Wine Regions & Piran Sea Salt Chocolate -->
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-editorial font-bold text-slate-900 text-sm" data-zh="🍷 戈里齊亞布爾達酒鄉與皮蘭鹽之花巧克力" data-en="🍷 Goriška Brda Wines & Piran Salt Chocolate">🍷 戈里齊亞布爾達酒鄉與皮蘭鹽之花巧克力</h3>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Goriska+Brda+Slovenia" target="_blank" class="text-[10px] font-mono text-[#0f3d2e] underline">🗺️ Brda</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="被譽為「斯洛維尼亞托斯卡尼」的<strong>戈里齊亞布爾達（Goriška Brda）</strong>與<strong>維帕瓦河谷（Vipava Valley）</strong>以世界頂級橘酒（Orange Wine）與 Rebula 白酒聞名；伴手禮必買以千年手工「皮蘭鹽田鹽之花（Piranske soline）」製成的黑巧克力！" data-en="Known as 'Slovenia's Tuscany,' <strong>Goriška Brda</strong> and <strong>Vipava Valley</strong> craft world-renowned Rebula and skin-contact orange wines—pair your trip with artisanal dark chocolate sprinkled with Piran fleur de sel.">
+                            被譽為「斯洛維尼亞托斯卡尼」的<strong>戈里齊亞布爾達（Goriška Brda）</strong>與<strong>維帕瓦河谷（Vipava Valley）</strong>以世界頂級橘酒（Orange Wine）與 Rebula 白酒聞名；伴手禮必買以千年手工「皮蘭鹽田鹽之花（Piranske soline）」製成的黑巧克力！
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 14: Personal Travel Notes & Packing Checklist -->
+            <div class="page-slide flex-col space-y-3" data-page="14">
+                <div class="alpine-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#1b5e46]" data-zh="Chapter 06 • 個人旅行筆記與行前清單" data-en="Chapter 06 • Travel Notes & Checklist">Chapter 06 • 個人旅行筆記與行前清單</p>
+                    <h2 class="text-xl font-bold font-editorial text-slate-900" data-zh="個人旅行筆記與行前準備清單" data-en="Personal Travel Notes & Packing Checklist">個人旅行筆記與行前準備清單</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-slate-800 leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Interactive Pre-Departure Checklist -->
+                    <div class="bg-white p-3 rounded-xl border border-[#cbe0d8] shadow-sm space-y-2">
+                        <div class="flex justify-between items-center border-b border-slate-100 pb-1.5">
+                            <h3 class="font-editorial font-bold text-[#0f3d2e] text-sm" data-zh="✅ 斯洛維尼亞行前檢核清單" data-en="✅ Slovenia Pre-Departure Checklist">✅ 斯洛維尼亞行前檢核清單</h3>
+                            <span id="checklist-counter" class="text-[10px] font-mono bg-[#e8f3ef] text-[#0f3d2e] px-2 py-0.5 rounded font-bold">0 / 6</span>
+                        </div>
+                        <div class="space-y-1.5 text-[11px]" id="checklist-items">
+                            <!-- Populated by JS with localStorage persistence -->
+                        </div>
+                    </div>
+
+                    <!-- Personal Travel Notes Scratchpad (localStorage) -->
+                    <div class="bg-white p-3 rounded-xl border-2 border-[#2ca69a]/60 shadow-sm space-y-2">
+                        <label for="slovenia-notes" class="font-editorial font-bold text-[#0f3d2e] text-sm flex justify-between items-center">
+                            <span data-zh="✒️ 旅客私人筆記本 (自動本機保存)" data-en="✒️ Personal Travel Notes Scratchpad">✒️ 旅客私人筆記本 (自動本機保存)</span>
+                            <span id="note-saved-badge" class="text-[10px] font-mono text-emerald-700 hidden" data-zh="✓ 已儲存" data-en="✓ Saved">✓ 已儲存</span>
+                        </label>
+                        <textarea id="slovenia-notes" rows="5"
+                            class="w-full p-2.5 rounded-lg border border-[#b7d4ca] bg-[#f7faf8] text-xs text-slate-800 focus:ring-2 focus:ring-[#2ca69a] focus:outline-none resize-none"
+                            placeholder="記錄文特加峽谷預約時段、波斯托伊納溶洞聯票、伴手禮清單（皮蘭海鹽巧克力、布爾達白酒）..."></textarea>
+                        <div class="flex space-x-2">
+                            <button onclick="saveNotes()" class="flex-1 bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] text-xs py-2 rounded-lg font-mono uppercase tracking-wider transition shadow-sm" data-zh="儲存筆記" data-en="Save Notes">
+                                儲存筆記
+                            </button>
+                            <button onclick="clearNotes()" class="bg-[#e4f0ec] hover:bg-[#d2e6df] text-emerald-950 text-xs px-3.5 py-2 rounded-lg font-mono transition" data-zh="清除筆記" data-en="Clear">
+                                清除筆記
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#e8f3ef] p-2.5 rounded-lg border border-[#b7d4ca] text-[11px] text-slate-700 text-center">
+                        <span data-zh="祝您擁有一趟難忘的阿爾卑斯與亞得里亞海旅程！Srečno pot!" data-en="Wishing you an unforgettable Alpine & Adriatic journey! Srečno pot!">
+                            祝您擁有一趟難忘的阿爾卑斯與亞得里亞海旅程！Srečno pot!
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="bg-[#e8f3ef] border-t border-[#b7d4ca] px-4 py-2.5 flex justify-between items-center z-20">
+            <button onclick="prevPage()" id="prev-btn" class="bg-white hover:bg-emerald-50 text-slate-800 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm border border-[#b7d4ca] disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-xs font-mono font-bold text-[#0f3d2e]" id="page-indicator">1 / 14</span>
+                <div class="w-24 h-1.5 bg-[#c7dfd7] rounded-full overflow-hidden mt-1">
+                    <div id="progress-bar" class="h-full bg-[#0f3d2e] transition-all duration-300" style="width: 7.14%;"></div>
+                </div>
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-[#0f3d2e] hover:bg-[#1b5e46] text-[#f6e3ba] border border-[#d4a359]/60 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+        <!-- Floating Status Toast -->
+        <div id="toast-msg" class="hidden absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-[#08231a]/95 text-[#f6e3ba] border border-[#2ca69a] text-[11px] font-mono px-3.5 py-1.5 rounded-full shadow-lg z-40 whitespace-nowrap"></div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, 12-Month Weather Selector, TOC, Checklist, LocalStorage Notes & Bilingual Toggle -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 14;
+        let currentLang = 'zh';
+        let selectedMonthIndex = 5; // Default to June (Long alpine daylight & emerald rivers)
+
+        const tocData = [
+            { page: 1, zh: "封面 • 斯洛維尼亞阿爾卑斯翠湖與溶洞之旅", en: "Cover • Slovenia Discovery Journey" },
+            { page: 2, zh: "01. 斯洛維尼亞國家介紹與地理位置", en: "01. Country Overview & Geography" },
+            { page: 3, zh: "02. 斯洛維尼亞每月氣候與穿搭指南", en: "02. Monthly Weather & Clothing Guide" },
+            { page: 4, zh: "03. 斯洛維尼亞經典五日遊行程規劃", en: "03. Classic 5-Day Slovenia Itinerary" },
+            { page: 5, zh: "04. 地標 [1/8] 盧比安納舊城區與城堡", en: "04. [1/8] Ljubljana Old Town & Castle" },
+            { page: 6, zh: "05. 地標 [2/8] 布萊德湖與湖心小島", en: "05. [2/8] Lake Bled & Bled Island" },
+            { page: 7, zh: "06. 地標 [3/8] 文特加峽谷木棧道", en: "06. [3/8] Vintgar Gorge & Šum Waterfall" },
+            { page: 8, zh: "07. 地標 [4/8] 波茵湖與沃格爾山", en: "07. [4/8] Lake Bohinj & Vogel" },
+            { page: 9, zh: "08. 地標 [5/8] 索查河谷與弗爾希奇山口", en: "08. [5/8] Soča Valley & Vršič Pass" },
+            { page: 10, zh: "09. 地標 [6/8] 波斯托伊納地底溶洞", en: "09. [6/8] Postojna Cave" },
+            { page: 11, zh: "10. 地標 [7/8] 普利雅瑪洞窟城堡", en: "10. [7/8] Predjama Castle" },
+            { page: 12, zh: "11. 地標 [8/8] 皮蘭古城與塔爾蒂尼廣場", en: "11. [8/8] Piran & Tartini Square" },
+            { page: 13, zh: "12. 斯洛維尼亞經典美食與精品佳釀", en: "12. Slovenian Gastronomy & Wine" },
+            { page: 14, zh: "13. 個人旅行筆記與行前準備清單", en: "13. Travel Notes & Checklist" }
+        ];
+
+        const monthlyWeatherData = [
+            {
+                mZh: "1月", mEn: "Jan", temp: "-3°C ~ 4°C", microclimate: "❄️ Alpine Snow / Coast Mild",
+                icon: "⛷️",
+                highlightZh: "朱利安阿爾卑斯山區（克拉尼斯卡戈拉、沃格爾）進入滑雪旺季，布萊德湖偶現銀白雪景。",
+                highlightEn: "Peak ski season in Kranjska Gora and Vogel; snow-dusted peaks mirror in Lake Bled.",
+                clothZh: "厚羽絨大衣、羊毛發熱內衣、防水防滑雪靴、毛帽、圍巾與保暖手套。",
+                clothEn: "Heavy down parka, merino thermal layers, waterproof snow boots, beanie, scarf & gloves."
+            },
+            {
+                mZh: "2月", mEn: "Feb", temp: "-2°C ~ 6°C", microclimate: "❄️ Winter Sun / 乾冷晴朗",
+                icon: "🎭",
+                highlightZh: "普圖伊（Ptuj）舉辦全歐聞名的傳統毛怪嘉年華「Kurentovanje」，海岸皮蘭陽光和煦。",
+                highlightEn: "Famous Kurentovanje carnival in Ptuj; crisp alpine sunshine and mild Adriatic days in Piran.",
+                clothZh: "防風保暖大衣、刷毛中層、防滑步行靴與太陽眼鏡（雪地反光強）。",
+                clothEn: "Windproof insulated coat, fleece mid-layer, slip-resistant boots, and UV sunglasses."
+            },
+            {
+                mZh: "3月", mEn: "Mar", temp: "1°C ~ 11°C", microclimate: "🌤️ Early Spring / 山谷融雪",
+                icon: "🌱",
+                highlightZh: "盧比安納與海岸地區春意萌發，適合探索恆溫 10°C 的波斯托伊納溶洞與洞窟城堡。",
+                highlightEn: "Spring blossoms in Ljubljana and Piran; ideal shoulder season for Postojna Cave & Predjama.",
+                clothZh: "洋蔥式多層次穿搭、防風防水夾克、針織毛衣與防滑健行鞋。",
+                clothEn: "Layered outfits, wind/water-resistant jacket, knit sweater, and sturdy walking shoes."
+            },
+            {
+                mZh: "4月", mEn: "Apr", temp: "5°C ~ 16°C", microclimate: "🌦️ Spring Showers / 春雨",
+                icon: "🌷",
+                highlightZh: "文特加峽谷木棧道重新開放！融雪使薩維察瀑布與索查河水量充沛、碧綠動人。",
+                highlightEn: "Vintgar Gorge reopens! Snowmelt feeds roaring Savica Waterfall and vivid turquoise Soča River.",
+                clothZh: "長袖襯衫、輕量防雨風衣、保暖抓絨衣與防潑水健行鞋。",
+                clothEn: "Long-sleeve shirts, packable rain shell, light fleece, and water-resistant hiking shoes."
+            },
+            {
+                mZh: "5月", mEn: "May", temp: "10°C ~ 21°C", microclimate: "☀️ Pleasant / 清爽宜人",
+                icon: "🌿",
+                highlightZh: "全年最佳旅行月份之一！弗爾希奇山口全面通車，山花綻放且遊客較盛夏少。",
+                highlightEn: "One of the finest months to visit: Vršič Pass opens fully, wildflowers bloom, and trails are quiet.",
+                clothZh: "短袖或薄長袖搭配防風薄外套、長褲、太陽眼鏡與好走的健行鞋。",
+                clothEn: "T-shirts or light long sleeves with a windbreaker, trousers, sunglasses, and trail shoes."
+            },
+            {
+                mZh: "6月", mEn: "Jun", temp: "14°C ~ 25°C", microclimate: "☀️ Long Daylight / 16hr 日照",
+                icon: "🚣",
+                highlightZh: "每日日照長達 16 小時！布萊德湖划船、波茵湖健行與戈里齊亞布爾達櫻桃節盛大登場。",
+                highlightEn: "Nearly 16 hours of daylight for Lake Bled rowing, Bohinj hikes, and Goriška Brda Cherry Festival.",
+                clothZh: "透氣夏裝、遮陽帽、防曬乳，參觀溶洞或登沃格爾山務必多帶一件保暖外套。",
+                clothEn: "Breathable summer wear, sun hat, SPF, plus a warm jacket for 10°C caves and high peaks."
+            },
+            {
+                mZh: "7月", mEn: "Jul", temp: "16°C ~ 28°C", microclimate: "☀️ Warm Summer / 偶午後雷雨",
+                icon: "🏖️",
+                highlightZh: "皮蘭亞得里亞海戲水、索查河白水泛舟與盧比安納夏季戶外音樂節最高峰。",
+                highlightEn: "Peak summer for Adriatic swimming in Piran, Soča white-water rafting, and Ljubljana Summer Festival.",
+                clothZh: "輕薄夏裝、泳衣、涼鞋與登山鞋，隨身攜帶折疊傘或輕便雨衣應對山區午後陣雨。",
+                clothEn: "Light summer clothes, swimwear, sandals & hiking shoes, plus a compact rain shell for alpine showers."
+            },
+            {
+                mZh: "8月", mEn: "Aug", temp: "16°C ~ 27°C", microclimate: "☀️ Warm & Sunny / 陽光充沛",
+                icon: "⛵",
+                highlightZh: "波茵湖與布萊德湖水溫達 22°C–24°C 最適合游泳，高山牧場起司節熱鬧舉行。",
+                highlightEn: "Lake Bled and Bohinj reach 22°C–24°C for swimming; traditional alpine pasture festivals.",
+                clothZh: "透氣短袖、防曬用品與太陽眼鏡，前往溶洞與高山仍需準備一件長袖防風衣。",
+                clothEn: "Breathable summer attire, SPF & sunglasses, plus a long-sleeve layer for caves and passes."
+            },
+            {
+                mZh: "9月", mEn: "Sep", temp: "11°C ~ 21°C", microclimate: "🌤️ Golden Harvest / 秋高氣爽",
+                icon: "🍇",
+                highlightZh: "戈里齊亞布爾達與維帕瓦河谷葡萄採收季，氣候穩定晴朗，健行與品酒皆宜。",
+                highlightEn: "Grape harvest across Goriška Brda & Vipava Valley; crisp sunny days ideal for hiking and wine tasting.",
+                clothZh: "長袖上衣、休閒風衣或薄羽絨背心、長褲與舒適步行鞋。",
+                clothEn: "Long sleeves, trench or light down vest, trousers, and comfortable walking shoes."
+            },
+            {
+                mZh: "10月", mEn: "Oct", temp: "6°C ~ 15°C", microclimate: "🍂 Autumn Foliage / 落葉松金秋",
+                icon: "🍁",
+                highlightZh: "朱利安阿爾卑斯落葉松轉為耀眼金黃，布萊德湖與波茵湖倒映斑斕秋色如油畫。",
+                highlightEn: "Golden larch trees illuminate Julian Alps passes; Lake Bled and Bohinj glow with autumn reflections.",
+                clothZh: "保暖夾克、針織毛衣、圍巾與防潑水健行鞋。",
+                clothEn: "Warm jacket, knit sweater, scarf, and water-resistant walking/hiking shoes."
+            },
+            {
+                mZh: "11月", mEn: "Nov", temp: "1°C ~ 8°C", microclimate: "🌧️ Misty & Crisp / 聖馬丁節",
+                icon: "🍷",
+                highlightZh: "11月11日「聖馬丁節（Martinovanje）」新酒開桶慶典！月底盧比安納聖誕燈飾點亮。",
+                highlightEn: "St. Martin's Day (Nov 11) young wine celebrations! Late-November Ljubljana Christmas lights switch-on.",
+                clothZh: "防風防水保暖大衣、毛衣、圍巾與防水短靴。",
+                clothEn: "Insulated wind/waterproof coat, warm sweaters, scarf, and waterproof ankle boots."
+            },
+            {
+                mZh: "12月", mEn: "Dec", temp: "-2°C ~ 4°C", microclimate: "❄️ Festive Lights / 聖誕市集",
+                icon: "🎄",
+                highlightZh: "盧比安納河岸星光聖誕市集夢幻登場，熱紅酒與烤栗子香氣瀰漫舊城石板街。",
+                highlightEn: "Enchanting riverside Christmas markets in Ljubljana filled with mulled wine, roasted chestnuts & lights.",
+                clothZh: "極地羽絨大衣、發熱內衣褲、毛帽、手套與防滑保暖雪靴。",
+                clothEn: "Heavy down coat, thermal base layers, beanie, gloves, and insulated slip-resistant boots."
+            }
+        ];
+
+        const defaultChecklist = [
+            { id: "slo1", zh: "護照（效期 6 個月以上）與申根旅遊醫療保險證明", en: "Passport (6+ months validity) & Schengen travel insurance" },
+            { id: "slo2", zh: "自駕必備：線上購買斯洛維尼亞高速公路電子通行證（e-Vignette）", en: "Driving: Pre-purchase Slovenia highway e-Vignette online (evinjeta.dars.si)" },
+            { id: "slo3", zh: "波斯托伊納溶洞（10°C）與高山溫差用保暖中層＋防風防水外套", en: "Warm fleece & waterproof windbreaker for 10°C caves & alpine passes" },
+            { id: "slo4", zh: "防滑抓地力佳的健行鞋（適用文特加峽谷木棧道與湖畔步道）", en: "Sturdy non-slip hiking/walking shoes for Vintgar Gorge & lake trails" },
+            { id: "slo5", zh: "線上預約文特加峽谷（Vintgar Gorge）與波斯托伊納溶洞時段票", en: "Book timed entry tickets for Vintgar Gorge & Postojna Cave online" },
+            { id: "slo6", zh: "歐規雙圓腳轉接頭（Type C / F，230V）與少量歐元現金（Pletna 船資）", en: "Type C / F two-pin power adapter (230V) & Euro cash for Pletna boats" }
+        ];
+
+        function handleImgFallback(imgEl, label) {
+            imgEl.onerror = null;
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+                <defs>
+                    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#0f3d2e"/>
+                        <stop offset="55%" stop-color="#1b5e46"/>
+                        <stop offset="100%" stop-color="#2ca69a"/>
+                    </linearGradient>
+                </defs>
+                <rect width="800" height="420" fill="url(#g)"/>
+                <rect x="24" y="24" width="752" height="372" rx="16" fill="none" stroke="#d4a359" stroke-width="2" stroke-opacity="0.7"/>
+                <text x="400" y="195" fill="#f6e3ba" font-family="Georgia, serif" font-size="26" font-weight="bold" text-anchor="middle">${label}</text>
+                <text x="400" y="232" fill="#e8f3ef" font-family="monospace" font-size="14" text-anchor="middle">I FEEL SLOVENIA • ALPINE & ADRIATIC HERITAGE</text>
+            </svg>`;
+            imgEl.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+        }
+
+        function renderToc() {
+            const tocList = document.getElementById('toc-list');
+            if (!tocList) return;
+            tocList.innerHTML = tocData.map(item => `
+                <button onclick="goToPage(${item.page}); toggleToc();"
+                        class="text-left px-3 py-1.5 rounded-lg transition flex justify-between items-center ${item.page === currentPage ? 'bg-[#0f3d2e] text-[#f6e3ba] font-bold border border-[#d4a359]' : 'bg-white hover:bg-[#e8f3ef] text-slate-800 border border-[#cbe0d8]'}">
+                    <span>${currentLang === 'zh' ? item.zh : item.en}</span>
+                    <span class="font-mono text-[10px] opacity-80">P.${item.page}</span>
+                </button>
+            `).join('');
+        }
+
+        function renderMonthSelector() {
+            const selector = document.getElementById('month-selector');
+            if (!selector) return;
+            selector.innerHTML = monthlyWeatherData.map((m, idx) => `
+                <button onclick="selectMonth(${idx})"
+                        class="py-1.5 px-1 rounded-lg font-mono text-[11px] transition border ${idx === selectedMonthIndex ? 'bg-[#0f3d2e] text-[#f6e3ba] border-[#d4a359] font-bold shadow-sm' : 'bg-white hover:bg-[#e8f3ef] text-slate-700 border-[#b7d4ca]'}">
+                    ${currentLang === 'zh' ? m.mZh : m.mEn}
+                </button>
+            `).join('');
+            renderMonthDetail();
+        }
+
+        function renderMonthDetail() {
+            const card = document.getElementById('month-detail-card');
+            if (!card) return;
+            const m = monthlyWeatherData[selectedMonthIndex];
+            card.innerHTML = `
+                <div class="flex justify-between items-center border-b border-[#cbe0d8] pb-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-2xl">${m.icon}</span>
+                        <div>
+                            <h3 class="font-editorial font-bold text-base text-slate-900">${currentLang === 'zh' ? m.mZh + ' 氣候與盛事' : m.mEn + ' Climate & Events'}</h3>
+                            <span class="text-[10px] font-mono text-[#1b5e46]">${m.microclimate}</span>
+                        </div>
+                    </div>
+                    <div class="bg-[#e8f3ef] px-2.5 py-1 rounded-lg border border-[#b7d4ca] font-mono font-bold text-[#0f3d2e] text-xs">
+                        ${m.temp}
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <div>
+                        <strong class="text-slate-900 font-editorial block text-[11px]">${currentLang === 'zh' ? '✨ 季節亮點：' : '✨ Seasonal Highlights:'}</strong>
+                        <p class="text-slate-700 text-[11px]">${currentLang === 'zh' ? m.highlightZh : m.highlightEn}</p>
+                    </div>
+                    <div>
+                        <strong class="text-slate-900 font-editorial block text-[11px]">${currentLang === 'zh' ? '🧥 穿搭與行李建議：' : '🧥 Clothing & Packing Advice:'}</strong>
+                        <p class="text-slate-700 text-[11px]">${currentLang === 'zh' ? m.clothZh : m.clothEn}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectMonth(idx) {
+            selectedMonthIndex = idx;
+            renderMonthSelector();
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-items');
+            const counter = document.getElementById('checklist-counter');
+            if (!container) return;
+
+            let savedState = {};
+            try {
+                savedState = JSON.parse(localStorage.getItem('slovenia_checklist_state') || '{}');
+            } catch (e) {}
+
+            let checkedCount = 0;
+            container.innerHTML = defaultChecklist.map(item => {
+                const isChecked = !!savedState[item.id];
+                if (isChecked) checkedCount++;
+                return `
+                    <label class="flex items-start space-x-2 p-1.5 rounded-lg hover:bg-[#e8f3ef] cursor-pointer transition">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleCheckItem('${item.id}')"
+                               class="mt-0.5 rounded text-[#0f3d2e] focus:ring-[#2ca69a]">
+                        <span class="${isChecked ? 'line-through text-slate-400' : 'text-slate-700'}">
+                            ${currentLang === 'zh' ? item.zh : item.en}
+                        </span>
+                    </label>
+                `;
+            }).join('');
+
+            if (counter) {
+                counter.textContent = `${checkedCount} / ${defaultChecklist.length}`;
+            }
+        }
+
+        function toggleCheckItem(id) {
+            let savedState = {};
+            try {
+                savedState = JSON.parse(localStorage.getItem('slovenia_checklist_state') || '{}');
+                savedState[id] = !savedState[id];
+                localStorage.setItem('slovenia_checklist_state', JSON.stringify(savedState));
+            } catch (e) {}
+            renderChecklist();
+        }
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'), 10);
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const pageLabel = `${currentPage} / ${totalPages}`;
+            const indicator = document.getElementById('page-indicator');
+            if (indicator) indicator.textContent = pageLabel;
+            const topIndicator = document.getElementById('top-page-indicator');
+            if (topIndicator) topIndicator.textContent = pageLabel;
+
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) progressBar.style.width = `${(currentPage / totalPages) * 100}%`;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.disabled = (currentPage === 1);
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '回封面 ↺' : 'Cover ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+
+            renderToc();
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+            } else {
+                currentPage = 1;
+            }
+            updateDisplay();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function toggleToc() {
+            const drawer = document.getElementById('toc-drawer');
+            if (!drawer) return;
+            if (drawer.classList.contains('hidden')) {
+                renderToc();
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+            }
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            const htmlRoot = document.getElementById('html-root');
+            if (htmlRoot) htmlRoot.setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+
+            const notesEl = document.getElementById('slovenia-notes');
+            if (notesEl) {
+                notesEl.placeholder = (currentLang === 'zh')
+                    ? '記錄文特加峽谷預約時段、波斯托伊納溶洞聯票、伴手禮清單（皮蘭海鹽巧克力、布爾達白酒）...'
+                    : 'Jot down Vintgar Gorge booking times, Postojna Cave tickets, or souvenirs (Piran salt chocolate, Brda wine)...';
+            }
+
+            renderMonthSelector();
+            renderChecklist();
+            updateDisplay();
+            showToast(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English');
+        }
+
+        function toggleBookmark() {
+            const btn = document.getElementById('bookmark-btn');
+            if (!btn) return;
+            if (btn.textContent.trim() === '🔖') {
+                btn.textContent = '📍';
+                showToast(currentLang === 'zh' ? `已加入第 ${currentPage} 頁書籤` : `Bookmarked Page ${currentPage}`);
+            } else {
+                btn.textContent = '🔖';
+                showToast(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notesEl = document.getElementById('slovenia-notes');
+            if (!notesEl) return;
+            try {
+                localStorage.setItem('slovenia_journey_notes', notesEl.value);
+                const badge = document.getElementById('note-saved-badge');
+                if (badge) {
+                    badge.classList.remove('hidden');
+                    setTimeout(() => badge.classList.add('hidden'), 2000);
+                }
+                showToast(currentLang === 'zh' ? '旅遊筆記已儲存！' : 'Travel notes saved!');
+            } catch (e) {
+                showToast(currentLang === 'zh' ? '無法存取本機儲存空間' : 'Storage unavailable');
+            }
+        }
+
+        function clearNotes() {
+            const notesEl = document.getElementById('slovenia-notes');
+            if (!notesEl) return;
+            notesEl.value = '';
+            try {
+                localStorage.removeItem('slovenia_journey_notes');
+            } catch (e) {}
+            showToast(currentLang === 'zh' ? '筆記已清除' : 'Notes cleared');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2200);
+        }
+
+        window.onload = function() {
+            try {
+                const savedNotes = localStorage.getItem('slovenia_journey_notes');
+                const notesEl = document.getElementById('slovenia-notes');
+                if (savedNotes && notesEl) {
+                    notesEl.value = savedNotes;
+                }
+            } catch (e) {}
+            renderMonthSelector();
+            renderChecklist();
+            updateDisplay();
+        };
+
+        // Keyboard Arrow Navigation Support
+        document.addEventListener('keydown', e => {
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (activeTag === 'textarea' || activeTag === 'input') return;
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') prevPage();
+        });
+
+        // Touch Swipe Navigation Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        if (bookArea) {
+            bookArea.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            bookArea.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                if (diff < -55) nextPage();
+                if (diff > 55) prevPage();
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
