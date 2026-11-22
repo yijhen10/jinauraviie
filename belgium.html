@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>比利時中世紀古城與工藝巧克力深度之旅電子書報 | Belgium Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+            background: radial-gradient(circle at top, #38141a 0%, #270e12 55%, #1f0b0e 100%);
+            color: #2b1815;
+            touch-action: pan-y;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+        }
+
+        /* Royal Belgian Burgundy (#3b1219 / #5c1d28), Golden Waffle/Beer Amber (#d99b26 / #e8b038) & Warm Parchment/Linen (#faf6f0 -> #f4ece1) */
+        .belgian-paper-bg {
+            background: linear-gradient(180deg, #faf6f0 0%, #f7f1e8 52%, #f4ece1 100%);
+        }
+
+        .royal-header {
+            border-bottom: 3px double #d99b26;
+            border-top: 1px solid #d99b26;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.1rem;
+            float: left;
+            line-height: 0.82;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #5c1d28;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4ece1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b87c19;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-0 sm:py-3 px-0 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile-First 430px Max Width) -->
+    <div class="w-full max-w-[430px] h-[100dvh] sm:h-[92vh] sm:max-h-[880px] belgian-paper-bg shadow-2xl sm:rounded-2xl overflow-hidden border-0 sm:border sm:border-[#d8c3a5] flex flex-col justify-between relative select-none">
+
+        <!-- Persistent Top Navigation / Royal Belgian Burgundy Issue Bar -->
+        <div class="bg-[#3b1219] text-[#faf6f0] px-3 py-2.5 text-xs flex justify-between items-center tracking-wider font-mono z-20 shadow-md border-b border-[#d99b26]/75">
+            <div class="flex items-center space-x-1.5 min-w-0">
+                <button onclick="toggleToc()" class="bg-[#5c1d28] hover:bg-[#732432] text-[#f7dca1] px-2 py-1 rounded text-[11px] flex items-center space-x-1 border border-[#d99b26]/60 transition shrink-0" title="Table of Contents / 目錄">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span data-zh="目錄" data-en="TOC">目錄</span>
+                </button>
+                <span class="text-[10px] font-editorial font-bold text-[#e8b038] truncate" data-zh="比利時深度之旅" data-en="BELGIUM EDITION">比利時深度之旅</span>
+            </div>
+            <div class="flex items-center space-x-1.5 shrink-0">
+                <span class="bg-[#5c1d28]/90 text-[#f7dca1] px-1.5 py-0.5 rounded text-[10px] font-bold border border-[#d99b26]/40" id="top-page-indicator">1 / 14</span>
+                <!-- Persistent Bilingual Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-[#e8b038] hover:bg-[#d99b26] text-[#240b0f] px-2 py-1 rounded text-[10px] font-mono transition font-bold shadow-sm" title="Switch Language / 切換語言">
+                    EN / 繁中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-[#f7dca1] hover:text-white transition-colors p-0.5" title="加入書籤 / Bookmark" aria-label="Bookmark">
+                    <svg id="bookmark-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide-Out Table of Contents Drawer -->
+        <div id="toc-drawer" class="hidden absolute inset-x-0 top-[44px] bottom-[56px] bg-[#faf6f0]/98 backdrop-blur-md z-30 flex-col justify-between p-4 overflow-y-auto border-b border-[#d8c3a5]">
+            <div class="space-y-2.5">
+                <div class="flex justify-between items-center border-b-2 border-[#d99b26] pb-2">
+                    <h3 class="font-editorial font-bold text-lg text-[#5c1d28]" data-zh="📖 比利時電子書報目錄" data-en="📖 Belgium Edition Contents">📖 比利時電子書報目錄</h3>
+                    <button onclick="toggleToc()" class="text-[#5c1d28] hover:text-black font-mono text-xs px-2.5 py-1 bg-[#ede2d2] rounded border border-[#d8c3a5]">✕</button>
+                </div>
+                <div class="grid grid-cols-1 gap-1.5 text-xs" id="toc-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+            <div class="pt-3 text-center text-[10px] font-mono text-[#7a4b3e]">
+                Belgium Discovery Digital Edition • 14 Standalone Pages
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (14 Standalone Pages) -->
+        <div class="flex-1 overflow-y-auto px-5 py-4 space-y-4 relative" id="book-content-area">
+
+            <!-- PAGE 1: Editorial Cover Page -->
+            <div class="page-slide active flex-col justify-between h-full space-y-3" data-page="1">
+                <div class="text-center space-y-1.5 pt-1">
+                    <span class="bg-[#5c1d28] text-[#f7dca1] border border-[#d99b26] text-[10px] px-3 py-0.5 font-mono tracking-widest rounded-full uppercase" data-zh="皇家工藝與中世紀古城典藏版 2026" data-en="Royal Craft & Medieval Guilds Edition 2026">皇家工藝與中世紀古城典藏版 2026</span>
+                    <h1 class="text-3xl font-bold font-editorial tracking-tight text-[#240b0f] leading-tight">
+                        <span class="text-[#5c1d28] tracking-wider text-2xl block">BELGIUM DISCOVERY JOURNEY</span>
+                        <span class="text-xl text-[#2b1815] block mt-0.5" data-zh="比利時深度探索之旅" data-en="Medieval Guildhalls, Chocolatiers & Trappist Heritage">比利時深度探索之旅</span>
+                    </h1>
+                    <p class="text-[11px] font-editorial italic text-[#9c6b14]" data-zh="Medieval Guildhalls, Artisanal Chocolatiers & Trappist Heritage" data-en="中世紀行會建築、手工巧克力大師與修道院精釀遺產">Medieval Guildhalls, Artisanal Chocolatiers & Trappist Heritage</p>
+                </div>
+
+                <div class="relative rounded-xl overflow-hidden shadow-lg border border-[#d8c3a5] group">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVJXlzlkoefDUajqYHRcVW20ugeugkS_RSG5pA-QyZSg&s=10"
+                         onerror="handleImgFallback(this, 'Bruges Canals & Brussels Grand Place')"
+                         alt="Bruges Medieval Canals and Belfry Belgium" class="w-full h-44 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#1f0b0e]/90 via-[#1f0b0e]/45 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-[#e8b038] uppercase tracking-wider" data-zh="歐洲心臟與工藝王國 • HEART OF EUROPE" data-en="HEART OF EUROPE • ARTISANAL KINGDOM">歐洲心臟與工藝王國 • HEART OF EUROPE</p>
+                        <p class="text-xs font-medium" data-zh="布魯塞爾大廣場、布魯日運河、根特伯爵堡與阿登高地" data-en="Brussels Grand Place, Bruges Canals, Ghent & Ardennes">布魯塞爾大廣場、布魯日運河、根特伯爵堡與阿登高地</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#f2e8d9] p-3.5 rounded-xl border border-[#d8c3a5] text-xs text-[#2b1815] leading-relaxed space-y-1.5 shadow-sm">
+                    <p class="drop-cap" data-zh="歡迎翻閱《比利時中世紀古城與工藝巧克力深度之旅》。這座位於西歐十字路口的低地王國，不僅是歐盟與北約總部所在的歐洲心臟，更凝聚了法蘭德斯黃金時代的華麗行會建築、浪漫如畫的布魯日運河、世界頂級手工夾心巧克力與列為人類非物質文化遺產的修道院精釀啤酒。本手冊完整收錄國家地理概況、十二月份氣候穿搭、五日經典行程與八大必訪地標。" data-en="Welcome to the Belgium Discovery Journey. Sitting at the crossroads of Western Europe, Belgium unites the diplomatic heart of the EU with opulent Flemish guildhalls, romantic Bruges canals, world-renowned artisanal chocolatiers, and UNESCO-listed Trappist beer heritage. Explore 14 standalone pages with bilingual guides, weather advice, and Google Maps links.">
+                        歡迎翻閱《比利時中世紀古城與工藝巧克力深度之旅》。這座位於西歐十字路口的低地王國，不僅是歐盟與北約總部所在的歐洲心臟，更凝聚了法蘭德斯黃金時代的華麗行會建築、浪漫如畫的布魯日運河、世界頂級手工夾心巧克力與列為人類非物質文化遺產的修道院精釀啤酒。本手冊完整收錄國家地理概況、十二月份氣候穿搭、五日經典行程與八大必訪地標。
+                    </p>
+                </div>
+
+                <div class="pt-0.5 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] border border-[#d99b26] text-xs py-3 rounded-lg font-mono uppercase tracking-widest shadow-md transition-all active:scale-95" data-zh="開始閱讀 / Start Reading ➔" data-en="Start Reading / 開始閱讀 ➔">
+                        開始閱讀 / Start Reading ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Country Overview & Geographical Location -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 01 • 國家介紹與地理位置" data-en="Chapter 01 • Country & Geography">Chapter 01 • 國家介紹與地理位置</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="比利時國家介紹與地理位置" data-en="Country Overview & Geographical Location">比利時國家介紹與地理位置</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Quick Fact Grid -->
+                    <div class="grid grid-cols-2 gap-2 bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] font-mono text-[11px]">
+                        <div>
+                            <span class="text-[#7a4b3e] block text-[9px]" data-zh="首都 / CAPITAL" data-en="CAPITAL">首都 / CAPITAL</span>
+                            <strong class="text-[#5c1d28]" data-zh="布魯塞爾 (Brussels)" data-en="Brussels">布魯塞爾 (Brussels)</strong>
+                        </div>
+                        <div>
+                            <span class="text-[#7a4b3e] block text-[9px]" data-zh="國土面積 / AREA" data-en="AREA">國土面積 / AREA</span>
+                            <strong class="text-[#240b0f]" data-zh="30,689 km² (低地王國)" data-en="30,689 km²">30,689 km² (低地王國)</strong>
+                        </div>
+                        <div>
+                            <span class="text-[#7a4b3e] block text-[9px]" data-zh="官方語言 / LANGUAGES" data-en="LANGUAGES">官方語言 / LANGUAGES</span>
+                            <strong class="text-[#240b0f]" data-zh="荷語 / 法語 / 德語" data-en="Dutch / French / German">荷語 / 法語 / 德語</strong>
+                        </div>
+                        <div>
+                            <span class="text-[#7a4b3e] block text-[9px]" data-zh="流通貨幣 / CURRENCY" data-en="CURRENCY">流通貨幣 / CURRENCY</span>
+                            <strong class="text-[#240b0f]" data-zh="歐元 Euro (€)" data-en="Euro (€)">歐元 Euro (€)</strong>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#fffdf9] p-3 rounded-lg border border-[#dfd0bc] space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#5c1d28] text-sm" data-zh="🧭 西歐十字路口與「歐洲首都」" data-en="🧭 Crossroads of Western Europe & Capital of the EU">🧭 西歐十字路口與「歐洲首都」</h3>
+                        <p data-zh="比利時王國（Kingdom of Belgium）位於西歐核心地帶，西北瀕臨北海（North Sea），北接荷蘭、東鄰德國、東南與盧森堡接壤、西南毗鄰法國。憑藉四通八達的高鐵與運河網絡，布魯塞爾成為歐盟執委會（EU）與北大西洋公約組織（NATO）總部所在地，被譽為「歐洲首都」。" data-en="Positioned at the strategic crossroads of Western Europe, Belgium borders the North Sea, the Netherlands, Germany, Luxembourg, and France. Linked by high-speed rail to London, Paris, and Amsterdam, Brussels serves as the de facto capital of the European Union and NATO.">
+                            比利時王國（Kingdom of Belgium）位於西歐核心地帶，西北瀕臨北海（North Sea），北接荷蘭、東鄰德國、東南與盧森堡接壤、西南毗鄰法國。憑藉四通八達的高鐵與運河網絡，布魯塞爾成為歐盟執委會（EU）與北大西洋公約組織（NATO）總部所在地，被譽為「歐洲首都」。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#fffdf9] p-3 rounded-lg border border-[#dfd0bc] space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#5c1d28] text-sm" data-zh="🏛️ 三大聯邦大區與多元文化交融" data-en="🏛️ Three Federal Regions & Cultural Tapestry">🏛️ 三大聯邦大區與多元文化交融</h3>
+                        <p data-zh="比利時由三大聯邦大區組成：北部說荷蘭語、以中世紀商貿古城與運河聞名的<strong>法蘭德斯大區（Flanders）</strong>；南部說法語、擁有壯麗城堡與河谷的<strong>瓦隆大區（Wallonia）</strong>；以及雙語並行的<strong>布魯塞爾首都大區</strong>，東部還設有德語社群，展現迷人的跨文化魅力。" data-en="Belgium comprises three federal regions: Dutch-speaking <strong>Flanders</strong> in the north (home to Bruges, Ghent, and Antwerp), French-speaking <strong>Wallonia</strong> in the south, and the bilingual <strong>Brussels-Capital Region</strong>, alongside a German-speaking community in the east.">
+                            比利時由三大聯邦大區組成：北部說荷蘭語、以中世紀商貿古城與運河聞名的<strong>法蘭德斯大區（Flanders）</strong>；南部說法語、擁有壯麗城堡與河谷的<strong>瓦隆大區（Wallonia）</strong>；以及雙語並行的<strong>布魯塞爾首都大區</strong>，東部還設有德語社群，展現迷人的跨文化魅力。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#f2e8d9] p-3 rounded-lg border border-[#d8c3a5] space-y-1">
+                        <h3 class="font-editorial font-bold text-[#240b0f] text-sm" data-zh="🌲 從北海沙丘平原到阿登森林高地" data-en="🌲 From North Sea Polders to Forested Ardennes">🌲 從北海沙丘平原到阿登森林高地</h3>
+                        <p data-zh="地勢由西北向東南漸次升高：西北部為平坦肥沃的北海沿岸低地與運河平原；中部為起伏的布拉班特丘陵；東南部則是茂密森林覆蓋、默茲河與瑟穆瓦河蜿蜒切割的<strong>阿登高地（Ardennes）</strong>，最高點博特朗日山海拔 694 公尺。" data-en="Topography rises gradually from northwest to southeast: flat coastal polders along the 67-km North Sea shore transition through central fertile plains into the densely forested hills and river valleys of the <strong>Ardennes</strong> (peaking at Signal de Botrange, 694m).">
+                            地勢由西北向東南漸次升高：西北部為平坦肥沃的北海沿岸低地與運河平原；中部為起伏的布拉班特丘陵；東南部則是茂密森林覆蓋、默茲河與瑟穆瓦河蜿蜒切割的<strong>阿登高地（Ardennes）</strong>，最高點博特朗日山海拔 694 公尺。
+                        </p>
+                    </div>
+
+                    <a href="https://maps.app.goo.gl/TW6xSYRiNX3dWcfg8" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2 rounded-lg font-mono text-[11px] transition shadow-sm">
+                        🗺️ <span data-zh="在 Google Maps 查看比利時全境地圖" data-en="View Belgium Map on Google Maps">在 Google Maps 查看比利時全境地圖</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Interactive 12-Month Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 02 • 每月氣候與穿搭指南" data-en="Chapter 02 • Monthly Weather & Packing">Chapter 02 • 每月氣候與穿搭指南</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="比利時每月氣候與穿搭指南" data-en="Interactive 12-Month Weather & Packing">比利時每月氣候與穿搭指南</h2>
+                </div>
+
+                <p class="text-[11px] text-[#6e3d32]" data-zh="點擊下方月份按鈕（1月–12月），查看平均氣溫、降雨與日照、季節盛事（如布魯塞爾鮮花地毯、根特燈光節）與穿搭建議：" data-en="Select any month (Jan–Dec) to view average temperatures, rain/sunlight, seasonal highlights (Brussels Flower Carpet, Ghent Light Festival) & attire:">
+                    點擊下方月份按鈕（1月–12月），查看平均氣溫、降雨與日照、季節盛事（如布魯塞爾鮮花地毯、根特燈光節）與穿搭建議：
+                </p>
+
+                <!-- 12-Month Interactive Grid -->
+                <div class="grid grid-cols-4 gap-1.5" id="month-selector">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Dynamic Month Detail Card -->
+                <div id="month-detail-card" class="bg-[#fffdf9] p-3.5 rounded-xl border-2 border-[#d99b26]/65 shadow-sm space-y-2 text-xs text-[#2b1815]">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px] text-[#2b1815] space-y-1">
+                    <strong class="text-[#5c1d28] block font-editorial" data-zh="☂️ 溫帶海洋性氣候與石板路鞋履貼士" data-en="☂️ Maritime Weather & Cobblestone Footwear Tip">☂️ 溫帶海洋性氣候與石板路鞋履貼士</strong>
+                    <p data-zh="受北海溫帶海洋性氣候影響，比利時四季天氣變化迅速、「一日四季」頗為常見，隨身攜帶防風防潑水外套與抗風折疊傘必不可少；布魯日與根特皆為古老鵝卵石街道，請務必穿著厚底防滑平底鞋。" data-en="Belgium's temperate maritime climate brings brisk showers and shifting skies year-round—pack a windproof water-repellent jacket, sturdy umbrella, and cushioned non-slip shoes for historic cobblestones.">
+                        受北海溫帶海洋性氣候影響，比利時四季天氣變化迅速、「一日四季」頗為常見，隨身攜帶防風防潑水外套與抗風折疊傘必不可少；布魯日與根特皆為古老鵝卵石街道，請務必穿著厚底防滑平底鞋。
+                    </p>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Classic 5-Day Belgium Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 03 • 比利時經典五日深度行程" data-en="Chapter 03 • Classic 5-Day Itinerary">Chapter 03 • 比利時經典五日深度行程</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="比利時經典五日遊行程規劃" data-en="Classic 5-Day Belgium Itinerary">比利時經典五日遊行程規劃</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Day 1 -->
+                    <div class="bg-[#fffdf9] p-3 rounded-lg border-l-4 border-[#5c1d28] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#5c1d28]">DAY 01</span>
+                            <a href="https://maps.app.goo.gl/8bJZsaodoFqKpaWBA" target="_blank" class="text-[10px] font-mono text-[#9c6b14] hover:text-[#5c1d28] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#240b0f] text-sm" data-zh="布魯塞爾大廣場、皇家聖休伯特長廊與尿尿小童" data-en="Brussels Grand Place, Royal Galleries & Manneken Pis">布魯塞爾大廣場、皇家聖休伯特長廊與尿尿小童</h3>
+                        <p class="text-[#54332c] text-[11px]" data-zh="上午讚嘆金碧輝煌的布魯塞爾大廣場行會建築，拜訪尿尿小童並漫步百年皇家聖休伯特長廊品嚐手工夾心巧克力，午後登藝術山（Mont des Arts）與皇家美術館。" data-en="Morning marveling at gilded guildhalls on Grand Place, greeting Manneken Pis, and sampling pralines in Galeries Royales Saint-Hubert; afternoon at Mont des Arts & Royal Museums.">
+                            上午讚嘆金碧輝煌的布魯塞爾大廣場行會建築，拜訪尿尿小童並漫步百年皇家聖休伯特長廊品嚐手工夾心巧克力，午後登藝術山（Mont des Arts）與皇家美術館。
+                        </p>
+                    </div>
+
+                    <!-- Day 2 -->
+                    <div class="bg-[#fffdf9] p-3 rounded-lg border-l-4 border-[#d99b26] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9c6b14]">DAY 02</span>
+                            <a href="https://maps.app.goo.gl/L68pAmqb7fpjuPmTA" target="_blank" class="text-[10px] font-mono text-[#9c6b14] hover:text-[#5c1d28] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#240b0f] text-sm" data-zh="「北方威尼斯」布魯日運河遊船、鐘樓與愛之湖" data-en="Bruges Canals, Belfry Tower & Minnewater Lake">「北方威尼斯」布魯日運河遊船、鐘樓與愛之湖</h3>
+                        <p class="text-[#54332c] text-[11px]" data-zh="搭火車抵達布魯日，經靜謐的愛之湖（Minnewater）與貝居安會院步入古城，攀登 366 階布魯日鐘樓俯瞰紅瓦屋頂，於玫瑰碼頭（Rozenhoedkaai）搭乘敞篷運河遊船。" data-en="Train to Bruges: stroll past serene Minnewater Lake and the Beguinage, climb 366 steps up the Belfry, and take an open-air canal boat tour from iconic Rozenhoedkaai.">
+                            搭火車抵達布魯日，經靜謐的愛之湖（Minnewater）與貝居安會院步入古城，攀登 366 階布魯日鐘樓俯瞰紅瓦屋頂，於玫瑰碼頭（Rozenhoedkaai）搭乘敞篷運河遊船。
+                        </p>
+                    </div>
+
+                    <!-- Day 3 -->
+                    <div class="bg-[#fffdf9] p-3 rounded-lg border-l-4 border-[#5c1d28] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#5c1d28]">DAY 03</span>
+                            <a href="https://maps.app.goo.gl/ecSqjAKLNUiuf5ai7" target="_blank" class="text-[10px] font-mono text-[#9c6b14] hover:text-[#5c1d28] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#240b0f] text-sm" data-zh="根特伯爵城堡、香草河岸與《根特祭壇畫》" data-en="Ghent Gravensteen Castle, Graslei & Ghent Altarpiece">根特伯爵城堡、香草河岸與《根特祭壇畫》</h3>
+                        <p class="text-[#54332c] text-[11px]" data-zh="上午於聖巴甫主教座堂欣賞凡·艾克兄弟傳世傑作《神秘羔羊之愛》，隨後登上護城河環繞的法蘭德斯伯爵城堡，黃昏在香草河岸（Graslei）與穀物河岸（Korenlei）欣賞華燈初上。" data-en="Morning admiring Van Eyck's Ghent Altarpiece at Saint Bavo's Cathedral, exploring moat-ringed Gravensteen Castle, and enjoying golden-hour reflections along Graslei and Korenlei.">
+                            上午於聖巴甫主教座堂欣賞凡·艾克兄弟傳世傑作《神秘羔羊之愛》，隨後登上護城河環繞的法蘭德斯伯爵城堡，黃昏在香草河岸（Graslei）與穀物河岸（Korenlei）欣賞華燈初上。
+                        </p>
+                    </div>
+
+                    <!-- Day 4 -->
+                    <div class="bg-[#fffdf9] p-3 rounded-lg border-l-4 border-[#d99b26] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#9c6b14]">DAY 04</span>
+                            <a href="https://maps.app.goo.gl/vaxiB248ABNWy69Z9" target="_blank" class="text-[10px] font-mono text-[#9c6b14] hover:text-[#5c1d28] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#240b0f] text-sm" data-zh="安特衛普世界最美火車站、聖母主教座堂與時尚區" data-en="Antwerp Central Station, Cathedral & Fashion Quarter">安特衛普世界最美火車站、聖母主教座堂與時尚區</h3>
+                        <p class="text-[#54332c] text-[11px]" data-zh="抵達「鐵路大教堂」安特衛普中央車站，步行至大市場（Grote Markt）與聖母主教座堂欣賞魯本斯祭壇巨作，午後探索鑽石街區與安特衛普六君子時尚設計名店。" data-en="Arrive at 'Railway Cathedral' Antwerp-Centraal, walk to Grote Markt and Cathedral of Our Lady to view Rubens masterpieces, and explore the Diamond & Fashion Districts.">
+                            抵達「鐵路大教堂」安特衛普中央車站，步行至大市場（Grote Markt）與聖母主教座堂欣賞魯本斯祭壇巨作，午後探索鑽石街區與安特衛普六君子時尚設計名店。
+                        </p>
+                    </div>
+
+                    <!-- Day 5 -->
+                    <div class="bg-[#fffdf9] p-3 rounded-lg border-l-4 border-[#5c1d28] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#5c1d28]">DAY 05</span>
+                            <a href="https://maps.app.goo.gl/96vsobH338gTydnM8" target="_blank" class="text-[10px] font-mono text-[#9c6b14] hover:text-[#5c1d28] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#240b0f] text-sm" data-zh="瓦隆大區：迪南懸崖城堡、默茲河畔與阿登高地" data-en="Wallonia: Dinant Citadel, Meuse River & Ardennes">瓦隆大區：迪南懸崖城堡、默茲河畔與阿登高地</h3>
+                        <p class="text-[#54332c] text-[11px]" data-zh="南下法語瓦隆大區，搭乘纜車登上峭壁上的迪南城堡俯瞰默茲河（Meuse River）與洋蔥頂聖母教堂，探訪薩克斯風發明者阿道夫·薩克斯故居，並延伸品味阿登森林與修道院啤酒。" data-en="Head south into French-speaking Wallonia: ride the cable car up Dinant Citadel above the Meuse River, visit the Maison de Monsieur Sax, and unwind in the forested Ardennes valleys.">
+                            南下法語瓦隆大區，搭乘纜車登上峭壁上的迪南城堡俯瞰默茲河（Meuse River）與洋蔥頂聖母教堂，探訪薩克斯風發明者阿道夫·薩克斯故居，並延伸品味阿登森林與修道院啤酒。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destination 1 - Grand Place & Old Town, Brussels -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 04 • 精選地標 [1/8]" data-en="Chapter 04 • Destination [1/8]">Chapter 04 • 精選地標 [1/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="Grand Place & Old Town (布魯塞爾大廣場與老城)" data-en="Grand Place & Old Town, Brussels">Grand Place & Old Town (布魯塞爾大廣場與老城)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8c3a5]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ58GKkk5gZYXLnZcR4MT9YZ9vZaWoyEoX2yxAJzhzKsA&s=10"
+                             onerror="handleImgFallback(this, 'Grand Place Brussels')"
+                             alt="Grand Place Guildhalls Brussels Belgium" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="被法國大文豪雨果讚譽為「世界最美廣場」的<strong>布魯塞爾大廣場（Grand Place / Grote Markt）</strong>，1998 年列入聯合國世界文化遺產。廣場四面環繞著 17 世紀巴洛克式行會建築（Guildhalls）、新哥德式國王之家與高達 96 公尺的哥德式布魯塞爾市政廳尖塔，金色山牆在陽光下璀璨奪目。" data-en="Celebrated by Victor Hugo as 'the most beautiful square in the world,' UNESCO-listed Grand Place is framed by opulent 17th-century Baroque guildhalls, the Neo-Gothic King's House, and the 96-meter Gothic Town Hall spire.">
+                        被法國大文豪雨果讚譽為「世界最美廣場」的<strong>布魯塞爾大廣場（Grand Place / Grote Markt）</strong>，1998 年列入聯合國世界文化遺產。廣場四面環繞著 17 世紀巴洛克式行會建築（Guildhalls）、新哥德式國王之家與高達 96 公尺的哥德式布魯塞爾市政廳尖塔，金色山牆在陽光下璀璨奪目。
+                    </p>
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px]">
+                        <strong class="text-[#5c1d28]" data-zh="🍫 尿尿小童與皇家聖休伯特長廊：" data-en="🍫 Manneken Pis & Galeries Royales Saint-Hubert:">🍫 尿尿小童與皇家聖休伯特長廊：</strong>
+                        <span data-zh="從廣場西南角轉入小巷僅步行 3 分鐘即達布魯塞爾第一公民「尿尿小童（Manneken Pis）」；東北側則是建於 1847 年的歐洲最古老玻璃拱頂購物長廊「皇家聖休伯特長廊（Galeries Royales Saint-Hubert）」，Neuhaus、Pierre Marcolini 等皇家巧克力名店齊聚於此。" data-en="Walk 3 minutes southwest to greet cheeky Manneken Pis, or stroll northeast into Galeries Royales Saint-Hubert (opened 1847)—Europe's oldest glazed shopping arcade housing Neuhaus and Pierre Marcolini.">
+                            從廣場西南角轉入小巷僅步行 3 分鐘即達布魯塞爾第一公民「尿尿小童（Manneken Pis）」；東北側則是建於 1847 年的歐洲最古老玻璃拱頂購物長廊「皇家聖休伯特長廊（Galeries Royales Saint-Hubert）」，Neuhaus、Pierre Marcolini 等皇家巧克力名店齊聚於此。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/s5hYJHzNKaPtUPQv9" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：布魯塞爾大廣場導航" data-en="Open Google Maps: Grand Place Brussels">開啟 Google Maps：布魯塞爾大廣場導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destination 2 - Historic Centre & Canals of Bruges -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 04 • 精選地標 [2/8]" data-en="Chapter 04 • Destination [2/8]">Chapter 04 • 精選地標 [2/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="Historic Centre & Canals (布魯日歷史中心與運河)" data-en="Historic Centre & Canals of Bruges">Historic Centre & Canals (布魯日歷史中心與運河)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8c3a5]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhApS0qhYokA7NtQXR2etCVzOAyTlrcLUpXL9nj7igkQ&s=10"
+                             onerror="handleImgFallback(this, 'Bruges Canals & Belfry')"
+                             alt="Historic Canals and Medieval Architecture in Bruges" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="素有「北方威尼斯」美譽的<strong>布魯日（Bruges / Brugge）</strong>整座中世紀古城獲列 UNESCO 世界遺產。13 至 15 世紀時曾是歐洲最繁華的羊毛與藝術貿易港，網狀運河倒映著階梯山牆紅磚屋、石拱橋與優雅白天鵝，時間彷彿在此凝結於中世紀黃金歲月。" data-en="Dubbed the 'Venice of the North,' the entire medieval center of Bruges is a UNESCO World Heritage site. Once a powerhouse of Flemish cloth and art trade, its winding canals, stone bridges, and stepped-gable brick houses create a living fairy tale.">
+                        素有「北方威尼斯」美譽的<strong>布魯日（Bruges / Brugge）</strong>整座中世紀古城獲列 UNESCO 世界遺產。13 至 15 世紀時曾是歐洲最繁華的羊毛與藝術貿易港，網狀運河倒映著階梯山牆紅磚屋、石拱橋與優雅白天鵝，時間彷彿在此凝結於中世紀黃金歲月。
+                    </p>
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px]">
+                        <strong class="text-[#5c1d28]" data-zh="📸 玫瑰碼頭、布魯日鐘樓與愛之湖：" data-en="📸 Rozenhoedkaai, Belfry & Minnewater Lake:">📸 玫瑰碼頭、布魯日鐘樓與愛之湖：</strong>
+                        <span data-zh="市集廣場（Markt）南側高達 83 公尺的「布魯日鐘樓（Belfry of Bruges）」擁有 47 口古編鐘；轉角處的「玫瑰碼頭（Rozenhoedkaai）」是布魯日最經典的明信片機位；南端「愛之湖（Minnewater）」與白牆寧靜的貝居安會院（Begijnhof）則最適合清晨散步。" data-en="Climb the 83-meter Belfry on Markt Square, capture postcard reflections at Rozenhoedkaai, and wander south to romantic Minnewater Lake and the serene 13th-century Beguinage.">
+                            市集廣場（Markt）南側高達 83 公尺的「布魯日鐘樓（Belfry of Bruges）」擁有 47 口古編鐘；轉角處的「玫瑰碼頭（Rozenhoedkaai）」是布魯日最經典的明信片機位；南端「愛之湖（Minnewater）」與白牆寧靜的貝居安會院（Begijnhof）則最適合清晨散步。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/a9FYWsXqSJiHvhVK8" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：布魯日歷史中心與運河導航" data-en="Open Google Maps: Bruges Historic Centre">開啟 Google Maps：布魯日歷史中心與運河導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destination 3 - Graslei, Korenlei & Gravensteen, Ghent -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 04 • 精選地標 [3/8]" data-en="Chapter 04 • Destination [3/8]">Chapter 04 • 精選地標 [3/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="Graslei & Gravensteen (根特香草河岸與伯爵城堡)" data-en="Graslei, Korenlei & Gravensteen, Ghent">Graslei & Gravensteen (根特香草河岸與伯爵城堡)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8c3a5]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQzruZXtL-9Z7w4aRQlBO_XZpH02PArMjjyqhMlnWe1g&s=10"
+                             onerror="handleImgFallback(this, 'Graslei & Gravensteen Ghent')"
+                             alt="Ghent Medieval Guildhalls and Riverfront" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="充滿大學城青春氣息與中世紀豪邁歷史的<strong>根特（Ghent / Gent）</strong>，在 14 世紀曾是阿爾卑斯山以北僅次於巴黎的第二大城。利斯河（Leie River）兩岸的<strong>香草河岸（Graslei）與穀物河岸（Korenlei）</strong>排列著 12 至 17 世紀的華麗穀物商行會建築，不遠處更矗立著護城河環繞的 12 世紀石造要塞<strong>法蘭德斯伯爵城堡（Gravensteen）</strong>。" data-en="Blending vibrant university energy with medieval grandeur, Ghent was northern Europe's second-largest city in the 14th century. Its Leie River waterfronts—Graslei and Korenlei—showcase rows of historic guildhalls, watched over by moat-ringed Gravensteen Castle.">
+                        充滿大學城青春氣息與中世紀豪邁歷史的<strong>根特（Ghent / Gent）</strong>，在 14 世紀曾是阿爾卑斯山以北僅次於巴黎的第二大城。利斯河（Leie River）兩岸的<strong>香草河岸（Graslei）與穀物河岸（Korenlei）</strong>排列著 12 至 17 世紀的華麗穀物商行會建築，不遠處更矗立著護城河環繞的 12 世紀石造要塞<strong>法蘭德斯伯爵城堡（Gravensteen）</strong>。
+                    </p>
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px]">
+                        <strong class="text-[#5c1d28]" data-zh="🎨 聖巴甫主教座堂《神秘羔羊之愛》：" data-en="🎨 Saint Bavo's Cathedral & Ghent Altarpiece:">🎨 聖巴甫主教座堂《神秘羔羊之愛》：</strong>
+                        <span data-zh="站在聖米歇爾橋（Sint-Michielsbrug）可一次將三座中世紀高塔盡收眼底；走進聖巴甫主教座堂（Saint Bavo's Cathedral），更能親眼目睹早期尼德蘭繪畫巔峰之作——凡·艾克兄弟於 1432 年完成的《根特祭壇畫（神秘羔羊之愛）》。" data-en="Stand on St. Michael's Bridge for the famous view of Ghent's three medieval towers, then step inside Saint Bavo's Cathedral to behold Jan van Eyck's 1432 masterpiece, the Ghent Altarpiece.">
+                            站在聖米歇爾橋（Sint-Michielsbrug）可一次將三座中世紀高塔盡收眼底；走進聖巴甫主教座堂（Saint Bavo's Cathedral），更能親眼目睹早期尼德蘭繪畫巔峰之作——凡·艾克兄弟於 1432 年完成的《根特祭壇畫（神秘羔羊之愛）》。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/kkPeDuNYfvEj4Z9GA" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：根特香草河岸與伯爵城堡" data-en="Open Google Maps: Graslei & Gravensteen">開啟 Google Maps：根特香草河岸與伯爵城堡</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destination 4 - Cathedral of Our Lady & Grote Markt, Antwerp -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 04 • 精選地標 [4/8]" data-en="Chapter 04 • Destination [4/8]">Chapter 04 • 精選地標 [4/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="Cathedral & Grote Markt (安特衛普大市場與座堂)" data-en="Cathedral of Our Lady & Grote Markt, Antwerp">Cathedral & Grote Markt (安特衛普大市場與座堂)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8c3a5]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKCNpIncy-z8Wxs05QIG41qoysQBkNohOI65CV-Kzd8Q&s=10"
+                             onerror="handleImgFallback(this, 'Antwerp Cathedral & Grote Markt')"
+                             alt="Antwerp Cathedral Spire and Grote Markt" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="世界鑽石貿易中心與前衛時尚之都<strong>安特衛普（Antwerp）</strong>，擁有低地國規模最宏偉的哥德式教堂——<strong>安特衛普聖母主教座堂（Cathedral of Our Lady）</strong>，其 123 公尺蕾絲般精巧的北塔已列入世界遺產。堂內永久珍藏巴洛克繪畫大師<strong>彼得·保羅·魯本斯（Peter Paul Rubens）</strong>的四幅不朽祭壇畫真跡。" data-en="World diamond capital and avant-garde fashion hub Antwerp boasts the Low Countries' largest Gothic church—the Cathedral of Our Lady, whose 123-meter spire is a UNESCO World Heritage site housing four monumental altarpieces by Peter Paul Rubens.">
+                        世界鑽石貿易中心與前衛時尚之都<strong>安特衛普（Antwerp）</strong>，擁有低地國規模最宏偉的哥德式教堂——<strong>安特衛普聖母主教座堂（Cathedral of Our Lady）</strong>，其 123 公尺蕾絲般精巧的北塔已列入世界遺產。堂內永久珍藏巴洛克繪畫大師<strong>彼得·保羅·魯本斯（Peter Paul Rubens）</strong>的四幅不朽祭壇畫真跡。
+                    </p>
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px]">
+                        <strong class="text-[#5c1d28]" data-zh="🚂 鐵路大教堂與布拉博噴泉傳說：" data-en="🚂 'Railway Cathedral' & Brabo Fountain:">🚂 鐵路大教堂與布拉博噴泉傳說：</strong>
+                        <span data-zh="教堂旁的「安特衛普大市場（Grote Markt）」矗立著羅馬勇士布拉博擲出巨人斷手的青銅噴泉（據說「安特衛普 Antwerpen」即源自荷蘭語「擲手 Hand werpen」）；別忘了欣賞被譽為世界最美車站之一的「安特衛普中央車站」穹頂大廳！" data-en="On nearby Grote Markt, admire the Brabo Fountain celebrating the mythical origin of Antwerp's name ('hand throwing'), and marvel at the palatial stone-and-iron dome of Antwerp-Centraal station.">
+                            教堂旁的「安特衛普大市場（Grote Markt）」矗立著羅馬勇士布拉博擲出巨人斷手的青銅噴泉（據說「安特衛普 Antwerpen」即源自荷蘭語「擲手 Hand werpen」）；別忘了欣賞被譽為世界最美車站之一的「安特衛普中央車站」穹頂大廳！
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/VFDE9fngknKty27PA" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：安特衛普座堂與大市場導航" data-en="Open Google Maps: Antwerp Cathedral & Markt">開啟 Google Maps：安特衛普座堂與大市場導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Destination 5 - Citadel & Meuse Riverfront, Dinant -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 04 • 精選地標 [5/8]" data-en="Chapter 04 • Destination [5/8]">Chapter 04 • 精選地標 [5/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="Citadel & Meuse Riverfront (迪南城堡與默茲河)" data-en="Citadel & Meuse Riverfront, Dinant">Citadel & Meuse Riverfront (迪南城堡與默茲河)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8c3a5]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTug9p5g86yFn946sG1wAMVKOHZAEUOp5beSmVajr1tSQ&s=10"
+                             onerror="handleImgFallback(this, 'Dinant Citadel & Meuse River')"
+                             alt="Scenic European River Valley and Cliffside Fortress" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="鑲嵌在默茲河（Meuse River）與百公尺垂直石灰岩峭壁之間的<strong>迪南（Dinant）</strong>，是法語瓦隆大區最具戲劇張力的山谷明珠。峭壁頂端雄踞著歷史悠久的<strong>迪南城堡（Citadel of Dinant）</strong>，山腳下則並立著擁有獨特洋蔥形鐘樓的哥德式<strong>迪南聖母教堂（Collegiate Church of Notre Dame）</strong>與彩色河岸建築。" data-en="Wedged dramatically between the Meuse River and a sheer 100-meter limestone cliff in Wallonia, Dinant is crowned by its historic hilltop Citadel, towering directly above the pear-shaped onion dome of the Collegiate Church of Notre Dame.">
+                        鑲嵌在默茲河（Meuse River）與百公尺垂直石灰岩峭壁之間的<strong>迪南（Dinant）</strong>，是法語瓦隆大區最具戲劇張力的山谷明珠。峭壁頂端雄踞著歷史悠久的<strong>迪南城堡（Citadel of Dinant）</strong>，山腳下則並立著擁有獨特洋蔥形鐘樓的哥德式<strong>迪南聖母教堂（Collegiate Church of Notre Dame）</strong>與彩色河岸建築。
+                    </p>
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px]">
+                        <strong class="text-[#5c1d28]" data-zh="🎷 薩克斯風誕生地與 408 階峭壁階梯：" data-en="🎷 Birthplace of the Saxophone & 408 Cliff Steps:">🎷 薩克斯風誕生地與 408 階峭壁階梯：</strong>
+                        <span data-zh="迪南是樂器發明家<strong>阿道夫·薩克斯（Adolphe Sax）</strong>的故鄉，夏爾·戴高樂大橋兩側排列著 28 座彩繪巨型薩克斯風雕塑！遊客可挑戰攀登 1577 年開鑿的 408 級岩壁石階，或搭乘空中纜車輕鬆登頂城堡俯瞰河谷。" data-en="Dinant is the hometown of saxophone inventor Adolphe Sax—spot 28 colorful giant saxophones lining the Charles de Gaulle Bridge, and ride the cable car (or climb 408 steep steps) up to the Citadel.">
+                            迪南是樂器發明家<strong>阿道夫·薩克斯（Adolphe Sax）</strong>的故鄉，夏爾·戴高樂大橋兩側排列著 28 座彩繪巨型薩克斯風雕塑！遊客可挑戰攀登 1577 年開鑿的 408 級岩壁石階，或搭乘空中纜車輕鬆登頂城堡俯瞰河谷。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/uiTKEzzYuJCEeX6v6" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：迪南城堡與默茲河導航" data-en="Open Google Maps: Dinant Citadel & Meuse">開啟 Google Maps：迪南城堡與默茲河導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Destination 6 - Leuven Historic University Town & Town Hall -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 04 • 精選地標 [6/8]" data-en="Chapter 04 • Destination [6/8]">Chapter 04 • 精選地標 [6/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="Leuven University & Town Hall (魯汶大學城與市政廳)" data-en="Leuven Historic University Town & Town Hall">Leuven University & Town Hall (魯汶大學城與市政廳)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8c3a5]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4jMV6zuMOwIpjsAUO5zQnXvV4To3671FFONLyCqgMsg&s=10"
+                             onerror="handleImgFallback(this, 'Leuven Gothic Town Hall & KU Leuven')"
+                             alt="Ornate Gothic Facade and Historic European Square" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="距離布魯塞爾僅 20 分鐘火車車程的<strong>魯汶（Leuven）</strong>，孕育了低地國最古老的天主教大學——創立於 1425 年的<strong>魯汶大學（KU Leuven）</strong>。市中心 15 世紀布拉班特晚期哥德式建築傑作<strong>魯汶市政廳（Leuven Town Hall）</strong>外牆佈滿 236 座精雕細琢的歷史人物石像，宛如一座石頭雕刻的華麗聖物匣。" data-en="Just 20 minutes east of Brussels by train, Leuven is home to KU Leuven (founded in 1425, the Low Countries' oldest university). Its 15th-century Brabantine Gothic Town Hall is an architectural tour de force adorned with 236 intricately carved stone statues.">
+                        距離布魯塞爾僅 20 分鐘火車車程的<strong>魯汶（Leuven）</strong>，孕育了低地國最古老的天主教大學——創立於 1425 年的<strong>魯汶大學（KU Leuven）</strong>。市中心 15 世紀布拉班特晚期哥德式建築傑作<strong>魯汶市政廳（Leuven Town Hall）</strong>外牆佈滿 236 座精雕細琢的歷史人物石像，宛如一座石頭雕刻的華麗聖物匣。
+                    </p>
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px]">
+                        <strong class="text-[#5c1d28]" data-zh="🍺 「世界最長吧檯」舊市場與大貝居安會院：" data-en="🍺 Oude Markt & UNESCO Grand Beguinage:">🍺 「世界最長吧檯」舊市場與大貝居安會院：</strong>
+                        <span data-zh="緊鄰市政廳的「舊市場廣場（Oude Markt）」四面被數十間學生酒吧與露台環繞，享有「世界最長吧檯」美譽；南側佔地廣闊的紅磚「魯汶大貝居安會院（Groot Begijnhof）」更列入世界文化遺產，小橋流水極為清幽。" data-en="Stroll across to lively Oude Markt—nicknamed 'the longest bar in the world'—then unwind in the peaceful brick lanes and footbridges of the UNESCO-listed Grand Beguinage.">
+                            緊鄰市政廳的「舊市場廣場（Oude Markt）」四面被數十間學生酒吧與露台環繞，享有「世界最長吧檯」美譽；南側佔地廣闊的紅磚「魯汶大貝居安會院（Groot Begijnhof）」更列入世界文化遺產，小橋流水極為清幽。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/Nqa6TgKB6RpEe68c9" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：魯汶市政廳與大學城導航" data-en="Open Google Maps: Leuven Town Hall & KU Leuven">開啟 Google Maps：魯汶市政廳與大學城導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Destination 7 - Bouillon Castle & Semois Valley, Ardennes -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 04 • 精選地標 [7/8]" data-en="Chapter 04 • Destination [7/8]">Chapter 04 • 精選地標 [7/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="Bouillon Castle & Semois Valley (布永城堡與瑟穆瓦河谷)" data-en="Bouillon Castle & Semois Valley, Ardennes">Bouillon Castle & Semois Valley (布永城堡與瑟穆瓦河谷)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8c3a5]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZjVszqMeQ2PFcHqbhzKQXia8yBvrXpFW6Ev_Is2wYg&s"
+                             onerror="handleImgFallback(this, 'Bouillon Castle & Semois Valley')"
+                             alt="Medieval Stone Fortress on Forested River Bend" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="隱身於阿登森林深處的<strong>布永城堡（Bouillon Castle / Château fort de Bouillon）</strong>，高踞在瑟穆瓦河（Semois River）馬蹄形大迴彎的三座岩石山脊之上，是比利時歷史最悠久且保存最完整的中世紀封建要塞。1096 年第一次十字軍東徵領袖<strong>布永的戈弗雷（Godfrey of Bouillon）</strong>正是抵押此堡籌措軍費遠征耶路撒冷。" data-en="Perched high on three rocky crags above a dramatic horseshoe bend of the Semois River in the Ardennes, Bouillon Castle is Belgium's oldest feudal fortress—famously mortgaged in 1096 by Godfrey of Bouillon to fund the First Crusade.">
+                        隱身於阿登森林深處的<strong>布永城堡（Bouillon Castle / Château fort de Bouillon）</strong>，高踞在瑟穆瓦河（Semois River）馬蹄形大迴彎的三座岩石山脊之上，是比利時歷史最悠久且保存最完整的中世紀封建要塞。1096 年第一次十字軍東徵領袖<strong>布永的戈弗雷（Godfrey of Bouillon）</strong>正是抵押此堡籌措軍費遠征耶路撒冷。
+                    </p>
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px]">
+                        <strong class="text-[#5c1d28]" data-zh="🦅 猛禽飛行秀與「巨人之墓」觀景台：" data-en="🦅 Falconry Show & Tombeau du Géant Viewpoint:">🦅 猛禽飛行秀與「巨人之墓」觀景台：</strong>
+                        <span data-zh="城堡內保留了迷宮般的石造地牢、吊橋與三座防禦塔樓，並定期舉辦精彩的傳統猛禽獵鷹飛行表演；驅車前往鄰近的 Botassart 村，更可俯瞰瑟穆瓦河環繞森林山丘形成的著名「巨人之墓（Tombeau du Géant）」奇景。" data-en="Explore labyrinthine stone corridors, drawbridges, and live falconry shows inside the fortress, then drive to nearby Botassart to admire the forested river bend known as the 'Giant's Tomb.'">
+                            城堡內保留了迷宮般的石造地牢、吊橋與三座防禦塔樓，並定期舉辦精彩的傳統猛禽獵鷹飛行表演；驅車前往鄰近的 Botassart 村，更可俯瞰瑟穆瓦河環繞森林山丘形成的著名「巨人之墓（Tombeau du Géant）」奇景。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/1qDvtkJR2XNpDPU68" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：布永城堡與瑟穆瓦河谷" data-en="Open Google Maps: Bouillon Castle & Semois">開啟 Google Maps：布永城堡與瑟穆瓦河谷</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Destination 8 - Atomium & Royal Museums of Fine Arts, Brussels -->
+            <div class="page-slide flex-col space-y-3" data-page="12">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 04 • 精選地標 [8/8]" data-en="Chapter 04 • Destination [8/8]">Chapter 04 • 精選地標 [8/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="Atomium & Royal Museums (原子球塔與皇家美術館)" data-en="Atomium & Royal Museums of Fine Arts, Brussels">Atomium & Royal Museums (原子球塔與皇家美術館)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8c3a5]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvIK5Pw4NWZhwY9Kzx4MXAdALK-8qqD37mQH8ZNxwvuw&s=10"
+                             onerror="handleImgFallback(this, 'Atomium & Magritte Museum')"
+                             alt="Futuristic Metallic Sphere Architecture Brussels" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="為 1958 年布魯塞爾世界博覽會興建的<strong>原子球塔（Atomium）</strong>，將一個鐵晶體分子放大 1,650 億倍，九顆直徑 18 公尺的不鏽鋼球體由鋼管斜廊相連，總高 102 公尺，是比利時現代設計與和平科學精神的未來主義圖騰。" data-en="Built for the 1958 Brussels World's Fair (Expo 58), the 102-meter Atomium magnifies an iron crystal unit cell 165 billion times—nine gleaming stainless-steel spheres connected by futuristic escalator tubes.">
+                        為 1958 年布魯塞爾世界博覽會興建的<strong>原子球塔（Atomium）</strong>，將一個鐵晶體分子放大 1,650 億倍，九顆直徑 18 公尺的不鏽鋼球體由鋼管斜廊相連，總高 102 公尺，是比利時現代設計與和平科學精神的未來主義圖騰。
+                    </p>
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px]">
+                        <strong class="text-[#5c1d28]" data-zh="🎩 皇家美術館與超現實大師馬格利特博物館：" data-en="🎩 Royal Museums & Magritte Museum:">🎩 皇家美術館與超現實大師馬格利特博物館：</strong>
+                        <span data-zh="搭乘高速電梯登上原子球塔頂球，可 360 度遠眺布魯塞爾全城；回到市中心藝術山（Mont des Arts），則必訪<strong>比利時皇家美術館</strong>與收藏逾 230 件《人子》、《這不是一根菸斗》等經典的<strong>馬格利特博物館（Magritte Museum）</strong>。" data-en="Take the high-speed lift to the Atomium's top sphere for 360° city views, then explore the Royal Museums of Fine Arts and the adjacent Magritte Museum—home to over 230 surrealist works.">
+                            搭乘高速電梯登上原子球塔頂球，可 360 度遠眺布魯塞爾全城；回到市中心藝術山（Mont des Arts），則必訪<strong>比利時皇家美術館</strong>與收藏逾 230 件《人子》、《這不是一根菸斗》等經典的<strong>馬格利特博物館（Magritte Museum）</strong>。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/gDKwmL9cGxxo7tSd8" target="_blank" class="block text-center bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：布魯塞爾原子球塔導航" data-en="Open Google Maps: Atomium Brussels">開啟 Google Maps：布魯塞爾原子球塔導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 13: Belgian Gastronomy, Chocolatiers & Trappist Beer Culture -->
+            <div class="page-slide flex-col space-y-3" data-page="13">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 05 • 皇家巧克力、鬆餅與修道院啤酒" data-en="Chapter 05 • Gastronomy, Chocolate & Beer">Chapter 05 • 皇家巧克力、鬆餅與修道院啤酒</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="比利時經典美食、巧克力與修道院啤酒文化" data-en="Belgian Gastronomy, Chocolatiers & Trappist Beer">比利時經典美食、巧克力與修道院啤酒文化</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- 1. Artisanal Pralines -->
+                    <div class="bg-[#fffdf9] p-2.5 rounded-lg border border-[#dfd0bc] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-editorial font-bold text-[#5c1d28] text-sm" data-zh="🍫 夾心巧克力之都：Neuhaus、Pierre Marcolini 與 Mary" data-en="🍫 Artisanal Pralines: Neuhaus, Pierre Marcolini & Mary">🍫 夾心巧克力之都：Neuhaus、Pierre Marcolini 與 Mary</h3>
+                            <a href="https://maps.app.goo.gl/7Y6N5b2D3K6r4L8Z8" target="_blank" class="text-[10px] font-mono text-[#9c6b14] underline">🗺️ Galleries</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="1912 年布魯塞爾藥劑師後代 Jean Neuhaus 發明了「夾心巧克力（Praline）」。皇家御用品牌 <strong>Neuhaus</strong>、<strong>Mary</strong>、<strong>Wittamer</strong> 與堅持從可可豆到巧克力塊（Bean-to-Bar）工藝的 <strong>Pierre Marcolini</strong> 皆為必訪殿堂。" data-en="Invented in Brussels in 1912 by Jean Neuhaus, Belgian pralines set the gold standard. Visit royal warrant holders <strong>Neuhaus</strong>, <strong>Mary</strong>, <strong>Wittamer</strong>, and bean-to-bar master <strong>Pierre Marcolini</strong>.">
+                            1912 年布魯塞爾藥劑師後代 Jean Neuhaus 發明了「夾心巧克力（Praline）」。皇家御用品牌 <strong>Neuhaus</strong>、<strong>Mary</strong>、<strong>Wittamer</strong> 與堅持從可可豆到巧克力塊（Bean-to-Bar）工藝的 <strong>Pierre Marcolini</strong> 皆為必訪殿堂。
+                        </p>
+                    </div>
+
+                    <!-- 2. Brussels vs Liège Waffles -->
+                    <div class="bg-[#fffdf9] p-2.5 rounded-lg border border-[#dfd0bc] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#5c1d28] text-sm" data-zh="🧇 布魯塞爾鬆餅 vs 列日鬆餅 (Brussels vs Liège Waffles)" data-en="🧇 Brussels Waffles vs. Liège Waffles">🧇 布魯塞爾鬆餅 vs 列日鬆餅 (Brussels vs Liège Waffles)</h3>
+                        <p class="text-[11px]" data-zh="<strong>布魯塞爾鬆餅（Brussels Waffle）</strong>呈工整長方形、麵糊輕盈酥脆，適合灑糖粉、鮮奶油與新鮮草莓；<strong>列日鬆餅（Liège Waffle）</strong>形狀較圓潤厚實，麵團揉入比利時珍珠糖（Pearl Sugar），烘烤後外層裹著香脆焦糖光澤，單吃即香氣四溢！" data-en="<strong>Brussels Waffles</strong> are rectangular, airy, and crisp—ideal topped with whipped cream and strawberries; <strong>Liège Waffles</strong> are denser and brioche-like, studded with caramelized pearl sugar.">
+                            <strong>布魯塞爾鬆餅（Brussels Waffle）</strong>呈工整長方形、麵糊輕盈酥脆，適合灑糖粉、鮮奶油與新鮮草莓；<strong>列日鬆餅（Liège Waffle）</strong>形狀較圓潤厚實，麵團揉入比利時珍珠糖（Pearl Sugar），烘烤後外層裹著香脆焦糖光澤，單吃即香氣四溢！
+                        </p>
+                    </div>
+
+                    <!-- 3. Moules-frites & Stoofvlees -->
+                    <div class="bg-[#fffdf9] p-2.5 rounded-lg border border-[#dfd0bc] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#5c1d28] text-sm" data-zh="🍲 白酒淡菜鍋 (Moules-frites) 與法蘭德斯啤酒燉牛肉" data-en="🍲 Moules-frites & Stoofvlees (Flemish Beef Stew)">🍲 白酒淡菜鍋 (Moules-frites) 與法蘭德斯啤酒燉牛肉</h3>
+                        <p class="text-[11px]" data-zh="國民美食<strong>Moules-frites</strong>以白酒、芹菜與洋蔥清蒸飽滿北海淡菜，搭配二次油炸的香脆比利時薯條（Frites）與蛋黃醬；另一道經典<strong>Stoofvlees（Carbonnade Flamande）</strong>則以深色修道院啤酒慢火燉煮牛肉並佐以塗芥末的香料麵包。" data-en="National favorite <strong>Moules-frites</strong> pairs plump North Sea mussels steamed in white wine and celery with twice-fried Belgian frites; <strong>Stoofvlees</strong> slow-braises beef in rich dark abbey ale.">
+                            國民美食<strong>Moules-frites</strong>以白酒、芹菜與洋蔥清蒸飽滿北海淡菜，搭配二次油炸的香脆比利時薯條（Frites）與蛋黃醬；另一道經典<strong>Stoofvlees（Carbonnade Flamande）</strong>則以深色修道院啤酒慢火燉煮牛肉並佐以塗芥末的香料麵包。
+                        </p>
+                    </div>
+
+                    <!-- 4. UNESCO Trappist Beer Culture -->
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-editorial font-bold text-[#240b0f] text-sm" data-zh="🍺 世界遺產：修道院啤酒與專用酒杯禮儀" data-en="🍺 UNESCO Trappist Abbey Beers & Glassware">🍺 世界遺產：修道院啤酒與專用酒杯禮儀</h3>
+                            <a href="https://maps.app.goo.gl/tY9m8u4R2vN8xV7t8" target="_blank" class="text-[10px] font-mono text-[#5c1d28] underline">🗺️ Delirium</a>
+                        </div>
+                        <p class="text-[11px]" data-zh="比利時啤酒文化於 2016 年列入聯合國非物質文化遺產，擁有逾 1,500 種風味！正統「Trappist 修道院啤酒」（如 Westvleteren、Chimay、Orval、Rochefort）必須在熙篤會修道院內由修士監督釀造，且每款酒皆有專屬聖杯（Chalice）以釋放最佳香氣。" data-en="Inscribed on UNESCO's Intangible Cultural Heritage list, Belgian beer spans 1,500+ styles—led by authentic Trappist ales (Westvleteren, Chimay, Orval, Rochefort), each served in its own bespoke chalice.">
+                            比利時啤酒文化於 2016 年列入聯合國非物質文化遺產，擁有逾 1,500 種風味！正統「Trappist 修道院啤酒」（如 Westvleteren、Chimay、Orval、Rochefort）必須在熙篤會修道院內由修士監督釀造，且每款酒皆有專屬聖杯（Chalice）以釋放最佳香氣。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 14: Interactive Travel Notes & Packing Checklist -->
+            <div class="page-slide flex-col space-y-3" data-page="14">
+                <div class="royal-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#9c6b14]" data-zh="Chapter 06 • 個人旅行筆記與行前清單" data-en="Chapter 06 • Travel Notes & Checklist">Chapter 06 • 個人旅行筆記與行前清單</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#240b0f]" data-zh="個人旅行筆記與行前準備清單" data-en="Personal Travel Notes & Packing Checklist">個人旅行筆記與行前準備清單</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#2b1815] leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Interactive Pre-Departure Checklist -->
+                    <div class="bg-[#fffdf9] p-3 rounded-xl border border-[#dfd0bc] shadow-sm space-y-2">
+                        <div class="flex justify-between items-center border-b border-[#f2e8d9] pb-1.5">
+                            <h3 class="font-editorial font-bold text-[#5c1d28] text-sm" data-zh="✅ 比利時行前檢核清單" data-en="✅ Belgium Pre-Departure Checklist">✅ 比利時行前檢核清單</h3>
+                            <span id="checklist-counter" class="text-[10px] font-mono bg-[#f2e8d9] text-[#5c1d28] px-2 py-0.5 rounded font-bold border border-[#d8c3a5]">0 / 6</span>
+                        </div>
+                        <div class="space-y-1.5 text-[11px]" id="checklist-items">
+                            <!-- Populated by JS with localStorage persistence -->
+                        </div>
+                    </div>
+
+                    <!-- Personal Travel Notes Scratchpad (localStorage) -->
+                    <div class="bg-[#fffdf9] p-3 rounded-xl border-2 border-[#d99b26]/65 shadow-sm space-y-2">
+                        <label for="belgium-notes" class="font-editorial font-bold text-[#5c1d28] text-sm flex justify-between items-center">
+                            <span data-zh="✒️ 旅客私人筆記本 (自動本機保存)" data-en="✒️ Personal Travel Notes Scratchpad">✒️ 旅客私人筆記本 (自動本機保存)</span>
+                            <span id="note-saved-badge" class="text-[10px] font-mono text-emerald-700 hidden" data-zh="✓ 已儲存" data-en="✓ Saved">✓ 已儲存</span>
+                        </label>
+                        <textarea id="belgium-notes" rows="5"
+                            class="w-full p-2.5 rounded-lg border border-[#d8c3a5] bg-[#faf6f0] text-xs text-[#2b1815] focus:ring-2 focus:ring-[#d99b26] focus:outline-none resize-none"
+                            placeholder="記錄《根特祭壇畫》預約時段、布魯日運河船票、必買巧克力清單（Neuhaus、Pierre Marcolini）..."></textarea>
+                        <div class="flex space-x-2">
+                            <button onclick="saveNotes()" class="flex-1 bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] text-xs py-2 rounded-lg font-mono uppercase tracking-wider transition shadow-sm" data-zh="儲存筆記" data-en="Save Notes">
+                                儲存筆記
+                            </button>
+                            <button onclick="clearNotes()" class="bg-[#ede2d2] hover:bg-[#e0d1bc] text-[#240b0f] text-xs px-3.5 py-2 rounded-lg font-mono transition" data-zh="清除筆記" data-en="Clear">
+                                清除筆記
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#f2e8d9] p-2.5 rounded-lg border border-[#d8c3a5] text-[11px] text-[#2b1815] text-center">
+                        <span data-zh="祝您擁有一趟難忘的比利時中世紀與巧克力之旅！Goede reis / Bon voyage!" data-en="Wishing you an unforgettable journey across Belgium! Goede reis / Bon voyage!">
+                            祝您擁有一趟難忘的比利時中世紀與巧克力之旅！Goede reis / Bon voyage!
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="bg-[#ede2d2] border-t border-[#d8c3a5] px-4 py-2.5 flex justify-between items-center z-20">
+            <button onclick="prevPage()" id="prev-btn" class="bg-[#fffdf9] hover:bg-[#faf6f0] text-[#5c1d28] px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm border border-[#d8c3a5] disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-xs font-mono font-bold text-[#5c1d28]" id="page-indicator">1 / 14</span>
+                <div class="w-24 h-1.5 bg-[#d8c3a5] rounded-full overflow-hidden mt-1">
+                    <div id="progress-bar" class="h-full bg-[#5c1d28] transition-all duration-300" style="width: 7.14%;"></div>
+                </div>
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-[#5c1d28] hover:bg-[#3b1219] text-[#f7dca1] border border-[#d99b26]/70 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+        <!-- Floating Status Toast -->
+        <div id="toast-msg" class="hidden absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-[#1f0b0e]/95 text-[#f7dca1] border border-[#d99b26] text-[11px] font-mono px-3.5 py-1.5 rounded-full shadow-lg z-40 whitespace-nowrap"></div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, 12-Month Weather Selector, TOC, Checklist, LocalStorage Notes & Bilingual Toggle -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 14;
+        let currentLang = 'zh';
+        let selectedMonthIndex = 7; // Default to August (Brussels Flower Carpet & summer terraces)
+
+        const tocData = [
+            { page: 1, zh: "封面 • 比利時中世紀古城與工藝巧克力之旅", en: "Cover • Belgium Discovery Journey" },
+            { page: 2, zh: "01. 比利時國家介紹與地理位置", en: "01. Country Overview & Geography" },
+            { page: 3, zh: "02. 比利時每月氣候與穿搭指南", en: "02. Monthly Weather & Packing Guide" },
+            { page: 4, zh: "03. 比利時經典五日遊行程規劃", en: "03. Classic 5-Day Belgium Itinerary" },
+            { page: 5, zh: "04. 地標 [1/8] 布魯塞爾大廣場與老城", en: "04. [1/8] Grand Place & Old Town, Brussels" },
+            { page: 6, zh: "05. 地標 [2/8] 布魯日歷史中心與運河網", en: "05. [2/8] Historic Centre & Canals of Bruges" },
+            { page: 7, zh: "06. 地標 [3/8] 根特香草河岸與伯爵城堡", en: "06. [3/8] Graslei & Gravensteen, Ghent" },
+            { page: 8, zh: "07. 地標 [4/8] 安特衛普聖母座堂與大市場", en: "07. [4/8] Cathedral & Grote Markt, Antwerp" },
+            { page: 9, zh: "08. 地標 [5/8] 迪南城堡與默茲河畔", en: "08. [5/8] Citadel & Meuse Riverfront, Dinant" },
+            { page: 10, zh: "09. 地標 [6/8] 魯汶大學城與哥德式市政廳", en: "09. [6/8] Leuven University & Town Hall" },
+            { page: 11, zh: "10. 地標 [7/8] 阿登高地布永城堡與河谷", en: "10. [7/8] Bouillon Castle & Semois Valley" },
+            { page: 12, zh: "11. 地標 [8/8] 布魯塞爾原子球塔與美術館", en: "11. [8/8] Atomium & Royal Museums" },
+            { page: 13, zh: "12. 比利時美食、巧克力與修道院啤酒", en: "12. Gastronomy, Chocolate & Trappist Beer" },
+            { page: 14, zh: "13. 個人旅行筆記與行前準備清單", en: "13. Travel Notes & Packing Checklist" }
+        ];
+
+        const monthlyWeatherData = [
+            {
+                mZh: "1月", mEn: "Jan", temp: "1°C ~ 6°C", weatherTag: "🌧️ Crisp & Damp / 濕冷微雨",
+                icon: "❄️",
+                highlightZh: "冬季折扣季（Winter Solden）開跑，布魯日運河偶現薄霜，適合品味修道院深色啤酒與熱巧克力。",
+                highlightEn: "Winter sales (Solden) across Antwerp & Brussels; cozy cafés for hot chocolate and dark Trappist ales.",
+                clothZh: "防風防水厚大衣、羊毛針織毛衣、圍巾、手套與防滑防水短靴。",
+                clothEn: "Wind/waterproof heavy coat, wool sweaters, scarf, gloves, and waterproof ankle boots."
+            },
+            {
+                mZh: "2月", mEn: "Feb", temp: "1°C ~ 7°C", weatherTag: "🌦️ Cool Breeze / 微冷偶雨",
+                icon: "🎭",
+                highlightZh: "班什狂歡節（Carnival of Binche，UNESCO 文化遺產）熱鬧登場，滑稽的「Gilles」拋灑血橙祈福。",
+                highlightEn: "UNESCO-listed Carnival of Binche features traditional Gilles tossing blood oranges to crowds.",
+                clothZh: "保暖羊毛大衣、多層次針織衫、抗風折疊傘與防滑石板路步行鞋。",
+                clothEn: "Insulated wool coat, layered knitwear, windproof umbrella, and cobblestone-friendly shoes."
+            },
+            {
+                mZh: "3月", mEn: "Mar", temp: "3°C ~ 11°C", weatherTag: "🌦️ Early Spring / 初春微風",
+                icon: "🌷",
+                highlightZh: "布魯日愛之湖與貝居安會院水仙花盛開，遊客較少且飯店房價實惠。",
+                highlightEn: "Golden daffodils carpet Bruges' Beguinage and Minnewater Park; quiet shoulder-season strolling.",
+                clothZh: "風衣外套、長袖襯衫、薄毛衣與防潑水步行鞋。",
+                clothEn: "Trench coat, long-sleeve shirts, light sweater, and water-repellent walking shoes."
+            },
+            {
+                mZh: "4月", mEn: "Apr", temp: "6°C ~ 14°C", weatherTag: "🌤️ Spring Blossoms / 晴雨交替",
+                icon: "🌸",
+                highlightZh: "「哈勒森林（Hallerbos）」夢幻藍鈴花海綻放！拉肯皇家溫室（Royal Greenhouses）限時開放三週。",
+                highlightEn: "Bluebells carpet Hallerbos forest, and the Royal Greenhouses of Laeken open for 3 weeks!",
+                clothZh: "洋蔥式多層次穿搭、防風夾克、針織開襟衫與抗風雨傘。",
+                clothEn: "Layered outfits, windproof jacket, cardigan, and a compact wind-resistant umbrella."
+            },
+            {
+                mZh: "5月", mEn: "May", temp: "9°C ~ 18°C", weatherTag: "☀️ Mild & Fresh / 清爽宜人",
+                icon: "🌿",
+                highlightZh: "全年最佳旅遊月份之一！布魯塞爾與根特河畔露天咖啡座全面開放，阿登森林綠意盎然。",
+                highlightEn: "One of the best months to visit: sunny canal-side terraces open and Ardennes trails turn lush green.",
+                clothZh: "長袖或短袖上衣搭配休閒風衣、長褲與舒適步行鞋。",
+                clothEn: "Long or short sleeves with a light trench/jacket, trousers, and comfortable walking shoes."
+            },
+            {
+                mZh: "6月", mEn: "Jun", temp: "12°C ~ 21°C", weatherTag: "☀️ Long Daylight / 16.5hr 日照",
+                icon: "🚣",
+                highlightZh: "夏日日照長達 16.5 小時，布魯日運河遊船與默茲河谷皮划艇氣候絕佳。",
+                highlightEn: "Over 16 hours of daylight—ideal for Bruges canal cruises and kayaking along the Meuse River.",
+                clothZh: "透氣長短袖混搭、太陽眼鏡，晚間河畔微涼建議攜帶一件薄外套。",
+                clothEn: "Breathable shirts, sunglasses, and a light jacket or cardigan for breezy canal evenings."
+            },
+            {
+                mZh: "7月", mEn: "Jul", temp: "14°C ~ 23°C", weatherTag: "☀️ Warm Summer / 偶午後雨",
+                icon: "🎶",
+                highlightZh: "7月21日「比利時國慶日」大廣場煙火與皇家宮殿開放參觀，根特節（Gentse Feesten）盛大舉行。",
+                highlightEn: "Belgian National Day (July 21) opens the Royal Palace; 10-day Gentse Feesten arts festival fills Ghent.",
+                clothZh: "輕薄夏裝、太陽眼鏡、防曬用品，隨身備一件防潑水薄風衣應對午後陣雨。",
+                clothEn: "Lightweight summer attire, sunglasses, SPF, plus a packable rain shell for brief showers."
+            },
+            {
+                mZh: "8月", mEn: "Aug", temp: "14°C ~ 23°C", weatherTag: "☀️ Sunny & Lively / 晴朗和煦",
+                icon: "🌺",
+                highlightZh: "雙數年 8 月中旬布魯塞爾大廣場鋪設壯觀「鮮花地毯（Flower Carpet）」，全城沉浸在花海與音樂節中。",
+                highlightEn: "Biennial August Flower Carpet blankets Brussels' Grand Place in 500,000+ begonias.",
+                clothZh: "透氣短袖、洋裝或亞麻長褲、舒適涼鞋或球鞋與薄針織外套。",
+                clothEn: "Breathable summer wear, linen trousers or dresses, walking shoes, and a light layer."
+            },
+            {
+                mZh: "9月", mEn: "Sep", temp: "11°C ~ 19°C", weatherTag: "🌤️ Crisp & Golden / 秋高氣爽",
+                icon: "🍺",
+                highlightZh: "大廣場舉辦「比利時啤酒週末（Belgian Beer Weekend）」，氣候穩定晴朗，人潮較盛夏舒適。",
+                highlightEn: "Belgian Beer Weekend takes over Grand Place; crisp, pleasant days with thinner crowds.",
+                clothZh: "長袖襯衫、休閒西裝外套或風衣、長褲與防滑步行鞋。",
+                clothEn: "Long-sleeve shirts, blazer or trench coat, trousers, and sturdy walking shoes."
+            },
+            {
+                mZh: "10月", mEn: "Oct", temp: "8°C ~ 15°C", weatherTag: "🍂 Autumn Colors / 阿登金秋",
+                icon: "🍁",
+                highlightZh: "阿登高地與瑟穆瓦河谷化為金紅秋色，野味與松露美食季正式登場。",
+                highlightEn: "Ardennes forests and Semois Valley glow with amber foliage; seasonal game and truffle menus.",
+                clothZh: "保暖夾克、針織毛衣、圍巾與防潑水步行鞋。",
+                clothEn: "Warm jacket, knit sweater, scarf, and water-repellent walking shoes."
+            },
+            {
+                mZh: "11月", mEn: "Nov", temp: "4°C ~ 9°C", weatherTag: "🌧️ Misty & Cool / 微涼偶雨",
+                icon: "✨",
+                highlightZh: "11 月底布魯塞爾「冬日奇蹟（Winter Wonders）」與根特燈光節陸續點亮中世紀古城。",
+                highlightEn: "Brussels Winter Wonders and Bruges Winter Glow light installations open in late November.",
+                clothZh: "防風防水保暖大衣、毛衣、圍巾與防水短靴。",
+                clothEn: "Insulated wind/waterproof coat, warm sweaters, scarf, and waterproof ankle boots."
+            },
+            {
+                mZh: "12月", mEn: "Dec", temp: "2°C ~ 6°C", weatherTag: "❄️ Festive Lights / 聖誕市集",
+                icon: "🎄",
+                highlightZh: "大廣場聲光秀、布魯日冰雕節與聖誕木屋市集夢幻登場，熱紅酒、列日鬆餅與巧克力香氣四溢。",
+                highlightEn: "Grand Place sound-and-light show, Bruges Christmas markets, mulled wine & warm Liège waffles.",
+                clothZh: "厚羽絨大衣或羊毛大衣、發熱內衣、毛帽、手套與防滑保暖靴。",
+                clothEn: "Heavy down or wool coat, thermal base layers, beanie, gloves, and insulated boots."
+            }
+        ];
+
+        const defaultChecklist = [
+            { id: "bel1", zh: "護照（效期 6 個月以上）與申根旅遊醫療保險證明", en: "Passport (6+ months validity) & Schengen travel insurance" },
+            { id: "bel2", zh: "比利時國鐵 SNCB 票券 App / 週末半價票（Weekend Ticket）規劃", en: "SNCB Belgian Rail App / 50%-off Weekend Return Train Tickets" },
+            { id: "bel3", zh: "厚底防滑步行鞋（適用布魯日、根特與布魯塞爾中世紀鵝卵石街道）", en: "Cushioned non-slip walking shoes for Bruges & Ghent cobblestones" },
+            { id: "bel4", zh: "防風防潑水連帽外套與抗風折疊傘（因應北海多變陣雨）", en: "Windproof water-repellent jacket & sturdy compact umbrella" },
+            { id: "bel5", zh: "歐規雙圓腳轉接頭（Type E / C，230V）與行動電源", en: "European Type E / C two-pin power adapter (230V) & power bank" },
+            { id: "bel6", zh: "預留行李箱空間與保冷袋（裝載 Neuhaus / Pierre Marcolini 手工巧克力）", en: "Extra suitcase space for Belgian pralines & Trappist beer bottles" }
+        ];
+
+        function handleImgFallback(imgEl, label) {
+            imgEl.onerror = null;
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+                <defs>
+                    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#3b1219"/>
+                        <stop offset="55%" stop-color="#5c1d28"/>
+                        <stop offset="100%" stop-color="#8c4a19"/>
+                    </linearGradient>
+                </defs>
+                <rect width="800" height="420" fill="url(#g)"/>
+                <rect x="24" y="24" width="752" height="372" rx="16" fill="none" stroke="#e8b038" stroke-width="2" stroke-opacity="0.75"/>
+                <text x="400" y="195" fill="#f7dca1" font-family="Georgia, serif" font-size="26" font-weight="bold" text-anchor="middle">${label}</text>
+                <text x="400" y="232" fill="#faf6f0" font-family="monospace" font-size="14" text-anchor="middle">BELGIUM DISCOVERY • ROYAL BURGUNDY & GOLDEN HERITAGE</text>
+            </svg>`;
+            imgEl.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+        }
+
+        function renderToc() {
+            const tocList = document.getElementById('toc-list');
+            if (!tocList) return;
+            tocList.innerHTML = tocData.map(item => `
+                <button onclick="goToPage(${item.page}); toggleToc();"
+                        class="text-left px-3 py-1.5 rounded-lg transition flex justify-between items-center ${item.page === currentPage ? 'bg-[#5c1d28] text-[#f7dca1] font-bold border border-[#d99b26]' : 'bg-[#fffdf9] hover:bg-[#f2e8d9] text-[#2b1815] border border-[#d8c3a5]'}">
+                    <span>${currentLang === 'zh' ? item.zh : item.en}</span>
+                    <span class="font-mono text-[10px] opacity-80">P.${item.page}</span>
+                </button>
+            `).join('');
+        }
+
+        function renderMonthSelector() {
+            const selector = document.getElementById('month-selector');
+            if (!selector) return;
+            selector.innerHTML = monthlyWeatherData.map((m, idx) => `
+                <button onclick="selectMonth(${idx})"
+                        class="py-1.5 px-1 rounded-lg font-mono text-[11px] transition border ${idx === selectedMonthIndex ? 'bg-[#5c1d28] text-[#f7dca1] border-[#d99b26] font-bold shadow-sm' : 'bg-[#fffdf9] hover:bg-[#f2e8d9] text-[#2b1815] border-[#d8c3a5]'}">
+                    ${currentLang === 'zh' ? m.mZh : m.mEn}
+                </button>
+            `).join('');
+            renderMonthDetail();
+        }
+
+        function renderMonthDetail() {
+            const card = document.getElementById('month-detail-card');
+            if (!card) return;
+            const m = monthlyWeatherData[selectedMonthIndex];
+            card.innerHTML = `
+                <div class="flex justify-between items-center border-b border-[#d8c3a5] pb-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-2xl">${m.icon}</span>
+                        <div>
+                            <h3 class="font-editorial font-bold text-base text-[#240b0f]">${currentLang === 'zh' ? m.mZh + ' 氣候與盛事' : m.mEn + ' Climate & Events'}</h3>
+                            <span class="text-[10px] font-mono text-[#9c6b14]">${m.weatherTag}</span>
+                        </div>
+                    </div>
+                    <div class="bg-[#f2e8d9] px-2.5 py-1 rounded-lg border border-[#d8c3a5] font-mono font-bold text-[#5c1d28] text-xs">
+                        ${m.temp}
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <div>
+                        <strong class="text-[#240b0f] font-editorial block text-[11px]">${currentLang === 'zh' ? '✨ 季節亮點：' : '✨ Seasonal Highlights:'}</strong>
+                        <p class="text-[#54332c] text-[11px]">${currentLang === 'zh' ? m.highlightZh : m.highlightEn}</p>
+                    </div>
+                    <div>
+                        <strong class="text-[#240b0f] font-editorial block text-[11px]">${currentLang === 'zh' ? '🧥 穿搭與行李建議：' : '🧥 Clothing & Packing Advice:'}</strong>
+                        <p class="text-[#54332c] text-[11px]">${currentLang === 'zh' ? m.clothZh : m.clothEn}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectMonth(idx) {
+            selectedMonthIndex = idx;
+            renderMonthSelector();
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-items');
+            const counter = document.getElementById('checklist-counter');
+            if (!container) return;
+
+            let savedState = {};
+            try {
+                savedState = JSON.parse(localStorage.getItem('belgium_checklist_state') || '{}');
+            } catch (e) {}
+
+            let checkedCount = 0;
+            container.innerHTML = defaultChecklist.map(item => {
+                const isChecked = !!savedState[item.id];
+                if (isChecked) checkedCount++;
+                return `
+                    <label class="flex items-start space-x-2 p-1.5 rounded-lg hover:bg-[#f2e8d9]/70 cursor-pointer transition">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleCheckItem('${item.id}')"
+                               class="mt-0.5 rounded text-[#5c1d28] focus:ring-[#d99b26]">
+                        <span class="${isChecked ? 'line-through text-[#8c685d]' : 'text-[#2b1815]'}">
+                            ${currentLang === 'zh' ? item.zh : item.en}
+                        </span>
+                    </label>
+                `;
+            }).join('');
+
+            if (counter) {
+                counter.textContent = `${checkedCount} / ${defaultChecklist.length}`;
+            }
+        }
+
+        function toggleCheckItem(id) {
+            let savedState = {};
+            try {
+                savedState = JSON.parse(localStorage.getItem('belgium_checklist_state') || '{}');
+                savedState[id] = !savedState[id];
+                localStorage.setItem('belgium_checklist_state', JSON.stringify(savedState));
+            } catch (e) {}
+            renderChecklist();
+        }
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'), 10);
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const pageLabel = `${currentPage} / ${totalPages}`;
+            const indicator = document.getElementById('page-indicator');
+            if (indicator) indicator.textContent = pageLabel;
+            const topIndicator = document.getElementById('top-page-indicator');
+            if (topIndicator) topIndicator.textContent = pageLabel;
+
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) progressBar.style.width = `${(currentPage / totalPages) * 100}%`;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.disabled = (currentPage === 1);
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '回封面 ↺' : 'Cover ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+
+            renderToc();
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+            } else {
+                currentPage = 1;
+            }
+            updateDisplay();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function toggleToc() {
+            const drawer = document.getElementById('toc-drawer');
+            if (!drawer) return;
+            if (drawer.classList.contains('hidden')) {
+                renderToc();
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+            }
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            const htmlRoot = document.getElementById('html-root');
+            if (htmlRoot) htmlRoot.setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+
+            const notesEl = document.getElementById('belgium-notes');
+            if (notesEl) {
+                notesEl.placeholder = (currentLang === 'zh')
+                    ? '記錄《根特祭壇畫》預約時段、布魯日運河船票、必買巧克力清單（Neuhaus、Pierre Marcolini）...'
+                    : 'Jot down Ghent Altarpiece tickets, Bruges canal boat times, or chocolatier picks (Neuhaus, Pierre Marcolini)...';
+            }
+
+            renderMonthSelector();
+            renderChecklist();
+            updateDisplay();
+            showToast(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English');
+        }
+
+        let isBookmarked = false;
+        function toggleBookmark() {
+            const icon = document.getElementById('bookmark-icon');
+            if (!icon) return;
+            isBookmarked = !isBookmarked;
+            if (isBookmarked) {
+                icon.setAttribute('fill', '#e8b038');
+                icon.setAttribute('stroke', '#e8b038');
+                showToast(currentLang === 'zh' ? `已加入第 ${currentPage} 頁書籤` : `Bookmarked Page ${currentPage}`);
+            } else {
+                icon.setAttribute('fill', 'none');
+                icon.setAttribute('stroke', 'currentColor');
+                showToast(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notesEl = document.getElementById('belgium-notes');
+            if (!notesEl) return;
+            try {
+                localStorage.setItem('belgium_journey_notes', notesEl.value);
+                const badge = document.getElementById('note-saved-badge');
+                if (badge) {
+                    badge.classList.remove('hidden');
+                    setTimeout(() => badge.classList.add('hidden'), 2000);
+                }
+                showToast(currentLang === 'zh' ? '旅遊筆記已儲存！' : 'Travel notes saved!');
+            } catch (e) {
+                showToast(currentLang === 'zh' ? '無法存取本機儲存空間' : 'Storage unavailable');
+            }
+        }
+
+        function clearNotes() {
+            const notesEl = document.getElementById('belgium-notes');
+            if (!notesEl) return;
+            notesEl.value = '';
+            try {
+                localStorage.removeItem('belgium_journey_notes');
+            } catch (e) {}
+            showToast(currentLang === 'zh' ? '筆記已清除' : 'Notes cleared');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2200);
+        }
+
+        window.onload = function() {
+            try {
+                const savedNotes = localStorage.getItem('belgium_journey_notes');
+                const notesEl = document.getElementById('belgium-notes');
+                if (savedNotes && notesEl) {
+                    notesEl.value = savedNotes;
+                }
+            } catch (e) {}
+            renderMonthSelector();
+            renderChecklist();
+            updateDisplay();
+        };
+
+        // Keyboard Arrow Navigation Support
+        document.addEventListener('keydown', e => {
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (activeTag === 'textarea' || activeTag === 'input') return;
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') prevPage();
+        });
+
+        // Touch Swipe Navigation Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        if (bookArea) {
+            bookArea.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            bookArea.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                if (diff < -55) nextPage();
+                if (diff > 55) prevPage();
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
