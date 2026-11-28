@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh-TW" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英格蘭皇家古典與田園海岸深度之旅電子書報 | England Discovery Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background: radial-gradient(circle at top, #13293d 0%, #0d1d2d 55%, #08111b 100%);
+            color: #172533;
+            touch-action: pan-y;
+        }
+
+        .font-editorial {
+            font-family: 'Playfair Display', 'Cormorant Garamond', 'Noto Serif TC', serif;
+        }
+
+        /* English Heritage Royal Navy (#13293d / #1c3b57), British Racing Green (#1d4d3e), Warm Brass (#c59b27 / #d9b03b) & Cotswold Limestone (#fbf9f4 -> #eae2d3) */
+        .cotswold-paper-bg {
+            background: linear-gradient(180deg, #fbf9f4 0%, #f4efe4 52%, #eae2d3 100%);
+        }
+
+        .heritage-header {
+            border-bottom: 3px double #c59b27;
+            border-top: 1px solid #c59b27;
+        }
+
+        .drop-cap::first-letter {
+            font-size: 3.1rem;
+            float: left;
+            line-height: 0.82;
+            padding-right: 0.5rem;
+            padding-top: 0.2rem;
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+            font-weight: 700;
+            color: #1d4d3e;
+        }
+
+        .page-slide {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out forwards;
+        }
+        .page-slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eae2d3;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8c734b;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen py-0 sm:py-3 px-0 sm:px-4">
+
+    <!-- Vertical E-Book Frame (Mobile-First 430px Max Width) -->
+    <div class="w-full max-w-[430px] h-[100dvh] sm:h-[92vh] sm:max-h-[880px] cotswold-paper-bg shadow-2xl sm:rounded-2xl overflow-hidden border-0 sm:border sm:border-[#d8cebe] flex flex-col justify-between relative select-none">
+
+        <!-- Persistent Top Navigation / British Heritage Royal Navy Issue Bar -->
+        <div class="bg-[#13293d] text-[#fbf9f4] px-3 py-2.5 text-xs flex justify-between items-center tracking-wider font-mono z-20 shadow-md border-b border-[#c59b27]/80">
+            <div class="flex items-center space-x-1.5 min-w-0">
+                <button onclick="toggleToc()" class="bg-[#1c3b57] hover:bg-[#264e73] text-[#f3dca0] px-2 py-1 rounded text-[11px] flex items-center space-x-1 border border-[#c59b27]/60 transition shrink-0" title="Table of Contents / 目錄">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span data-zh="目錄" data-en="TOC">目錄</span>
+                </button>
+                <span class="text-[10px] font-editorial font-bold text-[#d9b03b] truncate" data-zh="英格蘭深度之旅" data-en="ENGLAND EDITION">英格蘭深度之旅</span>
+            </div>
+            <div class="flex items-center space-x-1.5 shrink-0">
+                <span class="bg-[#1d4d3e] text-[#f3dca0] px-1.5 py-0.5 rounded text-[10px] font-bold border border-[#c59b27]/50" id="top-page-indicator">1 / 14</span>
+                <!-- Persistent Bilingual Toggle Button -->
+                <button onclick="toggleLanguage()" id="lang-btn" class="bg-[#d9b03b] hover:bg-[#c59b27] text-[#0d1d2d] px-2 py-1 rounded text-[10px] font-mono transition font-bold shadow-sm" title="Switch Language / 切換語言">
+                    EN / 繁中
+                </button>
+                <button onclick="toggleBookmark()" id="bookmark-btn" class="text-[#f3dca0] hover:text-white transition-colors p-0.5" title="加入書籤 / Bookmark" aria-label="Bookmark">
+                    <svg id="bookmark-icon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide-Out Table of Contents Drawer -->
+        <div id="toc-drawer" class="hidden absolute inset-x-0 top-[44px] bottom-[56px] bg-[#fbf9f4]/98 backdrop-blur-md z-30 flex-col justify-between p-4 overflow-y-auto border-b border-[#d8cebe]">
+            <div class="space-y-2.5">
+                <div class="flex justify-between items-center border-b-2 border-[#c59b27] pb-2">
+                    <h3 class="font-editorial font-bold text-lg text-[#13293d]" data-zh="📖 英格蘭電子書報目錄" data-en="📖 England Edition Contents">📖 英格蘭電子書報目錄</h3>
+                    <button onclick="toggleToc()" class="text-[#13293d] hover:text-black font-mono text-xs px-2.5 py-1 bg-[#eae2d3] rounded border border-[#d8cebe]">✕</button>
+                </div>
+                <div class="grid grid-cols-1 gap-1.5 text-xs" id="toc-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+            <div class="pt-3 text-center text-[10px] font-mono text-[#526373]">
+                Albion & Heritage Digital Edition • 14 Standalone Pages
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content Container (14 Standalone Pages) -->
+        <div class="flex-1 overflow-y-auto px-5 py-4 space-y-4 relative" id="book-content-area">
+
+            <!-- PAGE 1: Editorial Cover Page -->
+            <div class="page-slide active flex-col justify-between h-full space-y-3" data-page="1">
+                <div class="text-center space-y-1.5 pt-1">
+                    <span class="bg-[#13293d] text-[#f3dca0] border border-[#c59b27] text-[10px] px-3 py-0.5 font-mono tracking-widest rounded-full uppercase" data-zh="ALBION & HERITAGE · TRAVEL EDITION" data-en="ALBION & HERITAGE · TRAVEL EDITION">ALBION & HERITAGE · TRAVEL EDITION</span>
+                    <h1 class="text-3xl font-bold font-editorial tracking-tight text-[#0f1e2e] leading-tight">
+                        <span class="text-[#13293d] tracking-wider text-2xl block">ENGLAND DISCOVERY JOURNEY</span>
+                        <span class="text-xl text-[#1d4d3e] block mt-0.5" data-zh="英格蘭皇家古典與田園海岸深度之旅" data-en="Royal Heritage, Honey-Stone Villages & Chalk Cliffs">英格蘭皇家古典與田園海岸深度之旅</span>
+                    </h1>
+                    <p class="text-[11px] font-editorial italic text-[#8a6a1c]" data-zh="14 Pages · 8 Iconic Regions · 5-Day Classic Route" data-en="14 頁典藏 · 8 大經典地標 · 5 日精華行程">14 Pages · 8 Iconic Regions · 5-Day Classic Route</p>
+                </div>
+
+                <div class="relative rounded-xl overflow-hidden shadow-lg border border-[#d8cebe] group">
+                    <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=900&q=80"
+                         onerror="handleImgFallback(this, 'London Westminster & English Countryside')"
+                         alt="London Westminster Big Ben and River Thames" class="w-full h-44 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#08111b]/90 via-[#08111b]/45 to-transparent p-3 text-white">
+                        <p class="text-[10px] font-mono text-[#d9b03b] uppercase tracking-wider" data-zh="皇家典章與田園詩篇 • ALBION HERITAGE" data-en="ALBION HERITAGE • ROYAL & PASTORAL">皇家典章與田園詩篇 • ALBION HERITAGE</p>
+                        <p class="text-xs font-medium" data-zh="倫敦西敏宮、牛津尖塔、科茲窩石屋與七姐妹白堊斷崖" data-en="Westminster, Oxford Spires, Cotswolds & Seven Sisters">倫敦西敏宮、牛津尖塔、科茲窩石屋與七姐妹白堊斷崖</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#f0eadf] p-3.5 rounded-xl border border-[#d8cebe] text-xs text-[#172533] leading-relaxed space-y-1.5 shadow-sm">
+                    <p class="drop-cap" data-zh="歡迎翻閱《英格蘭皇家古典與田園海岸深度之旅》。從泰晤士河畔鐘聲悠揚的西敏宮與倫敦塔橋，到書香氤氳的牛津夢幻尖塔、蜂蜜色石灰岩砌成的科茲窩村落、羅馬温泉古城巴斯，再到史前巨石陣與壯闊的七姐妹白堊斷崖，本電子書報完整收錄地理概況、十二月份氣候穿搭、五日經典路線與八大必訪勝地。" data-en="Welcome to the England Discovery Journey. From royal Westminster and Tower Bridge along the Thames to Oxford's dreaming spires, honey-stone Cotswold villages, Roman Bath, prehistoric Stonehenge, and the dramatic white chalk cliffs of Seven Sisters, explore 14 standalone pages with bilingual guides, weather tips, and Google Maps links.">
+                        歡迎翻閱《英格蘭皇家古典與田園海岸深度之旅》。從泰晤士河畔鐘聲悠揚的西敏宮與倫敦塔橋，到書香氤氳的牛津夢幻尖塔、蜂蜜色石灰岩砌成的科茲窩村落、羅馬温泉古城巴斯，再到史前巨石陣與壯闊的七姐妹白堊斷崖，本電子書報完整收錄地理概況、十二月份氣候穿搭、五日經典路線與八大必訪勝地。
+                    </p>
+                </div>
+
+                <div class="pt-0.5 text-center">
+                    <button onclick="goToPage(2)" class="w-full bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] border border-[#c59b27] text-xs py-3 rounded-lg font-mono uppercase tracking-widest shadow-md transition-all active:scale-95" data-zh="Start Reading / 開始閱讀 ➔" data-en="Start Reading / 開始閱讀 ➔">
+                        Start Reading / 開始閱讀 ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- PAGE 2: Country Overview & Geographical Location -->
+            <div class="page-slide flex-col space-y-3" data-page="2">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 01 • 國家介紹與地理位置" data-en="Chapter 01 • Country & Geography">Chapter 01 • 國家介紹與地理位置</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="英格蘭國家介紹與地理位置" data-en="Country Overview & Geographical Location">英格蘭國家介紹與地理位置</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Quick Fact Grid -->
+                    <div class="grid grid-cols-2 gap-2 bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] font-mono text-[11px]">
+                        <div>
+                            <span class="text-[#526373] block text-[9px]" data-zh="首都 / CAPITAL" data-en="CAPITAL">首都 / CAPITAL</span>
+                            <strong class="text-[#13293d]" data-zh="倫敦 (London)" data-en="London">倫敦 (London)</strong>
+                        </div>
+                        <div>
+                            <span class="text-[#526373] block text-[9px]" data-zh="國土面積 / AREA" data-en="AREA">國土面積 / AREA</span>
+                            <strong class="text-[#0f1e2e]" data-zh="130,279 km²" data-en="130,279 km²">130,279 km²</strong>
+                        </div>
+                        <div>
+                            <span class="text-[#526373] block text-[9px]" data-zh="流通貨幣 / CURRENCY" data-en="CURRENCY">流通貨幣 / CURRENCY</span>
+                            <strong class="text-[#0f1e2e]" data-zh="英鎊 Pound Sterling (£)" data-en="Pound Sterling (£ / GBP)">英鎊 Pound Sterling (£)</strong>
+                        </div>
+                        <div>
+                            <span class="text-[#526373] block text-[9px]" data-zh="官方語言 / LANGUAGE" data-en="LANGUAGE">官方語言 / LANGUAGE</span>
+                            <strong class="text-[#0f1e2e]" data-zh="英語 (English)" data-en="English">英語 (English)</strong>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#fffefb] p-3 rounded-lg border border-[#dfd6c7] space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#13293d] text-sm" data-zh="🧭 大不列顛島心臟與海峽門戶" data-en="🧭 Heart of Great Britain & Channel Gateway">🧭 大不列顛島心臟與海峽門戶</h3>
+                        <p data-zh="英格蘭（England）佔據大不列顛島中南部，北與蘇格蘭接壤、西鄰威爾斯，東瀕北海（North Sea）、西臨愛爾蘭海，南方隔著<strong>英吉利海峽（English Channel）</strong>與歐陸相望，最窄處多佛海峽僅 34 公里，並透過英法海底隧道（Eurostar）緊密連結巴黎與布魯塞爾。" data-en="Occupying the central and southern portion of Great Britain, England borders Scotland to the north and Wales to the west. Framed by the North Sea, Irish Sea, and English Channel—just 34 km from France at the Strait of Dover—it links seamlessly to continental Europe via Eurostar.">
+                            英格蘭（England）佔據大不列顛島中南部，北與蘇格蘭接壤、西鄰威爾斯，東瀕北海（North Sea）、西臨愛爾蘭海，南方隔著<strong>英吉利海峽（English Channel）</strong>與歐陸相望，最窄處多佛海峽僅 34 公里，並透過英法海底隧道（Eurostar）緊密連結巴黎與布魯塞爾。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#fffefb] p-3 rounded-lg border border-[#dfd6c7] space-y-1.5 shadow-sm">
+                        <h3 class="font-editorial font-bold text-[#1d4d3e] text-sm" data-zh="🏞️ 從溫潤丘陵到冰河湖區的多元地貌" data-en="🏞️ Rolling Limestone Hills to Glacial Fells">🏞️ 從溫潤丘陵到冰河湖區的多元地貌</h3>
+                        <p data-zh="英格蘭地形南緩北峻：中南部以<strong>科茲窩（Cotswolds）</strong>蜂蜜色侏羅紀石灰岩丘陵、<strong>泰晤士河谷（Thames Valley）</strong>與索爾茲伯里白堊平原為主；南部海岸擁有鬼斧神工的<strong>七姐妹白堊斷崖</strong>與世界遺產<strong>侏羅紀海岸（Jurassic Coast）</strong>；北部則聳立著「英格蘭脊樑」奔寧山脈（Pennines）與冰河雕琢的<strong>湖區（Lake District）</strong>（最高峰斯科費爾峰 Scafell Pike 海拔 978 公尺）。" data-en="England's landscape shifts from rolling southern lowlands—the honey-stone Cotswold hills, fertile Thames Valley, and Salisbury chalk downs—to dramatic coastal chalk cliffs along the Jurassic Coast and rugged northern uplands in the Pennines and glacial Lake District (peaking at Scafell Pike, 978m).">
+                            英格蘭地形南緩北峻：中南部以<strong>科茲窩（Cotswolds）</strong>蜂蜜色侏羅紀石灰岩丘陵、<strong>泰晤士河谷（Thames Valley）</strong>與索爾茲伯里白堊平原為主；南部海岸擁有鬼斧神工的<strong>七姐妹白堊斷崖</strong>與世界遺產<strong>侏羅紀海岸（Jurassic Coast）</strong>；北部則聳立著「英格蘭脊樑」奔寧山脈（Pennines）與冰河雕琢的<strong>湖區（Lake District）</strong>（最高峰斯科費爾峰 Scafell Pike 海拔 978 公尺）。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#f0eadf] p-3 rounded-lg border border-[#d8cebe] space-y-1">
+                        <h3 class="font-editorial font-bold text-[#0f1e2e] text-sm" data-zh="👑 千年君主憲政與文學藝術搖籃" data-en="👑 Millennial Heritage & Literary Cradle">👑 千年君主憲政與文學藝術搖籃</h3>
+                        <p data-zh="從巨石陣新石器遺跡、羅馬帝國不列顛尼亞行省浴場、諾曼征服古堡到牛津劍橋千年學府與莎士比亞戲劇傳統，英格蘭在緊湊國土內濃縮了無數改變世界的歷史篇章。" data-en="From Neolithic Stonehenge and Roman thermal baths to Norman castles, Oxford's medieval colleges, and Shakespearean theatre, England condenses centuries of world-shaping heritage within easy rail reach.">
+                            從巨石陣新石器遺跡、羅馬帝國不列顛尼亞行省浴場、諾曼征服古堡到牛津劍橋千年學府與莎士比亞戲劇傳統，英格蘭在緊湊國土內濃縮了無數改變世界的歷史篇章。
+                        </p>
+                    </div>
+
+                    <a href="https://www.google.com/maps/search/?api=1&query=England+United+Kingdom" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2 rounded-lg font-mono text-[11px] transition shadow-sm">
+                        🗺️ <span data-zh="在 Google Maps 查看英格蘭全境地圖" data-en="View England Map on Google Maps">在 Google Maps 查看英格蘭全境地圖</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Interactive 12-Month Weather & Clothing Guide -->
+            <div class="page-slide flex-col space-y-3" data-page="3">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 02 • 四季氣候與穿搭指南" data-en="Chapter 02 • Monthly Weather & Packing">Chapter 02 • 四季氣候與穿搭指南</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="英格蘭每月氣候與穿搭指南" data-en="Interactive 12-Month Weather & Packing">英格蘭每月氣候與穿搭指南</h2>
+                </div>
+
+                <p class="text-[11px] text-[#455666]" data-zh="點擊下方月份按鈕（1月–12月），查看平均氣溫、日照降雨、季節盛事（5月藍鈴花海、夏季藝術節、湖區金秋）與穿搭建議：" data-en="Select any month (Jan–Dec) to view average temperatures, rain/daylight, seasonal highlights (May bluebells, summer festivals, Lake District foliage) & attire:">
+                    點擊下方月份按鈕（1月–12月），查看平均氣溫、日照降雨、季節盛事（5月藍鈴花海、夏季藝術節、湖區金秋）與穿搭建議：
+                </p>
+
+                <!-- 12-Month Interactive Grid -->
+                <div class="grid grid-cols-4 gap-1.5" id="month-selector">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Dynamic Month Detail Card -->
+                <div id="month-detail-card" class="bg-[#fffefb] p-3.5 rounded-xl border-2 border-[#c59b27]/70 shadow-sm space-y-2 text-xs text-[#172533]">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px] text-[#172533] space-y-1">
+                    <strong class="text-[#1d4d3e] block font-editorial" data-zh="🧥 「洋蔥式多層次穿搭」與風衣哲學" data-en="🧥 British Layering & Trench Coat Rule">🧥 「洋蔥式多層次穿搭」與風衣哲學</strong>
+                    <p data-zh="溫帶海洋性氣候讓英格蘭常在同一天出現陽光、微風與陣雨（「Four seasons in one day」）。一件防風防潑水風衣或衝鋒衣、輕量針織毛衣與好走的防水步行鞋，是全年暢遊倫敦街頭與鄉間步道的黃金配備。" data-en="England's maritime weather famously delivers 'four seasons in one day.' A breathable waterproof trench or shell, merino knit layer, and broken-in water-resistant walking shoes are essential year-round.">
+                        溫帶海洋性氣候讓英格蘭常在同一天出現陽光、微風與陣雨（「Four seasons in one day」）。一件防風防潑水風衣或衝鋒衣、輕量針織毛衣與好走的防水步行鞋，是全年暢遊倫敦街頭與鄉間步道的黃金配備。
+                    </p>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Classic 5-Day England Itinerary -->
+            <div class="page-slide flex-col space-y-3" data-page="4">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 03 • 英格蘭經典五日深度行程" data-en="Chapter 03 • Classic 5-Day Itinerary">Chapter 03 • 英格蘭經典五日深度行程</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="英格蘭經典五日遊行程規劃" data-en="Classic 5-Day England Itinerary">英格蘭經典五日遊行程規劃</h2>
+                </div>
+
+                <div class="space-y-2 text-xs overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Day 1 -->
+                    <div class="bg-[#fffefb] p-2.5 rounded-lg border-l-4 border-[#13293d] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#13293d]">DAY 01</span>
+                            <a href="https://maps.app.goo.gl/88yQZXMTXd1SG9kr7" target="_blank" class="text-[10px] font-mono text-[#8a6a1c] hover:text-[#13293d] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#0f1e2e] text-sm" data-zh="皇家西敏區與經典倫敦地標巡禮" data-en="Royal Westminster & Historic London">皇家西敏區與經典倫敦地標巡禮</h3>
+                        <p class="text-[#3e4e5e] text-[11px]" data-zh="清晨自大笨鐘與西敏寺出發，步行穿過聖詹姆士公園觀賞白金漢宮衛兵交接；午後沿泰晤士河南岸漫步至波羅市場（Borough Market）與倫敦塔橋。" data-en="Start at Big Ben and Westminster Abbey, stroll St. James's Park for Changing the Guard at Buckingham Palace, then walk the Thames South Bank to Borough Market and Tower Bridge.">
+                            清晨自大笨鐘與西敏寺出發，步行穿過聖詹姆士公園觀賞白金漢宮衛兵交接；午後沿泰晤士河南岸漫步至波羅市場（Borough Market）與倫敦塔橋。
+                        </p>
+                    </div>
+
+                    <!-- Day 2 -->
+                    <div class="bg-[#fffefb] p-2.5 rounded-lg border-l-4 border-[#1d4d3e] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#1d4d3e]">DAY 02</span>
+                            <a href="https://maps.app.goo.gl/a35MPM7jAfL6Rk7S9" target="_blank" class="text-[10px] font-mono text-[#8a6a1c] hover:text-[#13293d] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#0f1e2e] text-sm" data-zh="牛津夢幻尖塔學府與布倫海姆宮" data-en="Oxford Dreaming Spires & Blenheim Palace">牛津夢幻尖塔學府與布倫海姆宮</h3>
+                        <p class="text-[#3e4e5e] text-[11px]" data-zh="自倫敦帕丁頓車站搭 GWR 火車 55 分鐘抵牛津，探訪博德利圖書館、拉德克利夫相機樓與基督堂學院，午後於查韋爾河撐篙或延伸造訪邱吉爾出生地布倫海姆宮。" data-en="Take a 55-minute GWR train from Paddington to Oxford: tour the Bodleian Library, Radcliffe Camera, and Christ Church College, followed by punting on the Cherwell or visiting Blenheim Palace.">
+                            自倫敦帕丁頓車站搭 GWR 火車 55 分鐘抵牛津，探訪博德利圖書館、拉德克利夫相機樓與基督堂學院，午後於查韋爾河撐篙或延伸造訪邱吉爾出生地布倫海姆宮。
+                        </p>
+                    </div>
+
+                    <!-- Day 3 -->
+                    <div class="bg-[#fffefb] p-2.5 rounded-lg border-l-4 border-[#c59b27] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#8a6a1c]">DAY 03</span>
+                            <a href="https://maps.app.goo.gl/3bANHUaWUjZnQ8v9A" target="_blank" class="text-[10px] font-mono text-[#8a6a1c] hover:text-[#13293d] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#0f1e2e] text-sm" data-zh="科茲窩蜂蜜色石屋村落田園漫遊" data-en="Cotswolds Honey-Stone Villages">科茲窩蜂蜜色石屋村落田園漫遊</h3>
+                        <p class="text-[#3e4e5e] text-[11px]" data-zh="租車自駕或搭乘區域公車串聯「英格蘭最美村莊」拜伯里（Bibury）阿靈頓排屋、水上伯頓（Bourton-on-the-Water）低矮石橋與上下斯勞特村，享用正宗奶油茶。" data-en="Drive or take local buses through Bibury's 14th-century Arlington Row, Bourton-on-the-Water's stone footbridges, and the Slaughters, pausing for a classic Cotswold Cream Tea.">
+                            租車自駕或搭乘區域公車串聯「英格蘭最美村莊」拜伯里（Bibury）阿靈頓排屋、水上伯頓（Bourton-on-the-Water）低矮石橋與上下斯勞特村，享用正宗奶油茶。
+                        </p>
+                    </div>
+
+                    <!-- Day 4 -->
+                    <div class="bg-[#fffefb] p-2.5 rounded-lg border-l-4 border-[#13293d] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#13293d]">DAY 04</span>
+                            <a href="https://maps.app.goo.gl/mKt7MjphzUghd128A" target="_blank" class="text-[10px] font-mono text-[#8a6a1c] hover:text-[#13293d] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#0f1e2e] text-sm" data-zh="巴斯羅馬古浴場與索爾茲伯里巨石陣秘境" data-en="Roman Bath & Stonehenge Mystery">巴斯羅馬古浴場與索爾茲伯里巨石陣秘境</h3>
+                        <p class="text-[#3e4e5e] text-[11px]" data-zh="上午參觀世界遺產巴斯羅馬浴場、普爾特尼橋與皇家新月樓，午後前往索爾茲伯里平原朝聖史前巨石陣（Stonehenge）與擁有全英最高尖塔的索爾茲伯里大教堂。" data-en="Morning at UNESCO-listed Roman Baths, Pulteney Bridge, and Royal Crescent in Bath; afternoon pilgrimage to prehistoric Stonehenge and Salisbury Cathedral's soaring spire.">
+                            上午參觀世界遺產巴斯羅馬浴場、普爾特尼橋與皇家新月樓，午後前往索爾茲伯里平原朝聖史前巨石陣（Stonehenge）與擁有全英最高尖塔的索爾茲伯里大教堂。
+                        </p>
+                    </div>
+
+                    <!-- Day 5 -->
+                    <div class="bg-[#fffefb] p-2.5 rounded-lg border-l-4 border-[#1d4d3e] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono font-bold text-[#1d4d3e]">DAY 05</span>
+                            <a href="https://maps.app.goo.gl/bKHAfNdLcMeDCwWi6" target="_blank" class="text-[10px] font-mono text-[#8a6a1c] hover:text-[#13293d] underline">🗺️ Route Maps</a>
+                        </div>
+                        <h3 class="font-editorial font-bold text-[#0f1e2e] text-sm" data-zh="雙線精選：七姐妹白堊斷崖 或 湖區國家公園" data-en="Seven Sisters Cliffs or Lake District Fells">雙線精選：七姐妹白堊斷崖 或 湖區國家公園</h3>
+                        <p class="text-[#3e4e5e] text-[11px]" data-zh="南線自倫敦維多利亞站搭火車至布萊頓／伊斯特本，健行壯麗的七姐妹白堊斷崖；北線則乘西岸幹線高鐵直達溫德米爾，泛舟湖區與探訪彼得兔故鄉。" data-en="South option: train from London Victoria to Seaford/Eastbourne to hike the Seven Sisters chalk cliffs. North option: Avanti West Coast rail to Windermere for Lake District cruises.">
+                            南線自倫敦維多利亞站搭火車至布萊頓／伊斯特本，健行壯麗的七姐妹白堊斷崖；北線則乘西岸幹線高鐵直達溫德米爾，泛舟湖區與探訪彼得兔故鄉。
+                        </p>
+                    </div>
+
+                    <div class="bg-[#f0eadf] p-2 rounded-lg border border-[#d8cebe] text-[10px] font-mono text-[#13293d]">
+                        🚆 <span data-zh="交通貼士：城市間首選 National Rail（提前購 Advance 票省 50%），科茲窩與湖區小鎮建議自駕或搭配當地一日巴士通票。" data-en="Transit Tip: Use National Rail Advance tickets between London, Oxford, Bath & York; rent a car or use local Explorer buses for Cotswold & Lake District villages.">交通貼士：城市間首選 National Rail（提前購 Advance 票省 50%），科茲窩與湖區小鎮建議自駕或搭配當地一日巴士通票。</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 5: Destination 1 - London: Westminster & Tower Bridge -->
+            <div class="page-slide flex-col space-y-3" data-page="5">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 04 • 精選地標 [1/8]" data-en="Chapter 04 • Destination [1/8]">Chapter 04 • 精選地標 [1/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="London: Westminster & Tower Bridge (倫敦：西敏宮與塔橋)" data-en="London — Westminster & Tower Bridge">London: Westminster & Tower Bridge (倫敦：西敏宮與塔橋)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8cebe]">
+                        <img src="https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=900&q=80"
+                             onerror="handleImgFallback(this, 'London Westminster & Tower Bridge')"
+                             alt="Big Ben and Palace of Westminster London" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="泰晤士河畔的<strong>西敏宮（Palace of Westminster）</strong>與<strong>大笨鐘（Elizabeth Tower）</strong>是英國議會民主與皇家典章的永恆象徵，隔街相望的千年<strong>西敏寺（Westminster Abbey）</strong>自 1066 年以來見證了歷代英王加冕與皇室婚禮。沿河向東而行，維多利亞時代工程奇蹟<strong>倫敦塔橋（Tower Bridge）</strong>以雙塔懸索與開合橋面橫跨河心，守護著歷史悠久的倫敦塔。" data-en="Rising along the River Thames, the Gothic Revival Palace of Westminster and Big Ben stand opposite Westminster Abbey—coronation church of British monarchs since 1066. Further downstream, Victorian engineering icon Tower Bridge frames the historic Tower of London.">
+                        泰晤士河畔的<strong>西敏宮（Palace of Westminster）</strong>與<strong>大笨鐘（Elizabeth Tower）</strong>是英國議會民主與皇家典章的永恆象徵，隔街相望的千年<strong>西敏寺（Westminster Abbey）</strong>自 1066 年以來見證了歷代英王加冕與皇室婚禮。沿河向東而行，維多利亞時代工程奇蹟<strong>倫敦塔橋（Tower Bridge）</strong>以雙塔懸索與開合橋面橫跨河心，守護著歷史悠久的倫敦塔。
+                    </p>
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px]">
+                        <strong class="text-[#13293d]" data-zh="🥧 泰晤士南岸漫步與千年波羅市場：" data-en="🥧 Thames South Bank & Borough Market:">🥧 泰晤士南岸漫步與千年波羅市場：</strong>
+                        <span data-zh="推薦從西敏橋沿泰晤士河南岸步行至倫敦塔橋，途經莎士比亞環球劇場與泰特現代美術館，並於擁有千年歷史的「波羅市場（Borough Market）」品嚐現開生蠔、松露燉飯與手工肉派。" data-en="Walk the scenic Thames South Bank past Shakespeare's Globe and Tate Modern, stopping at 1,000-year-old Borough Market for artisanal pies, oysters, and specialty coffee.">
+                            推薦從西敏橋沿泰晤士河南岸步行至倫敦塔橋，途經莎士比亞環球劇場與泰特現代美術館，並於擁有千年歷史的「波羅市場（Borough Market）」品嚐現開生蠔、松露燉飯與手工肉派。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/pGWW6osh4vr3WXAd9" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：倫敦西敏宮與塔橋導航" data-en="Open Google Maps: London Westminster & Tower Bridge">開啟 Google Maps：倫敦西敏宮與塔橋導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 6: Destination 2 - Oxford: City of Dreaming Spires -->
+            <div class="page-slide flex-col space-y-3" data-page="6">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 04 • 精選地標 [2/8]" data-en="Chapter 04 • Destination [2/8]">Chapter 04 • 精選地標 [2/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="Oxford: City of Dreaming Spires (牛津：夢幻尖塔)" data-en="Oxford — City of Dreaming Spires">Oxford: City of Dreaming Spires (牛津：夢幻尖塔)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8cebe]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVz8NO0Fgl9CQkxvQegssAAUbypY3ScobLV9PkC_eCPA&s"
+                             onerror="handleImgFallback(this, 'Oxford Radcliffe Camera & Spires')"
+                             alt="Radcliffe Camera and Oxford University Spires" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="被詩人馬修·阿諾德讚為「夢幻尖塔之城」的<strong>牛津（Oxford）</strong>，擁有英語世界最古老的大學（11 世紀末開始教學）。蜂蜜色石砌建築群以巴洛克圓頂傑作<strong>拉德克利夫相機樓（Radcliffe Camera）</strong>與歐洲最古老圖書館之一的<strong>博德利圖書館（Bodleian Library）</strong>為中心，嘆息橋橫跨其間，書卷氣息濃厚。" data-en="Celebrated by poet Matthew Arnold as the 'City of Dreaming Spires,' Oxford hosts the English-speaking world's oldest university. Its honey-toned quadrangles center on the Baroque Radcliffe Camera, the historic Bodleian Library, and the Bridge of Sighs.">
+                        被詩人馬修·阿諾德讚為「夢幻尖塔之城」的<strong>牛津（Oxford）</strong>，擁有英語世界最古老的大學（11 世紀末開始教學）。蜂蜜色石砌建築群以巴洛克圓頂傑作<strong>拉德克利夫相機樓（Radcliffe Camera）</strong>與歐洲最古老圖書館之一的<strong>博德利圖書館（Bodleian Library）</strong>為中心，嘆息橋橫跨其間，書卷氣息濃厚。
+                    </p>
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px]">
+                        <strong class="text-[#1d4d3e]" data-zh="🚣 基督堂學院與查韋爾河撐篙（Punting）：" data-en="🚣 Christ Church College & Punting on the Cherwell:">🚣 基督堂學院與查韋爾河撐篙（Punting）：</strong>
+                        <span data-zh="走進電影《哈利波特》霍格華茲大廳靈感來源的「基督堂學院（Christ Church）」都鐸式大飯廳，午後於抹大拉橋碼頭體驗英式傳統平底船撐篙（Punting），悠然穿梭於垂柳河道之間。" data-en="Step inside Christ Church's Tudor Great Hall—inspiration for Hogwarts' dining hall—then rent a traditional wooden punt at Magdalen Bridge to glide down the willow-lined River Cherwell.">
+                            走進電影《哈利波特》霍格華茲大廳靈感來源的「基督堂學院（Christ Church）」都鐸式大飯廳，午後於抹大拉橋碼頭體驗英式傳統平底船撐篙（Punting），悠然穿梭於垂柳河道之間。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/UEQsFcdk1SmBQxah7" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：牛津拉德克利夫相機樓與學院導航" data-en="Open Google Maps: Oxford Radcliffe Camera">開啟 Google Maps：牛津拉德克利夫相機樓與學院導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 7: Destination 3 - The Cotswolds: Bibury & Bourton-on-the-Water -->
+            <div class="page-slide flex-col space-y-3" data-page="7">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 04 • 精選地標 [3/8]" data-en="Chapter 04 • Destination [3/8]">Chapter 04 • 精選地標 [3/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="The Cotswolds: Bibury & Bourton (科茲窩田園村落)" data-en="The Cotswolds — Bibury & Bourton-on-the-Water">The Cotswolds: Bibury & Bourton (科茲窩田園村落)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8cebe]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh0Fd330akd0jyi77AAY3rz9_MAslFl2tZmQ1jAnv4dg&s=10"
+                             onerror="handleImgFallback(this, 'Arlington Row Bibury Cotswolds')"
+                             alt="Arlington Row Stone Cottages in Bibury Cotswolds" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="被指定為英國「傑出自然風景區（AONB）」的<strong>科茲窩（The Cotswolds）</strong>，是英格蘭鄉村美學的極致化身。其中<strong>拜伯里（Bibury）</strong>建於 1380 年的<strong>阿靈頓排屋（Arlington Row）</strong>，一排斜頂蜂蜜色石灰岩織工小屋沿著科恩河與濕地草甸展開，曾獲工藝美術大師威廉·莫里斯讚為「英格蘭最美村莊」。" data-en="Designated an Area of Outstanding Natural Beauty, the Cotswolds epitomize English pastoral charm. In Bibury, the 14th-century honey-colored limestone weavers' cottages of Arlington Row line the River Coln—hailed by William Morris as 'the most beautiful village in England.'">
+                        被指定為英國「傑出自然風景區（AONB）」的<strong>科茲窩（The Cotswolds）</strong>，是英格蘭鄉村美學的極致化身。其中<strong>拜伯里（Bibury）</strong>建於 1380 年的<strong>阿靈頓排屋（Arlington Row）</strong>，一排斜頂蜂蜜色石灰岩織工小屋沿著科恩河與濕地草甸展開，曾獲工藝美術大師威廉·莫里斯讚為「英格蘭最美村莊」。
+                    </p>
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px]">
+                        <strong class="text-[#1d4d3e]" data-zh="🌉 「科茲窩威尼斯」水上伯頓與英式奶油茶：" data-en="🌉 Bourton-on-the-Water & Cotswold Cream Tea:">🌉 「科茲窩威尼斯」水上伯頓與英式奶油茶：</strong>
+                        <span data-zh="往北前往素有「科茲窩威尼斯」之稱的「水上伯頓（Bourton-on-the-Water）」，清澈見底的溫德拉什河（River Windrush）穿村而過，五座低矮拱形石橋連接綠茵河岸，坐在河畔茶室享用熱司康與凝脂奶油最為愜意。" data-en="Continue north to Bourton-on-the-Water, where five low-arched stone bridges span the crystal-clear River Windrush—the quintessential setting for warm scones with clotted cream.">
+                            往北前往素有「科茲窩威尼斯」之稱的「水上伯頓（Bourton-on-the-Water）」，清澈見底的溫德拉什河（River Windrush）穿村而過，五座低矮拱形石橋連接綠茵河岸，坐在河畔茶室享用熱司康與凝脂奶油最為愜意。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/v8zfzD4XT2hhU3Nf9" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：科茲窩拜伯里阿靈頓排屋" data-en="Open Google Maps: Bibury & The Cotswolds">開啟 Google Maps：科茲窩拜伯里阿靈頓排屋</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 8: Destination 4 - Bath: Georgian Crescents & Roman Baths -->
+            <div class="page-slide flex-col space-y-3" data-page="8">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 04 • 精選地標 [4/8]" data-en="Chapter 04 • Destination [4/8]">Chapter 04 • 精選地標 [4/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="Bath: Georgian Crescents & Roman Baths (巴斯古城)" data-en="Bath — Georgian Crescents & Roman Baths">Bath: Georgian Crescents & Roman Baths (巴斯古城)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8cebe]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPRn1s_qYhFQ6N-_Vu6y5G-NrzAz5U98SjIHFLC0TFuw&s=10"
+                             onerror="handleImgFallback(this, 'Royal Crescent & Roman Baths Bath')"
+                             alt="Georgian Architecture Royal Crescent Bath England" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="全城列入聯合國世界文化遺產的<strong>巴斯（Bath）</strong>，擁有全英國唯一的天然地熱溫泉。西元 1 世紀羅馬人在此興建宏偉的<strong>羅馬浴場（The Roman Baths）</strong>神殿與大浴池，至今仍見 46°C 翠綠礦泉蒸氣嫋嫋；18 世紀喬治王時代更以溫潤巴斯石打造出帕拉第奧式古典建築群。" data-en="Inscribed as a UNESCO World Heritage city, Bath is home to Britain's only natural thermal hot springs. In the 1st century AD, the Romans built the monumental Roman Baths temple complex, later complemented by 18th-century Georgian Palladian architecture.">
+                        全城列入聯合國世界文化遺產的<strong>巴斯（Bath）</strong>，擁有全英國唯一的天然地熱溫泉。西元 1 世紀羅馬人在此興建宏偉的<strong>羅馬浴場（The Roman Baths）</strong>神殿與大浴池，至今仍見 46°C 翠綠礦泉蒸氣嫋嫋；18 世紀喬治王時代更以溫潤巴斯石打造出帕拉第奧式古典建築群。
+                    </p>
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px]">
+                        <strong class="text-[#13293d]" data-zh="🏛️ 皇家新月樓、普爾特尼橋與珍·奧斯汀：" data-en="🏛️ Royal Crescent, Pulteney Bridge & Jane Austen:">🏛️ 皇家新月樓、普爾特尼橋與珍·奧斯汀：</strong>
+                        <span data-zh="由 30 棟連排住宅組成的宏偉半月形「皇家新月樓（Royal Crescent）」與橫跨雅芳河的廊橋「普爾特尼橋（Pulteney Bridge）」皆為建築史經典；文學迷更可造訪「珍·奧斯汀中心」重溫《傲慢與偏見》時代風華。" data-en="Admire the sweeping 30-house arc of the Royal Crescent, shop-lined Pulteney Bridge over the River Avon, and the Jane Austen Centre celebrating the author's Regency years in Bath.">
+                            由 30 棟連排住宅組成的宏偉半月形「皇家新月樓（Royal Crescent）」與橫跨雅芳河的廊橋「普爾特尼橋（Pulteney Bridge）」皆為建築史經典；文學迷更可造訪「珍·奧斯汀中心」重溫《傲慢與偏見》時代風華。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/vGfCXFjcUToQh8cx9" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：巴斯羅馬浴場與新月樓導航" data-en="Open Google Maps: Roman Baths & Bath">開啟 Google Maps：巴斯羅馬浴場與新月樓導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 9: Destination 5 - Stonehenge & Salisbury Plain -->
+            <div class="page-slide flex-col space-y-3" data-page="9">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 04 • 精選地標 [5/8]" data-en="Chapter 04 • Destination [5/8]">Chapter 04 • 精選地標 [5/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="Stonehenge & Salisbury Plain (巨石陣與索爾茲伯里)" data-en="Stonehenge & Salisbury Plain">Stonehenge & Salisbury Plain (巨石陣與索爾茲伯里)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8cebe]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5ckzhM6IpN7kGfQ1u-rVi385ypYv0_szJ7d60bfF-8Q&s=10"
+                             onerror="handleImgFallback(this, 'Stonehenge & Salisbury Plain')"
+                             alt="Prehistoric Stonehenge Megaliths Salisbury Plain" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="矗立於威爾特郡遼闊白堊草甸上的<strong>巨石陣（Stonehenge）</strong>，建於西元前 3000 年至前 2000 年之間，重達 25 噸的砂岩巨石（Sarsens）與遠自 240 公里外威爾斯運來的藍砂岩（Bluestones）精準排列，其主軸線與夏至日出、冬至日落天文方位完全契合，是全球最神秘的史前世界遺產。" data-en="Standing on the windswept chalk downs of Wiltshire, UNESCO-listed Stonehenge was erected between 3000 BC and 2000 BC. Its monumental 25-ton sarsen stones and Welsh bluestones align precisely with the summer solstice sunrise and winter solstice sunset.">
+                        矗立於威爾特郡遼闊白堊草甸上的<strong>巨石陣（Stonehenge）</strong>，建於西元前 3000 年至前 2000 年之間，重達 25 噸的砂岩巨石（Sarsens）與遠自 240 公里外威爾斯運來的藍砂岩（Bluestones）精準排列，其主軸線與夏至日出、冬至日落天文方位完全契合，是全球最神秘的史前世界遺產。
+                    </p>
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px]">
+                        <strong class="text-[#1d4d3e]" data-zh="⛪ 索爾茲伯里大教堂與 1215 年《大憲章》：" data-en="⛪ Salisbury Cathedral & 1215 Magna Carta:">⛪ 索爾茲伯里大教堂與 1215 年《大憲章》：</strong>
+                        <span data-zh="距離巨石陣僅 15 分鐘車程的「索爾茲伯里大教堂（Salisbury Cathedral）」擁有高達 123 公尺的全英國最高教堂尖塔，教堂分會堂內更珍藏著現存四份 1215 年《大憲章（Magna Carta）》原始羊皮紙手稿中最完整的一份！" data-en="Just 15 minutes south, Salisbury Cathedral boasts Britain's tallest church spire (123m) and preserves the best-surviving original 1215 Magna Carta manuscript in its Chapter House.">
+                            距離巨石陣僅 15 分鐘車程的「索爾茲伯里大教堂（Salisbury Cathedral）」擁有高達 123 公尺的全英國最高教堂尖塔，教堂分會堂內更珍藏著現存四份 1215 年《大憲章（Magna Carta）》原始羊皮紙手稿中最完整的一份！
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/SwG35UNxTvonCLVw9" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：巨石陣與索爾茲伯里導航" data-en="Open Google Maps: Stonehenge & Salisbury">開啟 Google Maps：巨石陣與索爾茲伯里導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 10: Destination 6 - Lake District: Windermere & Keswick -->
+            <div class="page-slide flex-col space-y-3" data-page="10">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 04 • 精選地標 [6/8]" data-en="Chapter 04 • Destination [6/8]">Chapter 04 • 精選地標 [6/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="Lake District: Windermere & Keswick (湖區國家公園)" data-en="Lake District — Windermere & Keswick">Lake District: Windermere & Keswick (湖區國家公園)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8cebe]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6zX1jH-BArC8PDNsSVeOI8xW9QjZyUr7JgiJJo4qBbg&s=10"
+                             onerror="handleImgFallback(this, 'Lake District Windermere & Keswick')"
+                             alt="Glacial Lake and Mountain Fells in Lake District England" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="位於英格蘭西北部坎布里亞郡的<strong>湖區國家公園（Lake District National Park）</strong>，2017 年獲列 UNESCO 世界文化遺產。冰河時期雕琢出的 16 座深邃湖泊與蒼翠山巒（Fells）交織如詩——南端<strong>溫德米爾湖（Windermere）</strong>為英格蘭最大天然湖泊，北端<strong>凱西克（Keswick）</strong>則依偎著湖光山色絕美的德文特湖（Derwentwater）。" data-en="Inscribed as a UNESCO World Heritage landscape in Cumbria, the Lake District unites 16 glacial lakes with rugged fells—from Windermere, England's largest natural lake in the south, to northern market town Keswick beside scenic Derwentwater.">
+                        位於英格蘭西北部坎布里亞郡的<strong>湖區國家公園（Lake District National Park）</strong>，2017 年獲列 UNESCO 世界文化遺產。冰河時期雕琢出的 16 座深邃湖泊與蒼翠山巒（Fells）交織如詩——南端<strong>溫德米爾湖（Windermere）</strong>為英格蘭最大天然湖泊，北端<strong>凱西克（Keswick）</strong>則依偎著湖光山色絕美的德文特湖（Derwentwater）。
+                    </p>
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px]">
+                        <strong class="text-[#1d4d3e]" data-zh="🐇 彼得兔故鄉與浪漫派湖畔詩人足跡：" data-en="🐇 Beatrix Potter & Romantic Lake Poets:">🐇 彼得兔故鄉與浪漫派湖畔詩人足跡：</strong>
+                        <span data-zh="搭乘經典復古蒸氣船遊覽溫德米爾湖，前往丘頂農莊（Hill Top）探訪《彼得兔》作者碧雅翠絲·波特故居；並至格拉斯米爾（Grasmere）尋訪桂冠詩人華茲華斯故居與百年手工薑餅店！" data-en="Cruise Windermere by historic steamer, visit Beatrix Potter's Hill Top farmhouse in Near Sawrey, and walk William Wordsworth's beloved trails around Grasmere.">
+                            搭乘經典復古蒸氣船遊覽溫德米爾湖，前往丘頂農莊（Hill Top）探訪《彼得兔》作者碧雅翠絲·波特故居；並至格拉斯米爾（Grasmere）尋訪桂冠詩人華茲華斯故居與百年手工薑餅店！
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/Auq3HLdcjo9j7CJH9" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：湖區溫德米爾與凱西克導航" data-en="Open Google Maps: Lake District Windermere">開啟 Google Maps：湖區溫德米爾與凱西克導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 11: Destination 7 - York: Medieval Shambles & York Minster -->
+            <div class="page-slide flex-col space-y-3" data-page="11">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 04 • 精選地標 [7/8]" data-en="Chapter 04 • Destination [7/8]">Chapter 04 • 精選地標 [7/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="York: Shambles & York Minster (約克肉舖街與大教堂)" data-en="York — Medieval Shambles & York Minster">York: Shambles & York Minster (約克肉舖街與大教堂)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8cebe]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxN4MkkBlwQ8Gb1IZIxNjMAeST5MCJl3Gwoju3l_okxg&s=10"
+                             onerror="handleImgFallback(this, 'York Minster & Medieval Shambles')"
+                             alt="York Minster Gothic Cathedral and Medieval Town" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="英王喬治六世曾說「約克的歷史就是英格蘭的歷史」。這座歷經古羅馬帝國與維京海盜建都的古城，以英國最大哥德式大教堂<strong>約克大教堂（York Minster）</strong>為靈魂，堂內擁有中世紀最大彩繪玻璃「大東窗」；不遠處保存完好的 14 世紀木桁架老街<strong>肉舖街（The Shambles）</strong>，更因二樓向街心突出而成為《哈利波特》斜角巷靈感來源。" data-en="King George VI famously remarked that 'the history of York is the history of England.' Founded by Romans and settled by Vikings, York is crowned by Gothic York Minster—home to Britain's largest expanse of medieval stained glass—and The Shambles, a 14th-century timber-framed lane that inspired Diagon Alley.">
+                        英王喬治六世曾說「約克的歷史就是英格蘭的歷史」。這座歷經古羅馬帝國與維京海盜建都的古城，以英國最大哥德式大教堂<strong>約克大教堂（York Minster）</strong>為靈魂，堂內擁有中世紀最大彩繪玻璃「大東窗」；不遠處保存完好的 14 世紀木桁架老街<strong>肉舖街（The Shambles）</strong>，更因二樓向街心突出而成為《哈利波特》斜角巷靈感來源。
+                    </p>
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px]">
+                        <strong class="text-[#13293d]" data-zh="🏰 中世紀古城牆與貝蒂茶室下午茶：" data-en="🏰 Medieval City Walls & Bettys Café Tea Rooms:">🏰 中世紀古城牆與貝蒂茶室下午茶：</strong>
+                        <span data-zh="沿著全長 3.4 公里的羅馬與中世紀古城牆（York City Walls）漫步，俯瞰紅磚屋頂與大教堂尖塔，午後至創立於 1919 年的傳奇「貝蒂茶室（Bettys Café Tea Rooms）」享用傳統三層英式下午茶。" data-en="Walk atop York's 3.4-km medieval stone city walls for panoramic views of the Minster, then treat yourself to classic three-tier Afternoon Tea at historic Bettys Café Tea Rooms (est. 1919).">
+                            沿著全長 3.4 公里的羅馬與中世紀古城牆（York City Walls）漫步，俯瞰紅磚屋頂與大教堂尖塔，午後至創立於 1919 年的傳奇「貝蒂茶室（Bettys Café Tea Rooms）」享用傳統三層英式下午茶。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/DTAeFXgADWkuaCda6" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：約克大教堂與肉舖街導航" data-en="Open Google Maps: York Minster & The Shambles">開啟 Google Maps：約克大教堂與肉舖街導航</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 12: Destination 8 - Seven Sisters & Jurassic Coast -->
+            <div class="page-slide flex-col space-y-3" data-page="12">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 04 • 精選地標 [8/8]" data-en="Chapter 04 • Destination [8/8]">Chapter 04 • 精選地標 [8/8]</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="Seven Sisters & Jurassic Coast (七姐妹白堊斷崖)" data-en="Seven Sisters & Jurassic Coast">Seven Sisters & Jurassic Coast (七姐妹白堊斷崖)</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px]">
+                    <div class="rounded-xl overflow-hidden shadow-md border border-[#d8cebe]">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzj21BmG0n0IRkT3xRK8Kc3rZVEnA4932ir6QGDV077A&s=10"
+                             onerror="handleImgFallback(this, 'Seven Sisters White Chalk Cliffs')"
+                             alt="Seven Sisters White Chalk Cliffs English Channel" class="w-full h-40 object-cover">
+                    </div>
+                    <p data-zh="蜿蜒於南唐斯國家公園（South Downs National Park）海濱的<strong>七姐妹白堊斷崖（Seven Sisters Cliffs）</strong>，七座連綿起伏的雪白白堊岩壁垂直切入蔚藍英吉利海峽，上方覆蓋著碧綠草坡與海岸燈塔，純淨無瑕的海岸線更曾成為電影《贖罪》經典取景地；再往西延伸則是記錄 1.85 億年地球史的 UNESCO 世界遺產<strong>侏羅紀海岸（Jurassic Coast）</strong>。" data-en="Rising sheer above the turquoise English Channel inside South Downs National Park, the Seven Sisters are seven undulating pure-white chalk cliffs crowned with emerald turf—complemented further west by the UNESCO World Heritage Jurassic Coast.">
+                        蜿蜒於南唐斯國家公園（South Downs National Park）海濱的<strong>七姐妹白堊斷崖（Seven Sisters Cliffs）</strong>，七座連綿起伏的雪白白堊岩壁垂直切入蔚藍英吉利海峽，上方覆蓋著碧綠草坡與海岸燈塔，純淨無瑕的海岸線更曾成為電影《贖罪》經典取景地；再往西延伸則是記錄 1.85 億年地球史的 UNESCO 世界遺產<strong>侏羅紀海岸（Jurassic Coast）</strong>。
+                    </p>
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px]">
+                        <strong class="text-[#1d4d3e]" data-zh="🌊 伯靈峽谷、比奇角燈塔與杜德爾門海蝕拱：" data-en="🌊 Birling Gap, Beachy Head & Durdle Door:">🌊 伯靈峽谷、比奇角燈塔與杜德爾門海蝕拱：</strong>
+                        <span data-zh="推薦沿懸崖步道從 Seaford 健行至 Birling Gap 與紅白相間的「比奇角燈塔（Beachy Head Lighthouse）」，注意遠離無護欄崖邊；若前往多塞特郡侏羅紀海岸，則必訪天然石灰岩海蝕拱「杜德爾門（Durdle Door）」。" data-en="Hike the cliff-top trail from Seaford via Birling Gap to Beachy Head Lighthouse (always stay well back from unstable cliff edges), or visit iconic limestone sea arch Durdle Door in Dorset.">
+                            推薦沿懸崖步道從 Seaford 健行至 Birling Gap 與紅白相間的「比奇角燈塔（Beachy Head Lighthouse）」，注意遠離無護欄崖邊；若前往多塞特郡侏羅紀海岸，則必訪天然石灰岩海蝕拱「杜德爾門（Durdle Door）」。
+                        </span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/1ESdFg3HKAWLGRGR8" target="_blank" class="block text-center bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] py-2.5 rounded-lg font-mono text-xs shadow transition">
+                        🗺️ <span data-zh="開啟 Google Maps：七姐妹白堊斷崖與伯靈峽谷" data-en="Open Google Maps: Seven Sisters Cliffs">開啟 Google Maps：七姐妹白堊斷崖與伯靈峽谷</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PAGE 13: English Gastronomy, Pubs & Afternoon Tea Culture -->
+            <div class="page-slide flex-col space-y-3" data-page="13">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 05 • 英倫美饌、傳統酒館與下午茶" data-en="Chapter 05 • Gastronomy, Pubs & Afternoon Tea">Chapter 05 • 英倫美饌、傳統酒館與下午茶</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="英倫經典美食、傳統酒館與下午茶文化" data-en="English Gastronomy, Pubs & Afternoon Tea Culture">英倫經典美食、傳統酒館與下午茶文化</h2>
+                </div>
+
+                <div class="space-y-2 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- 1. Traditional Afternoon Tea -->
+                    <div class="bg-[#fffefb] p-2.5 rounded-lg border border-[#dfd6c7] shadow-sm space-y-1">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-editorial font-bold text-[#13293d] text-sm" data-zh="🫖 皇家三層下午茶 (Traditional Afternoon Tea)" data-en="🫖 Traditional Afternoon Tea & Cream Tea">🫖 皇家三層下午茶 (Traditional Afternoon Tea)</h3>
+                        </div>
+                        <p class="text-[11px]" data-zh="1840 年由貝德福德公爵夫人開創的午茶儀式！遵循由下而上順序品嚐：底層小黃瓜與煙燻鮭魚手指三明治、中層溫熱葡萄乾<strong>司康（Scones）搭配德文郡凝脂奶油（Clotted Cream）與草莓果醬</strong>，頂層精緻法式小甜點，佐一壺伯爵茶或大吉嶺。" data-en="Popularized in 1840 by the Duchess of Bedford, enjoy tiers from bottom to top: finger sandwiches, warm <strong>scones with Devonshire clotted cream and strawberry jam</strong>, and delicate pastries paired with Earl Grey.">
+                            1840 年由貝德福德公爵夫人開創的午茶儀式！遵循由下而上順序品嚐：底層小黃瓜與煙燻鮭魚手指三明治、中層溫熱葡萄乾<strong>司康（Scones）搭配德文郡凝脂奶油（Clotted Cream）與草莓果醬</strong>，頂層精緻法式小甜點，佐一壺伯爵茶或大吉嶺。
+                        </p>
+                    </div>
+
+                    <!-- 2. Sunday Roast & Yorkshire Pudding -->
+                    <div class="bg-[#fffefb] p-2.5 rounded-lg border border-[#dfd6c7] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#1d4d3e] text-sm" data-zh="🥩 週日烤肉大餐與約克夏布丁 (Sunday Roast)" data-en="🥩 Sunday Roast with Yorkshire Pudding">🥩 週日烤肉大餐與約克夏布丁 (Sunday Roast)</h3>
+                        <p class="text-[11px]" data-zh="英格蘭家庭與鄉村酒館週日午後的靈魂饗宴！粉嫩多汁的爐烤牛肉（Roast Beef）搭配外酥內軟、吸滿濃郁肉汁（Gravy）的<strong>約克夏布丁（Yorkshire Pudding）</strong>、脆皮烤馬鈴薯、蜂蜜烤防風草與辣根醬。" data-en="The centerpiece of English Sunday tradition: tender roast beef served alongside golden, airy <strong>Yorkshire Pudding</strong>, duck-fat roast potatoes, seasonal vegetables, horseradish, and rich gravy.">
+                            英格蘭家庭與鄉村酒館週日午後的靈魂饗宴！粉嫩多汁的爐烤牛肉（Roast Beef）搭配外酥內軟、吸滿濃郁肉汁（Gravy）的<strong>約克夏布丁（Yorkshire Pudding）</strong>、脆皮烤馬鈴薯、蜂蜜烤防風草與辣根醬。
+                        </p>
+                    </div>
+
+                    <!-- 3. Fish & Chips, Full English & Cornish Pasty -->
+                    <div class="bg-[#fffefb] p-2.5 rounded-lg border border-[#dfd6c7] shadow-sm space-y-0.5">
+                        <h3 class="font-editorial font-bold text-[#13293d] text-sm" data-zh="🐟 炸魚薯條、全套英式早餐與康瓦爾餡餅" data-en="🐟 Fish & Chips, Full English & Cornish Pasty">🐟 炸魚薯條、全套英式早餐與康瓦爾餡餅</h3>
+                        <p class="text-[11px]" data-zh="海濱必嚐金黃酥脆的<strong>炸魚薯條（Fish & Chips）</strong>（選用北大西洋鱈魚或黑線鱈，灑上麥芽醋與豌豆泥）；<strong>全套英式早餐（Full English）</strong>匯集培根、香腸、煎蛋、焗豆、烤番茄與黑布丁；起源於礦工午餐的<strong>康瓦爾餡餅（Cornish Pasty）</strong>則以厚實編織酥皮包裹牛肉與馬鈴薯。" data-en="Savor beer-battered <strong>Fish & Chips</strong> with mushy peas and malt vinegar by the coast, a hearty <strong>Full English Breakfast</strong>, or a traditional crimped <strong>Cornish Pasty</strong> stuffed with beef and swede.">
+                            海濱必嚐金黃酥脆的<strong>炸魚薯條（Fish & Chips）</strong>（選用北大西洋鱈魚或黑線鱈，灑上麥芽醋與豌豆泥）；<strong>全套英式早餐（Full English）</strong>匯集培根、香腸、煎蛋、焗豆、烤番茄與黑布丁；起源於礦工午餐的<strong>康瓦爾餡餅（Cornish Pasty）</strong>則以厚實編織酥皮包裹牛肉與馬鈴薯。
+                        </p>
+                    </div>
+
+                    <!-- 4. Historic English Pubs, Cask Ale & Somerset Cider -->
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-editorial font-bold text-[#0f1e2e] text-sm" data-zh="🍺 百年英式酒館：桶裝生啤與薩默塞特蘋果酒" data-en="🍺 Historic Pubs: Cask Ales & Somerset Cider">🍺 百年英式酒館：桶裝生啤與薩默塞特蘋果酒</h3>
+                        </div>
+                        <p class="text-[11px]" data-zh="走進狄更斯曾光顧的木樑壁爐老酒館（Pub），體驗吧檯自取文化，點一品脫（Pint）地窖恆溫直抽的傳統「桶裝愛爾啤酒（Real Cask Ale）」或西南部醇香「薩默塞特蘋果酒（Somerset Cider）」。" data-en="Step inside a centuries-old timber-beamed English pub, order at the bar, and enjoy a pint of cellar-conditioned <strong>Real Cask Ale</strong> or crisp <strong>Somerset Cider</strong>.">
+                            走進狄更斯曾光顧的木樑壁爐老酒館（Pub），體驗吧檯自取文化，點一品脫（Pint）地窖恆溫直抽的傳統「桶裝愛爾啤酒（Real Cask Ale）」或西南部醇香「薩默塞特蘋果酒（Somerset Cider）」。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 14: Personal Travel Notes & Packing Checklist -->
+            <div class="page-slide flex-col space-y-3" data-page="14">
+                <div class="heritage-header pb-2">
+                    <p class="text-[10px] font-mono uppercase tracking-widest text-[#8a6a1c]" data-zh="Chapter 06 • 個人旅行筆記與行前清單" data-en="Chapter 06 • Travel Notes & Checklist">Chapter 06 • 個人旅行筆記與行前清單</p>
+                    <h2 class="text-xl font-bold font-editorial text-[#0f1e2e]" data-zh="個人旅行筆記與行前準備清單" data-en="Personal Travel Notes & Packing Checklist">個人旅行筆記與行前準備清單</h2>
+                </div>
+
+                <div class="space-y-2.5 text-xs text-[#172533] leading-relaxed overflow-y-auto max-h-[550px] pr-1">
+                    <!-- Interactive Pre-Departure Checklist -->
+                    <div class="bg-[#fffefb] p-3 rounded-xl border border-[#dfd6c7] shadow-sm space-y-2">
+                        <div class="flex justify-between items-center border-b border-[#f0eadf] pb-1.5">
+                            <h3 class="font-editorial font-bold text-[#13293d] text-sm" data-zh="✅ 英格蘭行前檢核清單" data-en="✅ England Pre-Departure Checklist">✅ 英格蘭行前檢核清單</h3>
+                            <span id="checklist-counter" class="text-[10px] font-mono bg-[#f0eadf] text-[#13293d] px-2 py-0.5 rounded font-bold border border-[#d8cebe]">0 / 6</span>
+                        </div>
+                        <div class="space-y-1.5 text-[11px]" id="checklist-items">
+                            <!-- Populated by JS with localStorage persistence -->
+                        </div>
+                    </div>
+
+                    <!-- Personal Travel Notes Scratchpad (localStorage) -->
+                    <div class="bg-[#fffefb] p-3 rounded-xl border-2 border-[#c59b27]/70 shadow-sm space-y-2">
+                        <label for="england-notes" class="font-editorial font-bold text-[#13293d] text-sm flex justify-between items-center">
+                            <span data-zh="✒️ 旅客私人筆記本 (自動本機保存)" data-en="✒️ Personal Travel Notes Scratchpad">✒️ 旅客私人筆記本 (自動本機保存)</span>
+                            <span id="note-saved-badge" class="text-[10px] font-mono text-[#1d4d3e] hidden" data-zh="✓ 已儲存" data-en="✓ Saved">✓ 已儲存</span>
+                        </label>
+                        <textarea id="england-notes" rows="5"
+                            class="w-full p-2.5 rounded-lg border border-[#d8cebe] bg-[#fbf9f4] text-xs text-[#172533] focus:ring-2 focus:ring-[#c59b27] focus:outline-none resize-none"
+                            placeholder="記錄西敏寺與巴斯羅馬浴場預約時段、National Rail 火車班次、伴手禮清單（Fortnum & Mason 茶葉、約克貝蒂茶室）..."></textarea>
+                        <div class="flex space-x-2">
+                            <button onclick="saveNotes()" class="flex-1 bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] text-xs py-2 rounded-lg font-mono uppercase tracking-wider transition shadow-sm" data-zh="儲存筆記" data-en="Save Notes">
+                                儲存筆記
+                            </button>
+                            <button onclick="clearNotes()" class="bg-[#eae2d3] hover:bg-[#ddd2be] text-[#0f1e2e] text-xs px-3.5 py-2 rounded-lg font-mono transition" data-zh="清除筆記" data-en="Clear">
+                                清除筆記
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#f0eadf] p-2.5 rounded-lg border border-[#d8cebe] text-[11px] text-[#172533] text-center">
+                        <span data-zh="祝您擁有一趟典雅難忘的英格蘭旅程！Safe travels & Cheerio!" data-en="Wishing you a memorable journey across England! Safe travels & Cheerio!">
+                            祝您擁有一趟典雅難忘的英格蘭旅程！Safe travels & Cheerio!
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="bg-[#eae2d3] border-t border-[#d8cebe] px-4 py-2.5 flex justify-between items-center z-20">
+            <button onclick="prevPage()" id="prev-btn" class="bg-[#fffefb] hover:bg-[#fbf9f4] text-[#13293d] px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm border border-[#d8cebe] disabled:opacity-40 transition-all" data-zh="◀ 上一頁" data-en="◀ Prev">
+                ◀ 上一頁
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-xs font-mono font-bold text-[#13293d]" id="page-indicator">1 / 14</span>
+                <div class="w-24 h-1.5 bg-[#d8cebe] rounded-full overflow-hidden mt-1">
+                    <div id="progress-bar" class="h-full bg-[#1d4d3e] transition-all duration-300" style="width: 7.14%;"></div>
+                </div>
+            </div>
+            <button onclick="nextPage()" id="next-btn" class="bg-[#13293d] hover:bg-[#1c3b57] text-[#f3dca0] border border-[#c59b27]/80 px-3.5 py-2 rounded-lg text-xs font-mono font-bold shadow-sm transition-all" data-zh="下一頁 ▶" data-en="Next ▶">
+                下一頁 ▶
+            </button>
+        </div>
+
+        <!-- Floating Status Toast -->
+        <div id="toast-msg" class="hidden absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-[#08111b]/95 text-[#f3dca0] border border-[#c59b27] text-[11px] font-mono px-3.5 py-1.5 rounded-full shadow-lg z-40 whitespace-nowrap"></div>
+
+    </div>
+
+    <!-- JavaScript for Interactive Pages, 12-Month Weather Selector, TOC, Checklist, LocalStorage Notes & Bilingual Toggle -->
+    <script>
+        let currentPage = 1;
+        const totalPages = 14;
+        let currentLang = 'zh';
+        let selectedMonthIndex = 4; // Default to May (Bluebells & mild spring countryside)
+
+        const tocData = [
+            { page: 1, zh: "封面 • 英格蘭皇家古典與田園海岸之旅", en: "Cover • England Discovery Journey" },
+            { page: 2, zh: "01. 英格蘭國家介紹與地理位置", en: "01. Country Overview & Geography" },
+            { page: 3, zh: "02. 英格蘭四季氣候與穿搭指南", en: "02. 12-Month Weather & Packing Guide" },
+            { page: 4, zh: "03. 英格蘭經典五日遊行程規劃", en: "03. Classic 5-Day England Itinerary" },
+            { page: 5, zh: "04. 地標 [1/8] 倫敦：西敏宮與倫敦塔橋", en: "04. [1/8] London: Westminster & Tower Bridge" },
+            { page: 6, zh: "05. 地標 [2/8] 牛津：夢幻尖塔大學城", en: "05. [2/8] Oxford: City of Dreaming Spires" },
+            { page: 7, zh: "06. 地標 [3/8] 科茲窩：拜伯里與水上伯頓", en: "06. [3/8] The Cotswolds: Bibury & Bourton" },
+            { page: 8, zh: "07. 地標 [4/8] 巴斯：羅馬浴場與皇家新月樓", en: "07. [4/8] Bath: Crescents & Roman Baths" },
+            { page: 9, zh: "08. 地標 [5/8] 巨石陣與索爾茲伯里平原", en: "08. [5/8] Stonehenge & Salisbury Plain" },
+            { page: 10, zh: "09. 地標 [6/8] 湖區國家公園：溫德米爾", en: "09. [6/8] Lake District: Windermere & Keswick" },
+            { page: 11, zh: "10. 地標 [7/8] 約克：肉舖街與約克大教堂", en: "10. [7/8] York: Shambles & York Minster" },
+            { page: 12, zh: "11. 地標 [8/8] 七姐妹白堊斷崖與侏羅紀海岸", en: "11. [8/8] Seven Sisters & Jurassic Coast" },
+            { page: 13, zh: "12. 英倫美饌、傳統酒館與下午茶文化", en: "12. Gastronomy, Pubs & Afternoon Tea" },
+            { page: 14, zh: "13. 個人旅行筆記與行前準備清單", en: "13. Travel Notes & Packing Checklist" }
+        ];
+
+        const monthlyWeatherData = [
+            {
+                mZh: "1月", mEn: "Jan", temp: "2°C ~ 8°C", weatherTag: "🌧️ Crisp & Misty / 濕冷短日照",
+                icon: "❄️",
+                highlightZh: "倫敦新年大遊行與冬季折扣季，博物館與百年壁爐酒館人潮少、氣氛溫馨。",
+                highlightEn: "London New Year's Day Parade & winter sales; quiet museums and cozy fireside pubs.",
+                clothZh: "防風防水厚大衣、羊毛毛衣、圍巾、手套與防滑防水短靴。",
+                clothEn: "Wind/waterproof heavy coat, wool knitwear, scarf, gloves, and waterproof ankle boots."
+            },
+            {
+                mZh: "2月", mEn: "Feb", temp: "2°C ~ 8°C", weatherTag: "🌦️ Brisk Breeze / 初春微寒",
+                icon: "🌼",
+                highlightZh: "科茲窩莊園與邱園（Kew Gardens）雪花蓮（Snowdrops）與番紅花率先報春。",
+                highlightEn: "Snowdrops and crocuses carpet Cotswold estates and Kew Gardens; serene winter-spring walks.",
+                clothZh: "保暖羊毛大衣、多層次針織衫、抗風折疊傘與防滑步行鞋。",
+                clothEn: "Insulated wool coat, layered sweaters, windproof umbrella, and sturdy walking shoes."
+            },
+            {
+                mZh: "3月", mEn: "Mar", temp: "4°C ~ 11°C", weatherTag: "🌦️ Spring Awakening / 晴雨交替",
+                icon: "🌱",
+                highlightZh: "水仙花盛開於湖區與倫敦皇家公園，白晝明顯變長，適合城市與古蹟深度遊。",
+                highlightEn: "Golden daffodils bloom across London parks and the Lake District as daylight lengthens.",
+                clothZh: "經典英倫風衣（Trench Coat）、長袖襯衫、薄毛衣與防潑水鞋履。",
+                clothEn: "Classic trench coat, long-sleeve shirts, light knit sweater, and water-repellent shoes."
+            },
+            {
+                mZh: "4月", mEn: "Apr", temp: "6°C ~ 14°C", weatherTag: "🌦️ April Showers / 四月陣雨",
+                icon: "🌷",
+                highlightZh: "「四月陣雨帶來五月花」，牛津劍橋划船賽季開啟，巴斯與科茲窩春意盎然。",
+                highlightEn: "Famous 'April showers' alternate with bright sunshine; spring blooms fill Bath and Oxford.",
+                clothZh: "洋蔥式多層次穿搭、防風防水夾克、針織開襟衫與抗風折疊傘。",
+                clothEn: "Layered outfits, windproof rain jacket, cardigan, and a sturdy compact umbrella."
+            },
+            {
+                mZh: "5月", mEn: "May", temp: "9°C ~ 17°C", weatherTag: "☀️ Bluebell Season / 清爽宜人",
+                icon: "🪻",
+                highlightZh: "英格蘭古老林地鋪滿夢幻「藍鈴花海（Bluebells）」，切爾西花展（Chelsea Flower Show）盛大登場！",
+                highlightEn: "Ancient woodlands glow with wild bluebells and London hosts the prestigious Chelsea Flower Show.",
+                clothZh: "長短袖混搭、休閒風衣或薄夾克、長褲與舒適健行步行鞋。",
+                clothEn: "Light layers with a trench or light jacket, trousers, and comfortable walking/trail shoes."
+            },
+            {
+                mZh: "6月", mEn: "Jun", temp: "12°C ~ 21°C", weatherTag: "☀️ Long Daylight / 16.5hr 日照",
+                icon: "🌞",
+                highlightZh: "夏至前後日照長達 16.5 小時！巨石陣夏至日出慶典、皇家賽馬會與溫布頓網球賽陸續開鑼。",
+                highlightEn: "16.5 hours of daylight for Stonehenge summer solstice, Royal Ascot, and Wimbledon tennis.",
+                clothZh: "透氣長短袖、太陽眼鏡，晚間海風與湖區微涼建議備一件薄針織外套。",
+                clothEn: "Breathable shirts, sunglasses, and a light cardigan or windbreaker for breezy evenings."
+            },
+            {
+                mZh: "7月", mEn: "Jul", temp: "14°C ~ 23°C", weatherTag: "☀️ Warm Summer / 陽光和煦",
+                icon: "⛵",
+                highlightZh: "七姐妹白堊斷崖健行、湖區游船與倫敦白金漢宮夏季國事廳限時開放參觀最佳時節。",
+                highlightEn: "Prime season for Seven Sisters cliff hikes, Lake District cruises, and Buckingham Palace tours.",
+                clothZh: "輕薄夏裝、遮陽帽、防曬乳與舒適涼鞋／球鞋，隨身帶一件防潑水薄風衣。",
+                clothEn: "Light summer wear, sun hat, SPF, walking shoes, and a packable showerproof shell."
+            },
+            {
+                mZh: "8月", mEn: "Aug", temp: "14°C ~ 23°C", weatherTag: "☀️ Festival Season / 溫暖晴朗",
+                icon: "🎭",
+                highlightZh: "莎士比亞故鄉露天戲劇、布萊頓海濱假期與諾丁丘嘉年華讓全英洋溢盛夏活力。",
+                highlightEn: "Open-air Shakespeare, seaside holidays along the Jurassic Coast, and Notting Hill Carnival.",
+                clothZh: "透氣棉麻服飾、太陽眼鏡與健行鞋，北部湖區高地仍需準備防風保暖中層。",
+                clothEn: "Breathable cotton/linen outfits, sunglasses, trail shoes, plus a fleece for northern fells."
+            },
+            {
+                mZh: "9月", mEn: "Sep", temp: "11°C ~ 19°C", weatherTag: "🌤️ Indian Summer / 秋高氣爽",
+                icon: "🍎",
+                highlightZh: "「小陽春（Indian Summer）」氣候穩定晴朗、遊客減少，薩默塞特蘋果酒坊迎來豐收季。",
+                highlightEn: "Crisp 'Indian Summer' sunshine with fewer crowds; Somerset cider orchards celebrate harvest.",
+                clothZh: "長袖襯衫、休閒西裝外套或風衣、長褲與防滑步行鞋。",
+                clothEn: "Long-sleeve shirts, blazer or trench coat, trousers, and sturdy walking shoes."
+            },
+            {
+                mZh: "10月", mEn: "Oct", temp: "8°C ~ 14°C", weatherTag: "🍂 Golden Foliage / 湖區金秋",
+                icon: "🍁",
+                highlightZh: "湖區國家公園與科茲窩山谷層林盡染，金紅秋葉倒映在溫德米爾與德文特湖面如畫。",
+                highlightEn: "Spectacular autumn foliage transforms the Lake District fells and Cotswold valleys into gold and russet.",
+                clothZh: "保暖夾克、針織毛衣、圍巾與防潑水健行步行鞋。",
+                clothEn: "Warm jacket, knit sweater, scarf, and water-resistant walking/hiking shoes."
+            },
+            {
+                mZh: "11月", mEn: "Nov", temp: "5°C ~ 10°C", weatherTag: "🌧️ Crisp & Festive / 篝火與燈飾",
+                icon: "🎆",
+                highlightZh: "11月5日「蓋伊·福克斯篝火之夜（Bonfire Night）」全英施放煙火，倫敦牛津街聖誕燈飾點亮。",
+                highlightEn: "Bonfire Night fireworks on Nov 5, followed by London's iconic Regent & Oxford Street Christmas lights.",
+                clothZh: "防風防水保暖大衣、毛衣、圍巾與防水短靴。",
+                clothEn: "Insulated wind/waterproof coat, warm sweaters, scarf, and waterproof ankle boots."
+            },
+            {
+                mZh: "12月", mEn: "Dec", temp: "2°C ~ 8°C", weatherTag: "❄️ Yuletide Charm / 聖誕市集",
+                icon: "🎄",
+                highlightZh: "巴斯聖誕市集、約克聖尼古拉斯市集與海德公園冬日嘉年華充滿熱紅酒與百果派香氣。",
+                highlightEn: "Bath and York Christmas markets plus Hyde Park Winter Wonderland brimming with mulled wine & mince pies.",
+                clothZh: "厚羽絨或羊毛大衣、發熱內衣、毛帽、手套與防滑保暖靴。",
+                clothEn: "Heavy down or wool coat, thermal base layers, beanie, gloves, and insulated boots."
+            }
+        ];
+
+        const defaultChecklist = [
+            { id: "eng1", zh: "護照（效期 6 個月以上）與英國電子旅行憑證（UK ETA）核准確認", en: "Passport (6+ months validity) & approved UK ETA (Electronic Travel Authorisation)" },
+            { id: "eng2", zh: "支援感應支付的海外回饋信用卡／Apple Pay（倫敦地鐵與巴士可直接感應扣款）", en: "Contactless credit card / Apple Pay (works directly on London Tube & buses)" },
+            { id: "eng3", zh: "英規三腳扁頭轉接頭（Type G，230V）與隨身行動電源", en: "UK Type G three-pin rectangular plug adapter (230V) & power bank" },
+            { id: "eng4", zh: "防風防潑水風衣／衝鋒衣與抗風折疊傘（因應英格蘭一日四季陣雨）", en: "Windproof water-repellent trench/shell & sturdy compact umbrella" },
+            { id: "eng5", zh: "已馴服的防滑防水步行鞋（適用科茲窩石子路、約克石板街與七姐妹斷崖）", en: "Broken-in waterproof walking shoes for Cotswolds, York & Seven Sisters cliffs" },
+            { id: "eng6", zh: "線上預約熱門門票（巨石陣、巴斯羅馬浴場、西敏寺與 Afternoon Tea）", en: "Pre-book timed tickets for Stonehenge, Roman Baths, Westminster Abbey & Afternoon Tea" }
+        ];
+
+        function handleImgFallback(imgEl, label) {
+            imgEl.onerror = null;
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+                <defs>
+                    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#13293d"/>
+                        <stop offset="55%" stop-color="#1c3b57"/>
+                        <stop offset="100%" stop-color="#1d4d3e"/>
+                    </linearGradient>
+                </defs>
+                <rect width="800" height="420" fill="url(#g)"/>
+                <rect x="24" y="24" width="752" height="372" rx="16" fill="none" stroke="#d9b03b" stroke-width="2" stroke-opacity="0.75"/>
+                <text x="400" y="195" fill="#f3dca0" font-family="Georgia, serif" font-size="26" font-weight="bold" text-anchor="middle">${label}</text>
+                <text x="400" y="232" fill="#fbf9f4" font-family="monospace" font-size="14" text-anchor="middle">ALBION & HERITAGE • ENGLAND DISCOVERY EDITION</text>
+            </svg>`;
+            imgEl.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+        }
+
+        function renderToc() {
+            const tocList = document.getElementById('toc-list');
+            if (!tocList) return;
+            tocList.innerHTML = tocData.map(item => `
+                <button onclick="goToPage(${item.page}); toggleToc();"
+                        class="text-left px-3 py-1.5 rounded-lg transition flex justify-between items-center ${item.page === currentPage ? 'bg-[#13293d] text-[#f3dca0] font-bold border border-[#c59b27]' : 'bg-[#fffefb] hover:bg-[#f0eadf] text-[#172533] border border-[#d8cebe]'}">
+                    <span>${currentLang === 'zh' ? item.zh : item.en}</span>
+                    <span class="font-mono text-[10px] opacity-80">P.${item.page}</span>
+                </button>
+            `).join('');
+        }
+
+        function renderMonthSelector() {
+            const selector = document.getElementById('month-selector');
+            if (!selector) return;
+            selector.innerHTML = monthlyWeatherData.map((m, idx) => `
+                <button onclick="selectMonth(${idx})"
+                        class="py-1.5 px-1 rounded-lg font-mono text-[11px] transition border ${idx === selectedMonthIndex ? 'bg-[#13293d] text-[#f3dca0] border-[#c59b27] font-bold shadow-sm' : 'bg-[#fffefb] hover:bg-[#f0eadf] text-[#172533] border-[#d8cebe]'}">
+                    ${currentLang === 'zh' ? m.mZh : m.mEn}
+                </button>
+            `).join('');
+            renderMonthDetail();
+        }
+
+        function renderMonthDetail() {
+            const card = document.getElementById('month-detail-card');
+            if (!card) return;
+            const m = monthlyWeatherData[selectedMonthIndex];
+            card.innerHTML = `
+                <div class="flex justify-between items-center border-b border-[#d8cebe] pb-2">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-2xl">${m.icon}</span>
+                        <div>
+                            <h3 class="font-editorial font-bold text-base text-[#0f1e2e]">${currentLang === 'zh' ? m.mZh + ' 氣候與盛事' : m.mEn + ' Climate & Events'}</h3>
+                            <span class="text-[10px] font-mono text-[#8a6a1c]">${m.weatherTag}</span>
+                        </div>
+                    </div>
+                    <div class="bg-[#f0eadf] px-2.5 py-1 rounded-lg border border-[#d8cebe] font-mono font-bold text-[#13293d] text-xs">
+                        ${m.temp}
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <div>
+                        <strong class="text-[#0f1e2e] font-editorial block text-[11px]">${currentLang === 'zh' ? '✨ 季節亮點：' : '✨ Seasonal Highlights:'}</strong>
+                        <p class="text-[#3e4e5e] text-[11px]">${currentLang === 'zh' ? m.highlightZh : m.highlightEn}</p>
+                    </div>
+                    <div>
+                        <strong class="text-[#0f1e2e] font-editorial block text-[11px]">${currentLang === 'zh' ? '🧥 穿搭與行李建議：' : '🧥 Clothing & Packing Advice:'}</strong>
+                        <p class="text-[#3e4e5e] text-[11px]">${currentLang === 'zh' ? m.clothZh : m.clothEn}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectMonth(idx) {
+            selectedMonthIndex = idx;
+            renderMonthSelector();
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-items');
+            const counter = document.getElementById('checklist-counter');
+            if (!container) return;
+
+            let savedState = {};
+            try {
+                savedState = JSON.parse(localStorage.getItem('england_checklist_state') || '{}');
+            } catch (e) {}
+
+            let checkedCount = 0;
+            container.innerHTML = defaultChecklist.map(item => {
+                const isChecked = !!savedState[item.id];
+                if (isChecked) checkedCount++;
+                return `
+                    <label class="flex items-start space-x-2 p-1.5 rounded-lg hover:bg-[#f0eadf]/75 cursor-pointer transition">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleCheckItem('${item.id}')"
+                               class="mt-0.5 rounded text-[#13293d] focus:ring-[#c59b27]">
+                        <span class="${isChecked ? 'line-through text-[#6f7e8c]' : 'text-[#172533]'}">
+                            ${currentLang === 'zh' ? item.zh : item.en}
+                        </span>
+                    </label>
+                `;
+            }).join('');
+
+            if (counter) {
+                counter.textContent = `${checkedCount} / ${defaultChecklist.length}`;
+            }
+        }
+
+        function toggleCheckItem(id) {
+            let savedState = {};
+            try {
+                savedState = JSON.parse(localStorage.getItem('england_checklist_state') || '{}');
+                savedState[id] = !savedState[id];
+                localStorage.setItem('england_checklist_state', JSON.stringify(savedState));
+            } catch (e) {}
+            renderChecklist();
+        }
+
+        function updateDisplay() {
+            const slides = document.querySelectorAll('.page-slide');
+            slides.forEach(slide => {
+                const pageNum = parseInt(slide.getAttribute('data-page'), 10);
+                if (pageNum === currentPage) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const pageLabel = `${currentPage} / ${totalPages}`;
+            const indicator = document.getElementById('page-indicator');
+            if (indicator) indicator.textContent = pageLabel;
+            const topIndicator = document.getElementById('top-page-indicator');
+            if (topIndicator) topIndicator.textContent = pageLabel;
+
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) progressBar.style.width = `${(currentPage / totalPages) * 100}%`;
+
+            const prevBtn = document.getElementById('prev-btn');
+            if (prevBtn) {
+                prevBtn.disabled = (currentPage === 1);
+                prevBtn.textContent = (currentLang === 'zh') ? '◀ 上一頁' : '◀ Prev';
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                if (currentPage === totalPages) {
+                    nextBtn.textContent = (currentLang === 'zh') ? '回封面 ↺' : 'Cover ↺';
+                } else {
+                    nextBtn.textContent = (currentLang === 'zh') ? '下一頁 ▶' : 'Next ▶';
+                }
+            }
+
+            const bookArea = document.getElementById('book-content-area');
+            if (bookArea) {
+                bookArea.scrollTop = 0;
+            }
+
+            renderToc();
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+            } else {
+                currentPage = 1;
+            }
+            updateDisplay();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateDisplay();
+            }
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateDisplay();
+            }
+        }
+
+        function toggleToc() {
+            const drawer = document.getElementById('toc-drawer');
+            if (!drawer) return;
+            if (drawer.classList.contains('hidden')) {
+                renderToc();
+                drawer.classList.remove('hidden');
+                drawer.classList.add('flex');
+            } else {
+                drawer.classList.add('hidden');
+                drawer.classList.remove('flex');
+            }
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'zh') ? 'en' : 'zh';
+            const htmlRoot = document.getElementById('html-root');
+            if (htmlRoot) htmlRoot.setAttribute('lang', currentLang === 'zh' ? 'zh-TW' : 'en');
+
+            const translatable = document.querySelectorAll('[data-zh][data-en]');
+            translatable.forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+
+            const notesEl = document.getElementById('england-notes');
+            if (notesEl) {
+                notesEl.placeholder = (currentLang === 'zh')
+                    ? '記錄西敏寺與巴斯羅馬浴場預約時段、National Rail 火車班次、伴手禮清單（Fortnum & Mason 茶葉、約克貝蒂茶室）...'
+                    : 'Jot down Westminster Abbey or Roman Baths tickets, National Rail trains, or souvenirs (Fortnum & Mason tea, Bettys Tea Rooms)...';
+            }
+
+            renderMonthSelector();
+            renderChecklist();
+            updateDisplay();
+            showToast(currentLang === 'zh' ? '已切換為繁體中文介面' : 'Switched to English');
+        }
+
+        let isBookmarked = false;
+        function toggleBookmark() {
+            const icon = document.getElementById('bookmark-icon');
+            if (!icon) return;
+            isBookmarked = !isBookmarked;
+            if (isBookmarked) {
+                icon.setAttribute('fill', '#d9b03b');
+                icon.setAttribute('stroke', '#d9b03b');
+                showToast(currentLang === 'zh' ? `已加入第 ${currentPage} 頁書籤` : `Bookmarked Page ${currentPage}`);
+            } else {
+                icon.setAttribute('fill', 'none');
+                icon.setAttribute('stroke', 'currentColor');
+                showToast(currentLang === 'zh' ? '已移除書籤' : 'Bookmark removed');
+            }
+        }
+
+        function saveNotes() {
+            const notesEl = document.getElementById('england-notes');
+            if (!notesEl) return;
+            try {
+                localStorage.setItem('england_journey_notes', notesEl.value);
+                const badge = document.getElementById('note-saved-badge');
+                if (badge) {
+                    badge.classList.remove('hidden');
+                    setTimeout(() => badge.classList.add('hidden'), 2000);
+                }
+                showToast(currentLang === 'zh' ? '旅遊筆記已儲存！' : 'Travel notes saved!');
+            } catch (e) {
+                showToast(currentLang === 'zh' ? '無法存取本機儲存空間' : 'Storage unavailable');
+            }
+        }
+
+        function clearNotes() {
+            const notesEl = document.getElementById('england-notes');
+            if (!notesEl) return;
+            notesEl.value = '';
+            try {
+                localStorage.removeItem('england_journey_notes');
+            } catch (e) {}
+            showToast(currentLang === 'zh' ? '筆記已清除' : 'Notes cleared');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2200);
+        }
+
+        window.onload = function() {
+            try {
+                const savedNotes = localStorage.getItem('england_journey_notes');
+                const notesEl = document.getElementById('england-notes');
+                if (savedNotes && notesEl) {
+                    notesEl.value = savedNotes;
+                }
+            } catch (e) {}
+            renderMonthSelector();
+            renderChecklist();
+            updateDisplay();
+        };
+
+        // Keyboard Arrow Navigation Support
+        document.addEventListener('keydown', e => {
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (activeTag === 'textarea' || activeTag === 'input') return;
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'ArrowLeft') prevPage();
+        });
+
+        // Touch Swipe Navigation Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const bookArea = document.getElementById('book-content-area');
+        if (bookArea) {
+            bookArea.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            bookArea.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                if (diff < -55) nextPage();
+                if (diff > 55) prevPage();
+            }, { passive: true });
+        }
+    </script>
+</body>
+</html>
